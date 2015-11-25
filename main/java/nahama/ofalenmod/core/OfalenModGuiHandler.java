@@ -1,0 +1,51 @@
+package nahama.ofalenmod.core;
+
+import nahama.ofalenmod.gui.GuiConversionMachine;
+import nahama.ofalenmod.gui.GuiRepairMachine;
+import nahama.ofalenmod.gui.GuiSmeltingMachine;
+import nahama.ofalenmod.inventory.ContainerConversionMachine;
+import nahama.ofalenmod.inventory.ContainerRepairMachine;
+import nahama.ofalenmod.inventory.ContainerSmeltingMachine;
+import nahama.ofalenmod.tileentity.TileEntityConversionMachine;
+import nahama.ofalenmod.tileentity.TileEntityRepairMachine;
+import nahama.ofalenmod.tileentity.TileEntitySmeltingMachine;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.world.World;
+import cpw.mods.fml.common.network.IGuiHandler;
+
+public class OfalenModGuiHandler implements IGuiHandler {
+
+	@Override
+	public Object getServerGuiElement(int id, EntityPlayer player, World world, int x, int y, int z) {
+		if (!world.blockExists(x, y, z))
+			return null;
+
+		TileEntity tileentity = world.getTileEntity(x, y, z);
+		if (tileentity instanceof TileEntitySmeltingMachine) {
+			return new ContainerSmeltingMachine(player, (TileEntitySmeltingMachine) tileentity);
+		} else if (tileentity instanceof TileEntityRepairMachine) {
+			return new ContainerRepairMachine(player, (TileEntityRepairMachine) tileentity);
+		} else if (tileentity instanceof TileEntityConversionMachine) {
+			return new ContainerConversionMachine(player, (TileEntityConversionMachine) tileentity);
+		}
+		return null;
+	}
+
+	@Override
+	public Object getClientGuiElement(int id, EntityPlayer player, World world, int x, int y, int z) {
+		if (!world.blockExists(x, y, z))
+			return null;
+
+		TileEntity tileentity = world.getTileEntity(x, y, z);
+		if (tileentity instanceof TileEntitySmeltingMachine) {
+			return new GuiSmeltingMachine(player, (TileEntitySmeltingMachine) tileentity);
+		} else if (tileentity instanceof TileEntityRepairMachine) {
+			return new GuiRepairMachine(player, (TileEntityRepairMachine) tileentity);
+		} else if (tileentity instanceof TileEntityConversionMachine) {
+			return new GuiConversionMachine(player, (TileEntityConversionMachine) tileentity);
+		}
+		return null;
+	}
+
+}

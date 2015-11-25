@@ -1,0 +1,153 @@
+﻿
+//クリエイティブタブ
+itemGroup.ofalentab=オファレンMOD
+
+//GUI
+container.smeltingmachine-0=オファレン製錬機
+container.smeltingmachine-1=オファレン製錬機 (Grade 1)
+container.smeltingmachine-2=オファレン製錬機 (Grade 2)
+container.smeltingmachine-3=オファレン製錬機 (Grade 3)
+container.conversionmachine-0=オファレン変換機
+container.conversionmachine-1=オファレン変換機 (Grade 1)
+container.conversionmachine-2=オファレン変換機 (Grade 2)
+container.conversionmachine-3=オファレン変換機 (Grade 3)
+container.repairmachine-0=オファレン修繕機
+container.repairmachine-1=オファレン修繕機 (Grade 1)
+container.repairmachine-2=オファレン修繕機 (Grade 2)
+container.repairmachine-3=オファレン修繕機 (Grade 3)
+
+//説明文
+info.smeltingrecipe=オファレン製錬機
+info.loaded=クリスタル:
+info.color:red=赤
+info.color:green=緑
+info.color:blue=青
+info.color:white=白
+info.metadescription=このMODは、新しい鉱石「オファレン」を追加し、新しく道具・防具・玉などのアイテムを作れるようにします。
+
+//アイテム
+item.ofalen.0.name=赤いオファレン
+item.ofalen.1.name=緑のオファレン
+item.ofalen.2.name=青いオファレン
+item.ofalen.3.name=白いオファレン
+item.fragmentOfalen.0.name=赤いオファレンの欠片
+item.fragmentOfalen.1.name=緑のオファレンの欠片
+item.fragmentOfalen.2.name=青いオファレンの欠片
+item.fragmentOfalen.3.name=白いオファレンの欠片
+item.coreOfalen.0.name=赤いオファレンコア
+item.coreOfalen.1.name=緑のオファレンコア
+item.coreOfalen.2.name=青いオファレンコア
+item.coreOfalen.3.name=白いオファレンコア
+item.partsOfalen.0.name=機械用カバープレート
+item.partsOfalen.1.name=Grade 3の部品
+item.partsOfalen.2.name=石の塊
+item.partsOfalen.3.name=石燃料
+item.partsOfalen.4.name=オファレン燃料
+item.partsOfalen.5.name=オファレンレーザーマガジン
+item.partsOfalen3D.0.name=鉄の棒
+
+//防具
+item.helmetOfalen.name=オファレンのヘルメット
+item.chestplateOfalen.name=オファレンのチェストプレート
+item.leggingsOfalen.name=オファレンのレギンス
+item.bootsOfalen.name=オファレンのブーツ
+
+item.helmetOfalenG2.name=オファレンのヘルメット Grade 2
+item.chestplateOfalenG2.name=オファレンのチェストプレート Grade 2
+item.leggingsOfalenG2.name=オファレンのレギンス Grade 2
+item.bootsOfalenG2.name=オファレンのブーツ Grade 2
+
+item.helmetOfalenG3.name=オファレンのヘルメット Grade 3
+item.chestplateOfalenG3.name=オファレンのチェストプレート Grade 3
+item.leggingsOfalenG3.name=オファレンのレギンス Grade 3
+item.bootsOfalenG3.name=オファレンのブーツ Grade 3
+
+item.helmetPerfectOfalen.name=オファレンの万能ヘルメット
+item.chestplatePerfectOfalen.name=オファレンの万能チェストプレート
+item.leggingsPerfectOfalen.name=オファレンの万能レギンス
+item.bootsPerfectOfalen.name=オファレンの万能ブーツ
+
+//玉
+item.ballEmpty.0.name=空の玉
+item.ballEmpty.1.name=空の玉 Grade 2
+item.ballEmpty.2.name=空の玉 Grade 3
+
+item.ballDefense.name=防御玉
+item.ballDefenseG2.name=防御玉 Grade 2
+item.ballDefenseG3.name=防御玉 Grade 3
+
+item.ballAttack.name=攻撃玉
+item.ballAttackG2.name=攻撃玉 Grade 2
+item.ballAttackG3.name=攻撃玉 Grade 3
+
+item.ballRecovery.name=回復玉
+item.ballRecoveryG2.name=回復玉 Grade 2
+item.ballRecoveryG3.name=回復玉 Grade 3
+
+item.ballExplosion.0.name=爆発玉
+item.ballExplosion.1.name=爆発玉 Grade 2
+item.ballExplosion.2.name=爆発玉 Grade 3
+
+item.ballFlame.0.name=火炎玉
+item.ballFlame.1.name=火炎玉 Grade 2
+item.ballFlame.2.name=火炎玉 Grade 3
+
+item.ballHungry.name=空腹玉
+item.ballPerfectOfalen.name=オファレンの万能玉
+
+//道具
+item.swordOfalen.name=オファレンの剣
+item.shovelOfalen.name=オファレンのシャベル
+item.pickaxeOfalen.name=オファレンのツルハシ
+item.axeOfalen.name=オファレンの斧
+item.hoeOfalen.name=オファレンのクワ
+
+item.swordOfalenG2.name=オファレンの剣 Grade 2
+item.shovelOfalenG2.name=オファレンのシャベル Grade 2
+item.pickaxeOfalenG2.name=オファレンのツルハシ Grade 2
+item.axeOfalenG2.name=オファレンの斧 Grade 2
+item.hoeOfalenG2.name=オファレンのクワ Grade 2
+
+item.swordOfalenG3.name=オファレンの剣 Grade 3
+item.shovelOfalenG3.name=オファレンのシャベル Grade 3
+item.pickaxeOfalenG3.name=オファレンのツルハシ Grade 3
+item.axeOfalenG3.name=オファレンの斧 Grade 3
+item.hoeOfalenG3.name=オファレンのクワ Grade 3
+
+item.toolPerfectOfalen.name=オファレンの万能ツール
+item.swordSp.name=クリエイティブソード
+
+//レーザー
+item.pistolLaser.name=オファレンレーザーピストル
+item.crystalEnergyLaser.0.name=オファレンレーザーエネルギークリスタル [赤]
+item.crystalEnergyLaser.1.name=オファレンレーザーエネルギークリスタル [緑]
+item.crystalEnergyLaser.2.name=オファレンレーザーエネルギークリスタル [青]
+item.crystalEnergyLaser.3.name=オファレンレーザーエネルギークリスタル [白]
+item.magazineLaserRed.name=オファレンレーザーマガジン [赤]
+item.magazineLaserGreen.name=オファレンレーザーマガジン [緑]
+item.magazineLaserBlue.name=オファレンレーザーマガジン [青]
+item.magazineLaserWhite.name=オファレンレーザーマガジン [白]
+
+//ブロック
+tile.blockOfalen.0.name=赤いオファレンブロック
+tile.blockOfalen.1.name=緑のオファレンブロック
+tile.blockOfalen.2.name=青いオファレンブロック
+tile.blockOfalen.3.name=白いオファレンブロック
+tile.oreOfalen.0.name=赤いオファレン鉱石
+tile.oreOfalen.1.name=緑のオファレン鉱石
+tile.oreOfalen.2.name=青いオファレン鉱石
+tile.oreOfalen.3.name=白いオファレン鉱石
+
+//機械
+tile.machineSmelting.name=オファレン製錬機
+tile.machineConversion.name=オファレン変換機
+tile.machineRepair.name=オファレン修繕機
+tile.processorMachine.0.name=オファレン処理装置 Grade 1
+tile.processorMachine.1.name=オファレン処理装置 Grade 2
+tile.processorMachine.2.name=オファレン処理装置 Grade 3
+tile.casingProcessor.0.name=処理装置筐体 Grade 1
+tile.casingProcessor.1.name=処理装置筐体 Grade 2
+tile.casingProcessor.2.name=処理装置筐体 Grade 3
+tile.casingProcessor.4.name=処理装置筐体固定ブロック Grade 1
+tile.casingProcessor.5.name=処理装置筐体固定ブロック Grade 2
+tile.casingProcessor.6.name=処理装置筐体固定ブロック Grade 3
