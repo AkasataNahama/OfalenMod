@@ -15,57 +15,57 @@ public class EntityFlameBall extends EntityThrowable {
 	public EntityFlameBall(World world, EntityLivingBase entity, int grade) {
 		super(world, entity);
 		power = 5 * (grade * 2);
-		if (power == 0) power = 5;
+		if (power == 0)
+			power = 5;
 	}
 
-	/**ブロックかエンティティに当たった時の処理*/
+	/** ブロックかエンティティに当たった時の処理 */
 	@Override
 	protected void onImpact(MovingObjectPosition position) {
 		Random random = new Random();
 		if (!this.worldObj.isRemote) {
-			//所持しているパワーに応じて周りに火をつける
-			for (int ix = 0; ix < power * 2; ix ++) {
-				int i = position.blockX + random.nextInt(power) - random.nextInt(power);
-				int j = position.blockY + random.nextInt(2) - random.nextInt(2);
-				int k = position.blockZ + random.nextInt(power) - random.nextInt(power);
+			// 所持しているパワーに応じて周りに火をつける
+			for (int i = 0; i < power * 2; i++) {
+				int ix = position.blockX + random.nextInt(power) - random.nextInt(power);
+				int iy = position.blockY + random.nextInt(2) - random.nextInt(2);
+				int iz = position.blockZ + random.nextInt(power) - random.nextInt(power);
 
-				if (ix == 0) {
-					i = position.blockX;
-					j = position.blockY;
-					k = position.blockZ;
+				if (i == 0) {
+					ix = position.blockX;
+					iy = position.blockY;
+					iz = position.blockZ;
 				}
 
-				//着火処理。ItemFireBall参照
+				// 着火処理。ItemFireBall参照
 				switch (position.sideHit) {
 				case 0:
-					--j;
+					--iy;
 					break;
 				case 1:
-					++j;
+					++iy;
 					break;
 				case 2:
-					--k;
+					--iz;
 					break;
 				case 3:
-					++k;
+					++iz;
 					break;
 				case 4:
-					--i;
+					--ix;
 					break;
 				case 5:
-					++i;
+					++ix;
 				}
 
-				if (this.worldObj.isAirBlock(i, j, k)) {
-					this.worldObj.setBlock(i, j, k, Blocks.fire);
+				if (this.worldObj.isAirBlock(ix, iy, iz)) {
+					this.worldObj.setBlock(ix, iy, iz, Blocks.fire);
 				}
-				//破壊力のない爆発を起こす
-				this.worldObj.newExplosion(this, i, j, k, 0.0F, true, true);
+				// 破壊力のない爆発を起こす
+				this.worldObj.newExplosion(this, ix, iy, iz, 0.0F, true, true);
 			}
 		}
-		//消滅させる
+		// 消滅させる
 		this.setDead();
-
 	}
 
 }

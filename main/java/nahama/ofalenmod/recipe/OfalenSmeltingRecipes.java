@@ -23,8 +23,8 @@ public class OfalenSmeltingRecipes {
 		return SMELTING_BASE;
 	}
 
-	/**レシピを設定する*/
-	protected OfalenSmeltingRecipes(){
+	/** レシピを設定する */
+	protected OfalenSmeltingRecipes() {
 		this.putLists(new ItemStack(OfalenModBlockCore.oreOfalen, 1, 0), new ItemStack(OfalenModItemCore.ofalen, smeltingAmount, 0), 1.0F);
 		this.putLists(new ItemStack(OfalenModBlockCore.oreOfalen, 1, 1), new ItemStack(OfalenModItemCore.ofalen, smeltingAmount, 1), 1.0F);
 		this.putLists(new ItemStack(OfalenModBlockCore.oreOfalen, 1, 2), new ItemStack(OfalenModItemCore.ofalen, smeltingAmount, 2), 1.0F);
@@ -34,21 +34,21 @@ public class OfalenSmeltingRecipes {
 		this.putLists(new ItemStack(OfalenModBlockCore.blockOfalen, 1, 2), new ItemStack(OfalenModItemCore.coreOfalen, 1, 2), 0.8F);
 	}
 
-	/**新しいレシピを登録する*/
-	public void addRecipie(Item item, ItemStack itemStack, float experience){
+	/** 新しいレシピを登録する */
+	public void addRecipie(Item item, ItemStack itemStack, float experience) {
 		this.addLists(item, itemStack, experience);
 	}
 
-	public void addLists(Item item, ItemStack itemStack, float experience){
+	public void addLists(Item item, ItemStack itemStack, float experience) {
 		this.putLists(new ItemStack(item, 1, 32767), itemStack, experience);
 	}
 
-	public void putLists(ItemStack itemStack, ItemStack itemStack2, float experience){
+	public void putLists(ItemStack itemStack, ItemStack itemStack2, float experience) {
 		this.smeltingList.put(itemStack, itemStack2);
 		this.experienceList.put(itemStack2, Float.valueOf(experience));
 	}
 
-	/**受け取ったItemStackの製錬結果を返す*/
+	/** 受け取ったItemStackの製錬結果を返す */
 	public ItemStack getSmeltingResult(ItemStack itemStack) {
 		Iterator iterator = this.smeltingList.entrySet().iterator();
 		Entry entry;
@@ -66,21 +66,20 @@ public class OfalenSmeltingRecipes {
 		return itemStack2.getItem() == itemStack.getItem() && (itemStack2.getItemDamage() == 32767 || itemStack2.getItemDamage() == itemStack.getItemDamage());
 	}
 
-	public float giveExperience(ItemStack itemStack){
+	public float giveExperience(ItemStack itemStack) {
 		Iterator iterator = this.experienceList.entrySet().iterator();
 		Entry entry;
 
-		do{
-			if(!iterator.hasNext()){
+		do {
+			if (!iterator.hasNext()) {
 				return 0.0f;
 			}
 
 			entry = (Entry) iterator.next();
-		}
-		while(!this.canBeSmelted(itemStack, (ItemStack) entry.getKey()));
+		} while (!this.canBeSmelted(itemStack, (ItemStack) entry.getKey()));
 
-		if(itemStack.getItem().getSmeltingExperience(itemStack) != -1){
-				return itemStack.getItem().getSmeltingExperience(itemStack);
+		if (itemStack.getItem().getSmeltingExperience(itemStack) != -1) {
+			return itemStack.getItem().getSmeltingExperience(itemStack);
 		}
 
 		return ((Float) entry.getValue()).floatValue();

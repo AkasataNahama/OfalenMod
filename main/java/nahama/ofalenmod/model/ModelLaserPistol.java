@@ -26,7 +26,7 @@ public class ModelLaserPistol extends ModelBase {
 		grip.setRotationPoint(0F, -1F, -2F);
 		grip.setTextureSize(1, 1);
 		grip.mirror = true;
-		setRotation(grip, (20F / 180F * (float)Math.PI), 0F, 0F);
+		setRotation(grip, (20F / 180F * (float) Math.PI), 0F, 0F);
 
 		lens = new ModelRenderer(this, 0, 0);
 		lens.addBox(-0.5F, -0.0F, 3.75F, 1, 1, 1);

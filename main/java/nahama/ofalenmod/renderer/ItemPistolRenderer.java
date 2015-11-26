@@ -1,15 +1,14 @@
 package nahama.ofalenmod.renderer;
 
+import org.lwjgl.opengl.GL11;
+
+import cpw.mods.fml.client.FMLClientHandler;
 import nahama.ofalenmod.model.ModelLaserPistol;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.IItemRenderer;
 
-import org.lwjgl.opengl.GL11;
-
-import cpw.mods.fml.client.FMLClientHandler;
-
-public class ItemPistolRenderer implements IItemRenderer{
+public class ItemPistolRenderer implements IItemRenderer {
 
 	private static final ResourceLocation resource = new ResourceLocation("ofalenmod:textures/entity/white.png");
 	private ModelLaserPistol model = new ModelLaserPistol();
@@ -20,7 +19,7 @@ public class ItemPistolRenderer implements IItemRenderer{
 	}
 
 	private boolean canRendering(ItemStack item, ItemRenderType type) {
-		switch(type) {
+		switch (type) {
 		case ENTITY:
 		case EQUIPPED:
 		case EQUIPPED_FIRST_PERSON:
@@ -48,7 +47,7 @@ public class ItemPistolRenderer implements IItemRenderer{
 			/*
 			 * 描画する種類によって回転, 平行移動を行う.
 			 */
-			switch(type) {
+			switch (type) {
 			case EQUIPPED:
 			case EQUIPPED_FIRST_PERSON:
 				GL11.glRotatef(-80F, 1.0F, 0.0F, 0.0F);

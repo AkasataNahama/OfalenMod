@@ -16,12 +16,11 @@ public class EntityBlueLaser extends EntityLaser {
 
 	@Override
 	protected void onImpact(MovingObjectPosition position) {
-		if (position.entityHit != null) {
-			power --;
+		if (position.entityHit != null && position.entityHit != this.getThrower()) {
+			power--;
 			position.entityHit.attackEntityFrom(DamageSource.causePlayerDamage((EntityPlayer) this.getThrower()), 30.0F);
 		}
-
-		if (this.power <= 0) {
+		if (power < 1) {
 			this.setDead();
 		}
 	}

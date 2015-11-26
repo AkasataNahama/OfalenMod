@@ -1,17 +1,16 @@
 package nahama.ofalenmod.renderer;
 
+import org.lwjgl.opengl.GL11;
+import org.lwjgl.opengl.GL12;
+
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import nahama.ofalenmod.entity.EntityLaser;
 import nahama.ofalenmod.model.ModelLaser;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.ResourceLocation;
-
-import org.lwjgl.opengl.GL11;
-import org.lwjgl.opengl.GL12;
-
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
 public class RenderLaser extends Render {
@@ -34,11 +33,11 @@ public class RenderLaser extends Render {
 		GL11.glDisable(GL11.GL_LIGHTING);
 		GL11.glEnable(GL12.GL_RESCALE_NORMAL);
 		GL11.glColor4f(2.0F, 2.0F, 2.0F, 1.0F);
-		GL11.glTranslatef((float)x, (float)y, (float)z);
+		GL11.glTranslatef((float) x, (float) y, (float) z);
 		GL11.glRotatef(entity.prevRotationYaw + (entity.rotationYaw - entity.prevRotationYaw) * par6, 0.0F, 1.0F, 0.0F);
 		GL11.glRotatef(entity.prevRotationPitch + (entity.rotationPitch - entity.prevRotationPitch) * par6, -1.0F, 0.0F, 0.0F);
 		GL11.glScalef(1.0F, -1.0F, -1.0F);
-		model.render((Entity)null, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F);
+		model.render((Entity) null, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F);
 		GL11.glDisable(GL12.GL_RESCALE_NORMAL);
 		GL11.glEnable(GL11.GL_LIGHTING);
 		GL11.glPopMatrix();
@@ -50,12 +49,12 @@ public class RenderLaser extends Render {
 
 	@Override
 	protected ResourceLocation getEntityTexture(Entity entity) {
-		return this.getTexture((EntityLaser)entity);
+		return this.getTexture((EntityLaser) entity);
 	}
 
 	@Override
 	public void doRender(Entity entity, double x, double y, double z, float par5, float par6) {
-		this.renderLaser((EntityLaser)entity, x, y, z, par5, par6);
+		this.renderLaser((EntityLaser) entity, x, y, z, par5, par6);
 	}
 
 }

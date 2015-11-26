@@ -1,35 +1,38 @@
 package nahama.ofalenmod.creativetab;
 
-import java.util.Random;
+import java.util.Calendar;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import nahama.ofalenmod.core.OfalenModItemCore;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 
 public class OfalenTab extends CreativeTabs {
 
-	private Random random = new Random();
-	private int count = 0;
+	private int count;
 	private int meta = -1;
+	private int lastSecond;
 
 	public OfalenTab(String label) {
 		super(label);
 	}
 
-	/** アイコンの設定 */
+	/** クリエイティブタブのアイコンを返す。 */
 	@Override
 	@SideOnly(Side.CLIENT)
 	public ItemStack getIconItemStack() {
+		Calendar cal = Calendar.getInstance();
+		int second = cal.get(Calendar.SECOND);
 		if (count < 1) {
-			count = 100;
+			count = 2;
 			meta++;
 			if (meta > 3)
 				meta = 0;
-		} else {
+		} else if (second != lastSecond) {
 			count--;
+			lastSecond = second;
 		}
 		return new ItemStack(OfalenModItemCore.ofalen, 1, meta);
 	}

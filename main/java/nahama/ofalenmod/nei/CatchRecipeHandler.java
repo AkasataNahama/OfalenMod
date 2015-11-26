@@ -4,14 +4,14 @@ import java.awt.Rectangle;
 import java.util.HashMap;
 import java.util.Map.Entry;
 
+import codechicken.nei.NEIServerUtils;
+import codechicken.nei.PositionedStack;
+import codechicken.nei.recipe.TemplateRecipeHandler;
 import nahama.ofalenmod.gui.GuiSmeltingMachine;
 import nahama.ofalenmod.recipe.OfalenSmeltingRecipes;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.StatCollector;
-import codechicken.nei.NEIServerUtils;
-import codechicken.nei.PositionedStack;
-import codechicken.nei.recipe.TemplateRecipeHandler;
 
 public class CatchRecipeHandler extends TemplateRecipeHandler {
 
@@ -32,7 +32,7 @@ public class CatchRecipeHandler extends TemplateRecipeHandler {
 		public recipeCacher(ItemStack in, ItemStack out) {
 			in.stackSize = 1;
 			this.input = new PositionedStack(in, 51, 6);
-			this.result= new PositionedStack(out, 111, 23);
+			this.result = new PositionedStack(out, 111, 23);
 		}
 
 		@Override
@@ -68,11 +68,12 @@ public class CatchRecipeHandler extends TemplateRecipeHandler {
 
 	@Override
 	public void loadCraftingRecipes(String outputId, Object... results) {
-		if(outputId.equals("OfalenSmeltingRecipe")) {
-			HashMap<ItemStack, ItemStack> recipes = (HashMap<ItemStack, ItemStack>) this.recipeLoader();
+		if (outputId.equals("OfalenSmeltingRecipe")) {
+			HashMap<ItemStack, ItemStack> recipes = this.recipeLoader();
 
-			if(recipes == null || recipes.isEmpty())return;
-			for(Entry<ItemStack, ItemStack> recipe : recipes.entrySet()) {
+			if (recipes == null || recipes.isEmpty())
+				return;
+			for (Entry<ItemStack, ItemStack> recipe : recipes.entrySet()) {
 				ItemStack item = recipe.getValue();
 				ItemStack in = recipe.getKey();
 				arecipes.add(new recipeCacher(in, item));
@@ -84,13 +85,14 @@ public class CatchRecipeHandler extends TemplateRecipeHandler {
 
 	@Override
 	public void loadCraftingRecipes(ItemStack result) {
-		HashMap<ItemStack, ItemStack> recipes = (HashMap<ItemStack, ItemStack>) this.recipeLoader();
+		HashMap<ItemStack, ItemStack> recipes = this.recipeLoader();
 
-		if(recipes == null || recipes.isEmpty())return;
-		for(Entry<ItemStack, ItemStack> recipe : recipes.entrySet()) {
+		if (recipes == null || recipes.isEmpty())
+			return;
+		for (Entry<ItemStack, ItemStack> recipe : recipes.entrySet()) {
 			ItemStack item = recipe.getValue();
 			ItemStack in = recipe.getKey();
-			if(NEIServerUtils.areStacksSameType(item, result)) {
+			if (NEIServerUtils.areStacksSameType(item, result)) {
 				arecipes.add(new recipeCacher(in, item));
 			}
 		}
@@ -98,13 +100,14 @@ public class CatchRecipeHandler extends TemplateRecipeHandler {
 
 	@Override
 	public void loadUsageRecipes(ItemStack ingredient) {
-		HashMap<ItemStack, ItemStack> recipes = (HashMap<ItemStack, ItemStack>) this.recipeLoader();
+		HashMap<ItemStack, ItemStack> recipes = this.recipeLoader();
 
-		if(recipes == null || recipes.isEmpty())return;
-		for(Entry<ItemStack, ItemStack> recipe : recipes.entrySet()) {
+		if (recipes == null || recipes.isEmpty())
+			return;
+		for (Entry<ItemStack, ItemStack> recipe : recipes.entrySet()) {
 			ItemStack item = recipe.getValue();
 			ItemStack in = recipe.getKey();
-			if(ingredient.isItemEqual(in)) {
+			if (ingredient.isItemEqual(in)) {
 				arecipes.add(new recipeCacher(ingredient, item));
 			}
 		}
@@ -115,7 +118,6 @@ public class CatchRecipeHandler extends TemplateRecipeHandler {
 		return StatCollector.translateToLocal("info.smeltingrecipe");
 	}
 
-	/*レシピ画面に使われる背景画像の場所です。*/
 	@Override
 	public String getGuiTexture() {
 		return "textures/gui/container/furnace.png";

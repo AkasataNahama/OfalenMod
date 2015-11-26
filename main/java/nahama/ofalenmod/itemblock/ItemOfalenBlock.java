@@ -10,7 +10,6 @@ public class ItemOfalenBlock extends ItemBlockWithMetadata {
 		super(block, block);
 	}
 
-	/**メタデータにより内部名を変える*/
 	@Override
 	public String getUnlocalizedName(ItemStack itemStack) {
 		return this.getUnlocalizedName() + "." + itemStack.getItemDamage();

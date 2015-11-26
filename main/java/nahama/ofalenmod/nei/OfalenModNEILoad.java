@@ -1,11 +1,10 @@
 package nahama.ofalenmod.nei;
 
-import nahama.ofalenmod.gui.GuiSmeltingMachine;
 import codechicken.nei.api.API;
+import nahama.ofalenmod.gui.GuiSmeltingMachine;
 
 public class OfalenModNEILoad {
 
-	/*別クラスで作るレシピ表示用インターフェースの取得*/
 	public static CatchRecipeHandler catchRecipe;
 
 	public static void load() {

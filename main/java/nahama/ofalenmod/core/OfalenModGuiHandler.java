@@ -1,18 +1,21 @@
 package nahama.ofalenmod.core;
 
+import cpw.mods.fml.common.network.IGuiHandler;
 import nahama.ofalenmod.gui.GuiConversionMachine;
 import nahama.ofalenmod.gui.GuiRepairMachine;
 import nahama.ofalenmod.gui.GuiSmeltingMachine;
+import nahama.ofalenmod.gui.GuiTeleportMarker;
 import nahama.ofalenmod.inventory.ContainerConversionMachine;
 import nahama.ofalenmod.inventory.ContainerRepairMachine;
 import nahama.ofalenmod.inventory.ContainerSmeltingMachine;
+import nahama.ofalenmod.inventory.ContainerTeleportMarker;
 import nahama.ofalenmod.tileentity.TileEntityConversionMachine;
 import nahama.ofalenmod.tileentity.TileEntityRepairMachine;
 import nahama.ofalenmod.tileentity.TileEntitySmeltingMachine;
+import nahama.ofalenmod.tileentity.TileEntityTeleportMarker;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
-import cpw.mods.fml.common.network.IGuiHandler;
 
 public class OfalenModGuiHandler implements IGuiHandler {
 
@@ -28,6 +31,8 @@ public class OfalenModGuiHandler implements IGuiHandler {
 			return new ContainerRepairMachine(player, (TileEntityRepairMachine) tileentity);
 		} else if (tileentity instanceof TileEntityConversionMachine) {
 			return new ContainerConversionMachine(player, (TileEntityConversionMachine) tileentity);
+		} else if (tileentity instanceof TileEntityTeleportMarker) {
+			return new ContainerTeleportMarker(player, (TileEntityTeleportMarker) tileentity);
 		}
 		return null;
 	}
@@ -44,6 +49,8 @@ public class OfalenModGuiHandler implements IGuiHandler {
 			return new GuiRepairMachine(player, (TileEntityRepairMachine) tileentity);
 		} else if (tileentity instanceof TileEntityConversionMachine) {
 			return new GuiConversionMachine(player, (TileEntityConversionMachine) tileentity);
+		} else if (tileentity instanceof TileEntityTeleportMarker) {
+			return new GuiTeleportMarker(player, (TileEntityTeleportMarker) tileentity);
 		}
 		return null;
 	}

@@ -2,10 +2,11 @@ package nahama.ofalenmod.entity;
 
 import java.util.List;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.IProjectile;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
@@ -14,10 +15,8 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 
-public abstract class EntityLaser extends Entity implements IProjectile {
+public abstract class EntityLaser extends Entity {
 
 	protected int xTile = -1;
 	protected int yTile = -1;
@@ -36,9 +35,10 @@ public abstract class EntityLaser extends Entity implements IProjectile {
 	@Override
 	protected void entityInit() {}
 
+	@Override
 	@SideOnly(Side.CLIENT)
 	public boolean isInRangeToRenderDist(double range) {
-		double d1 = this.boundingBox.getAverageEdgeLength() * 4.0D;
+		double d1 = boundingBox.getAverageEdgeLength() * 4.0D;
 		d1 *= 64.0D;
 		return range < d1 * d1;
 	}
@@ -49,119 +49,120 @@ public abstract class EntityLaser extends Entity implements IProjectile {
 
 	public EntityLaser(World world, EntityLivingBase entity) {
 		super(world);
-		this.thrower = entity;
+		thrower = entity;
 		this.setSize(0.5F, 0.5F);
-		this.setLocationAndAngles(entity.posX, entity.posY + (double)entity.getEyeHeight(), entity.posZ, entity.rotationYaw, entity.rotationPitch);
+		this.setLocationAndAngles(entity.posX, entity.posY + entity.getEyeHeight(), entity.posZ, entity.rotationYaw, entity.rotationPitch);
 		/*
-		this.posX -= (double)(MathHelper.cos(this.rotationYaw / 180.0F * (float)Math.PI) * 0.16F);
-		this.posZ -= (double)(MathHelper.sin(this.rotationYaw / 180.0F * (float)Math.PI) * 0.16F);
-		*/
-		this.posY -= 0.10000000149011612D;
-		this.setPosition(this.posX, this.posY, this.posZ);
-		this.startX = this.posX;
-		this.startY = this.posY;
-		this.startZ = this.posZ;
-		this.yOffset = 0.0F;
-		this.motionX = (double)(-MathHelper.sin(this.rotationYaw / 180.0F * (float)Math.PI) * MathHelper.cos(this.rotationPitch / 180.0F * (float)Math.PI));
-		this.motionZ = (double)(MathHelper.cos(this.rotationYaw / 180.0F * (float)Math.PI) * MathHelper.cos(this.rotationPitch / 180.0F * (float)Math.PI));
-		this.motionY = (double)(-MathHelper.sin(this.rotationPitch / 180.0F * (float)Math.PI));
-		this.setThrowableHeading(this.motionX, this.motionY, this.motionZ, this.getSpeed(), 1.0F);
+		 * posX -= (double)(MathHelper.cos(rotationYaw / 180.0F * (float)Math.PI) * 0.16F);
+		 * posZ -= (double)(MathHelper.sin(rotationYaw / 180.0F * (float)Math.PI) * 0.16F);
+		 */
+		posY -= 0.10000000149011612D;
+		this.setPosition(posX, posY, posZ);
+		startX = posX;
+		startY = posY;
+		startZ = posZ;
+		yOffset = 0.0F;
+		motionX = -MathHelper.sin(rotationYaw / 180.0F * (float) Math.PI) * MathHelper.cos(rotationPitch / 180.0F * (float) Math.PI);
+		motionZ = MathHelper.cos(rotationYaw / 180.0F * (float) Math.PI) * MathHelper.cos(rotationPitch / 180.0F * (float) Math.PI);
+		motionY = (-MathHelper.sin(rotationPitch / 180.0F * (float) Math.PI));
+		this.setThrowableHeading(motionX, motionY, motionZ, this.getSpeed(), 1.0F);
 	}
 
 	protected float getSpeed() {
 		return 1.5F;
 	}
 
-	/**IProjectileのオーバーライド。ディスペンサーなどで利用される。(?)*/
-	@Override
+	/** IProjectileのオーバーライド。ディスペンサーなどで利用される。(?) */
 	public void setThrowableHeading(double x, double y, double z, float speed, float par5) {
 		float f2 = MathHelper.sqrt_double(x * x + y * y + z * z);
-		x /= (double)f2;
-		y /= (double)f2;
-		z /= (double)f2;
-		//ランダム性をなくす。
-		/*x += this.rand.nextGaussian() * 0.007499999832361937D * (double)par5;
-		y += this.rand.nextGaussian() * 0.007499999832361937D * (double)par5;
-		z += this.rand.nextGaussian() * 0.007499999832361937D * (double)par5;*/
-		x *= (double)speed;
-		y *= (double)speed;
-		z *= (double)speed;
-		this.motionX = x;
-		this.motionY = y;
-		this.motionZ = z;
+		x /= f2;
+		y /= f2;
+		z /= f2;
+		// ランダム性をなくす。
+		/*
+		 * x += rand.nextGaussian() * 0.007499999832361937D * (double)par5;
+		 * y += rand.nextGaussian() * 0.007499999832361937D * (double)par5;
+		 * z += rand.nextGaussian() * 0.007499999832361937D * (double)par5;
+		 */
+		x *= speed;
+		y *= speed;
+		z *= speed;
+		motionX = x;
+		motionY = y;
+		motionZ = z;
 		float f3 = MathHelper.sqrt_double(x * x + z * z);
-		this.prevRotationYaw = this.rotationYaw = (float)(Math.atan2(x, z) * 180.0D / Math.PI);
-		this.prevRotationPitch = this.rotationPitch = (float)(Math.atan2(y, (double)f3) * 180.0D / Math.PI);
-		this.ticksInGround = 0;
+		prevRotationYaw = rotationYaw = (float) (Math.atan2(x, z) * 180.0D / Math.PI);
+		prevRotationPitch = rotationPitch = (float) (Math.atan2(y, f3) * 180.0D / Math.PI);
+		ticksInGround = 0;
 	}
 
-	/**速度の処理*/
+	/** 速度の処理 */
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void setVelocity(double x, double y, double z) {
-		this.motionX = x;
-		this.motionY = y;
-		this.motionZ = z;
+		motionX = x;
+		motionY = y;
+		motionZ = z;
 
-		if (this.prevRotationPitch == 0.0F && this.prevRotationYaw == 0.0F) {
+		if (prevRotationPitch == 0.0F && prevRotationYaw == 0.0F) {
 			float f = MathHelper.sqrt_double(x * x + z * z);
-			this.prevRotationYaw = this.rotationYaw = (float)(Math.atan2(x, z) * 180.0D / Math.PI);
-			this.prevRotationPitch = this.rotationPitch = (float)(Math.atan2(y, (double)f) * 180.0D / Math.PI);
+			prevRotationYaw = rotationYaw = (float) (Math.atan2(x, z) * 180.0D / Math.PI);
+			prevRotationPitch = rotationPitch = (float) (Math.atan2(y, f) * 180.0D / Math.PI);
 		}
 	}
 
-	/**更新時の処理*/
+	/** 更新時の処理 */
 	@Override
 	public void onUpdate() {
-		this.lastTickPosX = this.posX;
-		this.lastTickPosY = this.posY;
-		this.lastTickPosZ = this.posZ;
+		lastTickPosX = posX;
+		lastTickPosY = posY;
+		lastTickPosZ = posZ;
 		super.onUpdate();
 
-		if (this.throwableShake > 0) {
-			--this.throwableShake;
+		if (throwableShake > 0) {
+			--throwableShake;
 		}
 
-		if (this.inGround) {
-			if (this.worldObj.getBlock(this.xTile, this.yTile, this.zTile) == this.inBlock) {
-				++this.ticksInGround;
+		if (inGround) {
+			if (worldObj.getBlock(xTile, yTile, zTile) == inBlock) {
+				++ticksInGround;
 
-				if (this.ticksInGround == 1200) {
+				if (ticksInGround == 1200) {
 					this.setDead();
 				}
 
 				return;
 			}
 
-			this.inGround = false;
-			this.ticksInGround = 0;
-			this.ticksInAir = 0;
+			inGround = false;
+			ticksInGround = 0;
+			ticksInAir = 0;
 		} else {
-			++this.ticksInAir;
+			++ticksInAir;
 		}
 
-		Vec3 vec3 = Vec3.createVectorHelper(this.posX, this.posY, this.posZ);
-		Vec3 vec31 = Vec3.createVectorHelper(this.posX + this.motionX, this.posY + this.motionY, this.posZ + this.motionZ);
-		MovingObjectPosition movingobjectposition = this.worldObj.rayTraceBlocks(vec3, vec31);
-		vec3 = Vec3.createVectorHelper(this.posX, this.posY, this.posZ);
-		vec31 = Vec3.createVectorHelper(this.posX + this.motionX, this.posY + this.motionY, this.posZ + this.motionZ);
+		Vec3 vec3 = Vec3.createVectorHelper(posX, posY, posZ);
+		Vec3 vec31 = Vec3.createVectorHelper(posX + motionX, posY + motionY, posZ + motionZ);
+		MovingObjectPosition movingobjectposition = worldObj.rayTraceBlocks(vec3, vec31);
+		vec3 = Vec3.createVectorHelper(posX, posY, posZ);
+		vec31 = Vec3.createVectorHelper(posX + motionX, posY + motionY, posZ + motionZ);
 
 		if (movingobjectposition != null) {
 			vec31 = Vec3.createVectorHelper(movingobjectposition.hitVec.xCoord, movingobjectposition.hitVec.yCoord, movingobjectposition.hitVec.zCoord);
 		}
 
-		if (!this.worldObj.isRemote) {
+		if (!worldObj.isRemote) {
 			Entity entity = null;
-			List list = this.worldObj.getEntitiesWithinAABBExcludingEntity(this, this.boundingBox.addCoord(this.motionX, this.motionY, this.motionZ).expand(1.0D, 1.0D, 1.0D));
+			List list = worldObj.getEntitiesWithinAABBExcludingEntity(this, boundingBox.addCoord(motionX, motionY, motionZ).expand(1.0D, 1.0D, 1.0D));
 			double d0 = 0.0D;
 			EntityLivingBase entitylivingbase = this.getThrower();
 
 			for (int j = 0; j < list.size(); ++j) {
-				Entity entity1 = (Entity)list.get(j);
+				Entity entity1 = (Entity) list.get(j);
 
-				if (entity1.canBeCollidedWith() && (entity1 != entitylivingbase || this.ticksInAir >= 5)) {
+				if (entity1.canBeCollidedWith() && (entity1 != entitylivingbase || ticksInAir >= 5)) {
 					float f = 0.3F;
-					AxisAlignedBB axisalignedbb = entity1.boundingBox.expand((double)f, (double)f, (double)f);
+					AxisAlignedBB axisalignedbb = entity1.boundingBox.expand(f, f, f);
 					MovingObjectPosition movingobjectposition1 = axisalignedbb.calculateIntercept(vec3, vec31);
 
 					if (movingobjectposition1 != null) {
@@ -181,95 +182,95 @@ public abstract class EntityLaser extends Entity implements IProjectile {
 		}
 
 		if (movingobjectposition != null) {
-			if (movingobjectposition.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK && this.worldObj.getBlock(movingobjectposition.blockX, movingobjectposition.blockY, movingobjectposition.blockZ) == Blocks.portal) {
+			if (movingobjectposition.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK && worldObj.getBlock(movingobjectposition.blockX, movingobjectposition.blockY, movingobjectposition.blockZ) == Blocks.portal) {
 				this.setInPortal();
 			} else {
 				this.onImpact(movingobjectposition);
 			}
 		}
 
-		this.posX += this.motionX;
-		this.posY += this.motionY;
-		this.posZ += this.motionZ;
-		float f1 = MathHelper.sqrt_double(this.motionX * this.motionX + this.motionZ * this.motionZ);
-		this.rotationYaw = (float)(Math.atan2(this.motionX, this.motionZ) * 180.0D / Math.PI);
+		posX += motionX;
+		posY += motionY;
+		posZ += motionZ;
+		float f1 = MathHelper.sqrt_double(motionX * motionX + motionZ * motionZ);
+		rotationYaw = (float) (Math.atan2(motionX, motionZ) * 180.0D / Math.PI);
 
-		for (this.rotationPitch = (float)(Math.atan2(this.motionY, (double)f1) * 180.0D / Math.PI); this.rotationPitch - this.prevRotationPitch < -180.0F; this.prevRotationPitch -= 360.0F) {
+		for (rotationPitch = (float) (Math.atan2(motionY, f1) * 180.0D / Math.PI); rotationPitch - prevRotationPitch < -180.0F; prevRotationPitch -= 360.0F) {
 			;
 		}
 
-		while (this.rotationPitch - this.prevRotationPitch >= 180.0F) {
-			this.prevRotationPitch += 360.0F;
+		while (rotationPitch - prevRotationPitch >= 180.0F) {
+			prevRotationPitch += 360.0F;
 		}
 
-		while (this.rotationYaw - this.prevRotationYaw < -180.0F) {
-			this.prevRotationYaw -= 360.0F;
+		while (rotationYaw - prevRotationYaw < -180.0F) {
+			prevRotationYaw -= 360.0F;
 		}
 
-		while (this.rotationYaw - this.prevRotationYaw >= 180.0F) {
-			this.prevRotationYaw += 360.0F;
+		while (rotationYaw - prevRotationYaw >= 180.0F) {
+			prevRotationYaw += 360.0F;
 		}
 
-		this.rotationPitch = this.prevRotationPitch + (this.rotationPitch - this.prevRotationPitch) * 0.2F;
-		this.rotationYaw = this.prevRotationYaw + (this.rotationYaw - this.prevRotationYaw) * 0.2F;
+		rotationPitch = prevRotationPitch + (rotationPitch - prevRotationPitch) * 0.2F;
+		rotationYaw = prevRotationYaw + (rotationYaw - prevRotationYaw) * 0.2F;
 		float f2 = 0.99F;
 
 		if (this.isInWater()) {
 			for (int i = 0; i < 4; ++i) {
 				float f4 = 0.25F;
-				this.worldObj.spawnParticle("bubble", this.posX - this.motionX * (double)f4, this.posY - this.motionY * (double)f4, this.posZ - this.motionZ * (double)f4, this.motionX, this.motionY, this.motionZ);
+				worldObj.spawnParticle("bubble", posX - motionX * f4, posY - motionY * f4, posZ - motionZ * f4, motionX, motionY, motionZ);
 			}
 
 			f2 = 0.8F;
 		}
 
-		if (Math.abs(this.startX - this.posX) > 200) {
+		if (Math.abs(startX - posX) > 200) {
 			this.setDead();
-		} else if (Math.abs(this.startY - this.posY) > 200) {
+		} else if (Math.abs(startY - posY) > 200) {
 			this.setDead();
-		} else if (Math.abs(this.startZ - this.posZ) > 200) {
+		} else if (Math.abs(startZ - posZ) > 200) {
 			this.setDead();
-		} else if (this.posY < 0 || this.posY > 255) {
+		} else if (posY < 0 || posY > 255) {
 			this.setDead();
 		}
 
-		this.motionX *= 1.2D;
-		this.motionY *= 1.2D;
-		this.motionZ *= 1.2D;
+		motionX *= 1.2D;
+		motionY *= 1.2D;
+		motionZ *= 1.2D;
 
-		this.setPosition(this.posX, this.posY, this.posZ);
+		this.setPosition(posX, posY, posZ);
 	}
 
 	protected abstract void onImpact(MovingObjectPosition position);
 
 	@Override
 	public void writeEntityToNBT(NBTTagCompound nbt) {
-		nbt.setShort("xTile", (short)this.xTile);
-		nbt.setShort("yTile", (short)this.yTile);
-		nbt.setShort("zTile", (short)this.zTile);
-		nbt.setByte("inTile", (byte)Block.getIdFromBlock(this.inBlock));
-		nbt.setByte("shake", (byte)this.throwableShake);
-		nbt.setByte("inGround", (byte)(this.inGround ? 1 : 0));
+		nbt.setShort("xTile", (short) xTile);
+		nbt.setShort("yTile", (short) yTile);
+		nbt.setShort("zTile", (short) zTile);
+		nbt.setByte("inTile", (byte) Block.getIdFromBlock(inBlock));
+		nbt.setByte("shake", (byte) throwableShake);
+		nbt.setByte("inGround", (byte) (inGround ? 1 : 0));
 
-		if ((this.throwerName == null || this.throwerName.length() == 0) && this.thrower != null && this.thrower instanceof EntityPlayer) {
-			this.throwerName = this.thrower.getCommandSenderName();
+		if ((throwerName == null || throwerName.length() == 0) && thrower != null && thrower instanceof EntityPlayer) {
+			throwerName = thrower.getCommandSenderName();
 		}
 
-		nbt.setString("ownerName", this.throwerName == null ? "" : this.throwerName);
+		nbt.setString("ownerName", throwerName == null ? "" : throwerName);
 	}
 
 	@Override
 	public void readEntityFromNBT(NBTTagCompound nbt) {
-		this.xTile = nbt.getShort("xTile");
-		this.yTile = nbt.getShort("yTile");
-		this.zTile = nbt.getShort("zTile");
-		this.inBlock = Block.getBlockById(nbt.getByte("inTile") & 255);
-		this.throwableShake = nbt.getByte("shake") & 255;
-		this.inGround = nbt.getByte("inGround") == 1;
-		this.throwerName = nbt.getString("ownerName");
+		xTile = nbt.getShort("xTile");
+		yTile = nbt.getShort("yTile");
+		zTile = nbt.getShort("zTile");
+		inBlock = Block.getBlockById(nbt.getByte("inTile") & 255);
+		throwableShake = nbt.getByte("shake") & 255;
+		inGround = nbt.getByte("inGround") == 1;
+		throwerName = nbt.getString("ownerName");
 
-		if (this.throwerName != null && this.throwerName.length() == 0) {
-			this.throwerName = null;
+		if (throwerName != null && throwerName.length() == 0) {
+			throwerName = null;
 		}
 	}
 
@@ -280,11 +281,11 @@ public abstract class EntityLaser extends Entity implements IProjectile {
 	}
 
 	public EntityLivingBase getThrower() {
-		if (this.thrower == null && this.throwerName != null && this.throwerName.length() > 0) {
-			this.thrower = this.worldObj.getPlayerEntityByName(this.throwerName);
+		if (thrower == null && throwerName != null && throwerName.length() > 0) {
+			thrower = worldObj.getPlayerEntityByName(throwerName);
 		}
 
-		return this.thrower;
+		return thrower;
 	}
 
 }

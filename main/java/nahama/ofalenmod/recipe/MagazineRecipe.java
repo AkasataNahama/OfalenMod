@@ -17,23 +17,23 @@ public class MagazineRecipe implements IRecipe {
 	public MagazineRecipe(ItemStack result, ItemStack magazine, ItemStack crystal, int amount) {
 		output = result.copy();
 		input.add(magazine.copy());
-		for (int i = 0; i < amount; i ++) {
+		for (int i = 0; i < amount; i++) {
 			input.add((crystal).copy());
 		}
 	}
 
 	@Override
-	public int getRecipeSize(){
+	public int getRecipeSize() {
 		return input.size();
 	}
 
 	@Override
-	public ItemStack getRecipeOutput(){
+	public ItemStack getRecipeOutput() {
 		return output;
 	}
 
 	@Override
-	public ItemStack getCraftingResult(InventoryCrafting inv){
+	public ItemStack getCraftingResult(InventoryCrafting inv) {
 		return output.copy();
 	}
 
@@ -55,9 +55,9 @@ public class MagazineRecipe implements IRecipe {
 					Object next = req.next();
 
 					if (next instanceof ItemStack) {
-						match = OreDictionary.itemMatches((ItemStack)next, slot, false);
+						match = OreDictionary.itemMatches((ItemStack) next, slot, false);
 					} else if (next instanceof ArrayList) {
-						Iterator<ItemStack> itr = ((ArrayList<ItemStack>)next).iterator();
+						Iterator<ItemStack> itr = ((ArrayList<ItemStack>) next).iterator();
 						while (itr.hasNext() && !match) {
 							match = OreDictionary.itemMatches(itr.next(), slot, false);
 						}
