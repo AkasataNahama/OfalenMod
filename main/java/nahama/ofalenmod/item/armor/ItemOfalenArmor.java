@@ -10,11 +10,11 @@ import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.world.World;
 
-public class OfalenArmor extends ItemArmor {
+public class ItemOfalenArmor extends ItemArmor {
 
 	private int grade = 0;
 
-	public OfalenArmor(ArmorMaterial material, int type, int grade) {
+	public ItemOfalenArmor(ArmorMaterial material, int type, int grade) {
 		super(material, 0, type);
 		this.setCreativeTab(OfalenModCore.tabOfalen);
 		this.grade = grade;

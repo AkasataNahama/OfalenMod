@@ -1,11 +1,11 @@
 package nahama.ofalenmod.item.tool;
 
 import nahama.ofalenmod.OfalenModCore;
-import net.minecraft.item.ItemAxe;
+import net.minecraft.item.ItemPickaxe;
 
-public class OfalenAxe extends ItemAxe {
+public class ItemOfalenPickaxe extends ItemPickaxe {
 
-	public OfalenAxe(ToolMaterial material) {
+	public ItemOfalenPickaxe(ToolMaterial material) {
 		super(material);
 		this.setCreativeTab(OfalenModCore.tabOfalen);
 	}

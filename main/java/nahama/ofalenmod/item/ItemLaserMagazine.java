@@ -14,9 +14,9 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 
-public class LaserMagazine extends Item {
+public class ItemLaserMagazine extends Item {
 
-	public LaserMagazine() {
+	public ItemLaserMagazine() {
 		super();
 		this.setCreativeTab(OfalenModCore.tabOfalen);
 		this.setHasSubtypes(false);

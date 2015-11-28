@@ -15,7 +15,7 @@ public class OfalenOreGenerator implements IWorldGenerator {
 
 	@Override
 	public void generate(Random random, int chunkX, int chunkZ, World world, IChunkProvider chunkGenerator, IChunkProvider chunkProvider) {
-		if (OfalenModConfigCore.enabledGenerator) {
+		if (OfalenModConfigCore.isGeneratorEnabled) {
 			if (world.provider instanceof WorldProviderSurface) {
 				this.generateOreRed(world, random, chunkX << 4, chunkZ << 4);
 				this.generateOreGreen(world, random, chunkX << 4, chunkZ << 4);
@@ -26,7 +26,7 @@ public class OfalenOreGenerator implements IWorldGenerator {
 	}
 
 	private void generateOreRed(World world, Random random, int x, int z) {
-		for (int i = 0; i < OfalenModConfigCore.probabilityGeneration; i++) {
+		for (int i = 0; i < OfalenModConfigCore.frequencyGeneration; i++) {
 			int genX = x + random.nextInt(16);
 			int genY = 1 + random.nextInt(15);
 			int genZ = z + random.nextInt(16);
@@ -35,7 +35,7 @@ public class OfalenOreGenerator implements IWorldGenerator {
 	}
 
 	private void generateOreGreen(World world, Random random, int x, int z) {
-		for (int i = 0; i < OfalenModConfigCore.probabilityGeneration; i++) {
+		for (int i = 0; i < OfalenModConfigCore.frequencyGeneration; i++) {
 			int genX = x + random.nextInt(16);
 			int genY = 1 + random.nextInt(15);
 			int genZ = z + random.nextInt(16);
@@ -44,7 +44,7 @@ public class OfalenOreGenerator implements IWorldGenerator {
 	}
 
 	private void generateOreBlue(World world, Random random, int x, int z) {
-		for (int i = 0; i < OfalenModConfigCore.probabilityGeneration; i++) {
+		for (int i = 0; i < OfalenModConfigCore.frequencyGeneration; i++) {
 			int genX = x + random.nextInt(16);
 			int genY = 1 + random.nextInt(15);
 			int genZ = z + random.nextInt(16);

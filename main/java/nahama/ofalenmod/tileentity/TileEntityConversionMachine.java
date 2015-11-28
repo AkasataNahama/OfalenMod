@@ -4,7 +4,7 @@ import nahama.ofalenmod.core.OfalenModBlockCore;
 import nahama.ofalenmod.core.OfalenModConfigCore;
 import nahama.ofalenmod.core.OfalenModItemCore;
 import nahama.ofalenmod.core.OfalenModOreDicCore;
-import nahama.ofalenmod.item.Ofalen;
+import nahama.ofalenmod.item.ItemOfalen;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -45,7 +45,7 @@ public class TileEntityConversionMachine extends TileEntityGradedMachineBase {
 		// 変換前スロットとサンプルのアイテムが同じでメタデータが違い、オファレンなら可。
 		if (itemStacks[0].getItem() == sample.getItem() && itemStacks[0].getItemDamage() != sample.getItemDamage()) {
 			Item item = itemStacks[0].getItem();
-			if ((item instanceof Ofalen) || (Block.getBlockFromItem(item) == OfalenModBlockCore.blockOfalen)) {
+			if ((item instanceof ItemOfalen) || (Block.getBlockFromItem(item) == OfalenModBlockCore.blockOfalen)) {
 				if (item != OfalenModItemCore.coreOfalen || sample.getItemDamage() != 3) {
 					return true;
 				}

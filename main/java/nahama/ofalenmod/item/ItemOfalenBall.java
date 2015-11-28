@@ -8,12 +8,12 @@ import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.world.World;
 
-public class OfalenBall extends ItemFood {
+public class ItemOfalenBall extends ItemFood {
 
 	/** 付与するポーション効果の配列 */
 	private final PotionEffect[] effects;
 
-	public OfalenBall(PotionEffect[] effects) {
+	public ItemOfalenBall(PotionEffect[] effects) {
 		super(0, 0.0F, false);
 		this.effects = effects;
 		this.setCreativeTab(OfalenModCore.tabOfalen);

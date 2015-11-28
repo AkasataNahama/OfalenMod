@@ -11,7 +11,9 @@ import cpw.mods.fml.common.ModMetadata;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
+import cpw.mods.fml.common.event.FMLServerStartingEvent;
 import cpw.mods.fml.common.network.NetworkRegistry;
+import cpw.mods.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -22,6 +24,7 @@ import nahama.ofalenmod.core.OfalenModInfoCore;
 import nahama.ofalenmod.core.OfalenModItemCore;
 import nahama.ofalenmod.core.OfalenModOreDicCore;
 import nahama.ofalenmod.core.OfalenModRecipeCore;
+import nahama.ofalenmod.core.OfalenTeleportManager;
 import nahama.ofalenmod.creativetab.OfalenTab;
 import nahama.ofalenmod.entity.EntityBlueLaser;
 import nahama.ofalenmod.entity.EntityExplosionBall;
@@ -32,6 +35,8 @@ import nahama.ofalenmod.entity.EntityWhiteLaser;
 import nahama.ofalenmod.generator.OfalenOreGenerator;
 import nahama.ofalenmod.model.ModelLaser;
 import nahama.ofalenmod.nei.OfalenModNEILoad;
+import nahama.ofalenmod.network.MTeleporterChannel;
+import nahama.ofalenmod.network.MTeleporterMeta;
 import nahama.ofalenmod.renderer.ItemPistolRenderer;
 import nahama.ofalenmod.renderer.RenderLaser;
 import net.minecraft.client.renderer.entity.RenderSnowball;
@@ -59,6 +64,8 @@ public class OfalenModCore {
 	/** 追加するクリエイティブタブ */
 	public static final CreativeTabs tabOfalen = new OfalenTab("ofalentab");
 
+	public static final SimpleNetworkWrapper wrapper = NetworkRegistry.INSTANCE.newSimpleChannel(OfalenModCore.MODID);
+
 	/** 初期化前処理。 */
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
@@ -68,6 +75,9 @@ public class OfalenModCore {
 		OfalenModBlockCore.registerBlock();
 		// 機械類のGUIを登録する。
 		NetworkRegistry.INSTANCE.registerGuiHandler(this.instance, new OfalenModGuiHandler());
+		// パケットを登録する。
+		wrapper.registerMessage(MTeleporterChannel.Handler.class, MTeleporterChannel.class, 0, Side.SERVER);
+		wrapper.registerMessage(MTeleporterMeta.Handler.class, MTeleporterMeta.class, 1, Side.SERVER);
 	}
 
 	/** 初期化処理。 */
@@ -106,10 +116,16 @@ public class OfalenModCore {
 			try {
 				OfalenModNEILoad.load();
 			} catch (Exception e) {
-				Log.error("NEI loading error", "OfalenModCore.clientInit", true);
+				Log.error("Error on NEI loading", "OfalenModCore.clientInit", true);
 				e.printStackTrace(System.err);
 			}
 		}
+	}
+
+	/** サーバー起動時の処理。 */
+	@EventHandler
+	public void serverStarting(FMLServerStartingEvent event) {
+		OfalenTeleportManager.init();
 	}
 
 }

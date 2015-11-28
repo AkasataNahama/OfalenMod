@@ -6,15 +6,15 @@ import net.minecraftforge.common.config.Configuration;
 
 public class OfalenModConfigCore {
 
-	public static boolean enabledConfig;
+	public static boolean isConfigEnabled;
 	public static int sizeExplosion;
 	public static float efficiencyPerfectTool;
 
 	public static int amountDrop;
 
-	public static boolean enabledGenerator;
+	public static boolean isGeneratorEnabled;
 	public static int limitGeneration;
-	public static int probabilityGeneration;
+	public static int frequencyGeneration;
 	public static int probabilityGenerationLode;
 
 	public static int timeBurnOfalen;
@@ -26,6 +26,12 @@ public class OfalenModConfigCore {
 
 	public static int recipeLump;
 
+	private static final String GENERAL = "General";
+	private static final String DIFFICULTY = GENERAL + ".Difficulty";
+	private static final String GENERATE = GENERAL + ".Generate";
+	private static final String MACHINE = GENERAL + ".Machine";
+	private static final String RECIPE = GENERAL + ".Recipe";
+
 	/** configを読み込む処理。 */
 	public static void loadConfig(FMLPreInitializationEvent event) {
 
@@ -33,49 +39,49 @@ public class OfalenModConfigCore {
 
 		try {
 			cfg.load();
-			enabledConfig = cfg.getBoolean("General", "ConfigEnabled", false, "If true Config is valid.[false]");
-			sizeExplosion = cfg.getInt("General", "ExplosionSize", 2, 0, 255, "Explosion size of Explosion Ball[2]");
-			efficiencyPerfectTool = cfg.getFloat("General", "PerfectToolEfficiency", 100F, 1F, 1000000F, "Efficiency of Ofalen Perfect Tool[100.0]");
+			isConfigEnabled = cfg.getBoolean("ConfigIsEnabled", GENERAL, false, "Config is valid when true.");
+			sizeExplosion = cfg.getInt("ExplosionSize", GENERAL, 2, 0, 255, "Explosion size of Explosion Ball");
+			efficiencyPerfectTool = cfg.getFloat("PerfectToolEfficiency", GENERAL, 100, 1, Float.MAX_VALUE, "Efficiency of Ofalen Perfect Tool");
 
-			amountDrop = cfg.getInt("General.Difficulty", "DropAmount", 3, 1, 255, "Drop amount of Ofalen Fragment from Ofalen Ore[3]");
+			amountDrop = cfg.getInt("DropAmount", DIFFICULTY, 3, 1, 255, "Drop amount of Ofalen Fragment from Ofalen Ore");
 
-			enabledGenerator = cfg.getBoolean("General.Generate", "GeneraterEnabled", true, "If true Ofalen Ore is generated.[true]");
-			limitGeneration = cfg.getInt("General.Generate", "GenerationLimit", 8, 1, 255, "Max generation size of Ofalen Ore[8]");
-			probabilityGeneration = cfg.getInt("General.Generate", "GenerationProbability", 1, 1, 255, "Generation probability of Ofalen Ore[1]");
-			probabilityGenerationLode = cfg.getInt("General.Generate", "GenerationProbabilityLode", 1, 1, 100000, "Generation probability of Huge Ofalen Ore Lode[1](/10000)");
+			isGeneratorEnabled = cfg.getBoolean("GeneratorEnabled", GENERATE, true, "Ofalen Ore is generated when true.");
+			limitGeneration = cfg.getInt("GenerationLimit", GENERATE, 8, 1, 255, "Max generation size of Ofalen Ore");
+			frequencyGeneration = cfg.getInt("GenerationFrequency", GENERATE, 3, 1, 255, "Generation Frequency of Ofalen Ore");
+			probabilityGenerationLode = cfg.getInt("GenerationProbabilityLode", GENERATE, 1, 1, 10000, "Generation probability of Huge Ofalen Ore Lode(/10000)");
 
-			timeBurnOfalen = cfg.getInt("General.Machine", "BurnTimeOfalen", 2000, 1, Integer.MAX_VALUE, "Burn time of Ofalen Fuel[2000](tick)");
-			timeBurnStone = cfg.getInt("General.Machine", "BurnTimeStone", 200, 1, Integer.MAX_VALUE, "Burn time of Stone Fuel[200](tick)");
-			timeConversion = cfg.getInt("General.Machine", "ConversionTime", 1200, 1, Integer.MAX_VALUE, "Conversion time of Ofalen Conversion Machine[1200](tick)");
-			timeRepair = cfg.getInt("General.Machine", "RepairTime", 40, 1, Integer.MAX_VALUE, "Repair time of Ofalen Repair Machine[40](tick)");
-			amountSmelting = cfg.getInt("General.Machine", "SmeltingAmount", 1, 1, 64, "Smelting amount of Ofalen Smelting Machine from Ofalen Ore to Ofalen[1]");
-			timeSmelting = cfg.getInt("General.Machine", "SmeltingTime", 1200, 1, Integer.MAX_VALUE, "Smelting time of Ofalen Smelting Machine[1200](tick)");
+			timeBurnOfalen = cfg.getInt("BurnTimeOfalen", MACHINE, 2000, 1, Integer.MAX_VALUE, "Burn time of Ofalen Fuel(tick)");
+			timeBurnStone = cfg.getInt("BurnTimeStone", MACHINE, 200, 1, Integer.MAX_VALUE, "Burn time of Stone Fuel(tick)");
+			timeConversion = cfg.getInt("ConversionTime", MACHINE, 1200, 1, Integer.MAX_VALUE, "Conversion time of Ofalen Conversion Machine(tick)");
+			timeRepair = cfg.getInt("RepairTime", MACHINE, 40, 1, Integer.MAX_VALUE, "Repair time of Ofalen Repair Machine(tick)");
+			amountSmelting = cfg.getInt("SmeltingAmount", MACHINE, 1, 1, 64, "Smelting amount of Ofalen Smelting Machine from Ofalen Ore to Ofalen");
+			timeSmelting = cfg.getInt("SmeltingTime", MACHINE, 1200, 1, Integer.MAX_VALUE, "Smelting time of Ofalen Smelting Machine(tick)");
 
-			recipeLump = cfg.getInt("General.Recipe", "LumpRecipe", 7, 0, 8, "Recipe of \"Lump of Stone\". Number is location of space.[7]\n0 1 2\n3 4 5\n6 7 8");
+			recipeLump = cfg.getInt("LumpRecipe", RECIPE, 7, 0, 8, "Recipe of \"Lump of Stone\". Number is location of space.\n0 1 2\n3 4 5\n6 7 8\n");
 		} catch (Exception error) {
-			Log.error("Config loading error", "OfalenModConfigCore.loadConfig", true);
+			Log.error("Error on config loading", "OfalenModConfigCore.loadConfig", true);
 		} finally {
 			cfg.save();
 		}
 
-		if (enabledConfig)
+		if (isConfigEnabled)
 			return;
 		sizeExplosion = 2;
-		efficiencyPerfectTool = 100.0F;
+		efficiencyPerfectTool = 100F;
 
 		amountDrop = 3;
 
-		enabledGenerator = true;
+		isGeneratorEnabled = true;
 		limitGeneration = 8;
-		probabilityGeneration = 1;
+		frequencyGeneration = 3;
 		probabilityGenerationLode = 1;
 
 		timeBurnOfalen = 2000;
 		timeBurnStone = 200;
 		timeConversion = 1200;
 		timeRepair = 40;
-		timeSmelting = 1200;
 		amountSmelting = 1;
+		timeSmelting = 1200;
 
 		recipeLump = 7;
 	}

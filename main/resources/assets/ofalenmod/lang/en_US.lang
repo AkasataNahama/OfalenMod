@@ -15,6 +15,8 @@ container.repairmachine-0=Ofalen Repair Machine
 container.repairmachine-1=Ofalen Repair Machine (Grade 1)
 container.repairmachine-2=Ofalen Repair Machine (Grade 2)
 container.repairmachine-3=Ofalen Repair Machine (Grade 3)
+container.OfalenMod.TeleportMarker=Ofalen Teleport Marker
+container.OfalenMod.ItemTeleporter=Ofalen Teleporter
 
 //Description
 info.smeltingrecipe=Ofalen Smelting Machine
@@ -24,6 +26,8 @@ info.color:green=Green
 info.color:blue=Blue
 info.color:white=White
 info.metadescription=This mod adds a new ore "Ofalen", to add a new such as tools, armors, balls using it.
+info.OfalenMod.ItemTeleporter.MaterialLacking=Ofalen Teleporter:Teleport Chip is lacking!
+info.OfalenMod.ItemTeleporter.ChannelInvalid=Ofalen Teleporter:This channel is Invalid!
 
 //Item
 item.ofalen.0.name=Red Ofalen
@@ -44,7 +48,10 @@ item.partsOfalen.2.name=Lump of Stone
 item.partsOfalen.3.name=Stone Fuel
 item.partsOfalen.4.name=Ofalen Fuel
 item.partsOfalen.5.name=Ofalen Laser Magazine
+item.partsOfalen.6.name=Can't use!
+item.partsOfalen.7.name=Ofalen Teleport Chip
 item.partsOfalen3D.0.name=Iron Stick
+item.teleporterOfalen.name=Ofalen Teleporter
 
 //Armor
 item.helmetOfalen.name=Ofalen Helmet
@@ -93,6 +100,7 @@ item.ballFlame.1.name=Flame Ball Grade 2
 item.ballFlame.2.name=Flame Ball Grade 3
 
 item.ballHungry.name=Hungry Ball
+item.ballFood.name=Food Ball
 item.ballPerfectOfalen.name=Ofalen Perfect Ball
 
 //Tool
@@ -114,6 +122,7 @@ item.pickaxeOfalenG3.name=Ofalen Pickaxe Grade 3
 item.axeOfalenG3.name=Ofalen Axe Grade 3
 item.hoeOfalenG3.name=Ofalen Hoe Grade 3
 
+item.bowOfalen.name=Ofalen Bow
 item.toolPerfectOfalen.name=Ofaeln Perfect Tool
 item.swordSp.name=Creative Sword
 
@@ -137,6 +146,7 @@ tile.oreOfalen.0.name=Red Ofalen Ore
 tile.oreOfalen.1.name=Green Ofalen Ore
 tile.oreOfalen.2.name=Blue Ofalen Ore
 tile.oreOfalen.3.name=White Ofalen Ore
+tile.markerTeleportOfalen.name=Ofalen Teleport Marker
 
 //Machine
 tile.machineSmelting.name=Ofalen Smelting Machine

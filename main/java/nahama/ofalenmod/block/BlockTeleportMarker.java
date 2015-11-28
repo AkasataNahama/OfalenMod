@@ -35,13 +35,15 @@ public class BlockTeleportMarker extends Block implements ITileEntityProvider {
 
 	@Override
 	public void breakBlock(World world, int x, int y, int z, Block block, int meta) {
-		super.breakBlock(world, x, y, z, block, meta);
-		if (world.isRemote)
+		if (world.isRemote) {
+			super.breakBlock(world, x, y, z, block, meta);
 			return;
+		}
 		TileEntity tileEntity = world.getTileEntity(x, y, z);
 		if (tileEntity == null || !(tileEntity instanceof TileEntityTeleportMarker))
 			return;
-		((TileEntityTeleportMarker) tileEntity).onBreaking();;
+		((TileEntityTeleportMarker) tileEntity).onBreaking();
+		super.breakBlock(world, x, y, z, block, meta);
 	}
 
 }

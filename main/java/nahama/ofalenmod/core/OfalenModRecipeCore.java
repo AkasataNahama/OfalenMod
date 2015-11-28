@@ -62,9 +62,9 @@ public class OfalenModRecipeCore {
 		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ITEM.partsOfalen3D, 1, 0),
 				"X", "X", 'X', Items.iron_ingot));
 
-		// 機械の部品
+		// 機械用カバープレート
 		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ITEM.partsOfalen, 1, 0),
-				"XXX", "XYX", "XXX", 'X', new ItemStack(ITEM.partsOfalen, 1, 2), 'Y', gem[3]));
+				"LQL", "GOG", "LQL", 'L', new ItemStack(ITEM.partsOfalen, 1, 2), 'G', "ingotGold", 'Q', "gemQuartz", 'O', frag[3]));
 
 		// Grade 3の部品
 		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ITEM.partsOfalen, 1, 1),
@@ -243,6 +243,12 @@ public class OfalenModRecipeCore {
 		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ITEM.ballHungry, 4),
 				" X ", "XYX", " X ", 'X', ITEM.ballEmpty, 'Y', Items.rotten_flesh));
 
+		GameRegistry.addRecipe(new ShapelessOreRecipe(ITEM.ballFood,
+				ITEM.ballFood, gem[1]));
+
+		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ITEM.ballFood, 4),
+				" X ", "XYX", " X ", 'X', ITEM.ballEmpty, 'Y', gem[1]));
+
 		GameRegistry.addRecipe(new ShapedOreRecipe(ITEM.ballPerfectOfalen,
 				"XAX", "BYC", "XZX",
 				'A', ITEM.ballRecoveryG3,
@@ -298,6 +304,12 @@ public class OfalenModRecipeCore {
 		GameRegistry.addRecipe(new ShapedOreRecipe(ITEM.swordOfalenG3,
 				"ZXZ", "XYX", "ZXZ", 'X', new ItemStack(ITEM.partsOfalen, 1, 1), 'Y', ITEM.swordOfalenG2, 'Z', "gemOfalenBlue"));
 
+		GameRegistry.addRecipe(new ShapedOreRecipe(ITEM.bowOfalen,
+				" OS",
+				"O S",
+				" OS",
+				'O', gem[2], 'S', Items.string));
+
 		GameRegistry.addRecipe(new ShapedOreRecipe(ITEM.toolPerfectOfalen,
 				"ABC", "XZX", "DYE",
 				'A', ITEM.shovelOfalenG3,
@@ -349,6 +361,23 @@ public class OfalenModRecipeCore {
 						new ItemStack(ITEM.magazineLaserWhite, 1, i + (32 * j)), crystal[3], j));
 			}
 		}
+
+		// テレポーター関連
+		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ITEM.partsOfalen, 4, 7),
+				" O ",
+				"OEO",
+				" O ",
+				'O', frag[1], 'E', Items.ender_pearl));
+		GameRegistry.addRecipe(new ShapedOreRecipe(ITEM.teleporterOfalen,
+				"IOI",
+				"QEQ",
+				"IOI",
+				'I', "ingotIron", 'O', core[1], 'Q', "gemQuartz", 'E', Items.ender_pearl));
+		GameRegistry.addRecipe(new ShapedOreRecipe(BLOCK.markerTeleportOfalen,
+				"GTG",
+				"OCO",
+				"GTG",
+				'G', "ingotGold", 'T', ITEM.teleport, 'O', gem[1], 'C', core[1]));
 
 		// 燃料の登録
 		GameRegistry.registerFuelHandler(new IFuelHandler() {

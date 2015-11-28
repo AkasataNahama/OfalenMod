@@ -4,9 +4,9 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.util.IIcon;
 
-public class Ofalen extends Parts {
+public class ItemOfalen extends ItemParts {
 
-	public Ofalen() {
+	public ItemOfalen() {
 		super(4);
 	}
 

@@ -5,9 +5,9 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
-public class CreativeSword extends Item {
+public class ItemCreativeSword extends Item {
 
-	public CreativeSword() {
+	public ItemCreativeSword() {
 		super();
 		this.setCreativeTab(OfalenModCore.tabOfalen);
 		this.setMaxStackSize(1);

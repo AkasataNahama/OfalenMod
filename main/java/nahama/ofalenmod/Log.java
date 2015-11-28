@@ -13,7 +13,7 @@ public class Log {
 
 	public static void info(String msg, String data, boolean flag) {
 		if (flag)
-			logger.info(msg + " [" + data + "]");
+			info(msg + " [" + data + "]");
 	}
 
 	public static void error(String msg) {
@@ -22,7 +22,7 @@ public class Log {
 
 	public static void error(String msg, String data, boolean flag) {
 		if (flag)
-			logger.error(msg + " [" + data + "]");
+			error(msg + " [" + data + "]");
 	}
 
 }

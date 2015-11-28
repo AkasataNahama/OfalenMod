@@ -5,9 +5,9 @@ import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
 
-public class OfalenPerfectBall extends OfalenBall {
+public class ItemOfalenPerfectBall extends ItemOfalenBall {
 
-	public OfalenPerfectBall(PotionEffect[] effects) {
+	public ItemOfalenPerfectBall(PotionEffect[] effects) {
 		super(effects);
 	}
 

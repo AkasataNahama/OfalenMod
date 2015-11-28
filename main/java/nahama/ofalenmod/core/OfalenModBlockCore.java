@@ -27,7 +27,7 @@ public class OfalenModBlockCore {
 	public static Block machineRepair;
 	public static Block processorMachine;
 	public static Block casingProcessor;
-	public static Block markerTeleport;
+	public static Block markerTeleportOfalen;
 
 	/** ブロックを登録する処理。 */
 	public static void registerBlock() {
@@ -79,10 +79,10 @@ public class OfalenModBlockCore {
 				.setBlockTextureName("ofalenmod:processor_casing-");
 		GameRegistry.registerBlock(casingProcessor, ItemOfalenBlock.class, "casingProcessor");
 
-		markerTeleport = new BlockTeleportMarker()
-				.setBlockName("markerTeleport")
-				.setBlockTextureName("ofalenmod:markerTeleport");
-		GameRegistry.registerBlock(markerTeleport, "markerTeleport");
+		markerTeleportOfalen = new BlockTeleportMarker()
+				.setBlockName("markerTeleportOfalen")
+				.setBlockTextureName("ofalenmod:teleport_marker");
+		GameRegistry.registerBlock(markerTeleportOfalen, "markerTeleportOfalen");
 		GameRegistry.registerTileEntity(TileEntityTeleportMarker.class, "TileEntityTeleportMarker");
 	}
 

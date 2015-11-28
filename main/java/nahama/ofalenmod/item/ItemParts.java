@@ -11,12 +11,12 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 
-public class Parts extends Item {
+public class ItemParts extends Item {
 
 	protected IIcon[] iicon;
 	private final int type;
 
-	public Parts(int type) {
+	public ItemParts(int type) {
 		super();
 		this.type = type;
 		this.setCreativeTab(OfalenModCore.tabOfalen);
@@ -46,7 +46,8 @@ public class Parts extends Item {
 	@SideOnly(Side.CLIENT)
 	public void getSubItems(Item item, CreativeTabs creativeTab, List list) {
 		for (int i = 0; i < type; i++) {
-			list.add(new ItemStack(this, 1, i));
+			if (i != 6)
+				list.add(new ItemStack(this, 1, i));
 		}
 	}
 

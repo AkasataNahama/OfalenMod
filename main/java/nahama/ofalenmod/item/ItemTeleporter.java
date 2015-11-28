@@ -2,11 +2,11 @@ package nahama.ofalenmod.item;
 
 import nahama.ofalenmod.Log;
 import nahama.ofalenmod.OfalenModCore;
+import nahama.ofalenmod.core.OfalenModItemCore;
 import nahama.ofalenmod.core.OfalenTeleportManager;
 import nahama.ofalenmod.tileentity.TileEntityTeleportMarker;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -23,6 +23,7 @@ public class ItemTeleporter extends Item {
 		super();
 		this.setCreativeTab(OfalenModCore.tabOfalen);
 		this.setMaxDamage(0);
+		this.setMaxStackSize(1);
 	}
 
 	@Override
@@ -51,13 +52,13 @@ public class ItemTeleporter extends Item {
 		}
 		if (!itemStack.getTagCompound().hasKey("Material")) {
 			// 材料がないならチャットに出力して終了。
-			player.addChatMessage(new ChatComponentText("info.OfalenMod.ItemTeleporter.MaterialLacking"));
+			player.addChatMessage(new ChatComponentText(StatCollector.translateToLocal("info.OfalenMod.ItemTeleporter.MaterialLacking")));
 			return itemStack;
 		}
 		ItemStack material = ItemStack.loadItemStackFromNBT(itemStack.getTagCompound().getCompoundTag("Material"));
-		if (material == null || !this.isMaterialValid(material)) {
+		if (material == null || !this.canUseItemStack(material)) {
 			// 材料が足りないならチャットに出力して終了。
-			player.addChatMessage(new ChatComponentText("info.OfalenMod.ItemTeleporter.MaterialLacking"));
+			player.addChatMessage(new ChatComponentText(StatCollector.translateToLocal("info.OfalenMod.ItemTeleporter.MaterialLacking")));
 			return itemStack;
 		}
 		// 材料を消費し、保存。
@@ -73,7 +74,7 @@ public class ItemTeleporter extends Item {
 		}
 		OfalenTeleportManager manager = OfalenTeleportManager.getInstance(world);
 		int channel = itemStack.getItemDamage();
-		if (channel < 0 || !manager.isChannelValid(channel)) {
+		if (channel < 1 || !manager.isChannelValid(channel)) {
 			// チャンネルが無効ならチャットに出力して終了。
 			player.addChatMessage(new ChatComponentText(StatCollector.translateToLocal("info.OfalenMod.ItemTeleporter.ChannelInvalid")));
 			return itemStack;
@@ -81,16 +82,16 @@ public class ItemTeleporter extends Item {
 		int[] coord = manager.getCoord(channel);
 		if (coord == null) {
 			// 座標が取得できなかったらログに出力して終了。
-			Log.error("Error on getting marker corrd! channel : " + channel);
+			Log.error("Error on getting marker corrd! channel:" + channel, "ItemTeleporter.onItemRightClick", true);
 			return itemStack;
 		}
 		TileEntity tileEntity = world.getTileEntity(coord[0], coord[1], coord[2]);
 		if (tileEntity == null || !(tileEntity instanceof TileEntityTeleportMarker)) {
 			// テレポートマーカーが取得できなかったらログに出力して終了。
-			Log.error("Error on getting TileEntityTeleportMarker! channel : " + channel + ", coord : (" + coord[0] + ", " + coord[1] + ", " + coord[2] + ")");
+			Log.error("Error on getting TileEntityTeleportMarker! channel:" + channel + ", coord : (" + coord[0] + ", " + coord[1] + ", " + coord[2] + ")", "ItemTeleporter.onItemRightClick", true);
 			return itemStack;
 		}
-		if (!((TileEntityTeleportMarker) tileEntity).onTeleporting()) {
+		if (!((TileEntityTeleportMarker) tileEntity).canTeleport()) {
 			// マーカーがテレポートを許可しなかったらチャットに出力して終了。
 			player.addChatMessage(new ChatComponentText(StatCollector.translateToLocal("info.OfalenMod.ItemTeleporter.MarkerInvalid")));
 			return itemStack;
@@ -102,8 +103,16 @@ public class ItemTeleporter extends Item {
 		return itemStack;
 	}
 
-	public boolean isMaterialValid(ItemStack material) {
-		if (material.getItem() == Items.ender_pearl)
+	public boolean canUseItemStack(ItemStack material) {
+		if (material == null || !isItemMaterial(material))
+			return false;
+		return true;
+	}
+
+	public static boolean isItemMaterial(ItemStack material) {
+		if (material == null)
+			return false;
+		if (material.isItemEqual(OfalenModItemCore.teleport))
 			return true;
 		return false;
 	}

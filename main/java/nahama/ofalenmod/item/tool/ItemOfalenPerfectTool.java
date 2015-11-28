@@ -13,9 +13,9 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.player.UseHoeEvent;
 
-public class OfalenPerfectTool extends ItemTool {
+public class ItemOfalenPerfectTool extends ItemTool {
 
-	public OfalenPerfectTool(ToolMaterial material) {
+	public ItemOfalenPerfectTool(ToolMaterial material) {
 		super(0.0F, material, null);
 		this.setCreativeTab(OfalenModCore.tabOfalen);
 	}

@@ -21,12 +21,12 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 
-public class LaserPistol extends Item {
+public class ItemLaserPistol extends Item {
 
 	/** 次のレーザーが撃てるようになるまでのカウント。 */
 	private int duration = 0;
 
-	public LaserPistol() {
+	public ItemLaserPistol() {
 		super();
 		this.setCreativeTab(OfalenModCore.tabOfalen);
 		this.setMaxStackSize(1);
@@ -127,7 +127,7 @@ public class LaserPistol extends Item {
 		// インベントリの全アイテムを調査し、
 		for (int i = 0; i < itemStacks.length; i++) {
 			// マガジンで、充填済みなら、
-			if (itemStacks[i] != null && itemStacks[i].getItem() instanceof LaserMagazine && itemStacks[i].getItemDamage() == 0) {
+			if (itemStacks[i] != null && itemStacks[i].getItem() instanceof ItemLaserMagazine && itemStacks[i].getItemDamage() == 0) {
 				// trueを返す。
 				return true;
 			}
@@ -174,7 +174,7 @@ public class LaserPistol extends Item {
 		// プレイヤーが所持しているマガジンの色をNBTTagに保存する。
 		ItemStack[] inventory = player.inventory.mainInventory;
 		for (int i = 0; i < inventory.length; i++) {
-			if (inventory[i] != null && inventory[i].getItem() instanceof LaserMagazine && inventory[i].getItemDamage() == 0) {
+			if (inventory[i] != null && inventory[i].getItem() instanceof ItemLaserMagazine && inventory[i].getItemDamage() == 0) {
 				String color = "";
 				if (inventory[i].getItem() == OfalenModItemCore.magazineLaserRed) {
 					color = "Red";

@@ -12,34 +12,55 @@ import net.minecraft.tileentity.TileEntity;
 
 public class TileEntityTeleportMarker extends TileEntity {
 
-	protected int channel = -1;
+	public boolean isValid;
+	private boolean wasInited;
+	protected int channel;
 
 	@Override
 	public void updateEntity() {
 		super.updateEntity();
+		if (worldObj.isRemote || wasInited)
+			return;
+		// サーバー側で、初期化されていなかったらする。
+		this.setChannel(channel);
+		wasInited = true;
 	}
 
 	@Override
 	public void writeToNBT(NBTTagCompound nbt) {
 		super.writeToNBT(nbt);
 		nbt.setInteger("Channel", channel);
+		nbt.setBoolean("IsValid", isValid);
 	}
 
 	@Override
 	public void readFromNBT(NBTTagCompound nbt) {
 		super.readFromNBT(nbt);
 		channel = nbt.getInteger("Channel");
+		wasInited = !nbt.getBoolean("IsValid");
 	}
 
-	public boolean updateChannel(int channel) {
+	public void setChannel(int newChannel) {
+		if (worldObj.isRemote) {
+			channel = newChannel;
+			return;
+		}
 		OfalenTeleportManager manager = OfalenTeleportManager.getInstance(worldObj);
-		if (channel < 0 || manager.isChannelValid(channel))
-			return false;
-		manager.registerMarker(channel, new int[] { xCoord, yCoord, zCoord });
-		return true;
+		if (isValid && manager.isChannelValid(channel)) {
+			manager.removeMarker(channel);
+		}
+		channel = newChannel;
+		if (newChannel < 1 || manager.isChannelValid(newChannel)) {
+			isValid = false;
+			return;
+		}
+		manager.registerMarker(newChannel, new int[] { xCoord, yCoord, zCoord });
+		isValid = true;
 	}
 
-	public boolean onTeleporting() {
+	public boolean canTeleport() {
+		if (!isValid)
+			return false;
 		for (int i = 1; i < 3; i++) {
 			Block block = worldObj.getBlock(xCoord, yCoord + i, zCoord);
 			if (block == null || block.getBlockHardness(worldObj, xCoord, yCoord + i, zCoord) < 0)
@@ -64,9 +85,13 @@ public class TileEntityTeleportMarker extends TileEntity {
 	}
 
 	public void onBreaking() {
-		if (channel < 0)
+		if (channel < 1 || !isValid)
 			return;
 		OfalenTeleportManager.getInstance(worldObj).removeMarker(channel);
+	}
+
+	public int getChannel() {
+		return channel;
 	}
 
 }
