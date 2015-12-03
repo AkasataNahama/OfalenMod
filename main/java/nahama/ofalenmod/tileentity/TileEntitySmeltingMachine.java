@@ -49,14 +49,11 @@ public class TileEntitySmeltingMachine extends TileEntityGradedMachineBase {
 	@Override
 	public void onWorking() {
 		// 製錬結果を取得し、完成品スロットに代入/追加する。
-		ItemStack itemStack = OfalenSmeltingRecipes.smelting().getSmeltingResult(itemStacks[0]);
-		int size = itemStack.stackSize;
-		if (itemStacks[0].getItem() == Item.getItemFromBlock(OfalenModBlockCore.oreOfalen))
-			size *= (grade + 1);
+		ItemStack itemStack = OfalenSmeltingRecipes.smelting().getSmeltingResultFromGrade(itemStacks[0], grade);
 		if (itemStacks[2] == null) {
-			itemStacks[2] = new ItemStack(itemStack.getItem(), size, itemStack.getItemDamage());
+			itemStacks[2] = itemStack;
 		} else if (itemStacks[2].isItemEqual(itemStack)) {
-			itemStacks[2].stackSize += size;
+			itemStacks[2].stackSize += itemStack.stackSize;
 		}
 		// 製錬前スロットのアイテム数を減らす
 		--itemStacks[0].stackSize;

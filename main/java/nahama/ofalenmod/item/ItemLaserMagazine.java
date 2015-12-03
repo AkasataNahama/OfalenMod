@@ -60,7 +60,7 @@ public class ItemLaserMagazine extends Item {
 	/** 説明欄の内容を追加する。 */
 	@Override
 	public void addInformation(ItemStack itemStack, EntityPlayer player, List list, boolean flag) {
-		list.add(StatCollector.translateToLocal("info.loaded") + (32 - (itemStack.getItemDamage() / 32)));
+		list.add(StatCollector.translateToLocal("info.OfalenMod.loaded") + (32 - (itemStack.getItemDamage() / 32)));
 	}
 
 	@Override

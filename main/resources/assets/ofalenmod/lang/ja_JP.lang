@@ -15,19 +15,24 @@ container.repairmachine-0=オファレン修繕機
 container.repairmachine-1=オファレン修繕機 (Grade 1)
 container.repairmachine-2=オファレン修繕機 (Grade 2)
 container.repairmachine-3=オファレン修繕機 (Grade 3)
+container.OfalenMod.ItemShield=オファレンシールド
 container.OfalenMod.TeleportMarker=オファレンテレポートマーカー
 container.OfalenMod.ItemTeleporter=オファレンテレポーター
+container.OfalenMod.ItemFloater=オファレンフローター
 
 //説明文
-info.smeltingrecipe=オファレン製錬機
-info.loaded=クリスタル:
-info.color:red=赤
-info.color:green=緑
-info.color:blue=青
-info.color:white=白
-info.metadescription=このMODは、新しい鉱石「オファレン」を追加し、新しく道具・防具・玉などのアイテムを作れるようにします。
-info.OfalenMod.ItemTeleporter.MaterialLacking=オファレンテレポーター：テレポートチップが足りません！
+info.OfalenMod.smeltingrecipe=オファレン製錬機
+info.OfalenMod.loaded=クリスタル:
+info.OfalenMod.color:red=赤
+info.OfalenMod.color:green=緑
+info.OfalenMod.color:blue=青
+info.OfalenMod.color:white=白
+info.OfalenMod.metadescription=このMODは、新しい鉱石「オファレン」を追加し、新しく道具・防具・玉などのアイテムを作れるようにします。
+info.OfalenMod.ItemShield.MaterialLacking=オファレンシールド：シールドインゴットが不足しています！
+info.OfalenMod.ItemShield.ShieldBreaked=オファレンシールド：シールドが無効になりました！
+info.OfalenMod.ItemTeleporter.MaterialLacking=オファレンテレポーター：テレポートパールが不足しています！
 info.OfalenMod.ItemTeleporter.ChannelInvalid=オファレンテレポーター：このチャンネルは無効です！
+info.OfalenMod.ItemFloater.MaterialLacking=オファレンフローター：フロートダストが足りなくなりました！
 
 //アイテム
 item.ofalen.0.name=赤いオファレン
@@ -48,10 +53,13 @@ item.partsOfalen.2.name=石の塊
 item.partsOfalen.3.name=石燃料
 item.partsOfalen.4.name=オファレン燃料
 item.partsOfalen.5.name=オファレンレーザーマガジン
-item.partsOfalen.6.name=使用不可
-item.partsOfalen.7.name=オファレンテレポートチップ
+item.partsOfalen.6.name=オファレンシールドインゴット
+item.partsOfalen.7.name=オファレンテレポーテートパール
+item.partsOfalen.8.name=オファレンフロートダスト
 item.partsOfalen3D.0.name=鉄の棒
+item.shieldOfalen.name=オファレンシールド
 item.teleporterOfalen.name=オファレンテレポーター
+item.floaterOfalen.name=オファレンフローター
 
 //防具
 item.helmetOfalen.name=オファレンのヘルメット
@@ -100,7 +108,7 @@ item.ballFlame.1.name=火炎玉 Grade 2
 item.ballFlame.2.name=火炎玉 Grade 3
 
 item.ballHungry.name=空腹玉
-item.ballFood.name=食料玉
+item.ballFood.name=満腹玉
 item.ballPerfectOfalen.name=オファレンの万能玉
 
 //道具

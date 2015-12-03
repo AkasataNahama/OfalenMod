@@ -2,6 +2,7 @@ package nahama.ofalenmod.nei;
 
 import java.awt.Rectangle;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map.Entry;
 
 import codechicken.nei.NEIServerUtils;
@@ -19,9 +20,15 @@ public class CatchRecipeHandler extends TemplateRecipeHandler {
 
 	private HashMap<ItemStack, ItemStack> recipeLoader() {
 		if (OfalenSmeltingRecipes.smelting().smeltingList != null && !OfalenSmeltingRecipes.smelting().smeltingList.isEmpty()) {
-			this.newRecipe = OfalenSmeltingRecipes.smelting().smeltingList;
+			newRecipe = new HashMap<ItemStack, ItemStack>();
+			Iterator<Entry<ItemStack[], Boolean>> iterator = OfalenSmeltingRecipes.smelting().smeltingList.entrySet().iterator();
+			Entry<ItemStack[], Boolean> entry;
+			while (iterator.hasNext()) {
+				entry = iterator.next();
+				newRecipe.put(entry.getKey()[0], entry.getKey()[1]);
+			}
 		}
-		return this.newRecipe;
+		return newRecipe;
 	}
 
 	public class recipeCacher extends CachedRecipe {
@@ -31,18 +38,18 @@ public class CatchRecipeHandler extends TemplateRecipeHandler {
 
 		public recipeCacher(ItemStack in, ItemStack out) {
 			in.stackSize = 1;
-			this.input = new PositionedStack(in, 51, 6);
-			this.result = new PositionedStack(out, 111, 23);
+			input = new PositionedStack(in, 51, 6);
+			result = new PositionedStack(out, 111, 23);
 		}
 
 		@Override
 		public PositionedStack getResult() {
-			return this.result;
+			return result;
 		}
 
 		@Override
 		public PositionedStack getIngredient() {
-			return this.input;
+			return input;
 		}
 
 	}
@@ -115,7 +122,7 @@ public class CatchRecipeHandler extends TemplateRecipeHandler {
 
 	@Override
 	public String getRecipeName() {
-		return StatCollector.translateToLocal("info.smeltingrecipe");
+		return StatCollector.translateToLocal("info.OfalenMod.smeltingrecipe");
 	}
 
 	@Override

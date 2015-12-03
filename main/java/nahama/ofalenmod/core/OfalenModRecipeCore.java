@@ -64,7 +64,7 @@ public class OfalenModRecipeCore {
 
 		// 機械用カバープレート
 		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ITEM.partsOfalen, 1, 0),
-				"LQL", "GOG", "LQL", 'L', new ItemStack(ITEM.partsOfalen, 1, 2), 'G', "ingotGold", 'Q', "gemQuartz", 'O', frag[3]));
+				"LQL", "QOQ", "LQL", 'L', new ItemStack(ITEM.partsOfalen, 1, 2), 'Q', "gemQuartz", 'O', frag[3]));
 
 		// Grade 3の部品
 		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ITEM.partsOfalen, 1, 1),
@@ -244,10 +244,10 @@ public class OfalenModRecipeCore {
 				" X ", "XYX", " X ", 'X', ITEM.ballEmpty, 'Y', Items.rotten_flesh));
 
 		GameRegistry.addRecipe(new ShapelessOreRecipe(ITEM.ballFood,
-				ITEM.ballFood, gem[1]));
+				ITEM.ballFood, "ingotGold"));
 
 		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ITEM.ballFood, 4),
-				" X ", "XYX", " X ", 'X', ITEM.ballEmpty, 'Y', gem[1]));
+				" X ", "XYX", " X ", 'X', ITEM.ballEmpty, 'Y', "ingotGold"));
 
 		GameRegistry.addRecipe(new ShapedOreRecipe(ITEM.ballPerfectOfalen,
 				"XAX", "BYC", "XZX",
@@ -304,12 +304,6 @@ public class OfalenModRecipeCore {
 		GameRegistry.addRecipe(new ShapedOreRecipe(ITEM.swordOfalenG3,
 				"ZXZ", "XYX", "ZXZ", 'X', new ItemStack(ITEM.partsOfalen, 1, 1), 'Y', ITEM.swordOfalenG2, 'Z', "gemOfalenBlue"));
 
-		GameRegistry.addRecipe(new ShapedOreRecipe(ITEM.bowOfalen,
-				" OS",
-				"O S",
-				" OS",
-				'O', gem[2], 'S', Items.string));
-
 		GameRegistry.addRecipe(new ShapedOreRecipe(ITEM.toolPerfectOfalen,
 				"ABC", "XZX", "DYE",
 				'A', ITEM.shovelOfalenG3,
@@ -362,22 +356,44 @@ public class OfalenModRecipeCore {
 			}
 		}
 
+		// シールド関連
+		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ITEM.partsOfalen, 4, 6),
+				"GOG",
+				"OEO",
+				"GOG",
+				'G', "ingotGold", 'O', frag[0], 'E', "ingotIron"));
+		GameRegistry.addRecipe(new ShapedOreRecipe(ITEM.shieldOfalen,
+				"IOI",
+				"OEO",
+				"IOI",
+				'I', "ingotGold", 'O', core[0], 'E', ITEM.ingot));
 		// テレポーター関連
 		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ITEM.partsOfalen, 4, 7),
-				" O ",
+				"GOG",
 				"OEO",
-				" O ",
-				'O', frag[1], 'E', Items.ender_pearl));
+				"GOG",
+				'G', "ingotGold", 'O', frag[1], 'E', Items.ender_pearl));
 		GameRegistry.addRecipe(new ShapedOreRecipe(ITEM.teleporterOfalen,
 				"IOI",
-				"QEQ",
+				"OEO",
 				"IOI",
-				'I', "ingotIron", 'O', core[1], 'Q', "gemQuartz", 'E', Items.ender_pearl));
+				'I', "ingotGold", 'O', core[1], 'E', ITEM.pearl));
 		GameRegistry.addRecipe(new ShapedOreRecipe(BLOCK.markerTeleportOfalen,
 				"GTG",
 				"OCO",
 				"GTG",
-				'G', "ingotGold", 'T', ITEM.teleport, 'O', gem[1], 'C', core[1]));
+				'G', "ingotGold", 'T', ITEM.pearl, 'O', gem[1], 'C', core[1]));
+		// フローター関連
+		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ITEM.partsOfalen, 4, 8),
+				"GOG",
+				"ODO",
+				"GOG",
+				'G', "ingotGold", 'O', frag[2], 'D', "dustGlowstone"));
+		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ITEM.floaterOfalen),
+				"IOI",
+				"OEO",
+				"IOI",
+				'I', "ingotGold", 'O', core[2], 'E', ITEM.dust));
 
 		// 燃料の登録
 		GameRegistry.registerFuelHandler(new IFuelHandler() {

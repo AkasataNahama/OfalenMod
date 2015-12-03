@@ -81,6 +81,8 @@ public class GuiItemTeleporter extends GuiContainer {
 		int l = (height - ySize) / 2;
 		this.drawTexturedModalRect(k, l, 0, 0, xSize, ySize);
 
+		currentItem = Minecraft.getMinecraft().thePlayer.getHeldItem();
+		int offY = currentItem.getTagCompound().getBoolean("IsValid") ? 0 : 26;
 		String s = String.valueOf(currentItem.getItemDamage());
 		for (int i = 0; i < 3; i++) {
 			char c = '0';
@@ -88,7 +90,7 @@ public class GuiItemTeleporter extends GuiContainer {
 				c = s.charAt(i - 3 + s.length());
 			} catch (StringIndexOutOfBoundsException e) {}
 			// チャンネルを表示する。
-			this.drawTexturedModalRect(k + 62 + (i * 18), l + 27, 16 * Integer.parseInt(c + ""), 166, 16, 26);
+			this.drawTexturedModalRect(k + 62 + (i * 18), l + 27, 16 * Integer.parseInt(c + ""), 166 + offY, 16, 26);
 		}
 	}
 

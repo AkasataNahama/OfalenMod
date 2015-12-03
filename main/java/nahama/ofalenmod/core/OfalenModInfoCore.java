@@ -10,7 +10,7 @@ public class OfalenModInfoCore {
 	public static void registerInfo(ModMetadata meta) {
 		meta.modId = OfalenModCore.MODID;
 		meta.name = OfalenModCore.MODNAME;
-		meta.description = StatCollector.translateToLocal("info.ofalen.metadescription");
+		meta.description = StatCollector.translateToLocal("info.OfalenMod.metadescription");
 		meta.version = OfalenModCore.VERSION;
 		meta.url = "http://www63.atwiki.jp/akasatanahama/pages/15.html";
 		meta.authorList.add("Akasata Nahama");

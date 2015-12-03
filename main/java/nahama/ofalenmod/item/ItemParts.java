@@ -46,8 +46,7 @@ public class ItemParts extends Item {
 	@SideOnly(Side.CLIENT)
 	public void getSubItems(Item item, CreativeTabs creativeTab, List list) {
 		for (int i = 0; i < type; i++) {
-			if (i != 6)
-				list.add(new ItemStack(this, 1, i));
+			list.add(new ItemStack(this, 1, i));
 		}
 	}
 

@@ -3,7 +3,7 @@ package nahama.ofalenmod.tileentity;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import nahama.ofalenmod.core.OfalenTeleportManager;
+import nahama.ofalenmod.handler.OfalenTeleportHandler;
 import net.minecraft.block.Block;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemStack;
@@ -45,7 +45,7 @@ public class TileEntityTeleportMarker extends TileEntity {
 			channel = newChannel;
 			return;
 		}
-		OfalenTeleportManager manager = OfalenTeleportManager.getInstance(worldObj);
+		OfalenTeleportHandler manager = OfalenTeleportHandler.getInstance(worldObj);
 		if (isValid && manager.isChannelValid(channel)) {
 			manager.removeMarker(channel);
 		}
@@ -87,7 +87,7 @@ public class TileEntityTeleportMarker extends TileEntity {
 	public void onBreaking() {
 		if (channel < 1 || !isValid)
 			return;
-		OfalenTeleportManager.getInstance(worldObj).removeMarker(channel);
+		OfalenTeleportHandler.getInstance(worldObj).removeMarker(channel);
 	}
 
 	public int getChannel() {

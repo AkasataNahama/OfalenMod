@@ -3,11 +3,10 @@ package nahama.ofalenmod.item;
 import nahama.ofalenmod.Log;
 import nahama.ofalenmod.OfalenModCore;
 import nahama.ofalenmod.core.OfalenModItemCore;
-import nahama.ofalenmod.core.OfalenTeleportManager;
+import nahama.ofalenmod.handler.OfalenTeleportHandler;
+import nahama.ofalenmod.network.MSpawnParticle;
 import nahama.ofalenmod.tileentity.TileEntityTeleportMarker;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -15,41 +14,27 @@ import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 
-public class ItemTeleporter extends Item {
-
-	private int duration;
+public class ItemTeleporter extends ItemFuture {
 
 	public ItemTeleporter() {
 		super();
-		this.setCreativeTab(OfalenModCore.tabOfalen);
 		this.setMaxDamage(0);
-		this.setMaxStackSize(1);
-	}
-
-	@Override
-	public void onUpdate(ItemStack itemStack, World world, Entity entity, int slot, boolean flag) {
-		super.onUpdate(itemStack, world, entity, slot, flag);
-		if (duration > 0)
-			duration--;
 	}
 
 	@Override
 	public ItemStack onItemRightClick(ItemStack itemStack, World world, EntityPlayer player) {
 		super.onItemRightClick(itemStack, world, player);
 		// 違うアイテムなら終了。
-		if (itemStack.getItem() != this)
+		if (!(itemStack.getItem() instanceof ItemTeleporter))
 			return itemStack;
 		if (player.isSneaking()) {
 			// スニークしていたらGUIを開く。
-			player.openGui(OfalenModCore.instance, 2, world, (int) player.posX, (int) player.posY, (int) player.posZ);
+			player.openGui(OfalenModCore.instance, 3, world, (int) player.posX, (int) player.posY, (int) player.posZ);
 			return itemStack;
 		}
-		// クライアントなら終了。
-		if (world.isRemote)
+		// クライアントか、時間がたっていないなら終了。
+		if (world.isRemote || itemStack.getTagCompound().getByte("Duration") > 0)
 			return itemStack;
-		if (!itemStack.hasTagCompound()) {
-			itemStack.setTagCompound(new NBTTagCompound());
-		}
 		if (!itemStack.getTagCompound().hasKey("Material")) {
 			// 材料がないならチャットに出力して終了。
 			player.addChatMessage(new ChatComponentText(StatCollector.translateToLocal("info.OfalenMod.ItemTeleporter.MaterialLacking")));
@@ -72,7 +57,7 @@ public class ItemTeleporter extends Item {
 		} else {
 			itemStack.getTagCompound().removeTag("Material");;
 		}
-		OfalenTeleportManager manager = OfalenTeleportManager.getInstance(world);
+		OfalenTeleportHandler manager = OfalenTeleportHandler.getInstance(world);
 		int channel = itemStack.getItemDamage();
 		if (channel < 1 || !manager.isChannelValid(channel)) {
 			// チャンネルが無効ならチャットに出力して終了。
@@ -97,9 +82,10 @@ public class ItemTeleporter extends Item {
 			return itemStack;
 		}
 		// 問題なければテレポート。
-		duration = 10;
+		itemStack.getTagCompound().setByte("Duration", (byte) 10);
 		player.mountEntity(null);
 		player.setPositionAndUpdate(coord[0] + 0.5, coord[1] + 1.1, coord[2] + 0.5);
+		OfalenModCore.wrapper.sendToAll(new MSpawnParticle(coord[0] + 0.5, coord[1] + 1.5, coord[2] + 0.5, (byte) 1));
 		return itemStack;
 	}
 
@@ -112,7 +98,7 @@ public class ItemTeleporter extends Item {
 	public static boolean isItemMaterial(ItemStack material) {
 		if (material == null)
 			return false;
-		if (material.isItemEqual(OfalenModItemCore.teleport))
+		if (material.isItemEqual(OfalenModItemCore.pearl))
 			return true;
 		return false;
 	}

@@ -1,5 +1,6 @@
 package nahama.ofalenmod;
 
+import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Loader;
@@ -19,12 +20,11 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import nahama.ofalenmod.core.OfalenModBlockCore;
 import nahama.ofalenmod.core.OfalenModConfigCore;
-import nahama.ofalenmod.core.OfalenModGuiHandler;
+import nahama.ofalenmod.core.OfalenModEventCore;
 import nahama.ofalenmod.core.OfalenModInfoCore;
 import nahama.ofalenmod.core.OfalenModItemCore;
 import nahama.ofalenmod.core.OfalenModOreDicCore;
 import nahama.ofalenmod.core.OfalenModRecipeCore;
-import nahama.ofalenmod.core.OfalenTeleportManager;
 import nahama.ofalenmod.creativetab.OfalenTab;
 import nahama.ofalenmod.entity.EntityBlueLaser;
 import nahama.ofalenmod.entity.EntityExplosionBall;
@@ -33,15 +33,24 @@ import nahama.ofalenmod.entity.EntityGreenLaser;
 import nahama.ofalenmod.entity.EntityRedLaser;
 import nahama.ofalenmod.entity.EntityWhiteLaser;
 import nahama.ofalenmod.generator.OfalenOreGenerator;
+import nahama.ofalenmod.handler.OfalenFlightHandlerServer;
+import nahama.ofalenmod.handler.OfalenModGuiHandler;
+import nahama.ofalenmod.handler.OfalenShieldHandler;
+import nahama.ofalenmod.handler.OfalenTeleportHandler;
 import nahama.ofalenmod.model.ModelLaser;
 import nahama.ofalenmod.nei.OfalenModNEILoad;
+import nahama.ofalenmod.network.MFloaterMode;
+import nahama.ofalenmod.network.MSpawnParticle;
 import nahama.ofalenmod.network.MTeleporterChannel;
 import nahama.ofalenmod.network.MTeleporterMeta;
-import nahama.ofalenmod.renderer.ItemPistolRenderer;
-import nahama.ofalenmod.renderer.RenderLaser;
+import nahama.ofalenmod.render.ItemPistolRenderer;
+import nahama.ofalenmod.render.RenderLaser;
+import nahama.ofalenmod.render.RenderTeleportMarker;
+import nahama.ofalenmod.tileentity.TileEntityTeleportMarker;
 import net.minecraft.client.renderer.entity.RenderSnowball;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraftforge.client.MinecraftForgeClient;
+import net.minecraftforge.common.MinecraftForge;
 
 /**
  * @author Akasata Nahama
@@ -78,6 +87,11 @@ public class OfalenModCore {
 		// パケットを登録する。
 		wrapper.registerMessage(MTeleporterChannel.Handler.class, MTeleporterChannel.class, 0, Side.SERVER);
 		wrapper.registerMessage(MTeleporterMeta.Handler.class, MTeleporterMeta.class, 1, Side.SERVER);
+		wrapper.registerMessage(MFloaterMode.Handler.class, MFloaterMode.class, 2, Side.SERVER);
+		wrapper.registerMessage(MSpawnParticle.Handler.class, MSpawnParticle.class, 3, Side.CLIENT);
+		// Event処理を登録する。
+		MinecraftForge.EVENT_BUS.register(new OfalenModEventCore());
+		FMLCommonHandler.instance().bus().register(new OfalenModEventCore());
 	}
 
 	/** 初期化処理。 */
@@ -102,6 +116,8 @@ public class OfalenModCore {
 	/** クライアントの初期化処理。 */
 	@SideOnly(Side.CLIENT)
 	public void clientInit() {
+		// タイルエンティティとレンダラーの紐づけ
+		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityTeleportMarker.class, new RenderTeleportMarker());
 		// エンティティとレンダラーの紐付け
 		RenderingRegistry.registerEntityRenderingHandler(EntityExplosionBall.class, new RenderSnowball(OfalenModItemCore.ballExplosion));
 		RenderingRegistry.registerEntityRenderingHandler(EntityFlameBall.class, new RenderSnowball(OfalenModItemCore.ballFlame));
@@ -125,7 +141,9 @@ public class OfalenModCore {
 	/** サーバー起動時の処理。 */
 	@EventHandler
 	public void serverStarting(FMLServerStartingEvent event) {
-		OfalenTeleportManager.init();
+		OfalenShieldHandler.init();
+		OfalenTeleportHandler.init();
+		OfalenFlightHandlerServer.init();
 	}
 
 }

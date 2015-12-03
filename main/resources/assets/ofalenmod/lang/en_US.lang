@@ -15,19 +15,24 @@ container.repairmachine-0=Ofalen Repair Machine
 container.repairmachine-1=Ofalen Repair Machine (Grade 1)
 container.repairmachine-2=Ofalen Repair Machine (Grade 2)
 container.repairmachine-3=Ofalen Repair Machine (Grade 3)
+container.OfalenMod.ItemShield=Ofalen Shield
 container.OfalenMod.TeleportMarker=Ofalen Teleport Marker
 container.OfalenMod.ItemTeleporter=Ofalen Teleporter
+container.OfalenMod.ItemFloater=Ofalen Floater
 
 //Description
-info.smeltingrecipe=Ofalen Smelting Machine
-info.loaded=Crystal:
-info.color:red=Red
-info.color:green=Green
-info.color:blue=Blue
-info.color:white=White
-info.metadescription=This mod adds a new ore "Ofalen", to add a new such as tools, armors, balls using it.
-info.OfalenMod.ItemTeleporter.MaterialLacking=Ofalen Teleporter:Teleport Chip is lacking!
+info.OfalenMod.smeltingrecipe=Ofalen Smelting Machine
+info.OfalenMod.loaded=Crystal:
+info.OfalenMod.color:red=Red
+info.OfalenMod.color:green=Green
+info.OfalenMod.color:blue=Blue
+info.OfalenMod.color:white=White
+info.OfalenMod.metadescription=This mod adds a new ore "Ofalen", to add a new such as tools, armors, balls using it.
+info.OfalenMod.ItemShield.MaterialLacking=Ofalen Shield:Shield Ingot is lacking!
+info.OfalenMod.ItemShield.ShieldBreaked=Ofalen Shield:Shield expired!
+info.OfalenMod.ItemTeleporter.MaterialLacking=Ofalen Teleporter:Teleport Pearl is lacking!
 info.OfalenMod.ItemTeleporter.ChannelInvalid=Ofalen Teleporter:This channel is Invalid!
+info.OfalenMod.ItemFloater.MaterialLacking=Ofalen Floater:Float Dust has lacked!
 
 //Item
 item.ofalen.0.name=Red Ofalen
@@ -48,10 +53,13 @@ item.partsOfalen.2.name=Lump of Stone
 item.partsOfalen.3.name=Stone Fuel
 item.partsOfalen.4.name=Ofalen Fuel
 item.partsOfalen.5.name=Ofalen Laser Magazine
-item.partsOfalen.6.name=Can't use!
-item.partsOfalen.7.name=Ofalen Teleport Chip
+item.partsOfalen.6.name=Ofalen Shield Ingot
+item.partsOfalen.7.name=Ofalen Teleport Pearl
+item.partsOfalen.8.name=Ofalen Float Dust
 item.partsOfalen3D.0.name=Iron Stick
+item.shieldOfalen.name=Ofalen Shield
 item.teleporterOfalen.name=Ofalen Teleporter
+item.floaterOfalen.name=Ofalen Floater
 
 //Armor
 item.helmetOfalen.name=Ofalen Helmet

@@ -208,7 +208,7 @@ public class ItemLaserPistol extends Item {
 		String color = nbt.getString("LaserColor");
 		if (color.length() < 1)
 			return;
-		list.add(StatCollector.translateToLocal("info.color:" + color.toLowerCase()) + " " + StatCollector.translateToLocal("info.loaded") + (32 - (itemStack.getItemDamage() / 32)));
+		list.add(StatCollector.translateToLocal("info.OfalenMod.color:" + color.toLowerCase()) + " " + StatCollector.translateToLocal("info.OfalenMod.loaded") + (32 - (itemStack.getItemDamage() / 32)));
 	}
 
 }

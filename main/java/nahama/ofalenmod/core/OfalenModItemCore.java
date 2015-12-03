@@ -5,14 +5,14 @@ import nahama.ofalenmod.OfalenModCore;
 import nahama.ofalenmod.item.ItemCreativeSword;
 import nahama.ofalenmod.item.ItemEmptyBall;
 import nahama.ofalenmod.item.ItemExplosionBall;
-import nahama.ofalenmod.item.ItemFoodBall;
+import nahama.ofalenmod.item.ItemFloater;
 import nahama.ofalenmod.item.ItemLaserMagazine;
 import nahama.ofalenmod.item.ItemLaserPistol;
 import nahama.ofalenmod.item.ItemOfalen;
 import nahama.ofalenmod.item.ItemOfalenBall;
-import nahama.ofalenmod.item.ItemOfalenBow;
 import nahama.ofalenmod.item.ItemOfalenPerfectBall;
 import nahama.ofalenmod.item.ItemParts;
+import nahama.ofalenmod.item.ItemShield;
 import nahama.ofalenmod.item.ItemTeleporter;
 import nahama.ofalenmod.item.armor.ItemOfalenArmor;
 import nahama.ofalenmod.item.tool.ItemOfalenAxe;
@@ -33,7 +33,7 @@ public class OfalenModItemCore {
 	public static Item ofalen;
 	public static Item fragmentOfalen;
 	public static Item coreOfalen;
-	/** 0:Machine Cover Plate, 1:Grade 3 Part, 2:Lump of Stone, 3:Stone Fuel, 4:Ofalen Fuel, 5:Laser Magazine, 6:Shield Chip, 7:Teleport Chip */
+	/** 0:Machine Cover Plate, 1:Grade 3 Part, 2:Lump of Stone, 3:Stone Fuel, 4:Ofalen Fuel, 5:Laser Magazine, 6:Shield Ingot, 7:Teleport Pearl, 8:Float Dust */
 	public static Item partsOfalen;
 	/** 0: Iron Stick */
 	public static Item partsOfalen3D;
@@ -43,8 +43,9 @@ public class OfalenModItemCore {
 	public static ItemStack fuelStone;
 	public static ItemStack fuelOfalen;
 	public static ItemStack magazine;
-	public static ItemStack shield;
-	public static ItemStack teleport;
+	public static ItemStack ingot;
+	public static ItemStack pearl;
+	public static ItemStack dust;
 	public static ItemStack stickIron;
 
 	public static Item helmetOfalen;
@@ -106,7 +107,6 @@ public class OfalenModItemCore {
 	public static Item hoeOfalenG3;
 
 	public static Item toolPerfectOfalen;
-	public static Item bowOfalen;
 	public static Item swordSp;
 
 	public static Item pistolLaser;
@@ -116,7 +116,9 @@ public class OfalenModItemCore {
 	public static Item magazineLaserBlue;
 	public static Item magazineLaserWhite;
 
+	public static Item shieldOfalen;
 	public static Item teleporterOfalen;
+	public static Item floaterOfalen;
 
 	/** アイテムを登録する処理。 */
 	public static void registerItem() {
@@ -152,7 +154,7 @@ public class OfalenModItemCore {
 		OreDictionary.registerOre("coreOfalenBlue", new ItemStack(coreOfalen, 1, 2));
 		OreDictionary.registerOre("coreOfalenWhite", new ItemStack(coreOfalen, 1, 3));
 
-		partsOfalen = new ItemParts(8)
+		partsOfalen = new ItemParts(9)
 				.setUnlocalizedName("partsOfalen")
 				.setTextureName("ofalenmod:parts");
 		GameRegistry.registerItem(partsOfalen, "partsOfalen");
@@ -169,8 +171,9 @@ public class OfalenModItemCore {
 		fuelStone = new ItemStack(partsOfalen, 1, 3);
 		fuelOfalen = new ItemStack(partsOfalen, 1, 4);
 		magazine = new ItemStack(partsOfalen, 1, 5);
-		shield = new ItemStack(partsOfalen, 1, 6);
-		teleport = new ItemStack(partsOfalen, 1, 7);
+		ingot = new ItemStack(partsOfalen, 1, 6);
+		pearl = new ItemStack(partsOfalen, 1, 7);
+		dust = new ItemStack(partsOfalen, 1, 8);
 		stickIron = new ItemStack(partsOfalen3D, 1, 0);
 
 		// アーマー
@@ -320,7 +323,7 @@ public class OfalenModItemCore {
 				.setTextureName("ofalenmod:hungry_ball");
 		GameRegistry.registerItem(ballHungry, "ballHungry");
 
-		ballFood = new ItemFoodBall()
+		ballFood = new ItemOfalenBall(new PotionEffect[] { new PotionEffect(23, 2400, 0) })
 				.setUnlocalizedName("ballFood")
 				.setTextureName("ofalenmod:food_ball");
 		GameRegistry.registerItem(ballFood, "ballFood");
@@ -418,11 +421,6 @@ public class OfalenModItemCore {
 				.setTextureName("ofalenmod:ofalen_hoe_G3");
 		GameRegistry.registerItem(hoeOfalenG3, "hoeOfalenG3");
 
-		bowOfalen = new ItemOfalenBow()
-				.setUnlocalizedName("bowOfalen")
-				.setTextureName("ofalenmod:ofalen_bow");
-		GameRegistry.registerItem(bowOfalen, "bowOfalen");
-
 		toolPerfectOfalen = new ItemOfalenPerfectTool(OfalenModMaterialCore.PERFECTT)
 				.setUnlocalizedName("toolPerfectOfalen")
 				.setTextureName("ofalenmod:ofalen_perfect_tool");
@@ -465,10 +463,20 @@ public class OfalenModItemCore {
 		GameRegistry.registerItem(magazineLaserWhite, "magazineLaserWhite");
 
 		// 未来道具
+		shieldOfalen = new ItemShield()
+				.setUnlocalizedName("shieldOfalen")
+				.setTextureName("ofalenmod:shield");
+		GameRegistry.registerItem(shieldOfalen, "shieldOfalen");
+
 		teleporterOfalen = new ItemTeleporter()
 				.setUnlocalizedName("teleporterOfalen")
 				.setTextureName("ofalenmod:teleporter");
 		GameRegistry.registerItem(teleporterOfalen, "teleporterOfalen");
+
+		floaterOfalen = new ItemFloater()
+				.setUnlocalizedName("floaterOfalen")
+				.setTextureName("ofalenmod:floater");
+		GameRegistry.registerItem(floaterOfalen, "floaterOfalen");
 	}
 
 }

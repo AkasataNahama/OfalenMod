@@ -1,48 +1,47 @@
 package nahama.ofalenmod.inventory;
 
+import nahama.ofalenmod.core.OfalenModItemCore;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
 
-public class InventoryItemTeleporter implements IInventory {
+public class InventoryItemShield implements IInventory {
 
 	private InventoryPlayer inventoryPlayer;
 	private ItemStack currentItem;
-	private ItemStack material;
+	private ItemStack[] itemStacks = new ItemStack[9];
 
-	public InventoryItemTeleporter(InventoryPlayer inventory) {
+	public InventoryItemShield(InventoryPlayer inventory) {
 		inventoryPlayer = inventory;
-		currentItem = inventoryPlayer.getCurrentItem();
 	}
 
 	/** インベントリのスロット数を返す。 */
 	@Override
 	public int getSizeInventory() {
-		return 1;
+		return 9;
 	}
 
 	/** スロットのアイテムを返す。 */
 	@Override
 	public ItemStack getStackInSlot(int slot) {
-		return material;
+		return itemStacks[slot];
 	}
 
 	/** スロットのスタック数を減らす。 */
 	@Override
 	public ItemStack decrStackSize(int slot, int amount) {
-		if (material == null)
+		if (itemStacks[slot] == null)
 			return null;
 		ItemStack itemstack;
-		if (material.stackSize <= amount) {
-			itemstack = material;
-			material = null;
+		if (itemStacks[slot].stackSize <= amount) {
+			itemstack = itemStacks[slot];
+			itemStacks[slot] = null;
 			return itemstack;
 		}
-		itemstack = material.splitStack(amount);
-		if (material.stackSize < 1) {
-			material = null;
+		itemstack = itemStacks[slot].splitStack(amount);
+		if (itemStacks[slot].stackSize < 1) {
+			itemStacks[slot] = null;
 		}
 		return itemstack;
 	}
@@ -55,7 +54,7 @@ public class InventoryItemTeleporter implements IInventory {
 	/** スロットの中身を設定する。 */
 	@Override
 	public void setInventorySlotContents(int slot, ItemStack itemStack) {
-		material = itemStack;
+		itemStacks[slot] = itemStack;
 		if (itemStack != null && itemStack.stackSize > this.getInventoryStackLimit()) {
 			itemStack.stackSize = this.getInventoryStackLimit();
 		}
@@ -69,7 +68,7 @@ public class InventoryItemTeleporter implements IInventory {
 
 	@Override
 	public String getInventoryName() {
-		return "container.OfalenMod.ItemTeleporter";
+		return "container.OfalenMod.ItemShield";
 	}
 
 	/** このインベントリの最大スタック数を返す。 */
@@ -91,26 +90,34 @@ public class InventoryItemTeleporter implements IInventory {
 	@Override
 	public void openInventory() {
 		// アイテムを読み込む。
-		if (currentItem.getTagCompound().hasKey("Material")) {
-			material = ItemStack.loadItemStackFromNBT(currentItem.getTagCompound().getCompoundTag("Material"));
-			return;
+		currentItem = inventoryPlayer.getCurrentItem();
+		int amount = currentItem.getMaxDamage() - currentItem.getItemDamage();
+		itemStacks = new ItemStack[9];
+		for (int i = 0; i < 9; i++) {
+			if (amount < 1)
+				break;
+			if (amount < 64) {
+				itemStacks[i] = new ItemStack(OfalenModItemCore.partsOfalen, amount, 6);
+				break;
+			}
+			itemStacks[i] = new ItemStack(OfalenModItemCore.partsOfalen, 64, 6);
+			amount -= 64;
+			continue;
 		}
-		material = null;
 	}
 
 	/** インベントリが閉じられた時の処理。 */
 	@Override
 	public void closeInventory() {
-		// アイテムを保存する。
-		ItemStack result = inventoryPlayer.getCurrentItem().copy();
-		if (material == null) {
-			result.getTagCompound().removeTag("Material");
-		} else {
-			NBTTagCompound nbt = new NBTTagCompound();
-			material.writeToNBT(nbt);
-			result.getTagCompound().setTag("Material", nbt);
+		currentItem = inventoryPlayer.getCurrentItem();
+		int amount = 0;
+		for (int i = 0; i < 9; i++) {
+			if (itemStacks[i] == null)
+				continue;
+			amount += itemStacks[i].stackSize;
 		}
-		inventoryPlayer.mainInventory[inventoryPlayer.currentItem] = result;
+		itemStacks = new ItemStack[9];
+		inventoryPlayer.mainInventory[inventoryPlayer.currentItem].setItemDamage(currentItem.getMaxDamage() - amount);
 	}
 
 	/** スロットにアクセスできるかどうか。 */

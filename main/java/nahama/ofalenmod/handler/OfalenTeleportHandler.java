@@ -1,36 +1,31 @@
-package nahama.ofalenmod.core;
+package nahama.ofalenmod.handler;
 
 import java.util.HashMap;
-import java.util.Iterator;
 
 import net.minecraft.world.World;
 
-public class OfalenTeleportManager {
+public class OfalenTeleportHandler {
 
-	private static HashMap<Integer, OfalenTeleportManager> instanceList = new HashMap<Integer, OfalenTeleportManager>();
+	private static HashMap<Integer, OfalenTeleportHandler> instanceList = new HashMap<Integer, OfalenTeleportHandler>();
 	private int id;
 	private HashMap<Integer, int[]> markerList = new HashMap<Integer, int[]>();
 
-	private OfalenTeleportManager(int id) {
+	private OfalenTeleportHandler(int id) {
 		this.id = id;
 	}
 
 	public static void init() {
-		Iterator<OfalenTeleportManager> iterator = instanceList.values().iterator();
-		while (iterator.hasNext()) {
-			iterator.next().markerList.clear();
-		}
 		instanceList.clear();
 	}
 
 	/** ディメンションに対応したマネージャーのインスタンスを返す。 */
-	public static OfalenTeleportManager getInstance(World world) {
+	public static OfalenTeleportHandler getInstance(World world) {
 		if (world.isRemote)
 			return null;
 		// ディメンションIDを取得し、そのディメンションに対応するマネージャーがないなら生成して返す。
 		int id = world.provider.dimensionId;
 		if (!instanceList.containsKey(id)) {
-			instanceList.put(id, new OfalenTeleportManager(id));
+			instanceList.put(id, new OfalenTeleportHandler(id));
 		}
 		return instanceList.get(id);
 	}

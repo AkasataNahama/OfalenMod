@@ -46,4 +46,19 @@ public class BlockTeleportMarker extends Block implements ITileEntityProvider {
 		super.breakBlock(world, x, y, z, block, meta);
 	}
 
+	@Override
+	public int getRenderType() {
+		return -1;
+	}
+
+	@Override
+	public boolean isOpaqueCube() {
+		return false;
+	}
+
+	@Override
+	public boolean renderAsNormalBlock() {
+		return false;
+	}
+
 }

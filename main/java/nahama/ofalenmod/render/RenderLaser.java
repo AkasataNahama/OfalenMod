@@ -1,4 +1,4 @@
-package nahama.ofalenmod.renderer;
+package nahama.ofalenmod.render;
 
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
