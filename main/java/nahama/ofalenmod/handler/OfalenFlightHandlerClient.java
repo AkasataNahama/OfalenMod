@@ -10,63 +10,74 @@ import nahama.ofalenmod.network.MFloaterMode;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 
 @SideOnly(Side.CLIENT)
 public class OfalenFlightHandlerClient {
 
+	/** フローターのモード。 */
 	private static byte flightMode;
+	private static byte time;
 	private static EntityPlayerSP player;
-	private static int duration;
 	private static Random random = new Random();
 
+	/** 初期化処理。 */
 	public static void init() {
+		// プレイヤーのインスタンスを代入する。
 		player = Minecraft.getMinecraft().thePlayer;
 		flightMode = -1;
 	}
 
+	/** プレイヤーがフローターを有効にしているか確認する。 */
 	public static void checkPlayer() {
+		flightMode = 0;
 		IInventory inventory = player.inventory;
 		for (int i = 0; i < inventory.getSizeInventory(); i++) {
 			ItemStack itemStack = inventory.getStackInSlot(i);
 			if (itemStack == null || !(itemStack.getItem() instanceof ItemFloater) || !itemStack.hasTagCompound())
 				continue;
-			allowPlayerToFloat(itemStack.getTagCompound().getByte("Mode"));
+			flightMode = itemStack.getTagCompound().getByte("Mode");
 		}
+		allowPlayerToFloat(flightMode);
+		time = 0;
 	}
 
+	/** フローターのモードを更新する。 */
 	public static void allowPlayerToFloat(byte mode) {
 		if (mode < 0) {
+			// 無効にされたら、飛行を禁止する。
 			forbidPlayerToFloat();
 			return;
 		}
+		// モードを設定し、サーバーに通知する。
 		flightMode = mode;
 		OfalenModCore.wrapper.sendToServer(new MFloaterMode(flightMode, false));
 	}
 
+	/** プレイヤーの浮遊を禁止する。 */
 	public static void forbidPlayerToFloat() {
+		// モードを0にし、サーバーに通知する。
 		flightMode = 0;
-		// 滞空時移動速度を上書き。
-		player.jumpMovementFactor = 0.02f;
 		OfalenModCore.wrapper.sendToServer(new MFloaterMode(flightMode, false));
+		// 滞空時移動速度をもとに戻す。
+		player.jumpMovementFactor = 0.02F;
 	}
 
+	/** 浮遊が許可されているかどうか。 */
 	public static boolean canFloat() {
+		// 初期化直後ならプレイヤーを調査する。
 		if (flightMode == -1)
 			checkPlayer();
 		return flightMode > 0;
 	}
 
-	public static void setFlightMode(byte mode, EntityPlayer player) {
-		flightMode = mode;
-	}
-
+	/** Entityがプレイヤーかどうか。 */
 	public static boolean isPlayer(Entity entity) {
 		return player.getCommandSenderName() == entity.getCommandSenderName();
 	}
 
+	/** プレイヤーを浮遊させる。 */
 	public static void floatPlayer() {
 		switch (flightMode) {
 		case 0:
@@ -75,19 +86,27 @@ public class OfalenFlightHandlerClient {
 			jetFlight();
 			break;
 		case 2:
-			jumpFlight();
+			glideFlight();
 			break;
 		case 3:
-			quietFlight();
+			jumpFlight();
 			break;
 		case 4:
+			quietFlight();
+			break;
+		case 5:
 			horizontalFlight();
 			break;
 		}
+		time++;
+		if (time > 20)
+			checkPlayer();
+		// プレイヤーが空中にいるならパーティクルを表示する。
 		if (!player.onGround)
 			Minecraft.getMinecraft().theWorld.spawnParticle("reddust", player.posX, player.posY - 1.6D - (random.nextDouble() / 2), player.posZ, 0.4D, 0.8D, 1.0D);
 	}
 
+	/** ジェットモードで浮遊させる。 */
 	private static void jetFlight() {
 		// 滞空時移動速度を上書き。
 		player.jumpMovementFactor = 0.04F;
@@ -101,6 +120,16 @@ public class OfalenFlightHandlerClient {
 		}
 	}
 
+	/** グライドモードで浮遊させる。 */
+	private static void glideFlight() {
+		// 滞空時移動速度を上書き。
+		player.jumpMovementFactor = 0.08F;
+		if (player.motionY < -0.1D) {
+			player.motionY = -0.1D;
+		}
+	}
+
+	/** ジャンプモードで浮遊させる。 */
 	private static void jumpFlight() {
 		// 滞空時移動速度を上書き。
 		player.jumpMovementFactor = 0.04F;
@@ -114,6 +143,7 @@ public class OfalenFlightHandlerClient {
 		}
 	}
 
+	/** クアイエットモードで浮遊させる。 */
 	private static void quietFlight() {
 		// 滞空時移動速度を上書き。
 		player.jumpMovementFactor = 0.08F;
@@ -131,6 +161,7 @@ public class OfalenFlightHandlerClient {
 		}
 	}
 
+	/** ホリゾンタルモードで浮遊させる。 */
 	private static void horizontalFlight() {
 		// 滞空時移動速度を上書き。
 		player.jumpMovementFactor = 0.02F;

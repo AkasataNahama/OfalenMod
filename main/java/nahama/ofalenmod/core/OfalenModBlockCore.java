@@ -5,12 +5,14 @@ import nahama.ofalenmod.block.BlockConversionMachine;
 import nahama.ofalenmod.block.BlockMachineProcessor;
 import nahama.ofalenmod.block.BlockOfalen;
 import nahama.ofalenmod.block.BlockOfalenOre;
+import nahama.ofalenmod.block.BlockPresentBox;
 import nahama.ofalenmod.block.BlockProcessorCasing;
 import nahama.ofalenmod.block.BlockRepairMachine;
 import nahama.ofalenmod.block.BlockSmeltingMachine;
 import nahama.ofalenmod.block.BlockTeleportMarker;
 import nahama.ofalenmod.itemblock.ItemOfalenBlock;
 import nahama.ofalenmod.tileentity.TileEntityConversionMachine;
+import nahama.ofalenmod.tileentity.TileEntityPresentBox;
 import nahama.ofalenmod.tileentity.TileEntityRepairMachine;
 import nahama.ofalenmod.tileentity.TileEntitySmeltingMachine;
 import nahama.ofalenmod.tileentity.TileEntityTeleportMarker;
@@ -28,6 +30,7 @@ public class OfalenModBlockCore {
 	public static Block processorMachine;
 	public static Block casingProcessor;
 	public static Block markerTeleportOfalen;
+	public static Block boxPresentOfalen;
 
 	/** ブロックを登録する処理。 */
 	public static void registerBlock() {
@@ -84,6 +87,12 @@ public class OfalenModBlockCore {
 				.setBlockTextureName("ofalenmod:teleport_marker");
 		GameRegistry.registerBlock(markerTeleportOfalen, "markerTeleportOfalen");
 		GameRegistry.registerTileEntity(TileEntityTeleportMarker.class, "TileEntityTeleportMarker");
+
+		boxPresentOfalen = new BlockPresentBox()
+				.setBlockName("boxPresentOfalen")
+				.setBlockTextureName("ofalenmod:present_box");
+		GameRegistry.registerBlock(boxPresentOfalen, "boxPresentOfalen");
+		GameRegistry.registerTileEntity(TileEntityPresentBox.class, "TileEntityOfalenPresentBox");
 	}
 
 }

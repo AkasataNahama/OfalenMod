@@ -132,7 +132,6 @@ public class ItemLaserPistol extends Item {
 				return true;
 			}
 		}
-
 		// もしマガジンを持っていなくても、ピストル側にLaserColorが設定されていれば、trueを返す。
 		if (itemStack.hasTagCompound() && itemStack.getTagCompound().getString("LaserColor").length() > 0)
 			return true;
@@ -156,7 +155,7 @@ public class ItemLaserPistol extends Item {
 	@Override
 	public ItemStack onEaten(ItemStack itemStack, World world, EntityPlayer player) {
 		// リロード完了時の処理を行う。
-		// NBTTagを作成する。
+		// NBTを作成する。
 		NBTTagCompound nbt = new NBTTagCompound();
 		// すでに引数のItemStackがNBTTagを保持しているなら、
 		if (itemStack.hasTagCompound()) {
@@ -171,7 +170,7 @@ public class ItemLaserPistol extends Item {
 			}
 		}
 
-		// プレイヤーが所持しているマガジンの色をNBTTagに保存する。
+		// プレイヤーが所持しているマガジンの色をNBTに保存する。
 		ItemStack[] inventory = player.inventory.mainInventory;
 		for (int i = 0; i < inventory.length; i++) {
 			if (inventory[i] != null && inventory[i].getItem() instanceof ItemLaserMagazine && inventory[i].getItemDamage() == 0) {
@@ -209,6 +208,12 @@ public class ItemLaserPistol extends Item {
 		if (color.length() < 1)
 			return;
 		list.add(StatCollector.translateToLocal("info.OfalenMod.color:" + color.toLowerCase()) + " " + StatCollector.translateToLocal("info.OfalenMod.loaded") + (32 - (itemStack.getItemDamage() / 32)));
+	}
+
+	/** ダメージを受けられるかどうか。 */
+	@Override
+	public boolean isDamageable() {
+		return false;
 	}
 
 }

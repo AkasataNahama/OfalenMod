@@ -35,7 +35,7 @@ public class ItemShield extends ItemFuture {
 		if (world.isRemote || itemStack.getTagCompound().getByte("Duration") > 0)
 			return itemStack;
 		if (itemStack.getTagCompound().getBoolean("IsValid")) {
-			OfalenShieldHandler.getInstance().unprotectPlayer(player);
+			OfalenShieldHandler.unprotectPlayer(player);
 			itemStack.getTagCompound().setBoolean("IsValid", false);
 			itemStack.getTagCompound().setByte("Duration", (byte) 10);
 			return itemStack;
@@ -45,7 +45,7 @@ public class ItemShield extends ItemFuture {
 			player.addChatMessage(new ChatComponentText(StatCollector.translateToLocal("info.OfalenMod.ItemShield.MaterialLacking")));
 			return itemStack;
 		}
-		OfalenShieldHandler.getInstance().protectPlayer(player);
+		OfalenShieldHandler.protectPlayer(player);
 		itemStack.setItemDamage(itemStack.getItemDamage() + 1);
 		itemStack.getTagCompound().setBoolean("IsValid", true);
 		itemStack.getTagCompound().setByte("Duration", (byte) 10);

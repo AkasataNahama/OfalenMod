@@ -1,31 +1,40 @@
-package nahama.ofalenmod.core;
+package nahama.ofalenmod.handler;
 
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
-import nahama.ofalenmod.handler.OfalenFlightHandlerClient;
-import nahama.ofalenmod.handler.OfalenFlightHandlerServer;
-import nahama.ofalenmod.handler.OfalenShieldHandler;
+import nahama.ofalenmod.core.OfalenModUpdateCheckCore;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.StatCollector;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.event.entity.living.LivingFallEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 
-public class OfalenModEventCore {
+public class OfalenModEventHandler {
 
-	/** Entityがワールドにスポーン/ログインした時の処理。 */
+	/** Entityがワールドに追加された時の処理。 */
 	@SubscribeEvent
 	public void onEntityJoinWorld(EntityJoinWorldEvent event) {
 		if (!(event.entity instanceof EntityPlayer))
 			return;
+		EntityPlayer player = (EntityPlayer) event.entity;
 		// プレイヤーの時。
 		if (!event.world.isRemote) {
 			// サーバー側
-			OfalenShieldHandler.checkPlayer((EntityPlayer) event.entity);
+			// シールドの調査。
+			OfalenShieldHandler.checkPlayer(player);
+			// プレゼントの調査。
+			OfalenModAnniversaryHandler.checkPlayer(player);
+			if (OfalenModUpdateCheckCore.isAvailableNewVersion) {
+				// 最新バージョンの通知をする。
+				player.addChatMessage(new ChatComponentText(StatCollector.translateToLocal("info.OfalenMod.NewVersionIsAvailable")));
+				player.addChatMessage(new ChatComponentText(OfalenModUpdateCheckCore.getMessage()));
+			}
 		} else {
 			// クライアント側
-			if (event.entity == Minecraft.getMinecraft().thePlayer) {
+			if (player == Minecraft.getMinecraft().thePlayer) {
 				OfalenFlightHandlerClient.init();
 			}
 		}
@@ -39,11 +48,12 @@ public class OfalenModEventCore {
 		if (event.source == DamageSource.outOfWorld)
 			return;
 		// サーバー側で、キャンセル可能で、プレイヤーが奈落ダメージ以外のダメージを受けた時。
+		// シールドが有効なプレイヤーならダメージを無効化。
 		EntityPlayer player = (EntityPlayer) event.entityLiving;
-		if (!OfalenShieldHandler.getInstance().isProtecting(player))
+		if (!OfalenShieldHandler.isProtecting(player))
 			return;
 		event.setCanceled(true);
-		OfalenShieldHandler.getInstance().onProtect(player);
+		OfalenShieldHandler.onProtect(player);
 	}
 
 	/** EntityLivingBaseのアップデート時の処理。 */
@@ -52,6 +62,7 @@ public class OfalenModEventCore {
 		if (!event.entityLiving.worldObj.isRemote || !OfalenFlightHandlerClient.isPlayer(event.entityLiving))
 			return;
 		// クライアント側で、本人プレイヤーの時。（マルチプレイでの別プレイヤーでない時。）
+		// 浮遊が許可されていないなら終了。
 		if (!OfalenFlightHandlerClient.canFloat())
 			return;
 		OfalenFlightHandlerClient.floatPlayer();
@@ -63,6 +74,7 @@ public class OfalenModEventCore {
 		if (event.entityLiving.worldObj.isRemote || event.isCanceled() || !event.isCancelable() || !(event.entityLiving instanceof EntityPlayer))
 			return;
 		// サーバー側で、キャンセル可能で、本人プレイヤーの時。
+		// フローターが有効なら落下（ダメージ）をキャンセル。
 		if (!OfalenFlightHandlerServer.canFlightPlayer((EntityPlayer) event.entityLiving))
 			return;
 		event.setCanceled(true);

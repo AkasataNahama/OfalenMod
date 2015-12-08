@@ -118,6 +118,8 @@ public class InventoryItemFloater implements IInventory {
 		}
 		itemStacks = new ItemStack[9];
 		inventoryPlayer.mainInventory[inventoryPlayer.currentItem].setItemDamage(currentItem.getMaxDamage() - amount);
+		if (inventoryPlayer.getCurrentItem().getItemDamage() >= 64 * 9)
+			inventoryPlayer.getCurrentItem().getTagCompound().setByte("Mode", (byte) 0);
 	}
 
 	/** スロットにアクセスできるかどうか。 */

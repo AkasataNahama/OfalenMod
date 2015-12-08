@@ -3,22 +3,23 @@
 itemGroup.ofalentab=Ofalen Mod
 
 //GUI
-container.smeltingmachine-0=Ofalen Smelting Machine
-container.smeltingmachine-1=Ofalen Smelting Machine (Grade 1)
-container.smeltingmachine-2=Ofalen Smelting Machine (Grade 2)
-container.smeltingmachine-3=Ofalen Smelting Machine (Grade 3)
-container.conversionmachine-0=Ofalen Conversion Machine
-container.conversionmachine-1=Ofalen Conversion Machine (Grade 1)
-container.conversionmachine-2=Ofalen Conversion Machine (Grade 2)
-container.conversionmachine-3=Ofalen Conversion Machine (Grade 3)
-container.repairmachine-0=Ofalen Repair Machine
-container.repairmachine-1=Ofalen Repair Machine (Grade 1)
-container.repairmachine-2=Ofalen Repair Machine (Grade 2)
-container.repairmachine-3=Ofalen Repair Machine (Grade 3)
+container.OfalenMod.smeltingmachine-0=Ofalen Smelting Machine
+container.OfalenMod.smeltingmachine-1=Ofalen Smelting Machine (Grade 1)
+container.OfalenMod.smeltingmachine-2=Ofalen Smelting Machine (Grade 2)
+container.OfalenMod.smeltingmachine-3=Ofalen Smelting Machine (Grade 3)
+container.OfalenMod.conversionmachine-0=Ofalen Conversion Machine
+container.OfalenMod.conversionmachine-1=Ofalen Conversion Machine (Grade 1)
+container.OfalenMod.conversionmachine-2=Ofalen Conversion Machine (Grade 2)
+container.OfalenMod.conversionmachine-3=Ofalen Conversion Machine (Grade 3)
+container.OfalenMod.repairmachine-0=Ofalen Repair Machine
+container.OfalenMod.repairmachine-1=Ofalen Repair Machine (Grade 1)
+container.OfalenMod.repairmachine-2=Ofalen Repair Machine (Grade 2)
+container.OfalenMod.repairmachine-3=Ofalen Repair Machine (Grade 3)
 container.OfalenMod.ItemShield=Ofalen Shield
 container.OfalenMod.TeleportMarker=Ofalen Teleport Marker
 container.OfalenMod.ItemTeleporter=Ofalen Teleporter
 container.OfalenMod.ItemFloater=Ofalen Floater
+container.OfalenMod.PresentBox=Ofalen Present Box
 
 //Description
 info.OfalenMod.smeltingrecipe=Ofalen Smelting Machine
@@ -32,7 +33,16 @@ info.OfalenMod.ItemShield.MaterialLacking=Ofalen Shield:Shield Ingot is lacking!
 info.OfalenMod.ItemShield.ShieldBreaked=Ofalen Shield:Shield expired!
 info.OfalenMod.ItemTeleporter.MaterialLacking=Ofalen Teleporter:Teleport Pearl is lacking!
 info.OfalenMod.ItemTeleporter.ChannelInvalid=Ofalen Teleporter:This channel is Invalid!
-info.OfalenMod.ItemFloater.MaterialLacking=Ofalen Floater:Float Dust has lacked!
+info.OfalenMod.ItemFloater.ChangeMode1=Ofalen Floater:Flight Mode was changed to 1!
+info.OfalenMod.ItemFloater.ChangeMode2=Ofalen Floater:Flight Mode was changed to 2!
+info.OfalenMod.ItemFloater.ChangeMode3=Ofalen Floater:Flight Mode was changed to 3!
+info.OfalenMod.ItemFloater.ChangeMode4=Ofalen Floater:Flight Mode was changed to 4!
+info.OfalenMod.ItemFloater.ChangeMode5=Ofalen Floater:Flight Mode was changed to 5!
+info.OfalenMod.ItemFloater.MaterialLacking=Ofalen Floater:Float Dust is lacking!
+info.OfalenMod.NewVersionIsAvailable=Ofalen Mod:New version is available!
+info.OfalenMod.Now= now : 
+info.OfalenMod.New= new : 
+
 
 //Item
 item.ofalen.0.name=Red Ofalen
@@ -155,6 +165,7 @@ tile.oreOfalen.1.name=Green Ofalen Ore
 tile.oreOfalen.2.name=Blue Ofalen Ore
 tile.oreOfalen.3.name=White Ofalen Ore
 tile.markerTeleportOfalen.name=Ofalen Teleport Marker
+tile.boxPresentOfalen.name=Ofalen Present Box
 
 //Machine
 tile.machineSmelting.name=Ofalen Smelting Machine

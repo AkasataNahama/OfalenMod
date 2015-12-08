@@ -5,9 +5,11 @@ import nahama.ofalenmod.gui.GuiConversionMachine;
 import nahama.ofalenmod.gui.GuiItemFloater;
 import nahama.ofalenmod.gui.GuiItemShield;
 import nahama.ofalenmod.gui.GuiItemTeleporter;
+import nahama.ofalenmod.gui.GuiPresentBox;
 import nahama.ofalenmod.gui.GuiRepairMachine;
 import nahama.ofalenmod.gui.GuiSmeltingMachine;
 import nahama.ofalenmod.gui.GuiTeleportMarker;
+import nahama.ofalenmod.inventory.ContainerPresentBox;
 import nahama.ofalenmod.inventory.ContainerConversionMachine;
 import nahama.ofalenmod.inventory.ContainerItemFloater;
 import nahama.ofalenmod.inventory.ContainerItemShield;
@@ -16,6 +18,7 @@ import nahama.ofalenmod.inventory.ContainerRepairMachine;
 import nahama.ofalenmod.inventory.ContainerSmeltingMachine;
 import nahama.ofalenmod.inventory.ContainerTeleportMarker;
 import nahama.ofalenmod.tileentity.TileEntityConversionMachine;
+import nahama.ofalenmod.tileentity.TileEntityPresentBox;
 import nahama.ofalenmod.tileentity.TileEntityRepairMachine;
 import nahama.ofalenmod.tileentity.TileEntitySmeltingMachine;
 import nahama.ofalenmod.tileentity.TileEntityTeleportMarker;
@@ -48,6 +51,9 @@ public class OfalenModGuiHandler implements IGuiHandler {
 		if (tileentity instanceof TileEntityTeleportMarker) {
 			return new ContainerTeleportMarker(player, (TileEntityTeleportMarker) tileentity);
 		}
+		if (tileentity instanceof TileEntityPresentBox) {
+			return new ContainerPresentBox(player, (TileEntityPresentBox) tileentity);
+		}
 		return null;
 	}
 
@@ -73,6 +79,9 @@ public class OfalenModGuiHandler implements IGuiHandler {
 		}
 		if (tileentity instanceof TileEntityTeleportMarker) {
 			return new GuiTeleportMarker(player, (TileEntityTeleportMarker) tileentity);
+		}
+		if (tileentity instanceof TileEntityPresentBox) {
+			return new GuiPresentBox(player, (TileEntityPresentBox) tileentity);
 		}
 		return null;
 	}

@@ -244,7 +244,7 @@ public class OfalenModRecipeCore {
 				" X ", "XYX", " X ", 'X', ITEM.ballEmpty, 'Y', Items.rotten_flesh));
 
 		GameRegistry.addRecipe(new ShapelessOreRecipe(ITEM.ballFood,
-				ITEM.ballFood, "ingotGold"));
+				ITEM.ballEmpty, "ingotGold"));
 
 		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ITEM.ballFood, 4),
 				" X ", "XYX", " X ", 'X', ITEM.ballEmpty, 'Y', "ingotGold"));
@@ -357,18 +357,18 @@ public class OfalenModRecipeCore {
 		}
 
 		// シールド関連
-		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ITEM.partsOfalen, 4, 6),
+		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ITEM.partsOfalen, OfalenModConfigCore.amountIngotShield, 6),
 				"GOG",
 				"OEO",
 				"GOG",
 				'G', "ingotGold", 'O', frag[0], 'E', "ingotIron"));
-		GameRegistry.addRecipe(new ShapedOreRecipe(ITEM.shieldOfalen,
+		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ITEM.shieldOfalen, 1, 576),
 				"IOI",
 				"OEO",
 				"IOI",
 				'I', "ingotGold", 'O', core[0], 'E', ITEM.ingot));
 		// テレポーター関連
-		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ITEM.partsOfalen, 4, 7),
+		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ITEM.partsOfalen, OfalenModConfigCore.amountPearlTeleport, 7),
 				"GOG",
 				"OEO",
 				"GOG",
@@ -384,12 +384,12 @@ public class OfalenModRecipeCore {
 				"GTG",
 				'G', "ingotGold", 'T', ITEM.pearl, 'O', gem[1], 'C', core[1]));
 		// フローター関連
-		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ITEM.partsOfalen, 4, 8),
+		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ITEM.partsOfalen, OfalenModConfigCore.amountDustFloat, 8),
 				"GOG",
 				"ODO",
 				"GOG",
 				'G', "ingotGold", 'O', frag[2], 'D', "dustGlowstone"));
-		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ITEM.floaterOfalen),
+		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ITEM.floaterOfalen, 1, 576),
 				"IOI",
 				"OEO",
 				"IOI",

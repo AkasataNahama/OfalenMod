@@ -15,9 +15,11 @@ public class ItemFuture extends Item {
 		this.setMaxStackSize(1);
 	}
 
+	/** アップデート時の処理。 */
 	@Override
 	public void onUpdate(ItemStack itemStack, World world, Entity entity, int slot, boolean flag) {
 		super.onUpdate(itemStack, world, entity, slot, flag);
+		// NBTを持っていなければ空のものを持たせ、Durationがあれば減らす。
 		if (!itemStack.hasTagCompound())
 			itemStack.setTagCompound(new NBTTagCompound());
 		byte duration = itemStack.getTagCompound().getByte("Duration");

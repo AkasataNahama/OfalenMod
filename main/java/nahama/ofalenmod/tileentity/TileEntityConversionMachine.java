@@ -18,7 +18,7 @@ public class TileEntityConversionMachine extends TileEntityGradedMachineBase {
 	/** インベントリ名を返す。 */
 	@Override
 	public String getInventoryName() {
-		return this.hasCustomInventoryName() ? customName : "container.conversionmachine-" + grade;
+		return this.hasCustomInventoryName() ? customName : "container.OfalenMod.conversionmachine-" + grade;
 	}
 
 	@Override
@@ -51,12 +51,10 @@ public class TileEntityConversionMachine extends TileEntityGradedMachineBase {
 				}
 			}
 		}
-		// 匠Craftが読み込まれているなら、匠のオファレンでも可。
-		if (OfalenModOreDicCore.isTakumiCraftLoaded) {
-			if (itemStacks[0].isItemEqual(OfalenModOreDicCore.ofalenCreeper)) {
-				if (Block.getBlockFromItem(sample.getItem()) == OfalenModBlockCore.blockOfalen) {
-					return true;
-				}
+		// オファレンブロックへの変換なら、匠式硬質オファレンブロックでも可。
+		if (Block.getBlockFromItem(sample.getItem()) == OfalenModBlockCore.blockOfalen) {
+			if (OfalenModOreDicCore.isCreeperOfalenBlock(itemStacks[0].copy())) {
+				return true;
 			}
 		}
 		this.moveItemStack();

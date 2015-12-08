@@ -3,22 +3,23 @@
 itemGroup.ofalentab=オファレンMOD
 
 //GUI
-container.smeltingmachine-0=オファレン製錬機
-container.smeltingmachine-1=オファレン製錬機 (Grade 1)
-container.smeltingmachine-2=オファレン製錬機 (Grade 2)
-container.smeltingmachine-3=オファレン製錬機 (Grade 3)
-container.conversionmachine-0=オファレン変換機
-container.conversionmachine-1=オファレン変換機 (Grade 1)
-container.conversionmachine-2=オファレン変換機 (Grade 2)
-container.conversionmachine-3=オファレン変換機 (Grade 3)
-container.repairmachine-0=オファレン修繕機
-container.repairmachine-1=オファレン修繕機 (Grade 1)
-container.repairmachine-2=オファレン修繕機 (Grade 2)
-container.repairmachine-3=オファレン修繕機 (Grade 3)
+container.OfalenMod.smeltingmachine-0=オファレン製錬機
+container.OfalenMod.smeltingmachine-1=オファレン製錬機 (Grade 1)
+container.OfalenMod.smeltingmachine-2=オファレン製錬機 (Grade 2)
+container.OfalenMod.smeltingmachine-3=オファレン製錬機 (Grade 3)
+container.OfalenMod.conversionmachine-0=オファレン変換機
+container.OfalenMod.conversionmachine-1=オファレン変換機 (Grade 1)
+container.OfalenMod.conversionmachine-2=オファレン変換機 (Grade 2)
+container.OfalenMod.conversionmachine-3=オファレン変換機 (Grade 3)
+container.OfalenMod.repairmachine-0=オファレン修繕機
+container.OfalenMod.repairmachine-1=オファレン修繕機 (Grade 1)
+container.OfalenMod.repairmachine-2=オファレン修繕機 (Grade 2)
+container.OfalenMod.repairmachine-3=オファレン修繕機 (Grade 3)
 container.OfalenMod.ItemShield=オファレンシールド
 container.OfalenMod.TeleportMarker=オファレンテレポートマーカー
 container.OfalenMod.ItemTeleporter=オファレンテレポーター
 container.OfalenMod.ItemFloater=オファレンフローター
+container.OfalenMod.PresentBox=オファレンプレゼントボックス
 
 //説明文
 info.OfalenMod.smeltingrecipe=オファレン製錬機
@@ -32,7 +33,15 @@ info.OfalenMod.ItemShield.MaterialLacking=オファレンシールド：シー�
 info.OfalenMod.ItemShield.ShieldBreaked=オファレンシールド：シールドが無効になりました！
 info.OfalenMod.ItemTeleporter.MaterialLacking=オファレンテレポーター：テレポートパールが不足しています！
 info.OfalenMod.ItemTeleporter.ChannelInvalid=オファレンテレポーター：このチャンネルは無効です！
-info.OfalenMod.ItemFloater.MaterialLacking=オファレンフローター：フロートダストが足りなくなりました！
+info.OfalenMod.ItemFloater.ChangeMode1=オファレンフローター：モードを1にチェンジしました！
+info.OfalenMod.ItemFloater.ChangeMode2=オファレンフローター：モードを2にチェンジしました！
+info.OfalenMod.ItemFloater.ChangeMode3=オファレンフローター：モードを3にチェンジしました！
+info.OfalenMod.ItemFloater.ChangeMode4=オファレンフローター：モードを4にチェンジしました！
+info.OfalenMod.ItemFloater.ChangeMode5=オファレンフローター：モードを5にチェンジしました！
+info.OfalenMod.ItemFloater.MaterialLacking=オファレンフローター：フロートダストが不足しています！
+info.OfalenMod.NewVersionIsAvailable=オファレンMOD：新しいバージョンがリリースされています！
+info.OfalenMod.Now= 現在 : 
+info.OfalenMod.New= 最新 : 
 
 //アイテム
 item.ofalen.0.name=赤いオファレン
@@ -155,6 +164,7 @@ tile.oreOfalen.1.name=緑のオファレン鉱石
 tile.oreOfalen.2.name=青いオファレン鉱石
 tile.oreOfalen.3.name=白いオファレン鉱石
 tile.markerTeleportOfalen.name=オファレンテレポートマーカー
+tile.boxPresentOfalen.name=オファレンプレゼントボックス
 
 //機械
 tile.machineSmelting.name=オファレン製錬機

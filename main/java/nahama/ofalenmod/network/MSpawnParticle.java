@@ -42,8 +42,8 @@ public class MSpawnParticle implements IMessage {
 
 		@Override
 		public IMessage onMessage(MSpawnParticle message, MessageContext ctx) {
+			Random random = new Random();
 			if (message.type == 0) {
-				Random random = new Random();
 				for (int i = 0; i < 80; i++) {
 					double d0 = message.x + ((random.nextDouble() - 0.5) * 2);
 					double d1 = message.y + (random.nextDouble() * 2);
@@ -52,16 +52,14 @@ public class MSpawnParticle implements IMessage {
 				}
 			}
 			if (message.type == 1) {
-				Random random = new Random();
 				for (int i = 0; i < 80; i++) {
 					double d0 = message.x + ((random.nextDouble() - 0.5) * 2);
 					double d1 = message.y + (random.nextDouble() * 2);
 					double d2 = message.z + ((random.nextDouble() - 0.5) * 2);
-					Minecraft.getMinecraft().theWorld.spawnParticle("portal", d0, d1, d2, 0, 0, 0);
+					Minecraft.getMinecraft().theWorld.spawnParticle("reddust", d0, d1, d2, 0.8D, 1.0D, 0.4D);
 				}
 			}
 			if (message.type == 2) {
-				Random random = new Random();
 				for (int i = 0; i < 40; i++) {
 					double d0 = message.x + ((random.nextDouble() - 0.5) * 2);
 					double d1 = message.y + (random.nextDouble() * 2);

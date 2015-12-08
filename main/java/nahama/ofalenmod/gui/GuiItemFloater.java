@@ -27,8 +27,8 @@ public class GuiItemFloater extends GuiContainer {
 	@Override
 	public void initGui() {
 		super.initGui();
-		for (int i = 0; i < 5; i++) {
-			buttonList.add(new GuiItemFloater.Button(-1 - i, guiLeft + 112 + (12 * i), guiTop + 15, i));
+		for (int i = 0; i < 6; i++) {
+			buttonList.add(new GuiItemFloater.Button(-1 - i, guiLeft + 100 + (12 * i), guiTop + 25, i));
 		}
 	}
 
@@ -45,9 +45,9 @@ public class GuiItemFloater extends GuiContainer {
 		String s = StatCollector.translateToLocal("container.OfalenMod.ItemFloater");
 		fontRendererObj.drawString(s, xSize / 2 - fontRendererObj.getStringWidth(s) / 2, 6, 4210752);
 		fontRendererObj.drawString(StatCollector.translateToLocal("container.inventory"), 8, ySize - 96 + 2, 4210752);
-		for (int i = 0; i < 5; i++) {
+		for (int i = 0; i < 6; i++) {
 			s = String.valueOf(i);
-			fontRendererObj.drawString(s, 112 + (12 * i) + 4 - (fontRendererObj.getStringWidth(s) / 2), 23, 4210752);
+			fontRendererObj.drawString(s, 100 + (12 * i) + 4 - (fontRendererObj.getStringWidth(s) / 2), 17, 4210752);
 		}
 	}
 

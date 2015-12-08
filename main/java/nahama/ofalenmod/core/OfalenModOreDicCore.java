@@ -2,27 +2,35 @@ package nahama.ofalenmod.core;
 
 import java.util.ArrayList;
 
+import nahama.ofalenmod.Log;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
 
 public class OfalenModOreDicCore {
 
-	public static ItemStack ofalenCreeper;
+	public static ArrayList<ItemStack> listCreeperOfalenBlock = OreDictionary.getOres("CreeperOfalenBlock");
+	public static ArrayList<ItemStack> listTDiamond = OreDictionary.getOres("TDiamond");
 	public static boolean isTakumiCraftLoaded;
 
 	/** 鉱石辞書からアイテムを取得する処理。 */
 	public static void getItemFromOreDictionary() {
 		// 鉱石辞書からItemStackのリストを取得する
-		ArrayList<ItemStack> listOfalenCreeper = OreDictionary.getOres("CreeperOfalenBlock");
-
 		// ItemStackを取得できていれば、代入する
-		if (listOfalenCreeper.size() > 0) {
-			ofalenCreeper = new ItemStack(listOfalenCreeper.get(0).getItem(), 1, listOfalenCreeper.get(0).getItemDamage());
-			isTakumiCraftLoaded = true;
-		} else {
-			ofalenCreeper = null;
+		isTakumiCraftLoaded = true;
+		if (listCreeperOfalenBlock.size() < 1 || listTDiamond.size() < 1) {
 			isTakumiCraftLoaded = false;
+			Log.info("Takumi Craft was not loaded.", "OfalenModOreDicCore", true);
 		}
+	}
+
+	public static boolean isCreeperOfalenBlock(ItemStack itemStack) {
+		if (!isTakumiCraftLoaded)
+			return false;
+		for (int i = 0; i < listCreeperOfalenBlock.size(); i++) {
+			if (itemStack.isItemEqual(listCreeperOfalenBlock.get(i)))
+				return true;
+		}
+		return false;
 	}
 
 }

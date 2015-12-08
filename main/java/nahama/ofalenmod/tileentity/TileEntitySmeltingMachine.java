@@ -1,9 +1,7 @@
 package nahama.ofalenmod.tileentity;
 
-import nahama.ofalenmod.core.OfalenModBlockCore;
 import nahama.ofalenmod.core.OfalenModConfigCore;
 import nahama.ofalenmod.recipe.OfalenSmeltingRecipes;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
 public class TileEntitySmeltingMachine extends TileEntityGradedMachineBase {
@@ -11,7 +9,7 @@ public class TileEntitySmeltingMachine extends TileEntityGradedMachineBase {
 	/** インベントリ名を返す。 */
 	@Override
 	public String getInventoryName() {
-		return this.hasCustomInventoryName() ? customName : "container.smeltingmachine-" + grade;
+		return this.hasCustomInventoryName() ? customName : "container.OfalenMod.smeltingmachine-" + grade;
 	}
 
 	@Override
@@ -26,7 +24,7 @@ public class TileEntitySmeltingMachine extends TileEntityGradedMachineBase {
 			return false;
 		boolean flag = true;
 		// 製錬レシピに登録されていて、完成品スロットに空きがあるなら可。
-		ItemStack itemStack = OfalenSmeltingRecipes.smelting().getSmeltingResult(itemStacks[0]);
+		ItemStack itemStack = OfalenSmeltingRecipes.smelting().getSmeltingResultFromGrade(itemStacks[0], grade);
 		if (itemStack == null)
 			flag = false;
 		if (flag && itemStacks[2] == null)
@@ -34,10 +32,7 @@ public class TileEntitySmeltingMachine extends TileEntityGradedMachineBase {
 		if (flag && !itemStacks[2].isItemEqual(itemStack))
 			flag = false;
 		if (flag) {
-			int size = itemStack.stackSize;
-			if (itemStacks[0].getItem() == Item.getItemFromBlock(OfalenModBlockCore.oreOfalen))
-				size *= (grade + 1);
-			int result = itemStacks[2].stackSize + size;
+			int result = itemStacks[2].stackSize + itemStack.stackSize;
 			if (result <= this.getInventoryStackLimit() && result <= itemStacks[2].getMaxStackSize()) {
 				return true;
 			}

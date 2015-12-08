@@ -104,7 +104,7 @@ public class ContainerConversionMachine extends Container {
 							return null;
 						}
 					}
-				} else if (OfalenModOreDicCore.isTakumiCraftLoaded && itemStack1.isItemEqual(OfalenModOreDicCore.ofalenCreeper)) {
+				} else if (OfalenModOreDicCore.isCreeperOfalenBlock(itemStack1)) {
 					if (!this.mergeItemStack(itemStack1, 0, 1, false)) {
 						return null;
 					}

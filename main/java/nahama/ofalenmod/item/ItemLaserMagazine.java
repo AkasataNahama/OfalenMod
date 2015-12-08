@@ -63,13 +63,21 @@ public class ItemLaserMagazine extends Item {
 		list.add(StatCollector.translateToLocal("info.OfalenMod.loaded") + (32 - (itemStack.getItemDamage() / 32)));
 	}
 
+	/** アイテムスタックの最大スタック数を返す。 */
 	@Override
 	public int getItemStackLimit(ItemStack itemStack) {
 		if (itemStack.getItemDamage() == 0) {
+			// 最大装填されていればスタック可能にする。
 			return 64;
 		} else {
 			return 1;
 		}
+	}
+
+	/** ダメージを受けられるかどうか。 */
+	@Override
+	public boolean isDamageable() {
+		return false;
 	}
 
 }

@@ -13,6 +13,7 @@ import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.event.FMLServerStartingEvent;
+import cpw.mods.fml.common.event.FMLServerStoppingEvent;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import cpw.mods.fml.common.registry.GameRegistry;
@@ -20,11 +21,11 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import nahama.ofalenmod.core.OfalenModBlockCore;
 import nahama.ofalenmod.core.OfalenModConfigCore;
-import nahama.ofalenmod.core.OfalenModEventCore;
 import nahama.ofalenmod.core.OfalenModInfoCore;
 import nahama.ofalenmod.core.OfalenModItemCore;
 import nahama.ofalenmod.core.OfalenModOreDicCore;
 import nahama.ofalenmod.core.OfalenModRecipeCore;
+import nahama.ofalenmod.core.OfalenModUpdateCheckCore;
 import nahama.ofalenmod.creativetab.OfalenTab;
 import nahama.ofalenmod.entity.EntityBlueLaser;
 import nahama.ofalenmod.entity.EntityExplosionBall;
@@ -34,6 +35,8 @@ import nahama.ofalenmod.entity.EntityRedLaser;
 import nahama.ofalenmod.entity.EntityWhiteLaser;
 import nahama.ofalenmod.generator.OfalenOreGenerator;
 import nahama.ofalenmod.handler.OfalenFlightHandlerServer;
+import nahama.ofalenmod.handler.OfalenModAnniversaryHandler;
+import nahama.ofalenmod.handler.OfalenModEventHandler;
 import nahama.ofalenmod.handler.OfalenModGuiHandler;
 import nahama.ofalenmod.handler.OfalenShieldHandler;
 import nahama.ofalenmod.handler.OfalenTeleportHandler;
@@ -49,6 +52,7 @@ import nahama.ofalenmod.render.RenderTeleportMarker;
 import nahama.ofalenmod.tileentity.TileEntityTeleportMarker;
 import net.minecraft.client.renderer.entity.RenderSnowball;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.util.StatCollector;
 import net.minecraftforge.client.MinecraftForgeClient;
 import net.minecraftforge.common.MinecraftForge;
 
@@ -60,7 +64,9 @@ public class OfalenModCore {
 
 	public static final String MODID = "OfalenMod";
 	public static final String MODNAME = "Ofalen Mod";
-	public static final String VERSION = "[1.7.10]1.1.0";
+	public static final String MCVERSION = "1.7.10";
+	public static final String OMVERSION = "1.1.0";
+	public static final String VERSION = "[" + MCVERSION + "]" + OMVERSION;
 
 	/** coreクラスのインスタンス */
 	@Instance(MODID)
@@ -79,6 +85,7 @@ public class OfalenModCore {
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
 		OfalenModInfoCore.registerInfo(meta);
+		OfalenModUpdateCheckCore.checkUpdate();
 		OfalenModConfigCore.loadConfig(event);
 		OfalenModItemCore.registerItem();
 		OfalenModBlockCore.registerBlock();
@@ -90,8 +97,8 @@ public class OfalenModCore {
 		wrapper.registerMessage(MFloaterMode.Handler.class, MFloaterMode.class, 2, Side.SERVER);
 		wrapper.registerMessage(MSpawnParticle.Handler.class, MSpawnParticle.class, 3, Side.CLIENT);
 		// Event処理を登録する。
-		MinecraftForge.EVENT_BUS.register(new OfalenModEventCore());
-		FMLCommonHandler.instance().bus().register(new OfalenModEventCore());
+		MinecraftForge.EVENT_BUS.register(new OfalenModEventHandler());
+		OfalenModAnniversaryHandler.isSinglePlay = FMLCommonHandler.instance().getSide() == Side.CLIENT;
 	}
 
 	/** 初期化処理。 */
@@ -132,7 +139,7 @@ public class OfalenModCore {
 			try {
 				OfalenModNEILoad.load();
 			} catch (Exception e) {
-				Log.error("Error on NEI loading", "OfalenModCore.clientInit", true);
+				Log.error("Error on loading NEI!", "OfalenModCore.clientInit", true);
 				e.printStackTrace(System.err);
 			}
 		}
@@ -141,9 +148,21 @@ public class OfalenModCore {
 	/** サーバー起動時の処理。 */
 	@EventHandler
 	public void serverStarting(FMLServerStartingEvent event) {
+		// 各種ハンドラーを初期化する。
 		OfalenShieldHandler.init();
 		OfalenTeleportHandler.init();
 		OfalenFlightHandlerServer.init();
+		OfalenModAnniversaryHandler.init();
+		// 最新バージョンの通知をする。
+		if (OfalenModUpdateCheckCore.isAvailableNewVersion) {
+			Log.info(StatCollector.translateToLocal("info.OfalenMod.NewVersionIsAvailable") + OfalenModUpdateCheckCore.getMessage());
+		}
+	}
+
+	/** サーバー終了時の処理。 */
+	@EventHandler
+	public void serverStopping(FMLServerStoppingEvent event) {
+		OfalenModAnniversaryHandler.save();
 	}
 
 }

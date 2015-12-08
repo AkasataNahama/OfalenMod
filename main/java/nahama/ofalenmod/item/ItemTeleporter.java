@@ -2,6 +2,7 @@ package nahama.ofalenmod.item;
 
 import nahama.ofalenmod.Log;
 import nahama.ofalenmod.OfalenModCore;
+import nahama.ofalenmod.core.OfalenModConfigCore;
 import nahama.ofalenmod.core.OfalenModItemCore;
 import nahama.ofalenmod.handler.OfalenTeleportHandler;
 import nahama.ofalenmod.network.MSpawnParticle;
@@ -27,8 +28,8 @@ public class ItemTeleporter extends ItemFuture {
 		// 違うアイテムなら終了。
 		if (!(itemStack.getItem() instanceof ItemTeleporter))
 			return itemStack;
-		if (player.isSneaking()) {
-			// スニークしていたらGUIを開く。
+		if (!player.isSneaking()) {
+			// スニークしていなかったらGUIを開く。
 			player.openGui(OfalenModCore.instance, 3, world, (int) player.posX, (int) player.posY, (int) player.posZ);
 			return itemStack;
 		}
@@ -47,7 +48,7 @@ public class ItemTeleporter extends ItemFuture {
 			return itemStack;
 		}
 		// 材料を消費し、保存。
-		material.stackSize--;
+		material.stackSize -= OfalenModConfigCore.amountDamageTeleporter;
 		if (material.stackSize < 1)
 			material = null;
 		if (material != null) {
@@ -91,6 +92,8 @@ public class ItemTeleporter extends ItemFuture {
 
 	public boolean canUseItemStack(ItemStack material) {
 		if (material == null || !isItemMaterial(material))
+			return false;
+		if (material.stackSize < OfalenModConfigCore.amountDamageTeleporter)
 			return false;
 		return true;
 	}

@@ -7,7 +7,7 @@ public class TileEntityRepairMachine extends TileEntityGradedMachineBase {
 	/** インベントリ名を返す。 */
 	@Override
 	public String getInventoryName() {
-		return this.hasCustomInventoryName() ? customName : "container.repairmachine-" + grade;
+		return this.hasCustomInventoryName() ? customName : "container.OfalenMod.repairmachine-" + grade;
 	}
 
 	@Override

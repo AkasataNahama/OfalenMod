@@ -5,6 +5,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 import nahama.ofalenmod.block.BlockMachineProcessor;
 import nahama.ofalenmod.core.OfalenModConfigCore;
 import nahama.ofalenmod.core.OfalenModItemCore;
+import nahama.ofalenmod.core.OfalenModOreDicCore;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
@@ -94,6 +95,12 @@ public abstract class TileEntityGradedMachineBase extends TileEntity implements 
 		} else if (meta == 4) {
 			return OfalenModConfigCore.timeBurnOfalen;
 		}
+		if (OfalenModOreDicCore.isTakumiCraftLoaded) {
+			for (int i = 0; i < OfalenModOreDicCore.listTDiamond.size(); i++) {
+				if (itemStack.isItemEqual(OfalenModOreDicCore.listTDiamond.get(i)))
+					return OfalenModConfigCore.timeBurnStone;
+			}
+		}
 		return time;
 	}
 
@@ -151,24 +158,24 @@ public abstract class TileEntityGradedMachineBase extends TileEntity implements 
 
 	/** 材料スロットから完成品スロットにアイテムを移動する。 */
 	protected void moveItemStack() {
-		int limit = Math.min(itemStacks[1].getMaxStackSize(), this.getInventoryStackLimit());
-		if (itemStacks[0] == null || itemStacks[1].stackSize >= limit)
+		if (itemStacks[0] == null)
 			return;
-		if (itemStacks[1] == null) {
-			itemStacks[1] = itemStacks[0].copy();
+		if (itemStacks[2] == null) {
+			itemStacks[2] = itemStacks[0].copy();
 			itemStacks[0] = null;
 			return;
 		}
-		if (!itemStacks[0].isItemEqual(itemStacks[1]))
+		int limit = Math.min(itemStacks[2].getMaxStackSize(), this.getInventoryStackLimit());
+		if (itemStacks[2].stackSize >= limit || !itemStacks[0].isItemEqual(itemStacks[2]))
 			return;
-		int result = itemStacks[1].stackSize + itemStacks[0].stackSize;
+		int result = itemStacks[2].stackSize + itemStacks[0].stackSize;
 		if (result <= limit) {
-			itemStacks[1].stackSize = result;
+			itemStacks[2].stackSize = result;
 			itemStacks[0] = null;
 			return;
 		}
 		itemStacks[0].stackSize = result - limit;
-		itemStacks[1].stackSize = limit;
+		itemStacks[2].stackSize = limit;
 	}
 
 	/** NBTに機械の情報を記録する。 */
