@@ -74,7 +74,7 @@ public class OfalenFlightHandlerClient {
 
 	/** Entityがプレイヤーかどうか。 */
 	public static boolean isPlayer(Entity entity) {
-		return player.getCommandSenderName() == entity.getCommandSenderName();
+		return player.getCommandSenderName().equals(entity.getCommandSenderName());
 	}
 
 	/** プレイヤーを浮遊させる。 */

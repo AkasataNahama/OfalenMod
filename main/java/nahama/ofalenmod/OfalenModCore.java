@@ -23,9 +23,7 @@ import nahama.ofalenmod.core.OfalenModBlockCore;
 import nahama.ofalenmod.core.OfalenModConfigCore;
 import nahama.ofalenmod.core.OfalenModInfoCore;
 import nahama.ofalenmod.core.OfalenModItemCore;
-import nahama.ofalenmod.core.OfalenModOreDicCore;
 import nahama.ofalenmod.core.OfalenModRecipeCore;
-import nahama.ofalenmod.core.OfalenModUpdateCheckCore;
 import nahama.ofalenmod.creativetab.OfalenTab;
 import nahama.ofalenmod.entity.EntityBlueLaser;
 import nahama.ofalenmod.entity.EntityExplosionBall;
@@ -38,6 +36,7 @@ import nahama.ofalenmod.handler.OfalenFlightHandlerServer;
 import nahama.ofalenmod.handler.OfalenModAnniversaryHandler;
 import nahama.ofalenmod.handler.OfalenModEventHandler;
 import nahama.ofalenmod.handler.OfalenModGuiHandler;
+import nahama.ofalenmod.handler.OfalenModUpdateCheckHandler;
 import nahama.ofalenmod.handler.OfalenShieldHandler;
 import nahama.ofalenmod.handler.OfalenTeleportHandler;
 import nahama.ofalenmod.model.ModelLaser;
@@ -65,8 +64,8 @@ public class OfalenModCore {
 	public static final String MODID = "OfalenMod";
 	public static final String MODNAME = "Ofalen Mod";
 	public static final String MCVERSION = "1.7.10";
-	public static final String OMVERSION = "1.1.0";
-	public static final String VERSION = "[" + MCVERSION + "]" + OMVERSION;
+	public static final String MODVERSION = "1.1.1";
+	public static final String VERSION = "[" + MCVERSION + "]" + MODVERSION;
 
 	/** coreクラスのインスタンス */
 	@Instance(MODID)
@@ -85,7 +84,7 @@ public class OfalenModCore {
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
 		OfalenModInfoCore.registerInfo(meta);
-		OfalenModUpdateCheckCore.checkUpdate();
+		OfalenModUpdateCheckHandler.checkUpdate();
 		OfalenModConfigCore.loadConfig(event);
 		OfalenModItemCore.registerItem();
 		OfalenModBlockCore.registerBlock();
@@ -115,10 +114,7 @@ public class OfalenModCore {
 
 	/** 初期化後処理。 */
 	@EventHandler
-	public void postInit(FMLPostInitializationEvent event) {
-		// 鉱石辞書からアイテムを取得するメソッドを実行。
-		OfalenModOreDicCore.getItemFromOreDictionary();
-	}
+	public void postInit(FMLPostInitializationEvent event) {}
 
 	/** クライアントの初期化処理。 */
 	@SideOnly(Side.CLIENT)
@@ -154,8 +150,8 @@ public class OfalenModCore {
 		OfalenFlightHandlerServer.init();
 		OfalenModAnniversaryHandler.init();
 		// 最新バージョンの通知をする。
-		if (OfalenModUpdateCheckCore.isAvailableNewVersion) {
-			Log.info(StatCollector.translateToLocal("info.OfalenMod.NewVersionIsAvailable") + OfalenModUpdateCheckCore.getMessage());
+		if (OfalenModUpdateCheckHandler.isAvailableNewVersion) {
+			Log.info(StatCollector.translateToLocal("info.OfalenMod.NewVersionIsAvailable") + OfalenModUpdateCheckHandler.getMessage());
 		}
 	}
 

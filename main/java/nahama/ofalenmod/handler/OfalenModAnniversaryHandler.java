@@ -40,8 +40,8 @@ public class OfalenModAnniversaryHandler {
 	private static ItemStack[] anotherPresents;
 	/** シングルプレイかどうか。 */
 	public static boolean isSinglePlay;
-	/** クリスマスかどうか。 */
-	public static boolean isChristmas;
+	/** テクスチャが特別かどうか。 */
+	public static boolean isTextureSpecial;
 	/** 二回開けられる記念日かどうか。 */
 	public static boolean isTwice;
 
@@ -54,11 +54,7 @@ public class OfalenModAnniversaryHandler {
 		int year = cal.get(cal.YEAR);
 		int month = cal.get(cal.MONTH);
 		int date = cal.get(cal.DATE);
-		if (month == cal.DECEMBER && 23 <= date && date <= 25)
-			isChristmas = true;
 		today = year + "/" + (month + 1) + "/" + date;
-		if (today.equals("2016/4/1"))
-			isTwice = true;
 		loadPresentedDate: {
 			try {
 				// ConfigフォルダのOfalenModPresentedDate.txtを読み込む。
@@ -87,9 +83,19 @@ public class OfalenModAnniversaryHandler {
 			while ((str = readString(in)) != null) {
 				if (str.charAt(0) != '+') {
 					dates = null;
+					isTwice = false;
+					isTextureSpecial = false;
 					continue;
 				}
 				str = str.substring(1);
+				if (str.charAt(0) == '+') {
+					isTwice = true;
+					str = str.substring(1);
+				}
+				if (str.charAt(0) == '-') {
+					isTextureSpecial = true;
+					str = str.substring(1);
+				}
 				dates = str.split(",");
 				for (int i = 0; i < dates.length; i++) {
 					if (!dates[i].equals(today))

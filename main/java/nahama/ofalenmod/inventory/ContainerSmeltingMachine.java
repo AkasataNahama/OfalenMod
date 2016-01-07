@@ -93,7 +93,7 @@ public class ContainerSmeltingMachine extends Container {
 				}
 				slot.onSlotChange(itemStack1, itemStack);
 			} else if (slotNumber != 1 && slotNumber != 0) {
-				if (OfalenSmeltingRecipes.smelting().getSmeltingResult(itemStack1) != null) {
+				if (OfalenSmeltingRecipes.getInstance().getSmeltingResult(itemStack1) != null) {
 					if (!this.mergeItemStack(itemStack1, 0, 1, false)) {
 						return null;
 					}

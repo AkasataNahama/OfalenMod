@@ -1,7 +1,6 @@
 package nahama.ofalenmod.handler;
 
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
-import nahama.ofalenmod.core.OfalenModUpdateCheckCore;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ChatComponentText;
@@ -27,10 +26,10 @@ public class OfalenModEventHandler {
 			OfalenShieldHandler.checkPlayer(player);
 			// プレゼントの調査。
 			OfalenModAnniversaryHandler.checkPlayer(player);
-			if (OfalenModUpdateCheckCore.isAvailableNewVersion) {
+			if (OfalenModUpdateCheckHandler.isAvailableNewVersion) {
 				// 最新バージョンの通知をする。
 				player.addChatMessage(new ChatComponentText(StatCollector.translateToLocal("info.OfalenMod.NewVersionIsAvailable")));
-				player.addChatMessage(new ChatComponentText(OfalenModUpdateCheckCore.getMessage()));
+				player.addChatMessage(new ChatComponentText(OfalenModUpdateCheckHandler.getMessage()));
 			}
 		} else {
 			// クライアント側

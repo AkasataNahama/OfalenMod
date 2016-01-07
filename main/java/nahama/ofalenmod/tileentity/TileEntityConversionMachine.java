@@ -53,7 +53,7 @@ public class TileEntityConversionMachine extends TileEntityGradedMachineBase {
 		}
 		// オファレンブロックへの変換なら、匠式硬質オファレンブロックでも可。
 		if (Block.getBlockFromItem(sample.getItem()) == OfalenModBlockCore.blockOfalen) {
-			if (OfalenModOreDicCore.isCreeperOfalenBlock(itemStacks[0].copy())) {
+			if (OfalenModOreDicCore.isMuchedItemStack(OfalenModOreDicCore.listCreeperOfalenBlock, itemStacks[0])) {
 				return true;
 			}
 		}

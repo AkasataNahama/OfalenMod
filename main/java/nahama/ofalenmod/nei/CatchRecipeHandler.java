@@ -19,9 +19,9 @@ public class CatchRecipeHandler extends TemplateRecipeHandler {
 	private HashMap<ItemStack, ItemStack> newRecipe;
 
 	private HashMap<ItemStack, ItemStack> recipeLoader() {
-		if (OfalenSmeltingRecipes.smelting().smeltingList != null && !OfalenSmeltingRecipes.smelting().smeltingList.isEmpty()) {
+		if (OfalenSmeltingRecipes.getInstance().smeltingList != null && !OfalenSmeltingRecipes.getInstance().smeltingList.isEmpty()) {
 			newRecipe = new HashMap<ItemStack, ItemStack>();
-			Iterator<Entry<ItemStack[], Boolean>> iterator = OfalenSmeltingRecipes.smelting().smeltingList.entrySet().iterator();
+			Iterator<Entry<ItemStack[], Boolean>> iterator = OfalenSmeltingRecipes.getInstance().smeltingList.entrySet().iterator();
 			Entry<ItemStack[], Boolean> entry;
 			while (iterator.hasNext()) {
 				entry = iterator.next();

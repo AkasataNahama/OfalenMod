@@ -17,6 +17,7 @@ public class OfalenModConfigCore {
 	public static int frequencyGeneration = 3;
 	public static int probabilityGenerationLode = 1;
 
+	public static int factorTimeBurnFuelFurnace = 512;
 	public static int timeBurnOfalen = 4800;
 	public static int timeBurnStone = 400;
 	public static int timeConversion = 1200;
@@ -59,6 +60,7 @@ public class OfalenModConfigCore {
 			frequencyGeneration = cfg.getInt("GenerationFrequency", GENERATE, frequencyGeneration, 1, 255, "Generation Frequency of Ofalen Ore");
 			probabilityGenerationLode = cfg.getInt("GenerationProbabilityLode", GENERATE, probabilityGenerationLode, 1, 10000, "Generation probability of Huge Ofalen Ore Lode(/10000)");
 
+			factorTimeBurnFuelFurnace = cfg.getInt("BurnTimeFactorFurnaceFuel", MACHINE, factorTimeBurnFuelFurnace, 1, Integer.MAX_VALUE, "Burn time factor of furnace fuel");
 			timeBurnOfalen = cfg.getInt("BurnTimeOfalen", MACHINE, timeBurnOfalen, 1, Integer.MAX_VALUE, "Burn time of Ofalen Fuel(tick)");
 			timeBurnStone = cfg.getInt("BurnTimeStone", MACHINE, timeBurnStone, 1, Integer.MAX_VALUE, "Burn time of Stone Fuel(tick)");
 			timeConversion = cfg.getInt("ConversionTime", MACHINE, timeConversion, 1, Integer.MAX_VALUE, "Conversion time of Ofalen Conversion Machine(tick)");
@@ -74,7 +76,7 @@ public class OfalenModConfigCore {
 			amountDamageShield = cfg.getInt("ShieldDamageAmount", FUTURE, amountDamageShield, 0, 64 * 9, "Damage amount of Ofalen Shield when protect player");
 			amountDamageTeleporter = cfg.getInt("TeleporterDamageAmount", FUTURE, amountDamageTeleporter, 0, 64, "Damage amount of Ofalen Teleporter when player teleport");
 			amountDamageFloater = cfg.getInt("FloaterDamageAmount", FUTURE, amountDamageFloater, 0, 64 * 9, "Damage amount of Ofalen Floater when float player");
-			intervalDamageFloater = (byte) cfg.getInt("FloaterDamageInterval", FUTURE, intervalDamageFloater, 0, Byte.MAX_VALUE, "Damage interval of Ofalen Floater");
+			intervalDamageFloater = (byte) cfg.getInt("FloaterDamageInterval", FUTURE, intervalDamageFloater, 0, Byte.MAX_VALUE, "Damage interval of Ofalen Floater(tick)");
 		} catch (Exception error) {
 			Log.error("Error on loading config!", "OfalenModConfigCore.loadConfig", true);
 		} finally {
@@ -92,6 +94,7 @@ public class OfalenModConfigCore {
 		frequencyGeneration = 3;
 		probabilityGenerationLode = 1;
 
+		factorTimeBurnFuelFurnace = 512;
 		timeBurnOfalen = 4800;
 		timeBurnStone = 400;
 		timeConversion = 1200;

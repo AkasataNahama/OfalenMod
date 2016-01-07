@@ -1,8 +1,8 @@
 package nahama.ofalenmod.core;
 
 import java.util.ArrayList;
+import java.util.List;
 
-import nahama.ofalenmod.Log;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
 
@@ -10,27 +10,30 @@ public class OfalenModOreDicCore {
 
 	public static ArrayList<ItemStack> listCreeperOfalenBlock = OreDictionary.getOres("CreeperOfalenBlock");
 	public static ArrayList<ItemStack> listTDiamond = OreDictionary.getOres("TDiamond");
-	public static boolean isTakumiCraftLoaded;
+	public static ArrayList<ItemStack> listOreGunPowder = OreDictionary.getOres("oreGunPowder");
 
-	/** 鉱石辞書からアイテムを取得する処理。 */
-	public static void getItemFromOreDictionary() {
-		// 鉱石辞書からItemStackのリストを取得する
-		// ItemStackを取得できていれば、代入する
-		isTakumiCraftLoaded = true;
-		if (listCreeperOfalenBlock.size() < 1 || listTDiamond.size() < 1) {
-			isTakumiCraftLoaded = false;
-			Log.info("Takumi Craft was not loaded.", "OfalenModOreDicCore", true);
-		}
-	}
-
-	public static boolean isCreeperOfalenBlock(ItemStack itemStack) {
-		if (!isTakumiCraftLoaded)
+	public static boolean isMuchedItemStack(List<ItemStack> inputs, ItemStack... targets) {
+		if (inputs == null || inputs.isEmpty())
 			return false;
-		for (int i = 0; i < listCreeperOfalenBlock.size(); i++) {
-			if (itemStack.isItemEqual(listCreeperOfalenBlock.get(i)))
-				return true;
+		for (ItemStack input : inputs) {
+			for (ItemStack target : targets) {
+				if (OreDictionary.itemMatches(target, input, false)) {
+					return true;
+				}
+			}
 		}
 		return false;
+	}
+
+	public static ItemStack getFirstItem(List<ItemStack> list) {
+		return getItem(list, 0);
+	}
+
+	public static ItemStack getItem(List<ItemStack> list, int index) {
+		if (list == null || list.isEmpty())
+			return null;
+		index %= list.size();
+		return new ItemStack(list.get(index).getItem(), 1, list.get(index).getItemDamage());
 	}
 
 }

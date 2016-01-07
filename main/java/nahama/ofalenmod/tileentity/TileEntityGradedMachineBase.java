@@ -86,21 +86,17 @@ public abstract class TileEntityGradedMachineBase extends TileEntity implements 
 	public int getItemBurnTime(ItemStack itemStack) {
 		if (itemStack == null)
 			return 0;
-		int time = TileEntityFurnace.getItemBurnTime(itemStack) * (4 - grade) / 200;
+		int time = TileEntityFurnace.getItemBurnTime(itemStack) * (4 - grade) / 4 / OfalenModConfigCore.factorTimeBurnFuelFurnace;
 		if (itemStack.getItem() != OfalenModItemCore.partsOfalen)
 			return time;
 		int meta = itemStack.getItemDamage();
 		if (meta == 3) {
-			return OfalenModConfigCore.timeBurnStone;
+			return OfalenModConfigCore.timeBurnStone * (4 - grade) / 4;
 		} else if (meta == 4) {
-			return OfalenModConfigCore.timeBurnOfalen;
+			return OfalenModConfigCore.timeBurnOfalen * (4 - grade) / 4;
 		}
-		if (OfalenModOreDicCore.isTakumiCraftLoaded) {
-			for (int i = 0; i < OfalenModOreDicCore.listTDiamond.size(); i++) {
-				if (itemStack.isItemEqual(OfalenModOreDicCore.listTDiamond.get(i)))
-					return OfalenModConfigCore.timeBurnStone;
-			}
-		}
+		if (OfalenModOreDicCore.isMuchedItemStack(OfalenModOreDicCore.listTDiamond, itemStack))
+			return OfalenModConfigCore.timeBurnStone * (4 - grade) / 4;
 		return time;
 	}
 

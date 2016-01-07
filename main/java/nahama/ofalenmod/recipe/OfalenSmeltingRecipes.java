@@ -7,20 +7,21 @@ import java.util.Map.Entry;
 import nahama.ofalenmod.core.OfalenModBlockCore;
 import nahama.ofalenmod.core.OfalenModConfigCore;
 import nahama.ofalenmod.core.OfalenModItemCore;
+import nahama.ofalenmod.core.OfalenModOreDicCore;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 
 public class OfalenSmeltingRecipes {
 
-	private static final OfalenSmeltingRecipes SMELTING_BASE = new OfalenSmeltingRecipes();
+	private static final OfalenSmeltingRecipes instance = new OfalenSmeltingRecipes();
 
 	public HashMap<ItemStack[], Boolean> smeltingList = new HashMap<ItemStack[], Boolean>();
 	private int smeltingAmount = OfalenModConfigCore.amountSmelting;
 
 	/** インスタンスを返す。 */
-	public static OfalenSmeltingRecipes smelting() {
-		return SMELTING_BASE;
+	public static OfalenSmeltingRecipes getInstance() {
+		return instance;
 	}
 
 	protected OfalenSmeltingRecipes() {
@@ -35,6 +36,9 @@ public class OfalenSmeltingRecipes {
 		this.addRecipe(new ItemStack(Blocks.iron_ore), new ItemStack(Items.iron_ingot), true);
 		this.addRecipe(new ItemStack(Blocks.gold_ore), new ItemStack(Items.gold_ingot), true);
 		this.addRecipe(new ItemStack(Blocks.quartz_ore), new ItemStack(Items.quartz), true);
+		for (int i = 0; i < OfalenModOreDicCore.listOreGunPowder.size(); i++) {
+			this.addRecipe(OfalenModOreDicCore.getItem(OfalenModOreDicCore.listOreGunPowder, i), new ItemStack(Items.gunpowder), true);
+		}
 	}
 
 	/** 新しくレシピを登録する。 */

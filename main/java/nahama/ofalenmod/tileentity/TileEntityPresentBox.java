@@ -11,14 +11,15 @@ import net.minecraft.tileentity.TileEntity;
 public class TileEntityPresentBox extends TileEntity implements IInventory {
 
 	protected ItemStack[] itemStacks = new ItemStack[54];
-	protected String owner;
 
 	/** プレイヤーがインベントリを開けた時の処理。 */
 	public void openInventory(EntityPlayer player) {
-		if (owner != null || worldObj.isRemote)
+		if (worldObj.isRemote)
 			return;
-		// オーナーに設定し、中身を上書きする。
-		owner = player.getCommandSenderName();
+		for (int i = 0; i < itemStacks.length; i++) {
+			if (itemStacks[i] != null)
+				return;
+		}
 		ItemStack[] presents = OfalenModAnniversaryHandler.getPresents(player);
 		if (presents == null)
 			return;
@@ -38,7 +39,6 @@ public class TileEntityPresentBox extends TileEntity implements IInventory {
 			nbttaglist.appendTag(nbt1);
 		}
 		nbt.setTag("Items", nbttaglist);
-		nbt.setString("Owner", owner);
 	}
 
 	@Override
@@ -53,7 +53,6 @@ public class TileEntityPresentBox extends TileEntity implements IInventory {
 				itemStacks[b0] = ItemStack.loadItemStackFromNBT(nbt1);
 			}
 		}
-		owner = nbt.getString("Owner");
 	}
 
 	/** インベントリのスロット数を返す。 */
@@ -121,8 +120,6 @@ public class TileEntityPresentBox extends TileEntity implements IInventory {
 	/** プレイヤーが使用できるかどうか。 */
 	@Override
 	public boolean isUseableByPlayer(EntityPlayer player) {
-		if (owner != null && !player.getCommandSenderName().equals(owner))
-			return false;
 		return worldObj.getTileEntity(xCoord, yCoord, zCoord) != this ? false : player.getDistanceSq(xCoord + 0.5D, yCoord + 0.5D, zCoord + 0.5D) <= 64.0D;
 	}
 

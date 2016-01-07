@@ -1,4 +1,4 @@
-package nahama.ofalenmod.core;
+package nahama.ofalenmod.handler;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -9,7 +9,7 @@ import nahama.ofalenmod.Log;
 import nahama.ofalenmod.OfalenModCore;
 import net.minecraft.util.StatCollector;
 
-public class OfalenModUpdateCheckCore {
+public class OfalenModUpdateCheckHandler {
 
 	public static boolean isAvailableNewVersion;
 	public static String latestVersion;
@@ -67,7 +67,7 @@ public class OfalenModUpdateCheckCore {
 			return false;
 		String omversion = version.substring(index + 1);
 		String[] array1 = splitVersion(omversion);
-		String[] array2 = splitVersion(OfalenModCore.OMVERSION);
+		String[] array2 = splitVersion(OfalenModCore.MODVERSION);
 		for (int i = 0; i < array1.length && i < array2.length; i++) {
 			try {
 				if (Integer.parseInt(array1[i]) > Integer.parseInt(array2[i])) {

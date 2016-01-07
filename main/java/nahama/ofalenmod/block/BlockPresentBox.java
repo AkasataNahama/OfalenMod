@@ -1,5 +1,6 @@
 package nahama.ofalenmod.block;
 
+import java.util.Calendar;
 import java.util.Random;
 
 import cpw.mods.fml.relauncher.Side;
@@ -22,8 +23,8 @@ import net.minecraft.world.World;
 public class BlockPresentBox extends Block implements ITileEntityProvider {
 
 	private Random random = new Random();
-	/** 0:下,1:上,2:横,3:クリスマス下,4;クリスマス上,5:クリスマス横 */
-	private IIcon[] iicon = new IIcon[6];
+	/** 0:下,1:上,2:横 */
+	private IIcon[] iicon = new IIcon[3];
 
 	public BlockPresentBox() {
 		super(Material.sponge);
@@ -43,6 +44,7 @@ public class BlockPresentBox extends Block implements ITileEntityProvider {
 	public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ) {
 		// GUIを開く
 		player.openGui(OfalenModCore.instance, 1, world, x, y, z);
+		((TileEntityPresentBox) world.getTileEntity(x, y, z)).openInventory(player);
 		return true;
 	}
 
@@ -91,8 +93,11 @@ public class BlockPresentBox extends Block implements ITileEntityProvider {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void registerBlockIcons(IIconRegister register) {
-		for (int i = 0; i < 6; i++) {
-			iicon[i] = register.registerIcon(this.getTextureName() + "-" + i);
+		String s = "";
+		if (OfalenModAnniversaryHandler.isTextureSpecial)
+			s = "-" + Calendar.getInstance().get(Calendar.MONTH + 1);
+		for (int i = 0; i < 3; i++) {
+			iicon[i] = register.registerIcon(this.getTextureName() + "-" + i + s);
 		}
 	}
 
@@ -105,8 +110,6 @@ public class BlockPresentBox extends Block implements ITileEntityProvider {
 			i = 0;
 		if (side == 1)
 			i = 1;
-		if (OfalenModAnniversaryHandler.isChristmas)
-			i += 3;
 		return iicon[i];
 	}
 

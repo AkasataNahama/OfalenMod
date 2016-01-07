@@ -24,7 +24,7 @@ public class TileEntitySmeltingMachine extends TileEntityGradedMachineBase {
 			return false;
 		boolean flag = true;
 		// 製錬レシピに登録されていて、完成品スロットに空きがあるなら可。
-		ItemStack itemStack = OfalenSmeltingRecipes.smelting().getSmeltingResultFromGrade(itemStacks[0], grade);
+		ItemStack itemStack = OfalenSmeltingRecipes.getInstance().getSmeltingResultFromGrade(itemStacks[0], grade);
 		if (itemStack == null)
 			flag = false;
 		if (flag && itemStacks[2] == null)
@@ -44,7 +44,7 @@ public class TileEntitySmeltingMachine extends TileEntityGradedMachineBase {
 	@Override
 	public void onWorking() {
 		// 製錬結果を取得し、完成品スロットに代入/追加する。
-		ItemStack itemStack = OfalenSmeltingRecipes.smelting().getSmeltingResultFromGrade(itemStacks[0], grade);
+		ItemStack itemStack = OfalenSmeltingRecipes.getInstance().getSmeltingResultFromGrade(itemStacks[0], grade);
 		if (itemStacks[2] == null) {
 			itemStacks[2] = itemStack;
 		} else if (itemStacks[2].isItemEqual(itemStack)) {

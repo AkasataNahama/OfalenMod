@@ -104,7 +104,7 @@ public class ContainerConversionMachine extends Container {
 							return null;
 						}
 					}
-				} else if (OfalenModOreDicCore.isCreeperOfalenBlock(itemStack1)) {
+				} else if (OfalenModOreDicCore.isMuchedItemStack(OfalenModOreDicCore.listCreeperOfalenBlock, itemStack1)) {
 					if (!this.mergeItemStack(itemStack1, 0, 1, false)) {
 						return null;
 					}

@@ -20,10 +20,9 @@ public class ContainerPresentBox extends Container {
 
 	public ContainerPresentBox(EntityPlayer player, TileEntityPresentBox tileEntity) {
 		this.tileEntity = tileEntity;
-		tileEntity.openInventory(player);
 		for (int iy = 0; iy < 6; iy++) {
 			for (int ix = 0; ix < 9; ix++) {
-				this.addSlotToContainer(new Slot(tileEntity, ix + (iy * 9), 8 + (ix * 18), 18 + (iy * 18)));
+				this.addSlotToContainer(new SlotUnputable(tileEntity, ix + (iy * 9), 8 + (ix * 18), 18 + (iy * 18)));
 			}
 		}
 		for (int iy = 0; iy < 3; iy++) {
