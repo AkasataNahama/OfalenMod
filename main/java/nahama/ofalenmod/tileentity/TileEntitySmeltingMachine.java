@@ -42,7 +42,7 @@ public class TileEntitySmeltingMachine extends TileEntityGradedMachineBase {
 	}
 
 	@Override
-	public void onWorking() {
+	public void work() {
 		// 製錬結果を取得し、完成品スロットに代入/追加する。
 		ItemStack itemStack = OfalenSmeltingRecipes.getInstance().getSmeltingResultFromGrade(itemStacks[0], grade);
 		if (itemStacks[2] == null) {

@@ -66,7 +66,7 @@ public abstract class TileEntityGradedMachineBase extends TileEntity implements 
 			++workTime;
 			if (workTime >= this.getWorkTime()) {
 				workTime = 0;
-				this.onWorking();
+				this.work();
 			}
 		} else {
 			// 燃焼中でないか作業不可能ならば作業時間をリセットする。
@@ -104,7 +104,7 @@ public abstract class TileEntityGradedMachineBase extends TileEntity implements 
 	protected abstract int getWorkTime();
 
 	/** 作業時の処理。 */
-	protected abstract void onWorking();
+	protected abstract void work();
 
 	/** 燃焼しているかでメタデータを更新する。 */
 	protected void updateIsBurning() {

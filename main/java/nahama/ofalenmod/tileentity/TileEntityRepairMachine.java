@@ -31,7 +31,7 @@ public class TileEntityRepairMachine extends TileEntityGradedMachineBase {
 	}
 
 	@Override
-	public void onWorking() {
+	public void work() {
 		// 修繕前スロットのアイテムの耐久値を回復。
 		itemStacks[0].setItemDamage(itemStacks[0].getItemDamage() - 1);
 		// ダメージがなくなったら移動。

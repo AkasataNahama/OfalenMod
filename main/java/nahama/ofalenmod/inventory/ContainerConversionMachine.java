@@ -20,6 +20,14 @@ public class ContainerConversionMachine extends Container {
 	private int lastConversionTime;
 	private int lastBurnTime;
 	private int lastItemBurnTime;
+	/** 変換機のインベントリの第一スロットの番号 */
+	private static final int index0 = 0;
+	/** プレイヤーのインベントリの第一スロットの番号 */
+	private static final int index1 = 4;
+	/** クイックスロットの第一スロットの番号 */
+	private static final int index2 = index1 + 27;
+	/** このコンテナの全体のスロット数 */
+	private static final int index3 = index2 + 9;
 
 	public ContainerConversionMachine(EntityPlayer player, TileEntityConversionMachine tileEntity) {
 		this.tileEntity = tileEntity;
@@ -93,11 +101,11 @@ public class ContainerConversionMachine extends Container {
 			ItemStack itemStack1 = slot.getStack();
 			itemStack = itemStack1.copy();
 			if (slotNumber == 2) {
-				if (!this.mergeItemStack(itemStack1, 4, 40, true)) {
+				if (!this.mergeItemStack(itemStack1, index1, index3, true)) {
 					return null;
 				}
 				slot.onSlotChange(itemStack1, itemStack);
-			} else if (slotNumber != 1 && slotNumber != 0 && slotNumber != 3) {
+			} else if (slotNumber > 3) {
 				if (((itemStack1.getItem() instanceof ItemOfalen) && !itemStack1.isItemEqual(new ItemStack(OfalenModItemCore.coreOfalen, 1, 3))) || Block.getBlockFromItem(itemStack1.getItem()) == OfalenModBlockCore.blockOfalen) {
 					if (!this.mergeItemStack(itemStack1, 3, 4, false)) {
 						if (!this.mergeItemStack(itemStack1, 0, 1, false)) {
@@ -112,14 +120,14 @@ public class ContainerConversionMachine extends Container {
 					if (!this.mergeItemStack(itemStack1, 1, 2, false)) {
 						return null;
 					}
-				} else if (slotNumber >= 4 && slotNumber < 31) {
-					if (!this.mergeItemStack(itemStack1, 31, 40, false)) {
+				} else if (slotNumber >= index1 && slotNumber < index2) {
+					if (!this.mergeItemStack(itemStack1, index2, index3, false)) {
 						return null;
 					}
-				} else if (slotNumber >= 31 && slotNumber < 40 && !this.mergeItemStack(itemStack1, 4, 31, false)) {
+				} else if (slotNumber >= index2 && slotNumber < index3 && !this.mergeItemStack(itemStack1, index1, index2, false)) {
 					return null;
 				}
-			} else if (!this.mergeItemStack(itemStack1, 4, 40, false)) {
+			} else if (!this.mergeItemStack(itemStack1, index1, index3, false)) {
 				return null;
 			}
 

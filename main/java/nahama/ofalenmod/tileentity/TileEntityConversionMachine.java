@@ -62,7 +62,7 @@ public class TileEntityConversionMachine extends TileEntityGradedMachineBase {
 	}
 
 	@Override
-	public void onWorking() {
+	public void work() {
 		// 完成品スロットに変換結果を代入/追加する。
 		if (itemStacks[2] == null) {
 			itemStacks[2] = new ItemStack(itemStacks[0].getItem(), 1, sample.getItemDamage());
@@ -129,8 +129,10 @@ public class TileEntityConversionMachine extends TileEntityGradedMachineBase {
 
 	@Override
 	public void setInventorySlotContents(int slot, ItemStack itemStack) {
-		if (slot != 3)
+		if (slot != 3) {
 			super.setInventorySlotContents(slot, itemStack);
+			return;
+		}
 		sample = itemStack;
 		if (itemStack != null && itemStack.stackSize > this.getInventoryStackLimit()) {
 			itemStack.stackSize = this.getInventoryStackLimit();

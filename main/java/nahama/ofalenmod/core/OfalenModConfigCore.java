@@ -17,7 +17,7 @@ public class OfalenModConfigCore {
 	public static int frequencyGeneration = 3;
 	public static int probabilityGenerationLode = 1;
 
-	public static int factorTimeBurnFuelFurnace = 512;
+	public static int factorTimeBurnFuelFurnace = 256;
 	public static int timeBurnOfalen = 4800;
 	public static int timeBurnStone = 400;
 	public static int timeConversion = 1200;
@@ -94,7 +94,7 @@ public class OfalenModConfigCore {
 		frequencyGeneration = 3;
 		probabilityGenerationLode = 1;
 
-		factorTimeBurnFuelFurnace = 512;
+		factorTimeBurnFuelFurnace = 256;
 		timeBurnOfalen = 4800;
 		timeBurnStone = 400;
 		timeConversion = 1200;
