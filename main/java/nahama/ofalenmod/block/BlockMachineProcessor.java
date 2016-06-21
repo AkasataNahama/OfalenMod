@@ -58,6 +58,12 @@ public class BlockMachineProcessor extends Block {
 		return iicon[meta & 3];
 	}
 
+	/** シルクタッチで回収できるか。 */
+	@Override
+	protected boolean canSilkHarvest() {
+		return false;
+	}
+
 	/** メタデータを更新して返す。 */
 	public int updateMetadata(World world, int x, int y, int z) {
 		int meta = this.getUpdatedMeta(world, x, y, z);
@@ -66,7 +72,7 @@ public class BlockMachineProcessor extends Block {
 	}
 
 	/** 周囲のブロックを調査し、メタデータを返す。 */
-	public int getUpdatedMeta(World world, int x, int y, int z) {
+	private int getUpdatedMeta(World world, int x, int y, int z) {
 		// 無効時のメタデータ。
 		int grade = world.getBlockMetadata(x, y, z) & 3;
 		for (int iy = -1; iy <= 1; iy++) {

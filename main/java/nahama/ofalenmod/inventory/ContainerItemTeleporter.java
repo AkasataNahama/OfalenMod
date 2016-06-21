@@ -24,7 +24,7 @@ public class ContainerItemTeleporter extends Container {
 		inventory.openInventory();
 		this.player = player;
 		if (!player.worldObj.isRemote)
-			player.getHeldItem().getTagCompound().setBoolean("IsValid", OfalenTeleportHandler.getInstance(player.worldObj).isChannelValid(player.getHeldItem().getItemDamage()));
+			player.getHeldItem().getTagCompound().setBoolean("IsValid", OfalenTeleportHandler.isChannelValid(player.getHeldItem().getItemDamage()));
 		this.addSlotToContainer(new SlotTeleportMaterial(inventory, 0, 134, 54));
 		int i;
 		for (i = 0; i < 3; ++i) {

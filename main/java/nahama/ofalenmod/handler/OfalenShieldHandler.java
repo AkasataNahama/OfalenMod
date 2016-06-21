@@ -81,10 +81,10 @@ public class OfalenShieldHandler {
 		if (!flag) {
 			// 有効になっているシールドがなければプレイヤーの保護をやめる。
 			unprotectPlayer(player);
-			player.addChatMessage(new ChatComponentText(StatCollector.translateToLocal("info.OfalenMod.ItemShield.ShieldBreaked")));
+			player.addChatMessage(new ChatComponentText(StatCollector.translateToLocal("info.OfalenMod.ItemShield.ShieldBroken")));
 		}
 		// パーティクルを表示させるようパケットを送る。。
-		OfalenModCore.wrapper.sendToAll(new MSpawnParticle(player.posX, player.posY, player.posZ, (byte) 0));
+		OfalenModCore.wrapper.sendToAll(new MSpawnParticle(player.worldObj.provider.dimensionId, player.posX, player.posY, player.posZ, (byte) 0));
 	}
 
 }

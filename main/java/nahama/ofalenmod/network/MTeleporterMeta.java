@@ -12,7 +12,8 @@ public class MTeleporterMeta implements IMessage {
 
 	public int channel;
 
-	public MTeleporterMeta() {}
+	public MTeleporterMeta() {
+	}
 
 	public MTeleporterMeta(int channel) {
 		this.channel = channel;
@@ -36,7 +37,7 @@ public class MTeleporterMeta implements IMessage {
 			if (teleporter == null || !(teleporter.getItem() instanceof ItemTeleporter))
 				return null;
 			teleporter.setItemDamage(message.channel);
-			boolean isValid = OfalenTeleportHandler.getInstance(ctx.getServerHandler().playerEntity.worldObj).isChannelValid(message.channel);
+			boolean isValid = OfalenTeleportHandler.isChannelValid(message.channel);
 			teleporter.getTagCompound().setBoolean("IsValid", isValid);
 			return null;
 		}

@@ -1,6 +1,7 @@
 package nahama.ofalenmod.item;
 
 import nahama.ofalenmod.OfalenModCore;
+import nahama.ofalenmod.core.OfalenModConfigCore;
 import nahama.ofalenmod.core.OfalenModItemCore;
 import nahama.ofalenmod.handler.OfalenShieldHandler;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -38,15 +39,16 @@ public class ItemShield extends ItemFuture {
 			OfalenShieldHandler.unprotectPlayer(player);
 			itemStack.getTagCompound().setBoolean("IsValid", false);
 			itemStack.getTagCompound().setByte("Duration", (byte) 10);
+			itemStack.setItemDamage(itemStack.getItemDamage() - OfalenModConfigCore.amountDamageShield);
 			return itemStack;
 		}
-		if (itemStack.getItemDamage() >= itemStack.getMaxDamage()) {
+		if (itemStack.getItemDamage() + OfalenModConfigCore.amountDamageShield > itemStack.getMaxDamage()) {
 			// 材料がないならチャットに出力して終了。
 			player.addChatMessage(new ChatComponentText(StatCollector.translateToLocal("info.OfalenMod.ItemShield.MaterialLacking")));
 			return itemStack;
 		}
 		OfalenShieldHandler.protectPlayer(player);
-		itemStack.setItemDamage(itemStack.getItemDamage() + 1);
+		itemStack.setItemDamage(itemStack.getItemDamage() + OfalenModConfigCore.amountDamageShield);
 		itemStack.getTagCompound().setBoolean("IsValid", true);
 		itemStack.getTagCompound().setByte("Duration", (byte) 10);
 		return itemStack;

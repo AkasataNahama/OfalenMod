@@ -43,8 +43,8 @@ public class BlockPresentBox extends Block implements ITileEntityProvider {
 	@Override
 	public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ) {
 		// GUIを開く
-		player.openGui(OfalenModCore.instance, 1, world, x, y, z);
 		((TileEntityPresentBox) world.getTileEntity(x, y, z)).openInventory(player);
+		player.openGui(OfalenModCore.instance, 1, world, x, y, z);
 		return true;
 	}
 
@@ -95,7 +95,7 @@ public class BlockPresentBox extends Block implements ITileEntityProvider {
 	public void registerBlockIcons(IIconRegister register) {
 		String s = "";
 		if (OfalenModAnniversaryHandler.isTextureSpecial)
-			s = "-" + Calendar.getInstance().get(Calendar.MONTH + 1);
+			s = "-" + (Calendar.getInstance().get(Calendar.MONTH) + 1);
 		for (int i = 0; i < 3; i++) {
 			iicon[i] = register.registerIcon(this.getTextureName() + "-" + i + s);
 		}

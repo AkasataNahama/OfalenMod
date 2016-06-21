@@ -55,16 +55,14 @@ import net.minecraft.util.StatCollector;
 import net.minecraftforge.client.MinecraftForgeClient;
 import net.minecraftforge.common.MinecraftForge;
 
-/**
- * @author Akasata Nahama
- */
+/** @author Akasata Nahama */
 @Mod(modid = OfalenModCore.MODID, name = OfalenModCore.MODNAME, version = OfalenModCore.VERSION)
 public class OfalenModCore {
 
 	public static final String MODID = "OfalenMod";
 	public static final String MODNAME = "Ofalen Mod";
 	public static final String MCVERSION = "1.7.10";
-	public static final String MODVERSION = "1.1.1";
+	public static final String MODVERSION = "1.1.2";
 	public static final String VERSION = "[" + MCVERSION + "]" + MODVERSION;
 
 	/** coreクラスのインスタンス */
@@ -84,12 +82,13 @@ public class OfalenModCore {
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
 		OfalenModInfoCore.registerInfo(meta);
-		OfalenModUpdateCheckHandler.checkUpdate();
 		OfalenModConfigCore.loadConfig(event);
+		if (OfalenModConfigCore.isUpdateCheckEnabled)
+			OfalenModUpdateCheckHandler.checkUpdate();
 		OfalenModItemCore.registerItem();
 		OfalenModBlockCore.registerBlock();
 		// 機械類のGUIを登録する。
-		NetworkRegistry.INSTANCE.registerGuiHandler(this.instance, new OfalenModGuiHandler());
+		NetworkRegistry.INSTANCE.registerGuiHandler(instance, new OfalenModGuiHandler());
 		// パケットを登録する。
 		wrapper.registerMessage(MTeleporterChannel.Handler.class, MTeleporterChannel.class, 0, Side.SERVER);
 		wrapper.registerMessage(MTeleporterMeta.Handler.class, MTeleporterMeta.class, 1, Side.SERVER);
@@ -108,17 +107,18 @@ public class OfalenModCore {
 		OfalenModRecipeCore.registerRecipe();
 		if (FMLCommonHandler.instance().getSide() == Side.CLIENT) {
 			// クライアントの初期化を行う。
-			this.instance.clientInit();
+			instance.clientInit();
 		}
 	}
 
 	/** 初期化後処理。 */
 	@EventHandler
-	public void postInit(FMLPostInitializationEvent event) {}
+	public void postInit(FMLPostInitializationEvent event) {
+	}
 
 	/** クライアントの初期化処理。 */
 	@SideOnly(Side.CLIENT)
-	public void clientInit() {
+	private void clientInit() {
 		// タイルエンティティとレンダラーの紐づけ
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityTeleportMarker.class, new RenderTeleportMarker());
 		// エンティティとレンダラーの紐付け
@@ -136,7 +136,7 @@ public class OfalenModCore {
 				OfalenModNEILoad.load();
 			} catch (Exception e) {
 				Log.error("Error on loading NEI!", "OfalenModCore.clientInit", true);
-				e.printStackTrace(System.err);
+				e.printStackTrace();
 			}
 		}
 	}
@@ -151,7 +151,8 @@ public class OfalenModCore {
 		OfalenModAnniversaryHandler.init();
 		// 最新バージョンの通知をする。
 		if (OfalenModUpdateCheckHandler.isAvailableNewVersion) {
-			Log.info(StatCollector.translateToLocal("info.OfalenMod.NewVersionIsAvailable") + OfalenModUpdateCheckHandler.getMessage());
+			Log.info(StatCollector.translateToLocal("info.OfalenMod.NewVersionIsAvailable")
+					+ OfalenModUpdateCheckHandler.getMessage());
 		}
 	}
 

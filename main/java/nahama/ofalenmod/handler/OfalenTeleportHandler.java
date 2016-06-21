@@ -1,65 +1,87 @@
 package nahama.ofalenmod.handler;
 
-import java.util.HashMap;
+import nahama.ofalenmod.Log;
 
-import net.minecraft.world.World;
+import java.util.HashMap;
 
 public class OfalenTeleportHandler {
 
-	/** ディメンションIDと対応したインスタンスのマップ。 */
-	private static HashMap<Integer, OfalenTeleportHandler> instanceList = new HashMap<Integer, OfalenTeleportHandler>();
-	/** 対応するディメンションID */
-	private int id;
 	/** テレポートマーカーのチャンネルと座標のマップ。 */
-	private HashMap<Integer, int[]> markerList = new HashMap<Integer, int[]>();
-
-	private OfalenTeleportHandler(int id) {
-		this.id = id;
-	}
+	private static HashMap<Integer, MarkerPos> markerList = new HashMap<>();
 
 	/** 初期化処理。 */
 	public static void init() {
-		// インスタンスのリストをリセットする。
-		instanceList.clear();
-	}
-
-	/** ディメンションに対応したマネージャーのインスタンスを返す。 */
-	public static OfalenTeleportHandler getInstance(World world) {
-		if (world.isRemote)
-			return null;
-		// ディメンションIDを取得し、そのディメンションに対応するマネージャーがないなら生成して返す。
-		int id = world.provider.dimensionId;
-		if (!instanceList.containsKey(id)) {
-			instanceList.put(id, new OfalenTeleportHandler(id));
-		}
-		return instanceList.get(id);
+		// マーカーのリストをリセットする。
+		markerList.clear();
 	}
 
 	/** チャンネルが登録されているどうか。 */
-	public boolean isChannelValid(int channel) {
-		if (channel < 1)
-			return false;
-		return markerList.containsKey(channel);
+	public static boolean isChannelValid(int channel) {
+		return channel >= 1 && markerList.containsKey(channel);
 	}
 
 	/** チャンネルに対応した座標を返す。 */
-	public int[] getCoord(int channel) {
+	public static MarkerPos getCoord(int channel) {
 		if (channel < 1)
 			return null;
 		return markerList.get(channel);
 	}
 
 	/** チャンネルと対応した座標を登録する。 */
-	public void registerMarker(int channel, int[] marker) {
+	public static boolean registerMarker(int channel, byte id, int x, int y, int z) {
+		if (channel < 1)
+			return false;
+		MarkerPos marker = markerList.get(channel);
 		// すでにチャンネルが登録されていたら登録しない。
-		if (this.isChannelValid(channel) || channel < 1)
-			return;
-		markerList.put(channel, marker);
+		if (marker != null)
+			return marker.equals(new MarkerPos(id, x, y, z));
+		markerList.put(channel, new MarkerPos(id, x, y, z));
+		return true;
 	}
 
 	/** チャンネルを無効にする。 */
-	public void removeMarker(int channel) {
+	public static void removeMarker(int channel) {
 		markerList.remove(channel);
+	}
+
+	public static class MarkerPos {
+		private byte id;
+		private int x, y, z;
+
+		public MarkerPos(byte id, int x, int y, int z) {
+			this.id = id;
+			this.x = x;
+			this.y = y;
+			this.z = z;
+		}
+
+		public byte getId() {
+			return id;
+		}
+
+		public int getX() {
+			return x;
+		}
+
+		public int getY() {
+			return y;
+		}
+
+		public int getZ() {
+			return z;
+		}
+
+		@Override
+		public boolean equals(Object obj) {
+			if (obj == null)
+				return false;
+			if (super.equals(obj))
+				return true;
+			if (!(obj instanceof MarkerPos))
+				return false;
+			MarkerPos pos = (MarkerPos) obj;
+			return id == pos.id && x == pos.x && y == pos.y && z == pos.z;
+		}
 	}
 
 }

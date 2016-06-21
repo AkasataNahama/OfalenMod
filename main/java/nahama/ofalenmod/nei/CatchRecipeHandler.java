@@ -70,7 +70,7 @@ public class CatchRecipeHandler extends TemplateRecipeHandler {
 
 	@Override
 	public void loadTransferRects() {
-		transferRects.add(new TemplateRecipeHandler.RecipeTransferRect(new Rectangle(80, 35, 22, 15), "OfalenSmeltingRecipe"));
+		transferRects.add(new TemplateRecipeHandler.RecipeTransferRect(new Rectangle(74, 23, 24, 18), "OfalenSmeltingRecipe"));
 	}
 
 	@Override

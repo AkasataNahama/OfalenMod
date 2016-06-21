@@ -10,20 +10,29 @@ import net.minecraft.client.Minecraft;
 
 public class MSpawnParticle implements IMessage {
 
+	public byte dimensionId;
 	public double x, y, z;
 	public byte type;
 
-	public MSpawnParticle() {}
+	public MSpawnParticle() {
+	}
 
-	public MSpawnParticle(double x, double y, double z, byte type) {
+	public MSpawnParticle(byte dimensionId, double x, double y, double z, byte type) {
+		this.dimensionId = dimensionId;
 		this.x = x;
 		this.y = y;
 		this.z = z;
 		this.type = type;
 	}
 
+	/** dimensionIdはbyteにキャストされます。 */
+	public MSpawnParticle(int dimensionId, double x, double y, double z, byte type) {
+		this((byte) dimensionId, x, y, z, type);
+	}
+
 	@Override
 	public void fromBytes(ByteBuf buf) {
+		dimensionId = buf.readByte();
 		x = buf.readDouble();
 		y = buf.readDouble();
 		z = buf.readDouble();
@@ -32,6 +41,7 @@ public class MSpawnParticle implements IMessage {
 
 	@Override
 	public void toBytes(ByteBuf buf) {
+		buf.writeByte(dimensionId);
 		buf.writeDouble(x);
 		buf.writeDouble(y);
 		buf.writeDouble(z);
@@ -42,6 +52,8 @@ public class MSpawnParticle implements IMessage {
 
 		@Override
 		public IMessage onMessage(MSpawnParticle message, MessageContext ctx) {
+			if (Minecraft.getMinecraft().theWorld.provider.dimensionId != message.dimensionId)
+				return null;
 			Random random = new Random();
 			if (message.type == 0) {
 				for (int i = 0; i < 80; i++) {

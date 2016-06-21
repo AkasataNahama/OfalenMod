@@ -3,6 +3,7 @@ package nahama.ofalenmod.tileentity;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import nahama.ofalenmod.Log;
 import nahama.ofalenmod.handler.OfalenTeleportHandler;
 import net.minecraft.block.Block;
 import net.minecraft.entity.item.EntityItem;
@@ -45,49 +46,17 @@ public class TileEntityTeleportMarker extends TileEntity {
 			channel = newChannel;
 			return;
 		}
-		OfalenTeleportHandler manager = OfalenTeleportHandler.getInstance(worldObj);
-		if (isValid && manager.isChannelValid(channel)) {
-			manager.removeMarker(channel);
+		if (isValid && OfalenTeleportHandler.isChannelValid(channel)) {
+			OfalenTeleportHandler.removeMarker(channel);
 		}
 		channel = newChannel;
-		if (newChannel < 1 || manager.isChannelValid(newChannel)) {
-			isValid = false;
-			return;
-		}
-		manager.registerMarker(newChannel, new int[] { xCoord, yCoord, zCoord });
-		isValid = true;
-	}
-
-	public boolean canTeleport() {
-		if (!isValid)
-			return false;
-		for (int i = 1; i < 3; i++) {
-			Block block = worldObj.getBlock(xCoord, yCoord + i, zCoord);
-			if (block == null || block.getBlockHardness(worldObj, xCoord, yCoord + i, zCoord) < 0)
-				return false;
-			if (!block.isNormalCube())
-				continue;
-			int meta = worldObj.getBlockMetadata(xCoord, yCoord + i, zCoord);
-			ArrayList<ItemStack> drops = block.getDrops(worldObj, xCoord, yCoord + i, zCoord, meta, 0);
-			Iterator<ItemStack> iterator = drops.iterator();
-			while (iterator.hasNext()) {
-				ItemStack itemStack = iterator.next();
-				EntityItem entity = new EntityItem(worldObj, xCoord + 0.5, yCoord + 1, zCoord + 0.5, itemStack);
-				if (itemStack.hasTagCompound()) {
-					entity.getEntityItem().setTagCompound(((NBTTagCompound) itemStack.getTagCompound().copy()));
-				}
-				worldObj.spawnEntityInWorld(entity);
-			}
-			block.breakBlock(worldObj, xCoord, yCoord + i, zCoord, block, meta);
-			worldObj.setBlockToAir(xCoord, yCoord + i, zCoord);
-		}
-		return true;
+		isValid = OfalenTeleportHandler.registerMarker(newChannel, (byte) worldObj.provider.dimensionId, xCoord, yCoord, zCoord);
 	}
 
 	public void onBreaking() {
 		if (channel < 1 || !isValid)
 			return;
-		OfalenTeleportHandler.getInstance(worldObj).removeMarker(channel);
+		OfalenTeleportHandler.removeMarker(channel);
 	}
 
 	public int getChannel() {

@@ -45,7 +45,7 @@ public class ItemFloater extends ItemFuture {
 		itemStack.setItemDamage(itemStack.getItemDamage() + OfalenModConfigCore.amountDamageFloater);
 		// サーバー側なら全クライアントにパーティクルを生成するようパケットを送信。
 		if (!world.isRemote)
-			OfalenModCore.wrapper.sendToAll(new MSpawnParticle(entity.posX, entity.posY - 1.6D, entity.posZ, (byte) 2));
+			OfalenModCore.wrapper.sendToAll(new MSpawnParticle(entity.worldObj.provider.dimensionId, entity.posX, entity.posY - 1.6D, entity.posZ, (byte) 2));
 		if (itemStack.getItemDamage() + OfalenModConfigCore.amountDamageFloater <= itemStack.getMaxDamage()) {
 			// 耐久値が残っているなら間隔をリセットして終了。
 			nbt.setByte("Duration", OfalenModConfigCore.intervalDamageFloater);

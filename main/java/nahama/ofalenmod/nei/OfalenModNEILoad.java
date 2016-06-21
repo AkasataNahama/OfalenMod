@@ -12,7 +12,7 @@ public class OfalenModNEILoad {
 
 		API.registerRecipeHandler(catchRecipe);
 		API.registerUsageHandler(catchRecipe);
-		API.registerGuiOverlay(GuiSmeltingMachine.class, catchRecipe.getOverlayIdentifier(), 0, 0);
+		API.registerGuiOverlay(GuiSmeltingMachine.class, catchRecipe.getOverlayIdentifier(), 5, 10);
 	}
 
 }

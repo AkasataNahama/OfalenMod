@@ -6,20 +6,35 @@ import nahama.ofalenmod.core.OfalenModConfigCore;
 import nahama.ofalenmod.core.OfalenModItemCore;
 import nahama.ofalenmod.handler.OfalenTeleportHandler;
 import nahama.ofalenmod.network.MSpawnParticle;
-import nahama.ofalenmod.tileentity.TileEntityTeleportMarker;
+import nahama.ofalenmod.world.TeleporterOfalen;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
+
+import java.util.List;
 
 public class ItemTeleporter extends ItemFuture {
 
 	public ItemTeleporter() {
 		super();
 		this.setMaxDamage(0);
+	}
+
+	@Override
+	public void getSubItems(Item item, CreativeTabs creativeTab, List list) {
+		ItemStack itemStack = new ItemStack(item);
+		NBTTagCompound nbt = new NBTTagCompound();
+		NBTTagCompound nbt1 = new NBTTagCompound();
+		new ItemStack(OfalenModItemCore.partsOfalen, 64, 7).writeToNBT(nbt1);
+		nbt.setTag("Material", nbt1);
+		itemStack.setTagCompound(nbt);
+		list.add(itemStack);
 	}
 
 	@Override
@@ -47,50 +62,51 @@ public class ItemTeleporter extends ItemFuture {
 			player.addChatMessage(new ChatComponentText(StatCollector.translateToLocal("info.OfalenMod.ItemTeleporter.MaterialLacking")));
 			return itemStack;
 		}
-		// 材料を消費し、保存。
-		material.stackSize -= OfalenModConfigCore.amountDamageTeleporter;
-		if (material.stackSize < 1)
-			material = null;
-		if (material != null) {
-			NBTTagCompound nbt1 = new NBTTagCompound();
-			material.writeToNBT(nbt1);
-			itemStack.getTagCompound().setTag("Material", nbt1);
-		} else {
-			itemStack.getTagCompound().removeTag("Material");;
-		}
-		OfalenTeleportHandler manager = OfalenTeleportHandler.getInstance(world);
 		int channel = itemStack.getItemDamage();
-		if (channel < 1 || !manager.isChannelValid(channel)) {
+		if (channel < 1 || !OfalenTeleportHandler.isChannelValid(channel)) {
 			// チャンネルが無効ならチャットに出力して終了。
 			player.addChatMessage(new ChatComponentText(StatCollector.translateToLocal("info.OfalenMod.ItemTeleporter.ChannelInvalid")));
 			return itemStack;
 		}
-		int[] coord = manager.getCoord(channel);
-		if (coord == null) {
+		OfalenTeleportHandler.MarkerPos pos = OfalenTeleportHandler.getCoord(channel);
+		if (pos == null) {
 			// 座標が取得できなかったらログに出力して終了。
-			Log.error("Error on getting marker corrd! channel:" + channel, "ItemTeleporter.onItemRightClick", true);
+			Log.error("Error on getting marker coord! channel:" + channel, "ItemTeleporter.onItemRightClick", true);
 			return itemStack;
 		}
-		TileEntity tileEntity = world.getTileEntity(coord[0], coord[1], coord[2]);
-		if (tileEntity == null || !(tileEntity instanceof TileEntityTeleportMarker)) {
-			// テレポートマーカーが取得できなかったらログに出力して終了。
-			Log.error("Error on getting TileEntityTeleportMarker! channel:" + channel + ", coord : (" + coord[0] + ", " + coord[1] + ", " + coord[2] + ")", "ItemTeleporter.onItemRightClick", true);
+		player.mountEntity(null);
+		if (!(player instanceof EntityPlayerMP))
 			return itemStack;
-		}
-		if (!((TileEntityTeleportMarker) tileEntity).canTeleport()) {
-			// マーカーがテレポートを許可しなかったらチャットに出力して終了。
-			player.addChatMessage(new ChatComponentText(StatCollector.translateToLocal("info.OfalenMod.ItemTeleporter.MarkerInvalid")));
+		if (player.ridingEntity != null || player.riddenByEntity != null)
 			return itemStack;
+		// 材料を消費し、保存。
+		if (!player.capabilities.isCreativeMode) {
+			material.stackSize -= OfalenModConfigCore.amountDamageTeleporter;
+			if (material.stackSize < 1)
+				material = null;
+			if (material != null) {
+				NBTTagCompound nbt1 = new NBTTagCompound();
+				material.writeToNBT(nbt1);
+				itemStack.getTagCompound().setTag("Material", nbt1);
+			} else {
+				itemStack.getTagCompound().removeTag("Material");
+			}
 		}
 		// 問題なければテレポート。
+		byte toId = pos.getId();
+		if (player.worldObj.provider.dimensionId != toId) {
+			EntityPlayerMP playerMP = (EntityPlayerMP) player;
+			playerMP.mcServer.getConfigurationManager().transferPlayerToDimension(playerMP, toId, new TeleporterOfalen(playerMP.mcServer.worldServerForDimension(toId)));
+			playerMP.addExperienceLevel(0);
+		}
+		player.setPositionAndUpdate(pos.getX() + 0.5, pos.getY() + 1.1, pos.getZ() + 0.5);
+		player.setSneaking(false);
 		itemStack.getTagCompound().setByte("Duration", (byte) 10);
-		player.mountEntity(null);
-		player.setPositionAndUpdate(coord[0] + 0.5, coord[1] + 1.1, coord[2] + 0.5);
-		OfalenModCore.wrapper.sendToAll(new MSpawnParticle(coord[0] + 0.5, coord[1] + 1.5, coord[2] + 0.5, (byte) 1));
+		OfalenModCore.wrapper.sendToAll(new MSpawnParticle(toId, pos.getX() + 0.5, pos.getY() + 1.5, pos.getZ() + 0.5, (byte) 1));
 		return itemStack;
 	}
 
-	public boolean canUseItemStack(ItemStack material) {
+	private boolean canUseItemStack(ItemStack material) {
 		if (material == null || !isItemMaterial(material))
 			return false;
 		if (material.stackSize < OfalenModConfigCore.amountDamageTeleporter)

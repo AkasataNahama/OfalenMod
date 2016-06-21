@@ -9,6 +9,7 @@ public class OfalenModConfigCore {
 	public static boolean isConfigEnabled = false;
 	public static int sizeExplosion = 2;
 	public static float efficiencyPerfectTool = 100;
+	public static boolean isUpdateCheckEnabled = true;
 
 	public static int amountDrop = 3;
 
@@ -52,6 +53,7 @@ public class OfalenModConfigCore {
 			isConfigEnabled = cfg.getBoolean("ConfigIsEnabled", GENERAL, isConfigEnabled, "Config is valid when true.");
 			sizeExplosion = cfg.getInt("ExplosionSize", GENERAL, sizeExplosion, 0, 255, "Explosion size of Explosion Ball");
 			efficiencyPerfectTool = cfg.getFloat("PerfectToolEfficiency", GENERAL, efficiencyPerfectTool, 1, Float.MAX_VALUE, "Efficiency of Ofalen Perfect Tool");
+			isUpdateCheckEnabled = cfg.getBoolean("UpdateCheckIsEnabled", GENERAL, isUpdateCheckEnabled, "Update Check is valid when true.");
 
 			amountDrop = cfg.getInt("DropAmount", DIFFICULTY, amountDrop, 1, 255, "Drop amount of Ofalen Fragment from Ofalen Ore");
 
@@ -86,6 +88,7 @@ public class OfalenModConfigCore {
 			return;
 		sizeExplosion = 2;
 		efficiencyPerfectTool = 100;
+		isUpdateCheckEnabled = true;
 
 		amountDrop = 3;
 
