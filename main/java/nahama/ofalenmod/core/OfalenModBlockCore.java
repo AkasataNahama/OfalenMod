@@ -1,15 +1,7 @@
 package nahama.ofalenmod.core;
 
 import cpw.mods.fml.common.registry.GameRegistry;
-import nahama.ofalenmod.block.BlockConversionMachine;
-import nahama.ofalenmod.block.BlockMachineProcessor;
-import nahama.ofalenmod.block.BlockOfalen;
-import nahama.ofalenmod.block.BlockOfalenOre;
-import nahama.ofalenmod.block.BlockPresentBox;
-import nahama.ofalenmod.block.BlockProcessorCasing;
-import nahama.ofalenmod.block.BlockRepairMachine;
-import nahama.ofalenmod.block.BlockSmeltingMachine;
-import nahama.ofalenmod.block.BlockTeleportMarker;
+import nahama.ofalenmod.block.*;
 import nahama.ofalenmod.itemblock.ItemOfalenBlock;
 import nahama.ofalenmod.tileentity.TileEntityConversionMachine;
 import nahama.ofalenmod.tileentity.TileEntityPresentBox;
@@ -31,6 +23,7 @@ public class OfalenModBlockCore {
 	public static Block casingProcessor;
 	public static Block markerTeleportOfalen;
 	public static Block boxPresentOfalen;
+	public static Block grassOfalen;
 
 	/** ブロックを登録する処理。 */
 	public static void registerBlock() {
@@ -93,6 +86,11 @@ public class OfalenModBlockCore {
 				.setBlockTextureName("ofalenmod:present_box");
 		GameRegistry.registerBlock(boxPresentOfalen, "boxPresentOfalen");
 		GameRegistry.registerTileEntity(TileEntityPresentBox.class, "TileEntityOfalenPresentBox");
+
+		grassOfalen = new BlockGrassOfalen()
+				.setBlockName("grassOfalen")
+				.setBlockTextureName("ofalenmod:ofalen_grass");
+		GameRegistry.registerBlock(grassOfalen, "grassOfalen");
 	}
 
 }

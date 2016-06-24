@@ -2,28 +2,13 @@ package nahama.ofalenmod.core;
 
 import cpw.mods.fml.common.registry.GameRegistry;
 import nahama.ofalenmod.OfalenModCore;
-import nahama.ofalenmod.item.ItemCreativeSword;
-import nahama.ofalenmod.item.ItemEmptyBall;
-import nahama.ofalenmod.item.ItemExplosionBall;
-import nahama.ofalenmod.item.ItemFloater;
-import nahama.ofalenmod.item.ItemLaserMagazine;
-import nahama.ofalenmod.item.ItemLaserPistol;
-import nahama.ofalenmod.item.ItemOfalen;
-import nahama.ofalenmod.item.ItemOfalenBall;
-import nahama.ofalenmod.item.ItemOfalenPerfectBall;
-import nahama.ofalenmod.item.ItemParts;
-import nahama.ofalenmod.item.ItemShield;
-import nahama.ofalenmod.item.ItemTeleporter;
+import nahama.ofalenmod.item.*;
 import nahama.ofalenmod.item.armor.ItemOfalenArmor;
 import nahama.ofalenmod.item.tool.ItemOfalenAxe;
 import nahama.ofalenmod.item.tool.ItemOfalenPerfectTool;
 import nahama.ofalenmod.item.tool.ItemOfalenPickaxe;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemHoe;
-import net.minecraft.item.ItemSpade;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemSword;
+import net.minecraft.item.*;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraftforge.oredict.OreDictionary;
@@ -119,6 +104,8 @@ public class OfalenModItemCore {
 	public static Item shieldOfalen;
 	public static Item teleporterOfalen;
 	public static Item floaterOfalen;
+
+	public static Item seedOfalen;
 
 	/** アイテムを登録する処理。 */
 	public static void registerItem() {
@@ -332,8 +319,8 @@ public class OfalenModItemCore {
 				new PotionEffect(Potion.heal.id, 1, 7),
 				new PotionEffect(Potion.damageBoost.id, 2400, 7),
 				new PotionEffect(Potion.resistance.id, 2400, 7) })
-						.setUnlocalizedName("ballPerfectOfalen")
-						.setTextureName("ofalenmod:empty_ball-2");
+				.setUnlocalizedName("ballPerfectOfalen")
+				.setTextureName("ofalenmod:empty_ball-2");
 		GameRegistry.registerItem(ballPerfectOfalen, "ballPerfectOfalen");
 
 		// ツール
@@ -477,6 +464,12 @@ public class OfalenModItemCore {
 				.setUnlocalizedName("floaterOfalen")
 				.setTextureName("ofalenmod:floater");
 		GameRegistry.registerItem(floaterOfalen, "floaterOfalen");
+
+		//オファレン草
+		seedOfalen = new ItemSeedOfalen(OfalenModBlockCore.grassOfalen)
+				.setUnlocalizedName("seedOfalen")
+				.setTextureName("ofalenmod:seed");
+		GameRegistry.registerItem(seedOfalen, "seedOfalen");
 	}
 
 }

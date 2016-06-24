@@ -154,6 +154,12 @@ item.magazineLaserGreen.name=オファレンレーザーマガジン [緑]
 item.magazineLaserBlue.name=オファレンレーザーマガジン [青]
 item.magazineLaserWhite.name=オファレンレーザーマガジン [白]
 
+//オファレン草
+item.seedOfalen.0.name=赤色オファレン草の種
+item.seedOfalen.1.name=緑色オファレン草の種
+item.seedOfalen.2.name=青色オファレン草の種
+item.seedOfalen.3.name=白色オファレン草の種
+
 //ブロック
 tile.blockOfalen.0.name=赤色オファレンブロック
 tile.blockOfalen.1.name=緑色オファレンブロック
@@ -179,3 +185,6 @@ tile.casingProcessor.2.name=処理装置筐体 Grade 3
 tile.casingProcessor.4.name=処理装置筐体固定ブロック Grade 1
 tile.casingProcessor.5.name=処理装置筐体固定ブロック Grade 2
 tile.casingProcessor.6.name=処理装置筐体固定ブロック Grade 3
+
+//オファレン草
+tile.grassOfalen.name=オファレン草

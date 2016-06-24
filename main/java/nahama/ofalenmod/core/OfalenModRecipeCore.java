@@ -1,6 +1,5 @@
 package nahama.ofalenmod.core;
 
-import cpw.mods.fml.common.IFuelHandler;
 import cpw.mods.fml.common.registry.GameRegistry;
 import nahama.ofalenmod.recipe.MagazineRecipe;
 import net.minecraft.init.Blocks;
@@ -13,8 +12,8 @@ import net.minecraftforge.oredict.ShapelessOreRecipe;
 
 public class OfalenModRecipeCore {
 
-	public static final OfalenModBlockCore BLOCK = new OfalenModBlockCore();
-	public static final OfalenModItemCore ITEM = new OfalenModItemCore();
+	private static final OfalenModBlockCore BLOCK = new OfalenModBlockCore();
+	private static final OfalenModItemCore ITEM = new OfalenModItemCore();
 
 	public static final String[] gem = { "gemOfalenRed", "gemOfalenGreen", "gemOfalenBlue", "gemOfalenWhite" };
 	public static final String[] frag = { "fragmentOfalenRed", "fragmentOfalenGreen", "fragmentOfalenBlue", "fragmentOfalenWhite" };
@@ -395,15 +394,21 @@ public class OfalenModRecipeCore {
 				"IOI",
 				'I', "ingotGold", 'O', core[2], 'E', ITEM.dust));
 
+		// オファレン草
+		for (int i = 0; i < 4; i++) {
+			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ITEM.seedOfalen, 1, i),
+					"SSS",
+					"SOS",
+					"SSS",
+					'S', Items.wheat_seeds, 'O', gem[i]));
+		}
+
 		// 燃料の登録
-		GameRegistry.registerFuelHandler(new IFuelHandler() {
-			@Override
-			public int getBurnTime(ItemStack fuel) {
-				if (fuel.isItemEqual(new ItemStack(ITEM.ofalen, 1, 0))) {
-					return 4000;
-				}
-				return 0;
+		GameRegistry.registerFuelHandler(fuel -> {
+			if (fuel.isItemEqual(new ItemStack(ITEM.ofalen, 1, 0))) {
+				return 4000;
 			}
+			return 0;
 		});
 	}
 
