@@ -3,11 +3,7 @@ package nahama.ofalenmod.core;
 import cpw.mods.fml.common.registry.GameRegistry;
 import nahama.ofalenmod.block.*;
 import nahama.ofalenmod.itemblock.ItemOfalenBlock;
-import nahama.ofalenmod.tileentity.TileEntityConversionMachine;
-import nahama.ofalenmod.tileentity.TileEntityPresentBox;
-import nahama.ofalenmod.tileentity.TileEntityRepairMachine;
-import nahama.ofalenmod.tileentity.TileEntitySmeltingMachine;
-import nahama.ofalenmod.tileentity.TileEntityTeleportMarker;
+import nahama.ofalenmod.tileentity.*;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
@@ -31,21 +27,25 @@ public class OfalenModBlockCore {
 				.setBlockName("oreOfalen")
 				.setBlockTextureName("ofalenmod:ofalen_ore-");
 		GameRegistry.registerBlock(oreOfalen, ItemOfalenBlock.class, "oreOfalen");
-		OreDictionary.registerOre("oreOfalen", new ItemStack(oreOfalen, 1, OreDictionary.WILDCARD_VALUE));
 		OreDictionary.registerOre("oreOfalenRed", new ItemStack(oreOfalen, 1, 0));
 		OreDictionary.registerOre("oreOfalenGreen", new ItemStack(oreOfalen, 1, 1));
 		OreDictionary.registerOre("oreOfalenBlue", new ItemStack(oreOfalen, 1, 2));
 		OreDictionary.registerOre("oreOfalenWhite", new ItemStack(oreOfalen, 1, 3));
+		OreDictionary.registerOre("oreOfalen", new ItemStack(oreOfalen, 1, OreDictionary.WILDCARD_VALUE));
 
 		blockOfalen = new BlockOfalen()
 				.setBlockName("blockOfalen")
 				.setBlockTextureName("ofalenmod:ofalen_block-");
 		GameRegistry.registerBlock(blockOfalen, ItemOfalenBlock.class, "blockOfalen");
-		OreDictionary.registerOre("blockOfalen", new ItemStack(blockOfalen, 1, OreDictionary.WILDCARD_VALUE));
 		OreDictionary.registerOre("blockOfalenRed", new ItemStack(blockOfalen, 1, 0));
 		OreDictionary.registerOre("blockOfalenGreen", new ItemStack(blockOfalen, 1, 1));
 		OreDictionary.registerOre("blockOfalenBlue", new ItemStack(blockOfalen, 1, 2));
 		OreDictionary.registerOre("blockOfalenWhite", new ItemStack(blockOfalen, 1, 3));
+		OreDictionary.registerOre("blockOfalenOrange", new ItemStack(blockOfalen, 1, 4));
+		OreDictionary.registerOre("blockOfalenViridian", new ItemStack(blockOfalen, 1, 5));
+		OreDictionary.registerOre("blockOfalenPurple", new ItemStack(blockOfalen, 1, 6));
+		OreDictionary.registerOre("blockOfalenBlack", new ItemStack(blockOfalen, 1, 7));
+		OreDictionary.registerOre("blockOfalen", new ItemStack(blockOfalen, 1, OreDictionary.WILDCARD_VALUE));
 
 		machineSmelting = new BlockSmeltingMachine()
 				.setBlockName("machineSmelting")

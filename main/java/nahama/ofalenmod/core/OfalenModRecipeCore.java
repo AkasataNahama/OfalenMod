@@ -15,10 +15,10 @@ public class OfalenModRecipeCore {
 	private static final OfalenModBlockCore BLOCK = new OfalenModBlockCore();
 	private static final OfalenModItemCore ITEM = new OfalenModItemCore();
 
-	public static final String[] gem = { "gemOfalenRed", "gemOfalenGreen", "gemOfalenBlue", "gemOfalenWhite" };
-	public static final String[] frag = { "fragmentOfalenRed", "fragmentOfalenGreen", "fragmentOfalenBlue", "fragmentOfalenWhite" };
-	public static final String[] core = { "coreOfalenRed", "coreOfalenGreen", "coreOfalenBlue", "coreOfalenWhite" };
-	public static final String[] block = { "blockOfalenRed", "blockOfalenGreen", "blockOfalenBlue", "blockOfalenWhite" };
+	public static final String[] gem = { "gemOfalenRed", "gemOfalenGreen", "gemOfalenBlue", "gemOfalenWhite", "gemOfalenOrange", "gemOfalenViridian", "gemOfalenPurple", "gemOfalenBlack" };
+	public static final String[] frag = { "fragmentOfalenRed", "fragmentOfalenGreen", "fragmentOfalenBlue", "fragmentOfalenWhite", "fragmentOfalenOrange", "fragmentOfalenViridian", "fragmentOfalenPurple", "fragmentOfalenBlack" };
+	public static final String[] core = { "coreOfalenRed", "coreOfalenGreen", "coreOfalenBlue", "coreOfalenWhite", "coreOfalenOrange", "coreOfalenViridian", "coreOfalenPurple", "coreOfalenBlack" };
+	public static final String[] block = { "blockOfalenRed", "blockOfalenGreen", "blockOfalenBlue", "blockOfalenWhite", "blockOfalenOrange", "blockOfalenViridian", "blockOfalenPurple", "blockOfalenBlack" };
 
 	public static final ItemStack[] crystal = { new ItemStack(ITEM.crystalEnergyLaser, 1, 0), new ItemStack(ITEM.crystalEnergyLaser, 1, 1), new ItemStack(ITEM.crystalEnergyLaser, 1, 2), new ItemStack(ITEM.crystalEnergyLaser, 1, 3) };
 
@@ -36,7 +36,7 @@ public class OfalenModRecipeCore {
 		recipeArray[OfalenModConfigCore.recipeLump / 3] = recipeType;
 
 		// ブロック・欠片関連
-		for (int i = 0; i < 4; i++) {
+		for (int i = 0; i < 8; i++) {
 			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(BLOCK.blockOfalen, 1, i),
 					"XXX", "XXX", "XXX", 'X', gem[i]));
 

@@ -7,18 +7,18 @@ import net.minecraft.util.IIcon;
 public class ItemOfalen extends ItemParts {
 
 	public ItemOfalen() {
-		super(4);
+		super(8);
 	}
 
 	@Override
 	@SideOnly(Side.CLIENT)
 	public IIcon getIconFromDamage(int meta) {
-		return iicon[meta & 3];
+		return iicon[meta & 7];
 	}
 
 	@Override
 	public int getMetadata(int meta) {
-		return meta & 3;
+		return meta & 7;
 	}
 
 }

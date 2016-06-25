@@ -115,31 +115,43 @@ public class OfalenModItemCore {
 				.setUnlocalizedName("ofalen")
 				.setTextureName("ofalenmod:ofalen");
 		GameRegistry.registerItem(ofalen, "ofalen");
-		OreDictionary.registerOre("gemOfalen", new ItemStack(ofalen, 1, OreDictionary.WILDCARD_VALUE));
 		OreDictionary.registerOre("gemOfalenRed", new ItemStack(ofalen, 1, 0));
 		OreDictionary.registerOre("gemOfalenGreen", new ItemStack(ofalen, 1, 1));
 		OreDictionary.registerOre("gemOfalenBlue", new ItemStack(ofalen, 1, 2));
 		OreDictionary.registerOre("gemOfalenWhite", new ItemStack(ofalen, 1, 3));
+		OreDictionary.registerOre("gemOfalenOrange", new ItemStack(ofalen, 1, 4));
+		OreDictionary.registerOre("gemOfalenViridian", new ItemStack(ofalen, 1, 5));
+		OreDictionary.registerOre("gemOfalenPurple", new ItemStack(ofalen, 1, 6));
+		OreDictionary.registerOre("gemOfalenBlack", new ItemStack(ofalen, 1, 7));
+		OreDictionary.registerOre("gemOfalen", new ItemStack(ofalen, 1, OreDictionary.WILDCARD_VALUE));
 
 		fragmentOfalen = new ItemOfalen()
 				.setUnlocalizedName("fragmentOfalen")
 				.setTextureName("ofalenmod:ofalen_fragment");
 		GameRegistry.registerItem(fragmentOfalen, "fragmentOfalen");
-		OreDictionary.registerOre("fragmentOfalen", new ItemStack(fragmentOfalen, 1, OreDictionary.WILDCARD_VALUE));
 		OreDictionary.registerOre("fragmentOfalenRed", new ItemStack(fragmentOfalen, 1, 0));
 		OreDictionary.registerOre("fragmentOfalenGreen", new ItemStack(fragmentOfalen, 1, 1));
 		OreDictionary.registerOre("fragmentOfalenBlue", new ItemStack(fragmentOfalen, 1, 2));
 		OreDictionary.registerOre("fragmentOfalenWhite", new ItemStack(fragmentOfalen, 1, 3));
+		OreDictionary.registerOre("fragmentOfalenOrange", new ItemStack(fragmentOfalen, 1, 4));
+		OreDictionary.registerOre("fragmentOfalenViridian", new ItemStack(fragmentOfalen, 1, 5));
+		OreDictionary.registerOre("fragmentOfalenPurple", new ItemStack(fragmentOfalen, 1, 6));
+		OreDictionary.registerOre("fragmentOfalenBlack", new ItemStack(fragmentOfalen, 1, 7));
+		OreDictionary.registerOre("fragmentOfalen", new ItemStack(fragmentOfalen, 1, OreDictionary.WILDCARD_VALUE));
 
 		coreOfalen = new ItemOfalen()
 				.setUnlocalizedName("coreOfalen")
 				.setTextureName("ofalenmod:ofalen_core");
 		GameRegistry.registerItem(coreOfalen, "coreOfalen");
-		OreDictionary.registerOre("coreOfalen", new ItemStack(coreOfalen, 1, OreDictionary.WILDCARD_VALUE));
 		OreDictionary.registerOre("coreOfalenRed", new ItemStack(coreOfalen, 1, 0));
 		OreDictionary.registerOre("coreOfalenGreen", new ItemStack(coreOfalen, 1, 1));
 		OreDictionary.registerOre("coreOfalenBlue", new ItemStack(coreOfalen, 1, 2));
 		OreDictionary.registerOre("coreOfalenWhite", new ItemStack(coreOfalen, 1, 3));
+		OreDictionary.registerOre("coreOfalenOrange", new ItemStack(coreOfalen, 1, 4));
+		OreDictionary.registerOre("coreOfalenViridian", new ItemStack(coreOfalen, 1, 5));
+		OreDictionary.registerOre("coreOfalenPurple", new ItemStack(coreOfalen, 1, 6));
+		OreDictionary.registerOre("coreOfalenBlack", new ItemStack(coreOfalen, 1, 7));
+		OreDictionary.registerOre("coreOfalen", new ItemStack(coreOfalen, 1, OreDictionary.WILDCARD_VALUE));
 
 		partsOfalen = new ItemParts(9)
 				.setUnlocalizedName("partsOfalen")
