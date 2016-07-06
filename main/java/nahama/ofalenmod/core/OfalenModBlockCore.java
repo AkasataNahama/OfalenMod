@@ -15,6 +15,7 @@ public class OfalenModBlockCore {
 	public static Block machineSmelting;
 	public static Block machineConversion;
 	public static Block machineRepair;
+	public static Block machineFusing;
 	public static Block processorMachine;
 	public static Block casingProcessor;
 	public static Block markerTeleportOfalen;
@@ -64,6 +65,12 @@ public class OfalenModBlockCore {
 				.setBlockTextureName("ofalenmod:repair_machine");
 		GameRegistry.registerBlock(machineRepair, "machineRepair");
 		GameRegistry.registerTileEntity(TileEntityRepairMachine.class, "TileEntityRepairMachine");
+
+		machineFusing = new BlockFusingMachine()
+				.setBlockName("machineFusing")
+				.setBlockTextureName("ofalenmod:fusing_machine");
+		GameRegistry.registerBlock(machineFusing, "machineFusing");
+		GameRegistry.registerTileEntity(TileEntityFusingMachine.class, "TileEntityFusingMachine");
 
 		processorMachine = new BlockMachineProcessor()
 				.setBlockName("processorMachine")

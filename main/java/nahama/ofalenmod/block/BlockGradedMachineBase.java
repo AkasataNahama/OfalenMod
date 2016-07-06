@@ -1,7 +1,5 @@
 package nahama.ofalenmod.block;
 
-import java.util.Random;
-
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import nahama.ofalenmod.OfalenModCore;
@@ -19,6 +17,8 @@ import net.minecraft.util.IIcon;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+
+import java.util.Random;
 
 public abstract class BlockGradedMachineBase extends BlockContainer {
 
@@ -72,10 +72,10 @@ public abstract class BlockGradedMachineBase extends BlockContainer {
 	@Override
 	public void breakBlock(World world, int x, int y, int z, Block block, int meta) {
 		// TileEntityの内部にあるアイテムをドロップさせる。
-		TileEntityGradedMachineBase tileentity = (TileEntityGradedMachineBase) world.getTileEntity(x, y, z);
-		if (tileentity != null) {
-			for (int i = 0; i < tileentity.getSizeInventory(); i++) {
-				ItemStack itemStack = tileentity.getStackInSlot(i);
+		TileEntityGradedMachineBase tileEntity = (TileEntityGradedMachineBase) world.getTileEntity(x, y, z);
+		if (tileEntity != null) {
+			for (int i = 0; i < tileEntity.getSizeInventory(); i++) {
+				ItemStack itemStack = tileEntity.getStackInSlot(i);
 
 				if (itemStack != null) {
 					float f = random.nextFloat() * 0.6F + 0.1F;

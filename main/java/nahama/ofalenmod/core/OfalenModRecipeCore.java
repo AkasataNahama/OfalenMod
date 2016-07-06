@@ -81,6 +81,10 @@ public class OfalenModRecipeCore {
 		GameRegistry.addRecipe(new ShapedOreRecipe(BLOCK.machineRepair,
 				"XYX", "XZX", "XYX", 'X', new ItemStack(ITEM.partsOfalen, 1, 0), 'Y', Blocks.anvil, 'Z', block[2]));
 
+		// 融合機
+		GameRegistry.addRecipe(new ShapedOreRecipe(BLOCK.machineFusing,
+				"XYX", "XZX", "XYX", 'X', new ItemStack(ITEM.partsOfalen, 1, 0), 'Y', core[3], 'Z', block[3]));
+
 		// 処理装置
 		GameRegistry.addRecipe(new ShapedOreRecipe(BLOCK.processorMachine,
 				"RXG", "YZY", "BXW", 'X', Items.diamond, 'Y', Items.gold_ingot, 'Z', new ItemStack(BLOCK.casingProcessor),

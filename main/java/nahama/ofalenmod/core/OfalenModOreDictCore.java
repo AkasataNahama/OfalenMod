@@ -1,18 +1,18 @@
 package nahama.ofalenmod.core;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
 
-public class OfalenModOreDicCore {
+import java.util.ArrayList;
+import java.util.List;
+
+public class OfalenModOreDictCore {
 
 	public static ArrayList<ItemStack> listCreeperOfalenBlock = OreDictionary.getOres("CreeperOfalenBlock");
 	public static ArrayList<ItemStack> listTDiamond = OreDictionary.getOres("TDiamond");
 	public static ArrayList<ItemStack> listOreGunPowder = OreDictionary.getOres("oreGunPowder");
 
-	public static boolean isMuchedItemStack(List<ItemStack> inputs, ItemStack... targets) {
+	public static boolean isMatchedItemStack(List<ItemStack> inputs, ItemStack... targets) {
 		if (inputs == null || inputs.isEmpty())
 			return false;
 		for (ItemStack input : inputs) {

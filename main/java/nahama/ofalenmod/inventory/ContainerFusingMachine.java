@@ -2,39 +2,35 @@ package nahama.ofalenmod.inventory;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import nahama.ofalenmod.core.OfalenModBlockCore;
-import nahama.ofalenmod.core.OfalenModItemCore;
-import nahama.ofalenmod.core.OfalenModOreDictCore;
-import nahama.ofalenmod.item.ItemOfalen;
-import nahama.ofalenmod.tileentity.TileEntityConversionMachine;
-import net.minecraft.block.Block;
+import nahama.ofalenmod.tileentity.TileEntityFusingMachine;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.ICrafting;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 
-public class ContainerConversionMachine extends Container {
+public class ContainerFusingMachine extends Container {
 
-	private TileEntityConversionMachine tileEntity;
-	private int lastConversionTime;
+	private TileEntityFusingMachine tileEntity;
+	private int lastFusingTime;
 	private int lastBurnTime;
 	private int lastItemBurnTime;
 	/** 変換機のインベントリの第一スロットの番号 */
 	private static final int index0 = 0;
 	/** プレイヤーのインベントリの第一スロットの番号 */
-	private static final int index1 = 4;
+	private static final int index1 = 5;
 	/** クイックスロットの第一スロットの番号 */
 	private static final int index2 = index1 + 27;
 	/** このコンテナの全体のスロット数 */
 	private static final int index3 = index2 + 9;
 
-	public ContainerConversionMachine(EntityPlayer player, TileEntityConversionMachine tileEntity) {
+	public ContainerFusingMachine(EntityPlayer player, TileEntityFusingMachine tileEntity) {
 		this.tileEntity = tileEntity;
-		this.addSlotToContainer(new Slot(tileEntity, 0, 56, 17));
-		this.addSlotToContainer(new Slot(tileEntity, 1, 56, 53));
-		this.addSlotToContainer(new SlotUnputable(tileEntity, 2, 116, 35));
-		this.addSlotToContainer(new Slot(tileEntity, 3, 83, 17));
+		this.addSlotToContainer(new Slot(tileEntity, 0, 35, 17));
+		this.addSlotToContainer(new Slot(tileEntity, 1, 14, 53));
+		this.addSlotToContainer(new Slot(tileEntity, 2, 56, 53));
+		this.addSlotToContainer(new Slot(tileEntity, 3, 83, 53));
+		this.addSlotToContainer(new SlotUnputable(tileEntity, 4, 116, 35));
 		int i;
 		for (i = 0; i < 3; ++i) {
 			for (int j = 0; j < 9; ++j) {
@@ -57,9 +53,9 @@ public class ContainerConversionMachine extends Container {
 	@Override
 	public void detectAndSendChanges() {
 		super.detectAndSendChanges();
-		for (int i = 0; i < crafters.size(); ++i) {
-			ICrafting icrafting = (ICrafting) crafters.get(i);
-			if (lastConversionTime != tileEntity.workTime) {
+		for (Object crafter : crafters) {
+			ICrafting icrafting = (ICrafting) crafter;
+			if (lastFusingTime != tileEntity.workTime) {
 				icrafting.sendProgressBarUpdate(this, 0, tileEntity.workTime);
 			}
 			if (lastBurnTime != tileEntity.burnTime) {
@@ -69,7 +65,7 @@ public class ContainerConversionMachine extends Container {
 				icrafting.sendProgressBarUpdate(this, 2, tileEntity.maxBurnTime);
 			}
 		}
-		lastConversionTime = tileEntity.workTime;
+		lastFusingTime = tileEntity.workTime;
 		lastBurnTime = tileEntity.burnTime;
 		lastItemBurnTime = tileEntity.maxBurnTime;
 	}
@@ -105,19 +101,14 @@ public class ContainerConversionMachine extends Container {
 					return null;
 				}
 				slot.onSlotChange(itemStack1, itemStack);
-			} else if (slotNumber > 3) {
-				if (((itemStack1.getItem() instanceof ItemOfalen) && !itemStack1.isItemEqual(new ItemStack(OfalenModItemCore.coreOfalen, 1, 3))) || Block.getBlockFromItem(itemStack1.getItem()) == OfalenModBlockCore.blockOfalen) {
-					if (!this.mergeItemStack(itemStack1, 3, 4, false)) {
-						if (!this.mergeItemStack(itemStack1, 0, 1, false)) {
-							return null;
-						}
-					}
-				} else if (OfalenModOreDictCore.isMatchedItemStack(OfalenModOreDictCore.listCreeperOfalenBlock, itemStack1)) {
-					if (!this.mergeItemStack(itemStack1, 0, 1, false)) {
+			} else if (slotNumber >= index1) {
+				int meta = itemStack1.getItemDamage() & 3;
+				if (tileEntity.isFusableOfalen(itemStack1.getItem()) && meta != 3) {
+					if (!this.mergeItemStack(itemStack1, meta, meta + 1, false)) {
 						return null;
 					}
 				} else if (tileEntity.isItemFuel(itemStack1)) {
-					if (!this.mergeItemStack(itemStack1, 1, 2, false)) {
+					if (!this.mergeItemStack(itemStack1, 3, 4, false)) {
 						return null;
 					}
 				} else if (slotNumber >= index1 && slotNumber < index2) {
@@ -132,7 +123,7 @@ public class ContainerConversionMachine extends Container {
 			}
 
 			if (itemStack1.stackSize == 0) {
-				slot.putStack((ItemStack) null);
+				slot.putStack(null);
 			} else {
 				slot.onSlotChanged();
 			}

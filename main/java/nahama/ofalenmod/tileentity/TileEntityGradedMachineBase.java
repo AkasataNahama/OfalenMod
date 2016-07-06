@@ -5,7 +5,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 import nahama.ofalenmod.block.BlockMachineProcessor;
 import nahama.ofalenmod.core.OfalenModConfigCore;
 import nahama.ofalenmod.core.OfalenModItemCore;
-import nahama.ofalenmod.core.OfalenModOreDicCore;
+import nahama.ofalenmod.core.OfalenModOreDictCore;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
@@ -86,6 +86,8 @@ public abstract class TileEntityGradedMachineBase extends TileEntity implements 
 	public int getItemBurnTime(ItemStack itemStack) {
 		if (itemStack == null)
 			return 0;
+		if (OfalenModOreDictCore.isMatchedItemStack(OfalenModOreDictCore.listTDiamond, itemStack))
+			return OfalenModConfigCore.timeBurnStone * (4 - grade) / 4;
 		int time = TileEntityFurnace.getItemBurnTime(itemStack) * (4 - grade) / 4 / OfalenModConfigCore.factorTimeBurnFuelFurnace;
 		if (itemStack.getItem() != OfalenModItemCore.partsOfalen)
 			return time;
@@ -95,8 +97,6 @@ public abstract class TileEntityGradedMachineBase extends TileEntity implements 
 		} else if (meta == 4) {
 			return OfalenModConfigCore.timeBurnOfalen * (4 - grade) / 4;
 		}
-		if (OfalenModOreDicCore.isMuchedItemStack(OfalenModOreDicCore.listTDiamond, itemStack))
-			return OfalenModConfigCore.timeBurnStone * (4 - grade) / 4;
 		return time;
 	}
 
@@ -301,19 +301,21 @@ public abstract class TileEntityGradedMachineBase extends TileEntity implements 
 	/** プレイヤーが使用できるかどうか。 */
 	@Override
 	public boolean isUseableByPlayer(EntityPlayer player) {
-		return worldObj.getTileEntity(xCoord, yCoord, zCoord) != this ? false : player.getDistanceSq(xCoord + 0.5D, yCoord + 0.5D, zCoord + 0.5D) <= 64.0D;
+		return worldObj.getTileEntity(xCoord, yCoord, zCoord) == this && player.getDistanceSq(xCoord + 0.5D, yCoord + 0.5D, zCoord + 0.5D) <= 64.0D;
 	}
 
 	@Override
-	public void openInventory() {}
+	public void openInventory() {
+	}
 
 	@Override
-	public void closeInventory() {}
+	public void closeInventory() {
+	}
 
 	/** スロットにアクセスできるかどうか。 */
 	@Override
 	public boolean isItemValidForSlot(int slot, ItemStack itemStack) {
-		return slot == 2 ? false : (slot == 1 ? this.isItemFuel(itemStack) : true);
+		return slot != 2 && (slot != 1 || this.isItemFuel(itemStack));
 	}
 
 	/** 方向からアクセスできるスロットの配列を返す。 */

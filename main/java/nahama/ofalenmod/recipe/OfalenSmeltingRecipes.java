@@ -7,7 +7,7 @@ import java.util.Map.Entry;
 import nahama.ofalenmod.core.OfalenModBlockCore;
 import nahama.ofalenmod.core.OfalenModConfigCore;
 import nahama.ofalenmod.core.OfalenModItemCore;
-import nahama.ofalenmod.core.OfalenModOreDicCore;
+import nahama.ofalenmod.core.OfalenModOreDictCore;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -36,8 +36,8 @@ public class OfalenSmeltingRecipes {
 		this.addRecipe(new ItemStack(Blocks.iron_ore), new ItemStack(Items.iron_ingot), true);
 		this.addRecipe(new ItemStack(Blocks.gold_ore), new ItemStack(Items.gold_ingot), true);
 		this.addRecipe(new ItemStack(Blocks.quartz_ore), new ItemStack(Items.quartz), true);
-		for (int i = 0; i < OfalenModOreDicCore.listOreGunPowder.size(); i++) {
-			this.addRecipe(OfalenModOreDicCore.getItem(OfalenModOreDicCore.listOreGunPowder, i), new ItemStack(Items.gunpowder), true);
+		for (int i = 0; i < OfalenModOreDictCore.listOreGunPowder.size(); i++) {
+			this.addRecipe(OfalenModOreDictCore.getItem(OfalenModOreDictCore.listOreGunPowder, i), new ItemStack(Items.gunpowder), true);
 		}
 	}
 

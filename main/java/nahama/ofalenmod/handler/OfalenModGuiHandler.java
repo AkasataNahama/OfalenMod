@@ -1,27 +1,9 @@
 package nahama.ofalenmod.handler;
 
 import cpw.mods.fml.common.network.IGuiHandler;
-import nahama.ofalenmod.gui.GuiConversionMachine;
-import nahama.ofalenmod.gui.GuiItemFloater;
-import nahama.ofalenmod.gui.GuiItemShield;
-import nahama.ofalenmod.gui.GuiItemTeleporter;
-import nahama.ofalenmod.gui.GuiPresentBox;
-import nahama.ofalenmod.gui.GuiRepairMachine;
-import nahama.ofalenmod.gui.GuiSmeltingMachine;
-import nahama.ofalenmod.gui.GuiTeleportMarker;
-import nahama.ofalenmod.inventory.ContainerPresentBox;
-import nahama.ofalenmod.inventory.ContainerConversionMachine;
-import nahama.ofalenmod.inventory.ContainerItemFloater;
-import nahama.ofalenmod.inventory.ContainerItemShield;
-import nahama.ofalenmod.inventory.ContainerItemTeleporter;
-import nahama.ofalenmod.inventory.ContainerRepairMachine;
-import nahama.ofalenmod.inventory.ContainerSmeltingMachine;
-import nahama.ofalenmod.inventory.ContainerTeleportMarker;
-import nahama.ofalenmod.tileentity.TileEntityConversionMachine;
-import nahama.ofalenmod.tileentity.TileEntityPresentBox;
-import nahama.ofalenmod.tileentity.TileEntityRepairMachine;
-import nahama.ofalenmod.tileentity.TileEntitySmeltingMachine;
-import nahama.ofalenmod.tileentity.TileEntityTeleportMarker;
+import nahama.ofalenmod.gui.*;
+import nahama.ofalenmod.inventory.*;
+import nahama.ofalenmod.tileentity.*;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
@@ -38,21 +20,24 @@ public class OfalenModGuiHandler implements IGuiHandler {
 			return new ContainerItemFloater(player);
 		if (!world.blockExists(x, y, z))
 			return null;
-		TileEntity tileentity = world.getTileEntity(x, y, z);
-		if (tileentity instanceof TileEntitySmeltingMachine) {
-			return new ContainerSmeltingMachine(player, (TileEntitySmeltingMachine) tileentity);
+		TileEntity tileEntity = world.getTileEntity(x, y, z);
+		if (tileEntity instanceof TileEntitySmeltingMachine) {
+			return new ContainerSmeltingMachine(player, (TileEntitySmeltingMachine) tileEntity);
 		}
-		if (tileentity instanceof TileEntityRepairMachine) {
-			return new ContainerRepairMachine(player, (TileEntityRepairMachine) tileentity);
+		if (tileEntity instanceof TileEntityRepairMachine) {
+			return new ContainerRepairMachine(player, (TileEntityRepairMachine) tileEntity);
 		}
-		if (tileentity instanceof TileEntityConversionMachine) {
-			return new ContainerConversionMachine(player, (TileEntityConversionMachine) tileentity);
+		if (tileEntity instanceof TileEntityConversionMachine) {
+			return new ContainerConversionMachine(player, (TileEntityConversionMachine) tileEntity);
 		}
-		if (tileentity instanceof TileEntityTeleportMarker) {
-			return new ContainerTeleportMarker(player, (TileEntityTeleportMarker) tileentity);
+		if (tileEntity instanceof TileEntityFusingMachine) {
+			return new ContainerFusingMachine(player, (TileEntityFusingMachine) tileEntity);
 		}
-		if (tileentity instanceof TileEntityPresentBox) {
-			return new ContainerPresentBox(player, (TileEntityPresentBox) tileentity);
+		if (tileEntity instanceof TileEntityTeleportMarker) {
+			return new ContainerTeleportMarker(player, (TileEntityTeleportMarker) tileEntity);
+		}
+		if (tileEntity instanceof TileEntityPresentBox) {
+			return new ContainerPresentBox(player, (TileEntityPresentBox) tileEntity);
 		}
 		return null;
 	}
@@ -67,21 +52,24 @@ public class OfalenModGuiHandler implements IGuiHandler {
 			return new GuiItemFloater(player);
 		if (!world.blockExists(x, y, z))
 			return null;
-		TileEntity tileentity = world.getTileEntity(x, y, z);
-		if (tileentity instanceof TileEntitySmeltingMachine) {
-			return new GuiSmeltingMachine(player, (TileEntitySmeltingMachine) tileentity);
+		TileEntity tileEntity = world.getTileEntity(x, y, z);
+		if (tileEntity instanceof TileEntitySmeltingMachine) {
+			return new GuiSmeltingMachine(player, (TileEntitySmeltingMachine) tileEntity);
 		}
-		if (tileentity instanceof TileEntityRepairMachine) {
-			return new GuiRepairMachine(player, (TileEntityRepairMachine) tileentity);
+		if (tileEntity instanceof TileEntityRepairMachine) {
+			return new GuiRepairMachine(player, (TileEntityRepairMachine) tileEntity);
 		}
-		if (tileentity instanceof TileEntityConversionMachine) {
-			return new GuiConversionMachine(player, (TileEntityConversionMachine) tileentity);
+		if (tileEntity instanceof TileEntityConversionMachine) {
+			return new GuiConversionMachine(player, (TileEntityConversionMachine) tileEntity);
 		}
-		if (tileentity instanceof TileEntityTeleportMarker) {
-			return new GuiTeleportMarker(player, (TileEntityTeleportMarker) tileentity);
+		if (tileEntity instanceof TileEntityFusingMachine) {
+			return new GuiFusingMachine(player, (TileEntityFusingMachine) tileEntity);
 		}
-		if (tileentity instanceof TileEntityPresentBox) {
-			return new GuiPresentBox(player, (TileEntityPresentBox) tileentity);
+		if (tileEntity instanceof TileEntityTeleportMarker) {
+			return new GuiTeleportMarker(player, (TileEntityTeleportMarker) tileEntity);
+		}
+		if (tileEntity instanceof TileEntityPresentBox) {
+			return new GuiPresentBox(player, (TileEntityPresentBox) tileEntity);
 		}
 		return null;
 	}

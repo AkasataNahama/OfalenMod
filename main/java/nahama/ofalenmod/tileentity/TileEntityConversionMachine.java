@@ -3,7 +3,7 @@ package nahama.ofalenmod.tileentity;
 import nahama.ofalenmod.core.OfalenModBlockCore;
 import nahama.ofalenmod.core.OfalenModConfigCore;
 import nahama.ofalenmod.core.OfalenModItemCore;
-import nahama.ofalenmod.core.OfalenModOreDicCore;
+import nahama.ofalenmod.core.OfalenModOreDictCore;
 import nahama.ofalenmod.item.ItemOfalen;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
@@ -53,7 +53,7 @@ public class TileEntityConversionMachine extends TileEntityGradedMachineBase {
 		}
 		// オファレンブロックへの変換なら、匠式硬質オファレンブロックでも可。
 		if (Block.getBlockFromItem(sample.getItem()) == OfalenModBlockCore.blockOfalen) {
-			if (OfalenModOreDicCore.isMuchedItemStack(OfalenModOreDicCore.listCreeperOfalenBlock, itemStacks[0])) {
+			if (OfalenModOreDictCore.isMatchedItemStack(OfalenModOreDictCore.listCreeperOfalenBlock, itemStacks[0])) {
 				return true;
 			}
 		}

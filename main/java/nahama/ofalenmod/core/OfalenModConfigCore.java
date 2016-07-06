@@ -22,6 +22,7 @@ public class OfalenModConfigCore {
 	public static int timeBurnOfalen = 4800;
 	public static int timeBurnStone = 400;
 	public static int timeConversion = 1200;
+	public static int timeFusing = 1200;
 	public static int timeRepair = 40;
 	public static int amountSmelting = 1;
 	public static int timeSmelting = 1200;
@@ -65,8 +66,9 @@ public class OfalenModConfigCore {
 			factorTimeBurnFuelFurnace = cfg.getInt("BurnTimeFactorFurnaceFuel", MACHINE, factorTimeBurnFuelFurnace, 1, Integer.MAX_VALUE, "Burn time factor of furnace fuel");
 			timeBurnOfalen = cfg.getInt("BurnTimeOfalen", MACHINE, timeBurnOfalen, 1, Integer.MAX_VALUE, "Burn time of Ofalen Fuel(tick)");
 			timeBurnStone = cfg.getInt("BurnTimeStone", MACHINE, timeBurnStone, 1, Integer.MAX_VALUE, "Burn time of Stone Fuel(tick)");
-			timeConversion = cfg.getInt("ConversionTime", MACHINE, timeConversion, 1, Integer.MAX_VALUE, "Conversion time of Ofalen Conversion Machine(tick)");
-			timeRepair = cfg.getInt("RepairTime", MACHINE, timeRepair, 1, Integer.MAX_VALUE, "Repair time of Ofalen Repair Machine(tick)");
+			timeConversion = cfg.getInt("ConvertingTime", MACHINE, timeConversion, 1, Integer.MAX_VALUE, "Converting time of Ofalen Converting Machine(tick)");
+			timeFusing = cfg.getInt("FusingTime", MACHINE, timeFusing, 1, Integer.MAX_VALUE, "Fusing time of Ofalen Fusing Machine(tick)");
+			timeRepair = cfg.getInt("RepairingTime", MACHINE, timeRepair, 1, Integer.MAX_VALUE, "Repairing time of Ofalen Repairing Machine(tick)");
 			amountSmelting = cfg.getInt("SmeltingAmount", MACHINE, amountSmelting, 1, 64, "Smelting amount of Ofalen Smelting Machine from Ofalen Ore to Ofalen");
 			timeSmelting = cfg.getInt("SmeltingTime", MACHINE, timeSmelting, 1, Integer.MAX_VALUE, "Smelting time of Ofalen Smelting Machine(tick)");
 
@@ -101,6 +103,7 @@ public class OfalenModConfigCore {
 		timeBurnOfalen = 4800;
 		timeBurnStone = 400;
 		timeConversion = 1200;
+		timeFusing = 1200;
 		timeRepair = 40;
 		amountSmelting = 1;
 		timeSmelting = 1200;
