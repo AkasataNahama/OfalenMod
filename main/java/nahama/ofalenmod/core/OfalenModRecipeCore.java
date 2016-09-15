@@ -1,5 +1,6 @@
 package nahama.ofalenmod.core;
 
+import cpw.mods.fml.common.IFuelHandler;
 import cpw.mods.fml.common.registry.GameRegistry;
 import nahama.ofalenmod.recipe.MagazineRecipe;
 import net.minecraft.init.Blocks;
@@ -408,11 +409,14 @@ public class OfalenModRecipeCore {
 		}
 
 		// 燃料の登録
-		GameRegistry.registerFuelHandler(fuel -> {
-			if (fuel.isItemEqual(new ItemStack(ITEM.ofalen, 1, 0))) {
-				return 4000;
+		GameRegistry.registerFuelHandler(new IFuelHandler() {
+			@Override
+			public int getBurnTime(ItemStack fuel) {
+				if (fuel.isItemEqual(new ItemStack(ITEM.ofalen, 1, 0))) {
+					return 4000;
+				}
+				return 0;
 			}
-			return 0;
 		});
 	}
 

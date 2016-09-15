@@ -1,18 +1,20 @@
 package nahama.ofalenmod.handler;
 
+import nahama.ofalenmod.Log;
+import nahama.ofalenmod.OfalenModCore;
+import net.minecraft.util.StatCollector;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
-
-import nahama.ofalenmod.Log;
-import nahama.ofalenmod.OfalenModCore;
-import net.minecraft.util.StatCollector;
+import java.util.ArrayList;
 
 public class OfalenModUpdateCheckHandler {
 
 	public static boolean isAvailableNewVersion;
 	public static String latestVersion;
+	public static ArrayList<String> notifiedNames = new ArrayList<>();
 
 	/** 新しいバージョンがリリースされているか確認する。 */
 	public static void checkUpdate() {
@@ -101,7 +103,7 @@ public class OfalenModUpdateCheckHandler {
 	public static String getMessage() {
 		String s1 = StatCollector.translateToLocal("info.OfalenMod.Now");
 		String s2 = StatCollector.translateToLocal("info.OfalenMod.New");
-		return s1 + OfalenModCore.VERSION + s2 + latestVersion;
+		return s1 + " " + OfalenModCore.VERSION + s2 + " " + latestVersion;
 	}
 
 }

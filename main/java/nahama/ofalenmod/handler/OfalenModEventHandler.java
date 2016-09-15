@@ -1,6 +1,7 @@
 package nahama.ofalenmod.handler;
 
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import nahama.ofalenmod.Log;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ChatComponentText;
@@ -18,6 +19,7 @@ public class OfalenModEventHandler {
 	public void onEntityJoinWorld(EntityJoinWorldEvent event) {
 		if (!(event.entity instanceof EntityPlayer))
 			return;
+		Log.info("onEntityJoinWorld");
 		EntityPlayer player = (EntityPlayer) event.entity;
 		// プレイヤーの時。
 		if (!event.world.isRemote) {
@@ -26,10 +28,11 @@ public class OfalenModEventHandler {
 			OfalenShieldHandler.checkPlayer(player);
 			// プレゼントの調査。
 			OfalenModAnniversaryHandler.checkPlayer(player);
-			if (OfalenModUpdateCheckHandler.isAvailableNewVersion) {
+			if (OfalenModUpdateCheckHandler.isAvailableNewVersion && !OfalenModUpdateCheckHandler.notifiedNames.contains(player.getCommandSenderName())) {
 				// 最新バージョンの通知をする。
 				player.addChatMessage(new ChatComponentText(StatCollector.translateToLocal("info.OfalenMod.NewVersionIsAvailable")));
 				player.addChatMessage(new ChatComponentText(OfalenModUpdateCheckHandler.getMessage()));
+				OfalenModUpdateCheckHandler.notifiedNames.add(player.getCommandSenderName());
 			}
 		} else {
 			// クライアント側

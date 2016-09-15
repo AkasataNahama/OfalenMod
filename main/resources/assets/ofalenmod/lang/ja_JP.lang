@@ -27,25 +27,25 @@ container.OfalenMod.PresentBox=オファレンプレゼントボックス
 
 //説明文
 info.OfalenMod.smeltingrecipe=オファレン製錬機
-info.OfalenMod.loaded=クリスタル:
+info.OfalenMod.loaded=クリスタル :
 info.OfalenMod.color:red=赤
 info.OfalenMod.color:green=緑
 info.OfalenMod.color:blue=青
 info.OfalenMod.color:white=白
 info.OfalenMod.metadescription=このMODは、新しい鉱石「オファレン」を追加し、新しく道具・防具・玉などのアイテムを作れるようにします。
-info.OfalenMod.ItemShield.MaterialLacking=オファレンシールド：シールドインゴットが不足しています！
-info.OfalenMod.ItemShield.ShieldBroken=オファレンシールド：シールドが無効になりました！
-info.OfalenMod.ItemTeleporter.MaterialLacking=オファレンテレポーター：テレポートパールが不足しています！
-info.OfalenMod.ItemTeleporter.ChannelInvalid=オファレンテレポーター：このチャンネルは無効です！
-info.OfalenMod.ItemFloater.ChangeMode1=オファレンフローター：モードを1にチェンジしました！
-info.OfalenMod.ItemFloater.ChangeMode2=オファレンフローター：モードを2にチェンジしました！
-info.OfalenMod.ItemFloater.ChangeMode3=オファレンフローター：モードを3にチェンジしました！
-info.OfalenMod.ItemFloater.ChangeMode4=オファレンフローター：モードを4にチェンジしました！
-info.OfalenMod.ItemFloater.ChangeMode5=オファレンフローター：モードを5にチェンジしました！
-info.OfalenMod.ItemFloater.MaterialLacking=オファレンフローター：フロートダストが不足しています！
-info.OfalenMod.NewVersionIsAvailable=オファレンMOD：新しいバージョンがリリースされています！
-info.OfalenMod.Now= 現在 : 
-info.OfalenMod.New= 最新 : 
+info.OfalenMod.ItemShield.MaterialLacking=オファレンシールド : シールドインゴットが不足しています！
+info.OfalenMod.ItemShield.ShieldBroken=オファレンシールド : シールドが無効になりました！
+info.OfalenMod.ItemTeleporter.MaterialLacking=オファレンテレポーター : テレポートパールが不足しています！
+info.OfalenMod.ItemTeleporter.ChannelInvalid=オファレンテレポーター : このチャンネルは無効です！
+info.OfalenMod.ItemFloater.ChangeMode1=オファレンフローター : モードを1にチェンジしました！
+info.OfalenMod.ItemFloater.ChangeMode2=オファレンフローター : モードを2にチェンジしました！
+info.OfalenMod.ItemFloater.ChangeMode3=オファレンフローター : モードを3にチェンジしました！
+info.OfalenMod.ItemFloater.ChangeMode4=オファレンフローター : モードを4にチェンジしました！
+info.OfalenMod.ItemFloater.ChangeMode5=オファレンフローター : モードを5にチェンジしました！
+info.OfalenMod.ItemFloater.MaterialLacking=オファレンフローター : フロートダストが不足しています！
+info.OfalenMod.NewVersionIsAvailable=オファレンMOD : 新しいバージョンがリリースされています！
+info.OfalenMod.Now=  現在 :
+info.OfalenMod.New=    最新 :
 
 //アイテム
 item.ofalen.0.name=赤色オファレン

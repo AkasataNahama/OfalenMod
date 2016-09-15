@@ -1,7 +1,5 @@
 package nahama.ofalenmod.item;
 
-import java.util.List;
-
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import nahama.ofalenmod.OfalenModCore;
@@ -13,6 +11,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
+
+import java.util.List;
 
 public class ItemLaserMagazine extends Item {
 
@@ -60,7 +60,7 @@ public class ItemLaserMagazine extends Item {
 	/** 説明欄の内容を追加する。 */
 	@Override
 	public void addInformation(ItemStack itemStack, EntityPlayer player, List list, boolean flag) {
-		list.add(StatCollector.translateToLocal("info.OfalenMod.loaded") + (32 - (itemStack.getItemDamage() / 32)));
+		list.add(StatCollector.translateToLocal("info.OfalenMod.loaded") + " " + (32 - (itemStack.getItemDamage() / 32)));
 	}
 
 	/** アイテムスタックの最大スタック数を返す。 */
