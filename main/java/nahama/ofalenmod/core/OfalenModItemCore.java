@@ -107,6 +107,8 @@ public class OfalenModItemCore {
 
 	public static Item seedOfalen;
 
+	public static Item listPaper;
+
 	/** アイテムを登録する処理。 */
 	public static void registerItem() {
 		CreativeTabs tab = OfalenModCore.tabOfalen;
@@ -477,11 +479,17 @@ public class OfalenModItemCore {
 				.setTextureName("ofalenmod:floater");
 		GameRegistry.registerItem(floaterOfalen, "floaterOfalen");
 
-		//オファレン草
+		// オファレン草
 		seedOfalen = new ItemSeedOfalen(OfalenModBlockCore.grassOfalen)
 				.setUnlocalizedName("seedOfalen")
 				.setTextureName("ofalenmod:seed");
 		GameRegistry.registerItem(seedOfalen, "seedOfalen");
+
+		// リスト
+		listPaper = new ItemListPaper()
+				.setUnlocalizedName("OfalenMod.ListPaper")
+				.setTextureName("ofalenmod:list");
+		GameRegistry.registerItem(listPaper, "listPaper");
 	}
 
 }

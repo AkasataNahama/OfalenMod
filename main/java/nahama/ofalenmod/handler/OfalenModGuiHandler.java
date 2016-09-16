@@ -12,12 +12,18 @@ public class OfalenModGuiHandler implements IGuiHandler {
 
 	@Override
 	public Object getServerGuiElement(int id, EntityPlayer player, World world, int x, int y, int z) {
-		if (id == 2)
+		switch (id) {
+		case 1:
+			break;
+		case 2:
 			return new ContainerItemShield(player);
-		if (id == 3)
+		case 3:
 			return new ContainerItemTeleporter(player);
-		if (id == 4)
+		case 4:
 			return new ContainerItemFloater(player);
+		case 5:
+			return new ContainerItemList(player);
+		}
 		if (!world.blockExists(x, y, z))
 			return null;
 		TileEntity tileEntity = world.getTileEntity(x, y, z);
@@ -44,12 +50,18 @@ public class OfalenModGuiHandler implements IGuiHandler {
 
 	@Override
 	public Object getClientGuiElement(int id, EntityPlayer player, World world, int x, int y, int z) {
-		if (id == 2)
+		switch (id) {
+		case 1:
+			break;
+		case 2:
 			return new GuiItemShield(player);
-		if (id == 3)
+		case 3:
 			return new GuiItemTeleporter(player);
-		if (id == 4)
+		case 4:
 			return new GuiItemFloater(player);
+		case 5:
+			return new GuiItemList(player);
+		}
 		if (!world.blockExists(x, y, z))
 			return null;
 		TileEntity tileEntity = world.getTileEntity(x, y, z);

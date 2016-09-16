@@ -1,25 +1,28 @@
 package nahama.ofalenmod.inventory;
 
-import nahama.ofalenmod.core.OfalenModItemCore;
+import nahama.ofalenmod.item.IItemList;
+import nahama.ofalenmod.item.ItemListPaper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
 
-public class InventoryItemShield implements IInventory {
+public class InventoryItemList implements IInventory {
 
 	private InventoryPlayer inventoryPlayer;
 	private ItemStack currentItem;
-	private ItemStack[] itemStacks = new ItemStack[9];
+	private ItemStack[] itemStacks = new ItemStack[27];
 
-	public InventoryItemShield(InventoryPlayer inventory) {
+	public InventoryItemList(InventoryPlayer inventory) {
 		inventoryPlayer = inventory;
 	}
 
 	/** インベントリのスロット数を返す。 */
 	@Override
 	public int getSizeInventory() {
-		return 9;
+		return 27;
 	}
 
 	/** スロットのアイテムを返す。 */
@@ -68,7 +71,7 @@ public class InventoryItemShield implements IInventory {
 
 	@Override
 	public String getInventoryName() {
-		return "container.OfalenMod.ItemShield";
+		return "container.OfalenMod.ItemList";
 	}
 
 	/** このインベントリの最大スタック数を返す。 */
@@ -78,7 +81,8 @@ public class InventoryItemShield implements IInventory {
 	}
 
 	@Override
-	public void markDirty() {}
+	public void markDirty() {
+	}
 
 	/** プレイヤーが使用できるかどうか。 */
 	@Override
@@ -90,33 +94,33 @@ public class InventoryItemShield implements IInventory {
 	@Override
 	public void openInventory() {
 		// アイテムを読み込む。
-		currentItem = inventoryPlayer.getCurrentItem();
-		int amount = currentItem.getMaxDamage() - currentItem.getItemDamage();
-		itemStacks = new ItemStack[9];
-		for (int i = 0; i < 9; i++) {
-			if (amount < 1)
-				break;
-			if (amount < 64) {
-				itemStacks[i] = new ItemStack(OfalenModItemCore.partsOfalen, amount, 6);
-				break;
-			}
-			itemStacks[i] = new ItemStack(OfalenModItemCore.partsOfalen, 64, 6);
-			amount -= 64;
+		itemStacks = new ItemStack[this.getSizeInventory()];
+		NBTTagList nbtTagList = inventoryPlayer.getCurrentItem().getTagCompound().getTagList(ItemListPaper.TAG_NAME, 10);
+		for (int i = 0; i < 27 && i < nbtTagList.tagCount(); i++) {
+			NBTTagCompound nbt = nbtTagList.getCompoundTagAt(i);
+			if (nbt == null)
+				continue;
+			itemStacks[i] = ItemStack.loadItemStackFromNBT(nbt);
 		}
 	}
 
 	/** インベントリが閉じられた時の処理。 */
 	@Override
 	public void closeInventory() {
-		currentItem = inventoryPlayer.getCurrentItem();
-		int amount = 0;
-		for (int i = 0; i < 9; i++) {
+		ItemStack current = inventoryPlayer.getCurrentItem();
+		if (!(current.getItem() instanceof IItemList))
+			return;
+		IItemList list = (IItemList) current.getItem();
+		NBTTagList nbtTagList = new NBTTagList();
+		for (int i = 0; i < 27; i++) {
 			if (itemStacks[i] == null)
 				continue;
-			amount += itemStacks[i].stackSize;
+			NBTTagCompound nbt = new NBTTagCompound();
+			itemStacks[i].writeToNBT(nbt);
+			nbtTagList.appendTag(nbt);
 		}
-		itemStacks = new ItemStack[9];
-		inventoryPlayer.mainInventory[inventoryPlayer.currentItem].setItemDamage(currentItem.getMaxDamage() - amount);
+		itemStacks = new ItemStack[this.getSizeInventory()];
+		inventoryPlayer.mainInventory[inventoryPlayer.currentItem].getTagCompound().setTag(ItemListPaper.TAG_NAME, nbtTagList);
 	}
 
 	/** スロットにアクセスできるかどうか。 */
