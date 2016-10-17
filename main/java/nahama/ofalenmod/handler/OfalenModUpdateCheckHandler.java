@@ -1,6 +1,6 @@
 package nahama.ofalenmod.handler;
 
-import nahama.ofalenmod.Log;
+import nahama.ofalenmod.Util;
 import nahama.ofalenmod.OfalenModCore;
 import net.minecraft.util.StatCollector;
 
@@ -31,7 +31,7 @@ public class OfalenModUpdateCheckHandler {
 			in.close();
 			connect.disconnect();
 		} catch (Exception e) {
-			Log.error("Error on checking update!", "OfalenModUpdateCheckCore", true);
+			Util.error("Error on checking update.", "OfalenModUpdateCheckCore");
 		}
 	}
 
@@ -52,7 +52,7 @@ public class OfalenModUpdateCheckHandler {
 			}
 			return new String(b, 0, l);
 		} catch (IOException e) {
-			Log.error("Error on reading string!", "OfalenModUpdateCheckCore", true);
+			Util.error("Error on reading string.", "OfalenModUpdateCheckCore");
 			return null;
 		}
 	}
@@ -67,8 +67,8 @@ public class OfalenModUpdateCheckHandler {
 		// Minecraftのバージョンが違うなら終了。
 		if (!OfalenModCore.MCVERSION.equals(version.substring(1, index)))
 			return false;
-		String omversion = version.substring(index + 1);
-		String[] array1 = splitVersion(omversion);
+		String versionOfalenMod = version.substring(index + 1);
+		String[] array1 = splitVersion(versionOfalenMod);
 		String[] array2 = splitVersion(OfalenModCore.MODVERSION);
 		for (int i = 0; i < array1.length && i < array2.length; i++) {
 			try {
@@ -78,7 +78,7 @@ public class OfalenModUpdateCheckHandler {
 					return true;
 				}
 			} catch (NumberFormatException e) {
-				Log.error("Error on comparing version!", "OfalenModUpdateCheckCore", true);
+				Util.error("Error on comparing version.", "OfalenModUpdateCheckCore");
 			}
 		}
 		return false;

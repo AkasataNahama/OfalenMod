@@ -1,26 +1,19 @@
 package nahama.ofalenmod.handler;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.util.Calendar;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map.Entry;
-
 import cpw.mods.fml.common.registry.GameRegistry;
-import nahama.ofalenmod.Log;
+import nahama.ofalenmod.Util;
 import nahama.ofalenmod.core.OfalenModBlockCore;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+
+import java.io.*;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map.Entry;
 
 public class OfalenModAnniversaryHandler {
 
@@ -29,7 +22,7 @@ public class OfalenModAnniversaryHandler {
 	 * マルチプレイの場合は、プレイヤー名と最後にプレゼントを渡した日付のマップ。
 	 * シングルプレイの場合は、ワールド名と最後にプレゼントを渡した日付のマップ。
 	 */
-	private static HashMap<String, String> presentedDate = new HashMap<String, String>();
+	private static HashMap<String, String> presentedDate = new HashMap<>();
 	/** サーバー起動時の日付。 */
 	private static String today;
 	/** todayを含んだ記念日イベントの期間。 */
@@ -55,7 +48,9 @@ public class OfalenModAnniversaryHandler {
 		int month = cal.get(cal.MONTH);
 		int date = cal.get(cal.DATE);
 		today = year + "/" + (month + 1) + "/" + date;
-		loadPresentedDate: {
+		//		today = "2016/11/21";
+		loadPresentedDate:
+		{
 			try {
 				// ConfigフォルダのOfalenModPresentedDate.txtを読み込む。
 				File file = new File(new File(".\\").getParentFile(), "config\\OfalenModPresentedDate.txt");
@@ -71,7 +66,7 @@ public class OfalenModAnniversaryHandler {
 				}
 				br.close();
 			} catch (Exception e) {
-				Log.error("Error on loading OfalenModPresentedDate.txt", "OfalenModAnniversaryHandler", true);
+				Util.error("Error on loading OfalenModPresentedDate.txt.", "OfalenModAnniversaryHandler");
 				e.printStackTrace();
 			}
 		}
@@ -97,8 +92,8 @@ public class OfalenModAnniversaryHandler {
 					str = str.substring(1);
 				}
 				dates = str.split(",");
-				for (int i = 0; i < dates.length; i++) {
-					if (!dates[i].equals(today))
+				for (String date1 : dates) {
+					if (!date1.equals(today))
 						continue;
 					loadPresents(in);
 					in.close();
@@ -110,7 +105,7 @@ public class OfalenModAnniversaryHandler {
 			in.close();
 			connect.disconnect();
 		} catch (Exception e) {
-			Log.error("Error on getting presents", "OfalenModAnniversaryHandler", true);
+			Util.error("Error on getting presents.", "OfalenModAnniversaryHandler");
 			e.printStackTrace();
 		}
 	}
@@ -133,7 +128,7 @@ public class OfalenModAnniversaryHandler {
 			}
 			return new String(b, 0, l);
 		} catch (IOException e) {
-			Log.error("Error on reading string!", "OfalenModUpdateCheckCore", true);
+			Util.error("Error on reading string.", "OfalenModUpdateCheckCore");
 			return null;
 		}
 	}
@@ -159,7 +154,7 @@ public class OfalenModAnniversaryHandler {
 				}
 			} catch (Exception e) {
 				presents[i] = null;
-				Log.error("Error on getting presents", "OfalenModAnniversaryHandler", true);
+				Util.error("Error on loading presents.", "OfalenModAnniversaryHandler");
 				e.printStackTrace();
 			}
 		}
@@ -183,7 +178,7 @@ public class OfalenModAnniversaryHandler {
 				}
 			} catch (Exception e) {
 				anotherPresents[i] = null;
-				Log.error("Error on getting presents", "OfalenModAnniversaryHandler", true);
+				Util.error("Error on loading second presents.", "OfalenModAnniversaryHandler");
 				e.printStackTrace();
 			}
 		}
@@ -197,15 +192,13 @@ public class OfalenModAnniversaryHandler {
 				file.createNewFile();
 			}
 			BufferedWriter bw = new BufferedWriter(new FileWriter(file));
-			Iterator<Entry<String, String>> iterator = presentedDate.entrySet().iterator();
-			while (iterator.hasNext()) {
-				Entry<String, String> entry = iterator.next();
+			for (Entry<String, String> entry : presentedDate.entrySet()) {
 				bw.write(entry.getKey() + "," + entry.getValue());
 				bw.newLine();
 			}
 			bw.close();
 		} catch (Exception e) {
-			Log.error("Error on saving OfalenModPresentedDate.txt", "OfalenModAnniversaryHandler", true);
+			Util.error("Error on saving OfalenModPresentedDate.txt.", "OfalenModAnniversaryHandler");
 			e.printStackTrace();
 		}
 	}
@@ -234,11 +227,11 @@ public class OfalenModAnniversaryHandler {
 		String s = presentedDate.get(name);
 		// 同じ記念日で一回も開けていないかどうか。
 		boolean flag = true;
-		for (int i = 0; i < dates.length; i++) {
+		for (String date : dates) {
 			// 既に同じ記念日で渡していたならnull。
-			if (dates[i].equals(s))
+			if (date.equals(s))
 				return null;
-			if (s.equals(dates[i] + '-'))
+			if (s.equals(date + '-'))
 				flag = false;
 		}
 		presentedDate.put(name, today);

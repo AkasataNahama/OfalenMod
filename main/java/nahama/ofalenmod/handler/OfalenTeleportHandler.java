@@ -1,7 +1,5 @@
 package nahama.ofalenmod.handler;
 
-import nahama.ofalenmod.Log;
-
 import java.util.HashMap;
 
 public class OfalenTeleportHandler {

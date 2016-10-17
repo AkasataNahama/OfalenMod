@@ -17,10 +17,10 @@ public class OfalenModRecipeCore {
 	private static final OfalenModBlockCore BLOCK = new OfalenModBlockCore();
 	private static final OfalenModItemCore ITEM = new OfalenModItemCore();
 
-	public static final String[] gem = { "gemOfalenRed", "gemOfalenGreen", "gemOfalenBlue", "gemOfalenWhite", "gemOfalenOrange", "gemOfalenViridian", "gemOfalenPurple", "gemOfalenBlack" };
-	public static final String[] frag = { "fragmentOfalenRed", "fragmentOfalenGreen", "fragmentOfalenBlue", "fragmentOfalenWhite", "fragmentOfalenOrange", "fragmentOfalenViridian", "fragmentOfalenPurple", "fragmentOfalenBlack" };
-	public static final String[] core = { "coreOfalenRed", "coreOfalenGreen", "coreOfalenBlue", "coreOfalenWhite", "coreOfalenOrange", "coreOfalenViridian", "coreOfalenPurple", "coreOfalenBlack" };
-	public static final String[] block = { "blockOfalenRed", "blockOfalenGreen", "blockOfalenBlue", "blockOfalenWhite", "blockOfalenOrange", "blockOfalenViridian", "blockOfalenPurple", "blockOfalenBlack" };
+	public static final String[] gem = { "gemOfalenRed", "gemOfalenGreen", "gemOfalenBlue", "gemOfalenWhite", "gemOfalenOrange", "gemOfalenViridian", "gemOfalenPurple", "gemOfalenDark" };
+	public static final String[] frag = { "fragmentOfalenRed", "fragmentOfalenGreen", "fragmentOfalenBlue", "fragmentOfalenWhite", "fragmentOfalenOrange", "fragmentOfalenViridian", "fragmentOfalenPurple", "fragmentOfalenDark" };
+	public static final String[] core = { "coreOfalenRed", "coreOfalenGreen", "coreOfalenBlue", "coreOfalenWhite", "coreOfalenOrange", "coreOfalenViridian", "coreOfalenPurple", "coreOfalenDark" };
+	public static final String[] block = { "blockOfalenRed", "blockOfalenGreen", "blockOfalenBlue", "blockOfalenWhite", "blockOfalenOrange", "blockOfalenViridian", "blockOfalenPurple", "blockOfalenDark" };
 
 	public static final ItemStack[] crystal = { new ItemStack(ITEM.crystalEnergyLaser, 1, 0), new ItemStack(ITEM.crystalEnergyLaser, 1, 1), new ItemStack(ITEM.crystalEnergyLaser, 1, 2), new ItemStack(ITEM.crystalEnergyLaser, 1, 3) };
 
@@ -418,6 +418,18 @@ public class OfalenModRecipeCore {
 
 		addShaped(new ItemStack(ITEM.listPaper, 1, 1),
 				"X", 'X', ITEM.listPaper);
+
+		// コレクター関連
+		addShaped(new ItemStack(ITEM.partsOfalen, OfalenModConfigCore.amountDustFloat, 9),// TODO コンフィグ
+				"GOG",
+				"ODO",
+				"GOG",
+				'G', "Gold", 'O', frag[2], 'D', "dustGlowstone");
+		addShaped(new ItemStack(ITEM.floaterOfalen, 1, 576),
+				"IOI",
+				"OEO",
+				"IOI",
+				'I', "ingotGold", 'O', core[2], 'E', ITEM.dust);
 
 		// 燃料の登録
 		GameRegistry.registerFuelHandler(new IFuelHandler() {

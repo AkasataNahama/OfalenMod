@@ -31,13 +31,15 @@ import nahama.ofalenmod.render.RenderLaser;
 import nahama.ofalenmod.render.RenderTeleportMarker;
 import nahama.ofalenmod.tileentity.TileEntityTeleportMarker;
 import net.minecraft.client.renderer.entity.RenderSnowball;
+import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.util.StatCollector;
 import net.minecraftforge.client.MinecraftForgeClient;
 import net.minecraftforge.common.MinecraftForge;
+import org.lwjgl.input.Keyboard;
 
 /** @author Akasata Nahama */
-@Mod(modid = OfalenModCore.MODID, name = OfalenModCore.MODNAME, version = OfalenModCore.VERSION)
+@Mod(modid = OfalenModCore.MODID, name = OfalenModCore.MODNAME, version = OfalenModCore.VERSION, guiFactory = "nahama.ofalenmod.gui.OfalenModGuiFactory")
 public class OfalenModCore {
 
 	public static final String MODID = "OfalenMod";
@@ -59,6 +61,8 @@ public class OfalenModCore {
 
 	public static final SimpleNetworkWrapper wrapper = NetworkRegistry.INSTANCE.newSimpleChannel(OfalenModCore.MODID);
 
+	public static final KeyBinding keyOSS = new KeyBinding("OfalenMod.OSSKey", Keyboard.KEY_F, "Ofalen Mod");
+
 	/** 初期化前処理。 */
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
@@ -75,8 +79,6 @@ public class OfalenModCore {
 		wrapper.registerMessage(MTeleporterMeta.Handler.class, MTeleporterMeta.class, 1, Side.SERVER);
 		wrapper.registerMessage(MFloaterMode.Handler.class, MFloaterMode.class, 2, Side.SERVER);
 		wrapper.registerMessage(MSpawnParticle.Handler.class, MSpawnParticle.class, 3, Side.CLIENT);
-		// Event処理を登録する。
-		MinecraftForge.EVENT_BUS.register(new OfalenModEventHandler());
 		OfalenModAnniversaryHandler.isSinglePlay = FMLCommonHandler.instance().getSide() == Side.CLIENT;
 	}
 
@@ -86,6 +88,9 @@ public class OfalenModCore {
 		// 鉱石の生成を登録する。
 		GameRegistry.registerWorldGenerator(new OfalenOreGenerator(), 1);
 		OfalenModRecipeCore.registerRecipe();
+		// Event処理を登録する。
+		MinecraftForge.EVENT_BUS.register(new OfalenModEventHandler());
+		FMLCommonHandler.instance().bus().register(new OfalenModEventHandler());
 		if (FMLCommonHandler.instance().getSide() == Side.CLIENT) {
 			// クライアントの初期化を行う。
 			instance.clientInit();
@@ -100,6 +105,8 @@ public class OfalenModCore {
 	/** クライアントの初期化処理。 */
 	@SideOnly(Side.CLIENT)
 	private void clientInit() {
+		// キーバインディングの登録
+		ClientRegistry.registerKeyBinding(keyOSS);
 		// タイルエンティティとレンダラーの紐づけ
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityTeleportMarker.class, new RenderTeleportMarker());
 		// エンティティとレンダラーの紐付け
@@ -116,7 +123,7 @@ public class OfalenModCore {
 			try {
 				OfalenModNEILoad.load();
 			} catch (Exception e) {
-				Log.error("Error on loading NEI!", "OfalenModCore.clientInit", true);
+				Util.error("Error on loading NEI.", "OfalenModCore.clientInit");
 				e.printStackTrace();
 			}
 		}
@@ -132,8 +139,7 @@ public class OfalenModCore {
 		OfalenModAnniversaryHandler.init();
 		// 最新バージョンの通知をする。
 		if (OfalenModUpdateCheckHandler.isAvailableNewVersion) {
-			Log.info(StatCollector.translateToLocal("info.OfalenMod.NewVersionIsAvailable")
-					+ OfalenModUpdateCheckHandler.getMessage());
+			Util.info(StatCollector.translateToLocal("info.OfalenMod.NewVersionIsAvailable") + OfalenModUpdateCheckHandler.getMessage());
 		}
 	}
 

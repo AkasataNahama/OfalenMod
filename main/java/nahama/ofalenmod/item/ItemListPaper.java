@@ -94,9 +94,9 @@ public class ItemListPaper extends Item implements IItemList {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void registerIcons(IIconRegister register) {
-		this.iicon = new IIcon[4];
+		iicon = new IIcon[4];
 		for (int i = 0; i < 4; i++) {
-			this.iicon[i] = register.registerIcon(this.getIconString() + "-" + i);
+			iicon[i] = register.registerIcon(this.getIconString() + "-" + i);
 		}
 	}
 

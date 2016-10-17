@@ -22,7 +22,8 @@ public class ItemFuture extends Item {
 		// NBTを持っていなければ空のものを持たせ、Durationがあれば減らす。
 		if (!itemStack.hasTagCompound())
 			itemStack.setTagCompound(new NBTTagCompound());
-		itemStack.getTagCompound().setBoolean("NotRepairable", true);
+		if (!itemStack.getTagCompound().getBoolean("NotRepairable"))
+			itemStack.getTagCompound().setBoolean("NotRepairable", true);
 		byte duration = itemStack.getTagCompound().getByte("Duration");
 		if (duration > 0)
 			itemStack.getTagCompound().setByte("Duration", (byte) (duration - 1));

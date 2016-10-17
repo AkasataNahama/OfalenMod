@@ -45,7 +45,7 @@ public class OfalenModBlockCore {
 		OreDictionary.registerOre("blockOfalenOrange", new ItemStack(blockOfalen, 1, 4));
 		OreDictionary.registerOre("blockOfalenViridian", new ItemStack(blockOfalen, 1, 5));
 		OreDictionary.registerOre("blockOfalenPurple", new ItemStack(blockOfalen, 1, 6));
-		OreDictionary.registerOre("blockOfalenBlack", new ItemStack(blockOfalen, 1, 7));
+		OreDictionary.registerOre("blockOfalenDark", new ItemStack(blockOfalen, 1, 7));
 		OreDictionary.registerOre("blockOfalen", new ItemStack(blockOfalen, 1, OreDictionary.WILDCARD_VALUE));
 
 		machineSmelting = new BlockSmeltingMachine()

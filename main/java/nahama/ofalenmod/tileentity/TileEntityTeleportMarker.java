@@ -1,13 +1,6 @@
 package nahama.ofalenmod.tileentity;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-
-import nahama.ofalenmod.Log;
 import nahama.ofalenmod.handler.OfalenTeleportHandler;
-import net.minecraft.block.Block;
-import net.minecraft.entity.item.EntityItem;
-import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 

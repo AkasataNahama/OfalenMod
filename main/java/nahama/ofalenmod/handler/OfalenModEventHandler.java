@@ -1,7 +1,9 @@
 package nahama.ofalenmod.handler;
 
+import cpw.mods.fml.client.event.ConfigChangedEvent;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
-import nahama.ofalenmod.Log;
+import nahama.ofalenmod.OfalenModCore;
+import nahama.ofalenmod.core.OfalenModConfigCore;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ChatComponentText;
@@ -19,7 +21,6 @@ public class OfalenModEventHandler {
 	public void onEntityJoinWorld(EntityJoinWorldEvent event) {
 		if (!(event.entity instanceof EntityPlayer))
 			return;
-		Log.info("onEntityJoinWorld");
 		EntityPlayer player = (EntityPlayer) event.entity;
 		// プレイヤーの時。
 		if (!event.world.isRemote) {
@@ -80,6 +81,12 @@ public class OfalenModEventHandler {
 		if (!OfalenFlightHandlerServer.canFlightPlayer((EntityPlayer) event.entityLiving))
 			return;
 		event.setCanceled(true);
+	}
+
+	@SubscribeEvent
+	public void onConfigChanged(ConfigChangedEvent.OnConfigChangedEvent event) {
+		if (event.modID.equals(OfalenModCore.MODID))
+			OfalenModConfigCore.syncConfig();
 	}
 
 }

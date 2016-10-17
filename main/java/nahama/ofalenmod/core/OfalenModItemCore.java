@@ -18,7 +18,7 @@ public class OfalenModItemCore {
 	public static Item ofalen;
 	public static Item fragmentOfalen;
 	public static Item coreOfalen;
-	/** 0:Machine Cover Plate, 1:Grade 3 Part, 2:Lump of Stone, 3:Stone Fuel, 4:Ofalen Fuel, 5:Laser Magazine, 6:Shield Ingot, 7:Teleport Pearl, 8:Float Dust */
+	/** 0:Machine Cover Plate, 1:Grade 3 Part, 2:Lump of Stone, 3:Stone Fuel, 4:Ofalen Fuel, 5:Laser Magazine, 6:Shielding Ingot, 7:Teleporting Pearl, 8:Floating Dust, 9:Collecting Lump */
 	public static Item partsOfalen;
 	/** 0: Iron Stick */
 	public static Item partsOfalen3D;
@@ -31,6 +31,7 @@ public class OfalenModItemCore {
 	public static ItemStack ingot;
 	public static ItemStack pearl;
 	public static ItemStack dust;
+	public static ItemStack lumpCollecting;
 	public static ItemStack stickIron;
 
 	public static Item helmetOfalen;
@@ -108,6 +109,7 @@ public class OfalenModItemCore {
 	public static Item seedOfalen;
 
 	public static Item listPaper;
+	public static Item collector;
 
 	/** アイテムを登録する処理。 */
 	public static void registerItem() {
@@ -124,7 +126,7 @@ public class OfalenModItemCore {
 		OreDictionary.registerOre("gemOfalenOrange", new ItemStack(ofalen, 1, 4));
 		OreDictionary.registerOre("gemOfalenViridian", new ItemStack(ofalen, 1, 5));
 		OreDictionary.registerOre("gemOfalenPurple", new ItemStack(ofalen, 1, 6));
-		OreDictionary.registerOre("gemOfalenBlack", new ItemStack(ofalen, 1, 7));
+		OreDictionary.registerOre("gemOfalenDark", new ItemStack(ofalen, 1, 7));
 		OreDictionary.registerOre("gemOfalen", new ItemStack(ofalen, 1, OreDictionary.WILDCARD_VALUE));
 
 		fragmentOfalen = new ItemOfalen()
@@ -138,7 +140,7 @@ public class OfalenModItemCore {
 		OreDictionary.registerOre("fragmentOfalenOrange", new ItemStack(fragmentOfalen, 1, 4));
 		OreDictionary.registerOre("fragmentOfalenViridian", new ItemStack(fragmentOfalen, 1, 5));
 		OreDictionary.registerOre("fragmentOfalenPurple", new ItemStack(fragmentOfalen, 1, 6));
-		OreDictionary.registerOre("fragmentOfalenBlack", new ItemStack(fragmentOfalen, 1, 7));
+		OreDictionary.registerOre("fragmentOfalenDark", new ItemStack(fragmentOfalen, 1, 7));
 		OreDictionary.registerOre("fragmentOfalen", new ItemStack(fragmentOfalen, 1, OreDictionary.WILDCARD_VALUE));
 
 		coreOfalen = new ItemOfalen()
@@ -152,10 +154,10 @@ public class OfalenModItemCore {
 		OreDictionary.registerOre("coreOfalenOrange", new ItemStack(coreOfalen, 1, 4));
 		OreDictionary.registerOre("coreOfalenViridian", new ItemStack(coreOfalen, 1, 5));
 		OreDictionary.registerOre("coreOfalenPurple", new ItemStack(coreOfalen, 1, 6));
-		OreDictionary.registerOre("coreOfalenBlack", new ItemStack(coreOfalen, 1, 7));
+		OreDictionary.registerOre("coreOfalenDark", new ItemStack(coreOfalen, 1, 7));
 		OreDictionary.registerOre("coreOfalen", new ItemStack(coreOfalen, 1, OreDictionary.WILDCARD_VALUE));
 
-		partsOfalen = new ItemParts(9)
+		partsOfalen = new ItemParts(10)
 				.setUnlocalizedName("partsOfalen")
 				.setTextureName("ofalenmod:parts");
 		GameRegistry.registerItem(partsOfalen, "partsOfalen");
@@ -175,6 +177,7 @@ public class OfalenModItemCore {
 		ingot = new ItemStack(partsOfalen, 1, 6);
 		pearl = new ItemStack(partsOfalen, 1, 7);
 		dust = new ItemStack(partsOfalen, 1, 8);
+		lumpCollecting = new ItemStack(partsOfalen, 1, 9);
 		stickIron = new ItemStack(partsOfalen3D, 1, 0);
 
 		// アーマー
@@ -490,6 +493,12 @@ public class OfalenModItemCore {
 				.setUnlocalizedName("OfalenMod.ListPaper")
 				.setTextureName("ofalenmod:list");
 		GameRegistry.registerItem(listPaper, "listPaper");
+
+		// コレクター
+		collector = new ItemCollector()
+				.setUnlocalizedName("OfalenMod.Collector")
+				.setTextureName("ofalenmod:collector");
+		GameRegistry.registerItem(collector, "collector");
 	}
 
 }

@@ -1,12 +1,13 @@
 package nahama.ofalenmod.core;
 
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
-import nahama.ofalenmod.Log;
+import nahama.ofalenmod.Util;
 import net.minecraftforge.common.config.Configuration;
 
 public class OfalenModConfigCore {
 
-	public static boolean isConfigEnabled = false;
+	public static Configuration cfg;
+
 	public static int sizeExplosion = 2;
 	public static float efficiencyPerfectTool = 100;
 	public static boolean isUpdateCheckEnabled = true;
@@ -37,7 +38,7 @@ public class OfalenModConfigCore {
 	public static int amountDamageFloater = 1;
 	public static byte intervalDamageFloater = 20;
 
-	private static final String GENERAL = "General";
+	public static final String GENERAL = "General";
 	private static final String DIFFICULTY = GENERAL + ".Difficulty";
 	private static final String GENERATE = GENERAL + ".Generate";
 	private static final String MACHINE = GENERAL + ".Machine";
@@ -46,12 +47,13 @@ public class OfalenModConfigCore {
 
 	/** configを読み込む処理。 */
 	public static void loadConfig(FMLPreInitializationEvent event) {
+		cfg = new Configuration(event.getSuggestedConfigurationFile(), true);
+		cfg.load();
+		syncConfig();
+	}
 
-		Configuration cfg = new Configuration(event.getSuggestedConfigurationFile(), true);
-
+	public static void syncConfig() {
 		try {
-			cfg.load();
-			isConfigEnabled = cfg.getBoolean("ConfigIsEnabled", GENERAL, isConfigEnabled, "Config is valid when true.");
 			sizeExplosion = cfg.getInt("ExplosionSize", GENERAL, sizeExplosion, 0, 255, "Explosion size of Explosion Ball");
 			efficiencyPerfectTool = cfg.getFloat("PerfectToolEfficiency", GENERAL, efficiencyPerfectTool, 1, Float.MAX_VALUE, "Efficiency of Ofalen Perfect Tool");
 			isUpdateCheckEnabled = cfg.getBoolean("UpdateCheckIsEnabled", GENERAL, isUpdateCheckEnabled, "Update Check is valid when true.");
@@ -81,42 +83,11 @@ public class OfalenModConfigCore {
 			amountDamageTeleporter = cfg.getInt("TeleporterDamageAmount", FUTURE, amountDamageTeleporter, 0, 64, "Damage amount of Ofalen Teleporter when player teleport");
 			amountDamageFloater = cfg.getInt("FloaterDamageAmount", FUTURE, amountDamageFloater, 0, 64 * 9, "Damage amount of Ofalen Floater when float player");
 			intervalDamageFloater = (byte) cfg.getInt("FloaterDamageInterval", FUTURE, intervalDamageFloater, 0, Byte.MAX_VALUE, "Damage interval of Ofalen Floater(tick)");
-		} catch (Exception error) {
-			Log.error("Error on loading config!", "OfalenModConfigCore.loadConfig", true);
+		} catch (Exception e) {
+			Util.error("Error on loading config.", "OfalenModConfigCore");
 		} finally {
 			cfg.save();
 		}
-		if (isConfigEnabled)
-			return;
-		sizeExplosion = 2;
-		efficiencyPerfectTool = 100;
-		isUpdateCheckEnabled = true;
-
-		amountDrop = 3;
-
-		isGeneratorEnabled = true;
-		limitGeneration = 8;
-		frequencyGeneration = 3;
-		probabilityGenerationLode = 1;
-
-		factorTimeBurnFuelFurnace = 256;
-		timeBurnOfalen = 4800;
-		timeBurnStone = 400;
-		timeConversion = 1200;
-		timeFusing = 1200;
-		timeRepair = 40;
-		amountSmelting = 1;
-		timeSmelting = 1200;
-
-		recipeLump = 7;
-		amountIngotShield = 4;
-		amountPearlTeleport = 4;
-		amountDustFloat = 4;
-
-		amountDamageShield = 1;
-		amountDamageTeleporter = 1;
-		amountDamageFloater = 1;
-		intervalDamageFloater = 20;
 	}
 
 }
