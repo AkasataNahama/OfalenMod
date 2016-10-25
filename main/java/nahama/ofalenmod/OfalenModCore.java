@@ -22,14 +22,12 @@ import nahama.ofalenmod.generator.OfalenOreGenerator;
 import nahama.ofalenmod.handler.*;
 import nahama.ofalenmod.model.ModelLaser;
 import nahama.ofalenmod.nei.OfalenModNEILoad;
-import nahama.ofalenmod.network.MFloaterMode;
-import nahama.ofalenmod.network.MSpawnParticle;
-import nahama.ofalenmod.network.MTeleporterChannel;
-import nahama.ofalenmod.network.MTeleporterMeta;
+import nahama.ofalenmod.network.*;
 import nahama.ofalenmod.render.ItemPistolRenderer;
 import nahama.ofalenmod.render.RenderLaser;
 import nahama.ofalenmod.render.RenderTeleportMarker;
 import nahama.ofalenmod.tileentity.TileEntityTeleportMarker;
+import nahama.ofalenmod.util.Util;
 import net.minecraft.client.renderer.entity.RenderSnowball;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.creativetab.CreativeTabs;
@@ -79,6 +77,7 @@ public class OfalenModCore {
 		wrapper.registerMessage(MTeleporterMeta.Handler.class, MTeleporterMeta.class, 1, Side.SERVER);
 		wrapper.registerMessage(MFloaterMode.Handler.class, MFloaterMode.class, 2, Side.SERVER);
 		wrapper.registerMessage(MSpawnParticle.Handler.class, MSpawnParticle.class, 3, Side.CLIENT);
+		wrapper.registerMessage(MFilterInstaller.Handler.class, MFilterInstaller.class, 4, Side.SERVER);
 		OfalenModAnniversaryHandler.isSinglePlay = FMLCommonHandler.instance().getSide() == Side.CLIENT;
 	}
 

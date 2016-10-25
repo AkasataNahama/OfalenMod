@@ -1,7 +1,7 @@
 package nahama.ofalenmod.handler;
 
 import cpw.mods.fml.common.registry.GameRegistry;
-import nahama.ofalenmod.Util;
+import nahama.ofalenmod.util.Util;
 import nahama.ofalenmod.core.OfalenModBlockCore;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;

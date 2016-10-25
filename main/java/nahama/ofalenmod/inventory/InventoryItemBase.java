@@ -1,26 +1,22 @@
 package nahama.ofalenmod.inventory;
 
-import nahama.ofalenmod.core.OfalenModItemCore;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 
-public class InventoryItemShield implements IInventory {
+public abstract class InventoryItemBase implements IInventory {
 
-	private InventoryPlayer inventoryPlayer;
-	private ItemStack currentItem;
-	private ItemStack[] itemStacks = new ItemStack[9];
+	protected InventoryPlayer inventoryPlayer;
+	protected ItemStack[] itemStacks;
 
-	public InventoryItemShield(InventoryPlayer inventory) {
+	public InventoryItemBase(InventoryPlayer inventory) {
 		inventoryPlayer = inventory;
 	}
 
 	/** インベントリのスロット数を返す。 */
 	@Override
-	public int getSizeInventory() {
-		return 9;
-	}
+	public abstract int getSizeInventory();
 
 	/** スロットのアイテムを返す。 */
 	@Override
@@ -67,9 +63,7 @@ public class InventoryItemShield implements IInventory {
 	}
 
 	@Override
-	public String getInventoryName() {
-		return "container.OfalenMod.ItemShield";
-	}
+	public abstract String getInventoryName();
 
 	/** このインベントリの最大スタック数を返す。 */
 	@Override
@@ -78,7 +72,8 @@ public class InventoryItemShield implements IInventory {
 	}
 
 	@Override
-	public void markDirty() {}
+	public void markDirty() {
+	}
 
 	/** プレイヤーが使用できるかどうか。 */
 	@Override
@@ -88,36 +83,11 @@ public class InventoryItemShield implements IInventory {
 
 	/** インベントリが開かれた時の処理。 */
 	@Override
-	public void openInventory() {
-		// アイテムを読み込む。
-		currentItem = inventoryPlayer.getCurrentItem();
-		int amount = currentItem.getMaxDamage() - currentItem.getItemDamage();
-		itemStacks = new ItemStack[9];
-		for (int i = 0; i < 9; i++) {
-			if (amount < 1)
-				break;
-			if (amount < 64) {
-				itemStacks[i] = new ItemStack(OfalenModItemCore.partsOfalen, amount, 6);
-				break;
-			}
-			itemStacks[i] = new ItemStack(OfalenModItemCore.partsOfalen, 64, 6);
-			amount -= 64;
-		}
-	}
+	public abstract void openInventory();
 
 	/** インベントリが閉じられた時の処理。 */
 	@Override
-	public void closeInventory() {
-		currentItem = inventoryPlayer.getCurrentItem();
-		int amount = 0;
-		for (int i = 0; i < 9; i++) {
-			if (itemStacks[i] == null)
-				continue;
-			amount += itemStacks[i].stackSize;
-		}
-		itemStacks = new ItemStack[9];
-		inventoryPlayer.mainInventory[inventoryPlayer.currentItem].setItemDamage(currentItem.getMaxDamage() - amount);
-	}
+	public abstract void closeInventory();
 
 	/** スロットにアクセスできるかどうか。 */
 	@Override

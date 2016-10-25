@@ -1,7 +1,7 @@
 package nahama.ofalenmod.item;
 
 import nahama.ofalenmod.OfalenModCore;
-import nahama.ofalenmod.Util;
+import nahama.ofalenmod.util.Util;
 import nahama.ofalenmod.core.OfalenModConfigCore;
 import nahama.ofalenmod.core.OfalenModItemCore;
 import nahama.ofalenmod.handler.OfalenTeleportHandler;

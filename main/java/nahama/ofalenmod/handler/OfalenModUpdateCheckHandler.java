@@ -1,6 +1,6 @@
 package nahama.ofalenmod.handler;
 
-import nahama.ofalenmod.Util;
+import nahama.ofalenmod.util.Util;
 import nahama.ofalenmod.OfalenModCore;
 import net.minecraft.util.StatCollector;
 

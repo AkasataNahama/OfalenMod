@@ -1,16 +1,18 @@
 package nahama.ofalenmod.item;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-import net.minecraft.client.renderer.texture.IIconRegister;
-import net.minecraft.creativetab.CreativeTabs;
+import nahama.ofalenmod.OfalenModCore;
+import nahama.ofalenmod.inventory.ContainerItemCollector;
+import nahama.ofalenmod.util.OfalenNBTUtil;
+import nahama.ofalenmod.util.Util;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
+import net.minecraft.entity.item.EntityXPOrb;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.IIcon;
+import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 
 import java.util.List;
@@ -18,73 +20,113 @@ import java.util.List;
 public class ItemCollector extends Item {
 	private IIcon[] icons;
 	private static byte interval = 10;
-	private static int range = 5;
+
+	public ItemCollector() {
+		super();
+		this.setCreativeTab(OfalenModCore.tabOfalen);
+		this.setMaxStackSize(1);
+		this.setMaxDamage(64 * 9 * 3);
+	}
 
 	@Override
-	public void onUpdate(ItemStack itemStack, World world, Entity entity, int slot, boolean isHeld) {
+	public void onUpdate(ItemStack thisStack, World world, Entity entity, int slot, boolean isHeld) {
 		// クライアント側なら終了。
 		if (world.isRemote)
 			return;
 		// NBTを持っていなかったら新しく持たせる。
-		if (!itemStack.hasTagCompound())
-			itemStack.setTagCompound(new NBTTagCompound());
-		// オフにされていたら終了。
-		if (itemStack.getItemDamage() > 0)
+		if (!thisStack.hasTagCompound())
+			OfalenNBTUtil.FilterUtil.initFilterTag(thisStack);
+		boolean isItemDisabled = thisStack.getTagCompound().getBoolean(OfalenNBTUtil.IS_ITEM_DISABLED);
+		boolean isExpDisabled = thisStack.getTagCompound().getBoolean(OfalenNBTUtil.IS_EXP_DISABLED);
+		if (isItemDisabled && isExpDisabled)
 			return;
+		if (Util.getRemainingDamage(thisStack) < 1)
+			return;
+		if (entity instanceof EntityPlayer) {
+			EntityPlayer player = (EntityPlayer) entity;
+			if (player.openContainer != null && player.openContainer instanceof ContainerItemCollector)
+				return;
+		}
 		// 無効時間の残りを取得。
-		byte interval2 = itemStack.getTagCompound().getByte("Interval");
+		byte interval2 = thisStack.getTagCompound().getByte(OfalenNBTUtil.INTERVAL);
 		if (interval2 > 0) {
 			// 無効時間が残っていたら減らして終了。
-			itemStack.getTagCompound().setByte("Interval", --interval2);
+			thisStack.getTagCompound().setByte(OfalenNBTUtil.INTERVAL, --interval2);
 			return;
 		}
 		// 無効時間をリセット。
-		itemStack.getTagCompound().setByte("Interval", interval);
-		// TODO 範囲のNBT読み込み? ダメージ？
-		// ワールドのentityリストでループ。
+		thisStack.getTagCompound().setByte(OfalenNBTUtil.INTERVAL, interval);
+		// 範囲の設定。
+		int rangeItem = 10;
+		int rangeExp = 10;
+		if (thisStack.getTagCompound().getBoolean(OfalenNBTUtil.IS_SET_IN_DETAIL)) {
+			rangeItem = thisStack.getTagCompound().getInteger(OfalenNBTUtil.ITEM_RANGE);
+			rangeExp = thisStack.getTagCompound().getInteger(OfalenNBTUtil.EXP_RANGE);
+		}
+		// EntityItemとEntityXPOrbがあれば移動する。
 		for (Object o : world.loadedEntityList) {
-			if (!(o instanceof EntityItem))
-				continue;
-			// EntityItem以外を除外してからキャスト。
-			EntityItem e = (EntityItem) o;
-			if (entity.getDistanceToEntity(e) > range || e.delayBeforeCanPickup > 0)
-				continue;
-			// 範囲以内かつ拾える状態なら移動。
-			e.setPosition(entity.posX, entity.posY, entity.posZ);
+			if (!isItemDisabled && o instanceof EntityItem) {
+				// EntityItemにキャスト。
+				EntityItem entityItem = (EntityItem) o;
+				if (entity.getDistanceToEntity(entityItem) > rangeItem || entityItem.delayBeforeCanPickup > 0)
+					continue;
+				// 範囲以内かつ拾える状態なら移動。
+				int remaining = Util.getRemainingDamage(thisStack);
+				ItemStack eItemStack = entityItem.getEntityItem();
+				if (remaining >= eItemStack.stackSize) {
+					entityItem.setPosition(entity.posX, entity.posY, entity.posZ);
+					thisStack.setItemDamage(thisStack.getItemDamage() + entityItem.getEntityItem().stackSize);
+					continue;
+				}
+				// 耐久値が足りなかったら足りる分だけ移動して終了。
+				ItemStack itemStack1 = eItemStack.copy();
+				itemStack1.stackSize = remaining;
+				Util.dropItemStackCopyNearEntity(itemStack1, entity);
+				entityItem.getEntityItem().stackSize -= remaining;
+				thisStack.setItemDamage(thisStack.getMaxDamage());
+				return;
+			} else if (!isExpDisabled && (o instanceof EntityXPOrb)) {
+				// EntityXPOrbにキャスト。
+				EntityXPOrb e = (EntityXPOrb) o;
+				if (entity.getDistanceToEntity(e) > rangeExp)
+					continue;
+				// 範囲以内なら移動。
+				int remaining = Util.getRemainingDamage(thisStack);
+				if (remaining >= e.xpValue) {
+					e.setPosition(entity.posX, entity.posY, entity.posZ);
+					thisStack.setItemDamage(thisStack.getItemDamage() + e.xpValue);
+					continue;
+				}
+				// 耐久値が足りなかったら足りる分だけ移動して終了。
+				Entity entity1 = new EntityXPOrb(world, entity.posX, entity.posY, entity.posZ, remaining);
+				world.spawnEntityInWorld(entity1);
+				e.xpValue -= remaining;
+				thisStack.setItemDamage(thisStack.getMaxDamage());
+				return;
+			}
 		}
 	}
 
 	@Override
 	public ItemStack onItemRightClick(ItemStack itemStack, World world, EntityPlayer player) {
-		if (player.isSneaking())
-			itemStack.setItemDamage(itemStack.getItemDamage() + 1 & 1);
+		if (!Util.isKeyDown(OfalenModCore.keyOSS.getKeyCode())) {
+			player.openGui(OfalenModCore.instance, 7, world, (int) player.posX, (int) player.posY, (int) player.posZ);
+			return itemStack;
+		}
+		NBTTagCompound nbt = itemStack.getTagCompound();
+		if (!player.isSneaking()) {
+			// OSS + 右クリックでアイテムのOn/Off。
+			nbt.setBoolean(OfalenNBTUtil.IS_ITEM_DISABLED, !nbt.getBoolean(OfalenNBTUtil.IS_ITEM_DISABLED));
+		} else {
+			// OSS + Shift + 右クリックで経験値のOn/Off。
+			nbt.setBoolean(OfalenNBTUtil.IS_EXP_DISABLED, !nbt.getBoolean(OfalenNBTUtil.IS_EXP_DISABLED));
+		}
 		return itemStack;
 	}
 
-	/** アイテムのテクスチャを登録する処理。 */
 	@Override
-	@SideOnly(Side.CLIENT)
-	public void registerIcons(IIconRegister register) {
-		icons = new IIcon[2];
-		for (int i = 0; i < 2; i++) {
-			icons[i] = register.registerIcon(this.getIconString() + "-" + i);
-		}
-	}
-
-	/** アイテムのテクスチャを返す。 */
-	@Override
-	@SideOnly(Side.CLIENT)
-	public IIcon getIconFromDamage(int meta) {
-		return icons[meta & 1];
-	}
-
-	/** アイテムをクリエイティブタブに登録する処理。 */
-	@Override
-	@SideOnly(Side.CLIENT)
-	public void getSubItems(Item item, CreativeTabs creativeTab, List list) {
-		for (int i = 0; i < 2; i++) {
-			list.add(new ItemStack(this, 1, i));
-		}
+	public boolean isDamageable() {
+		return false;
 	}
 
 	/** メタデータを返す。 */
@@ -93,9 +135,17 @@ public class ItemCollector extends Item {
 		return meta & 1;
 	}
 
-	/** 内部名を返す。 */
+	/** 説明欄の内容を追加する。 */
 	@Override
-	public String getUnlocalizedName(ItemStack itemStack) {
-		return this.getUnlocalizedName() + "." + itemStack.getItemDamage();
+	public void addInformation(ItemStack itemStack, EntityPlayer player, List list, boolean flag) {
+		if (!itemStack.hasTagCompound())
+			return;
+		list.add(StatCollector.translateToLocal("info.OfalenMod.ItemCollector.Item." + this.getOnOrOff(!itemStack.getTagCompound().getBoolean(OfalenNBTUtil.IS_ITEM_DISABLED))));
+		list.add(StatCollector.translateToLocal("info.OfalenMod.ItemCollector.Exp." + this.getOnOrOff(!itemStack.getTagCompound().getBoolean(OfalenNBTUtil.IS_EXP_DISABLED))));
+		OfalenNBTUtil.FilterUtil.addFilterInformation(itemStack, list);
+	}
+
+	private String getOnOrOff(boolean isOn) {
+		return isOn ? "On" : "Off";
 	}
 }

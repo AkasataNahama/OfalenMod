@@ -11,29 +11,27 @@ public class ModelLaserPistol extends ModelBase {
 	ModelRenderer lens;
 
 	public ModelLaserPistol() {
-		textureWidth = 1;
-		textureHeight = 1;
+		textureWidth = 64;
+	    textureHeight = 32;
 
-		base = new ModelRenderer(this, 0, 0);
-		base.addBox(-1.5F, -1.0F, -4.5F, 3, 3, 9);
-		base.setRotationPoint(0F, 0F, 0F);
-		base.setTextureSize(1, 1);
-		base.mirror = true;
-		setRotation(base, 0F, 0F, 0F);
-
-		grip = new ModelRenderer(this, 0, 0);
-		grip.addBox(-1.0F, -3.0F, -1.0F, 2, 4, 2);
-		grip.setRotationPoint(0F, -1F, -2F);
-		grip.setTextureSize(1, 1);
-		grip.mirror = true;
-		setRotation(grip, (20F / 180F * (float) Math.PI), 0F, 0F);
-
-		lens = new ModelRenderer(this, 0, 0);
-		lens.addBox(-0.5F, -0.0F, 3.75F, 1, 1, 1);
-		lens.setRotationPoint(0F, 0F, 0F);
-		lens.setTextureSize(1, 1);
-		lens.mirror = true;
-		setRotation(lens, 0F, 0F, 0F);
+	      base = new ModelRenderer(this, 0, 0);
+	      base.addBox(-1.5F, -1F, -4.5F, 3, 3, 9);
+	      base.setRotationPoint(0F, 0F, 0F);
+	      base.setTextureSize(64, 32);
+	      base.mirror = true;
+	      setRotation(base, 0F, 0F, 0F);
+	      grip = new ModelRenderer(this, 24, 0);
+	      grip.addBox(-1F, 0F, -1F, 2, 5, 2);
+	      grip.setRotationPoint(0F, 1F, 2F);
+	      grip.setTextureSize(64, 32);
+	      grip.mirror = true;
+	      setRotation(grip, 0.2617994F, 0F, 0F);
+	      lens = new ModelRenderer(this, 24, 7);
+	      lens.addBox(-0.5F, -0.5F, 0F, 1, 1, 1);
+	      lens.setRotationPoint(0F, 0.5F, -5F);
+	      lens.setTextureSize(64, 32);
+	      lens.mirror = true;
+	      setRotation(lens, 0F, 0F, 0F);
 	}
 
 	@Override

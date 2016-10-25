@@ -108,7 +108,9 @@ public class OfalenModItemCore {
 
 	public static Item seedOfalen;
 
-	public static Item listPaper;
+	public static Item filter;
+	public static Item filterInstaller;
+
 	public static Item collector;
 
 	/** アイテムを登録する処理。 */
@@ -488,11 +490,16 @@ public class OfalenModItemCore {
 				.setTextureName("ofalenmod:seed");
 		GameRegistry.registerItem(seedOfalen, "seedOfalen");
 
-		// リスト
-		listPaper = new ItemListPaper()
-				.setUnlocalizedName("OfalenMod.ListPaper")
-				.setTextureName("ofalenmod:list");
-		GameRegistry.registerItem(listPaper, "listPaper");
+		// フィルター
+		filter = new ItemFilter()
+				.setUnlocalizedName("OfalenMod.Filter")
+				.setTextureName("ofalenmod:filter");
+		GameRegistry.registerItem(filter, "filter");
+
+		filterInstaller=new ItemFilterInstaller()
+				.setUnlocalizedName("OfalenMod.FilterInstaller")
+				.setTextureName("ofalenmod:filter_installer");
+		GameRegistry.registerItem(filterInstaller, "filterInstaller");
 
 		// コレクター
 		collector = new ItemCollector()

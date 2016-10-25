@@ -18,7 +18,7 @@ public class ItemShield extends ItemFuture {
 
 	public ItemShield() {
 		super();
-		this.setMaxDamage(64 * 9);
+		this.setMaxDamage(64 * 9 * 3);
 	}
 
 	@Override

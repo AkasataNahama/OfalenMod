@@ -6,27 +6,43 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 
-public class ContainerItemList extends Container {
-
-	private InventoryItemList inventory;
-	/** リストのインベントリの第一スロットの番号 */
-	private static final int index0 = 0;
+public abstract class ContainerItemBase extends Container {
+	protected IInventory inventory;
+	/** アイテムのインベントリの第一スロットの番号 */
+	protected static int index0;
 	/** プレイヤーのインベントリの第一スロットの番号 */
-	private static final int index1 = 27;
+	protected static int index1;
 	/** クイックスロットの第一スロットの番号 */
-	private static final int index2 = index1 + 27;
+	protected static int index2;
 	/** このコンテナの全体のスロット数 */
-	private static final int index3 = index2 + 9;
+	protected static int index3;
 
-	public ContainerItemList(EntityPlayer player) {
-		inventory = new InventoryItemList(player.inventory);
+	public ContainerItemBase(EntityPlayer player) {
+		inventory = this.createInventory(player);
 		inventory.openInventory();
+		this.initIndexes();
+		this.initItemSlot();
+		this.initPlayerSlot(player);
+	}
+
+	protected abstract IInventory createInventory(EntityPlayer player);
+
+	protected void initIndexes() {
+		index0 = 0;
+		index1 = 27;
+		index2 = index1 + 27;
+		index3 = index2 + 9;
+	}
+
+	protected void initItemSlot() {
 		for (int i = 0; i < 3; ++i) {
 			for (int j = 0; j < 9; ++j) {
-				this.addSlotToContainer(new SlotListItemSelected(inventory, j + i * 9, 8 + j * 18, 18 + i * 18));
+				this.addSlotToContainer(new SlotFiltered(inventory, j + i * 9, 8 + j * 18, 18 + i * 18));
 			}
 		}
+	}
 
+	protected void initPlayerSlot(EntityPlayer player) {
 		for (int i = 0; i < 3; ++i) {
 			for (int j = 0; j < 9; ++j) {
 				this.addSlotToContainer(new Slot(player.inventory, j + i * 9 + 9, 8 + j * 18, 86 + i * 18));
@@ -54,20 +70,10 @@ public class ContainerItemList extends Container {
 		if (slotNumber - index1 == player.inventory.currentItem + 27) {
 			return null;
 		}
-		ItemStack itemStack = super.slotClick(slotNumber, par2, par3, player);
-		if (slotNumber < index1) {
-			// リストのスロットをクリックしたなら、スロットを書き換える。
-			ItemStack itemStack1 = player.inventory.getItemStack();
-			if (itemStack1 == null) {
-				inventory.setInventorySlotContents(slotNumber, null);
-			} else {
-				ItemStack itemStack2 = new ItemStack(itemStack1.getItem(), 1, itemStack1.getItemDamage());
-				inventory.setInventorySlotContents(slotNumber, itemStack2);
-			}
-		}
-		return null;
+		return super.slotClick(slotNumber, par2, par3, player);
 	}
 
+	/** Shift+左クリック時の処理。 */
 	@Override
 	public ItemStack transferStackInSlot(EntityPlayer player, int slotNumber) {
 		ItemStack itemStack = null;
@@ -76,7 +82,7 @@ public class ContainerItemList extends Container {
 			ItemStack itemStack1 = slot.getStack();
 			itemStack = itemStack1.copy();
 			if (index0 <= slotNumber && slotNumber < index1) {
-				// リストのインベントリならプレイヤーのインベントリに移動。
+				// アイテムのインベントリならプレイヤーのインベントリに移動。
 				if (!this.mergeItemStack(itemStack1, index1, index3, true)) {
 					return null;
 				}
@@ -84,7 +90,11 @@ public class ContainerItemList extends Container {
 				// このアイテムがあるスロットなら移動しない。
 				if (slotNumber - index1 == player.inventory.currentItem + 27)
 					return null;
-				if (index1 <= slotNumber && slotNumber < index2) {
+				if (this.isItemStackEnabled(itemStack1)) {
+					if (!this.transferStackInItemSlot(itemStack1, slotNumber)) {
+						return null;
+					}
+				} else if (index1 <= slotNumber && slotNumber < index2) {
 					// プレイヤーのインベントリならクイックスロットに移動。
 					if (!this.mergeItemStack(itemStack1, index2, index3, false)) {
 						return null;
@@ -108,28 +118,28 @@ public class ContainerItemList extends Container {
 		return itemStack;
 	}
 
-	private static class SlotListItemSelected extends Slot {
-		public SlotListItemSelected(IInventory iinventory, int index, int x, int y) {
+	/** 「スロットに入れられるか」と「Shift+左クリック時の処理」に使う。 */
+	protected abstract boolean isItemStackEnabled(ItemStack itemStack);
+
+	/**
+	 * プレイヤーのインベントリかクイックスロットでShift+左クリックされた時に移動する処理。
+	 *
+	 * @return 更新が必要か。
+	 */
+	protected boolean transferStackInItemSlot(ItemStack itemStack, int slotNumber) {
+		// 指定されたアイテムならアイテムのインベントリへ移動。
+		return this.mergeItemStack(itemStack, index0, index1, false);
+	}
+
+	private class SlotFiltered extends Slot {
+		public SlotFiltered(IInventory iinventory, int index, int x, int y) {
 			super(iinventory, index, x, y);
 		}
 
 		/** スロットにアイテムを入れられるか。 */
 		@Override
 		public boolean isItemValid(ItemStack itemStack) {
-			return false;
-		}
-
-		/** スロットからアイテムを取り出せるか。 */
-		@Override
-		public boolean canTakeStack(EntityPlayer player) {
-			return false;
-		}
-
-		/** スロットのスタック限界を返す。 */
-		@Override
-		public int getSlotStackLimit() {
-			return 1;
+			return isItemStackEnabled(itemStack);
 		}
 	}
-
 }

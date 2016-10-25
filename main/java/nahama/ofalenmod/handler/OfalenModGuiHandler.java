@@ -10,6 +10,8 @@ import net.minecraft.world.World;
 
 public class OfalenModGuiHandler implements IGuiHandler {
 
+	private static String prefix = "container.OfalenMod.";
+
 	@Override
 	public Object getServerGuiElement(int id, EntityPlayer player, World world, int x, int y, int z) {
 		switch (id) {
@@ -22,7 +24,11 @@ public class OfalenModGuiHandler implements IGuiHandler {
 		case 4:
 			return new ContainerItemFloater(player);
 		case 5:
-			return new ContainerItemList(player);
+			return new ContainerItemFilter(player);
+		case 6:
+			return new ContainerItemFilterInstaller(player);
+		case 7:
+			return new ContainerItemCollector(player);
 		}
 		if (!world.blockExists(x, y, z))
 			return null;
@@ -54,13 +60,17 @@ public class OfalenModGuiHandler implements IGuiHandler {
 		case 1:
 			break;
 		case 2:
-			return new GuiItemShield(player);
+			return new GuiContainer27(new ContainerItemShield(player), prefix + "ItemShield");
 		case 3:
 			return new GuiItemTeleporter(player);
 		case 4:
 			return new GuiItemFloater(player);
 		case 5:
-			return new GuiItemList(player);
+			return new GuiContainer27(new ContainerItemFilter(player), prefix + "ItemFilter");
+		case 6:
+			return new GuiItemFilterInstaller(player);
+		case 7:
+			return new GuiContainer27(new ContainerItemCollector(player), prefix + "ItemCollector");
 		}
 		if (!world.blockExists(x, y, z))
 			return null;

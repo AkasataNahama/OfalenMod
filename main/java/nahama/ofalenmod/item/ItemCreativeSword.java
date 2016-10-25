@@ -14,6 +14,7 @@ public class ItemCreativeSword extends Item {
 		this.setFull3D();
 	}
 
+	@Override
 	public boolean hitEntity(ItemStack itemStack, EntityLivingBase target, EntityLivingBase player) {
 		target.setHealth(0);
 		return true;

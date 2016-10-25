@@ -1,7 +1,7 @@
 package nahama.ofalenmod.core;
 
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
-import nahama.ofalenmod.Util;
+import nahama.ofalenmod.util.Util;
 import net.minecraftforge.common.config.Configuration;
 
 public class OfalenModConfigCore {

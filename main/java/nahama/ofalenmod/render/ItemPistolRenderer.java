@@ -1,16 +1,15 @@
 package nahama.ofalenmod.render;
 
-import org.lwjgl.opengl.GL11;
-
 import cpw.mods.fml.client.FMLClientHandler;
 import nahama.ofalenmod.model.ModelLaserPistol;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.IItemRenderer;
+import org.lwjgl.opengl.GL11;
 
 public class ItemPistolRenderer implements IItemRenderer {
 
-	private static final ResourceLocation resource = new ResourceLocation("ofalenmod:textures/entity/white.png");
+	private static final ResourceLocation resource = new ResourceLocation("ofalenmod:textures/models/LaserPistol.png");
 	private ModelLaserPistol model = new ModelLaserPistol();
 
 	@Override
@@ -53,7 +52,13 @@ public class ItemPistolRenderer implements IItemRenderer {
 				GL11.glRotatef(-80F, 1.0F, 0.0F, 0.0F);
 				GL11.glRotatef(10F, 0.0F, 1.0F, 0.0F);
 				GL11.glRotatef(92F, 0.0F, 0.0F, 1.0F);
-				GL11.glTranslatef(0.07F, -0.5F, 0.7F);
+				GL11.glTranslatef(0.1F, -0.5F, 0.7F);
+				GL11.glRotatef(200.0F, 1.0F, 0.0F, 0.0F);
+				GL11.glRotatef(-2.5F, 0.0F, 1.0F, 0.0F);
+				GL11.glRotatef(9.0F, 0.0F, 0.0F, 1.0F);
+				break;
+			case ENTITY:
+				GL11.glRotatef(180.0F, 1.0F, 0.0F, 0.0F);
 				break;
 			default:
 				break;

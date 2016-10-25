@@ -409,15 +409,10 @@ public class OfalenModRecipeCore {
 					'S', Items.wheat_seeds, 'O', gem[i]);
 		}
 
-		// リスト
-		//		addShaped(ITEM.listPaper,
+		// フィルター
+		//		addShaped(ITEM.filter,
 		//				"", "", "");
 
-		addShaped(ITEM.listPaper,
-				"X", 'X', new ItemStack(ITEM.listPaper, 1, 1));
-
-		addShaped(new ItemStack(ITEM.listPaper, 1, 1),
-				"X", 'X', ITEM.listPaper);
 
 		// コレクター関連
 		addShaped(new ItemStack(ITEM.partsOfalen, OfalenModConfigCore.amountDustFloat, 9),// TODO コンフィグ
