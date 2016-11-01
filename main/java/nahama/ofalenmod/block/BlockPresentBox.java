@@ -1,8 +1,5 @@
 package nahama.ofalenmod.block;
 
-import java.util.Calendar;
-import java.util.Random;
-
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import nahama.ofalenmod.OfalenModCore;
@@ -20,15 +17,17 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 
-public class BlockPresentBox extends Block implements ITileEntityProvider {
+import java.util.Calendar;
+import java.util.Random;
 
+public class BlockPresentBox extends Block implements ITileEntityProvider {
 	private Random random = new Random();
-	/** 0:下,1:上,2:横 */
-	private IIcon[] iicon = new IIcon[3];
+	/** 0:下,1:上,2:横。 */
+	private IIcon[] icons = new IIcon[3];
 
 	public BlockPresentBox() {
 		super(Material.sponge);
-		this.setCreativeTab(OfalenModCore.tabOfalen);
+		this.setCreativeTab(OfalenModCore.TAB_OFALEN);
 		this.setHardness(1.0F);
 		this.setResistance(1.0F);
 		this.setStepSound(Block.soundTypeCloth);
@@ -39,7 +38,7 @@ public class BlockPresentBox extends Block implements ITileEntityProvider {
 		return new TileEntityPresentBox();
 	}
 
-	/** プレイヤーに右クリックされたときの処理。 */
+	/** プレイヤーに右クリックされた時の処理。 */
 	@Override
 	public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ) {
 		// GUIを開く
@@ -52,30 +51,24 @@ public class BlockPresentBox extends Block implements ITileEntityProvider {
 	@Override
 	public void breakBlock(World world, int x, int y, int z, Block block, int meta) {
 		// TileEntityの内部にあるアイテムをドロップさせる。
-		TileEntityPresentBox tileentity = (TileEntityPresentBox) world.getTileEntity(x, y, z);
-		if (tileentity != null) {
-			for (int i = 0; i < tileentity.getSizeInventory(); i++) {
-				ItemStack itemStack = tileentity.getStackInSlot(i);
-
+		TileEntityPresentBox tileEntity = (TileEntityPresentBox) world.getTileEntity(x, y, z);
+		if (tileEntity != null) {
+			for (int i = 0; i < tileEntity.getSizeInventory(); i++) {
+				ItemStack itemStack = tileEntity.getStackInSlot(i);
 				if (itemStack != null) {
 					float f = random.nextFloat() * 0.6F + 0.1F;
 					float f1 = random.nextFloat() * 0.6F + 0.1F;
 					float f2 = random.nextFloat() * 0.6F + 0.1F;
-
 					while (itemStack.stackSize > 0) {
 						int j = random.nextInt(21) + 10;
-
 						if (j > itemStack.stackSize) {
 							j = itemStack.stackSize;
 						}
-
 						itemStack.stackSize -= j;
 						EntityItem entityItem = new EntityItem(world, x + f, y + f1, z + f2, new ItemStack(itemStack.getItem(), j, itemStack.getItemDamage()));
-
 						if (itemStack.hasTagCompound()) {
 							entityItem.getEntityItem().setTagCompound(((NBTTagCompound) itemStack.getTagCompound().copy()));
 						}
-
 						float f3 = 0.025F;
 						entityItem.motionX = (float) random.nextGaussian() * f3;
 						entityItem.motionY = (float) random.nextGaussian() * f3 + 0.1F;
@@ -97,7 +90,7 @@ public class BlockPresentBox extends Block implements ITileEntityProvider {
 		if (OfalenModAnniversaryHandler.isTextureSpecial)
 			s = "-" + (Calendar.getInstance().get(Calendar.MONTH) + 1);
 		for (int i = 0; i < 3; i++) {
-			iicon[i] = register.registerIcon(this.getTextureName() + "-" + i + s);
+			icons[i] = register.registerIcon(this.getTextureName() + "-" + i + s);
 		}
 	}
 
@@ -110,7 +103,6 @@ public class BlockPresentBox extends Block implements ITileEntityProvider {
 			i = 0;
 		if (side == 1)
 			i = 1;
-		return iicon[i];
+		return icons[i];
 	}
-
 }

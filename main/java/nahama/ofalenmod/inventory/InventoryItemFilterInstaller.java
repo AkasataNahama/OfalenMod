@@ -1,11 +1,10 @@
 package nahama.ofalenmod.inventory;
 
+import nahama.ofalenmod.util.OfalenNBTUtil.FilterUtil;
 import nahama.ofalenmod.util.Util;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.item.ItemStack;
-
-import static nahama.ofalenmod.util.OfalenNBTUtil.FilterUtil;
 
 public class InventoryItemFilterInstaller extends InventoryItemBase {
 	public InventoryItemFilterInstaller(InventoryPlayer inventory) {

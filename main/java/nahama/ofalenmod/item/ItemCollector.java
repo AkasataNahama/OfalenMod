@@ -19,11 +19,9 @@ import java.util.List;
 
 public class ItemCollector extends Item {
 	private IIcon[] icons;
-	private static byte interval = 10;
 
 	public ItemCollector() {
-		super();
-		this.setCreativeTab(OfalenModCore.tabOfalen);
+		this.setCreativeTab(OfalenModCore.TAB_OFALEN);
 		this.setMaxStackSize(1);
 		this.setMaxDamage(64 * 9 * 3);
 	}
@@ -54,14 +52,14 @@ public class ItemCollector extends Item {
 			thisStack.getTagCompound().setByte(OfalenNBTUtil.INTERVAL, --interval2);
 			return;
 		}
-		// 無効時間をリセット。
-		thisStack.getTagCompound().setByte(OfalenNBTUtil.INTERVAL, interval);
-		// 範囲の設定。
+		// 無効時間をリセット。TODO 詳細設定
+		thisStack.getTagCompound().setByte(OfalenNBTUtil.INTERVAL, (byte) 10);
+		// 範囲の設定。TODO 詳細設定
 		int rangeItem = 10;
 		int rangeExp = 10;
 		if (thisStack.getTagCompound().getBoolean(OfalenNBTUtil.IS_SET_IN_DETAIL)) {
-			rangeItem = thisStack.getTagCompound().getInteger(OfalenNBTUtil.ITEM_RANGE);
-			rangeExp = thisStack.getTagCompound().getInteger(OfalenNBTUtil.EXP_RANGE);
+			rangeItem = thisStack.getTagCompound().getShort(OfalenNBTUtil.ITEM_RANGE);
+			rangeExp = thisStack.getTagCompound().getShort(OfalenNBTUtil.EXP_RANGE);
 		}
 		// EntityItemとEntityXPOrbがあれば移動する。
 		for (Object o : world.loadedEntityList) {
@@ -109,7 +107,8 @@ public class ItemCollector extends Item {
 
 	@Override
 	public ItemStack onItemRightClick(ItemStack itemStack, World world, EntityPlayer player) {
-		if (!Util.isKeyDown(OfalenModCore.keyOSS.getKeyCode())) {
+		if (!Util.isKeyDown(OfalenModCore.KEY_OSS.getKeyCode())) {
+			Util.debuggingInfo("openGui", "ItemCollector.onItemRightClick");
 			player.openGui(OfalenModCore.instance, 7, world, (int) player.posX, (int) player.posY, (int) player.posZ);
 			return itemStack;
 		}
@@ -140,12 +139,8 @@ public class ItemCollector extends Item {
 	public void addInformation(ItemStack itemStack, EntityPlayer player, List list, boolean flag) {
 		if (!itemStack.hasTagCompound())
 			return;
-		list.add(StatCollector.translateToLocal("info.OfalenMod.ItemCollector.Item." + this.getOnOrOff(!itemStack.getTagCompound().getBoolean(OfalenNBTUtil.IS_ITEM_DISABLED))));
-		list.add(StatCollector.translateToLocal("info.OfalenMod.ItemCollector.Exp." + this.getOnOrOff(!itemStack.getTagCompound().getBoolean(OfalenNBTUtil.IS_EXP_DISABLED))));
+		list.add(StatCollector.translateToLocal("info.ofalen.collector.item") + " : " + (itemStack.getTagCompound().getBoolean(OfalenNBTUtil.IS_ITEM_DISABLED)?"Off":"On"));
+		list.add(StatCollector.translateToLocal("info.ofalen.collector.exp") + " : " +  (itemStack.getTagCompound().getBoolean(OfalenNBTUtil.IS_EXP_DISABLED)?"Off":"On"));
 		OfalenNBTUtil.FilterUtil.addFilterInformation(itemStack, list);
-	}
-
-	private String getOnOrOff(boolean isOn) {
-		return isOn ? "On" : "Off";
 	}
 }

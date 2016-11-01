@@ -9,8 +9,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 
 public class OfalenModGuiHandler implements IGuiHandler {
-
-	private static String prefix = "container.OfalenMod.";
+	private static String prefix = "container.ofalen.";
 
 	@Override
 	public Object getServerGuiElement(int id, EntityPlayer player, World world, int x, int y, int z) {
@@ -36,17 +35,17 @@ public class OfalenModGuiHandler implements IGuiHandler {
 		if (tileEntity instanceof TileEntitySmeltingMachine) {
 			return new ContainerSmeltingMachine(player, (TileEntitySmeltingMachine) tileEntity);
 		}
-		if (tileEntity instanceof TileEntityRepairMachine) {
-			return new ContainerRepairMachine(player, (TileEntityRepairMachine) tileEntity);
+		if (tileEntity instanceof TileEntityRepairingMachine) {
+			return new ContainerRepairingMachine(player, (TileEntityRepairingMachine) tileEntity);
 		}
-		if (tileEntity instanceof TileEntityConversionMachine) {
-			return new ContainerConversionMachine(player, (TileEntityConversionMachine) tileEntity);
+		if (tileEntity instanceof TileEntityConvertingMachine) {
+			return new ContainerConvertingMachine(player, (TileEntityConvertingMachine) tileEntity);
 		}
 		if (tileEntity instanceof TileEntityFusingMachine) {
 			return new ContainerFusingMachine(player, (TileEntityFusingMachine) tileEntity);
 		}
-		if (tileEntity instanceof TileEntityTeleportMarker) {
-			return new ContainerTeleportMarker(player, (TileEntityTeleportMarker) tileEntity);
+		if (tileEntity instanceof TileEntityTeleportingMarker) {
+			return new ContainerTeleportingMarker(player, (TileEntityTeleportingMarker) tileEntity);
 		}
 		if (tileEntity instanceof TileEntityPresentBox) {
 			return new ContainerPresentBox(player, (TileEntityPresentBox) tileEntity);
@@ -60,17 +59,17 @@ public class OfalenModGuiHandler implements IGuiHandler {
 		case 1:
 			break;
 		case 2:
-			return new GuiContainer27(new ContainerItemShield(player), prefix + "ItemShield");
+			return new GuiContainer27(new ContainerItemShield(player), prefix + "shield");
 		case 3:
 			return new GuiItemTeleporter(player);
 		case 4:
 			return new GuiItemFloater(player);
 		case 5:
-			return new GuiContainer27(new ContainerItemFilter(player), prefix + "ItemFilter");
+			return new GuiContainer27(new ContainerItemFilter(player), prefix + "filterItem");
 		case 6:
 			return new GuiItemFilterInstaller(player);
 		case 7:
-			return new GuiContainer27(new ContainerItemCollector(player), prefix + "ItemCollector");
+			return new GuiContainer27(new ContainerItemCollector(player), prefix + "collector");
 		}
 		if (!world.blockExists(x, y, z))
 			return null;
@@ -78,22 +77,21 @@ public class OfalenModGuiHandler implements IGuiHandler {
 		if (tileEntity instanceof TileEntitySmeltingMachine) {
 			return new GuiSmeltingMachine(player, (TileEntitySmeltingMachine) tileEntity);
 		}
-		if (tileEntity instanceof TileEntityRepairMachine) {
-			return new GuiRepairMachine(player, (TileEntityRepairMachine) tileEntity);
+		if (tileEntity instanceof TileEntityRepairingMachine) {
+			return new GuiRepairingMachine(player, (TileEntityRepairingMachine) tileEntity);
 		}
-		if (tileEntity instanceof TileEntityConversionMachine) {
-			return new GuiConversionMachine(player, (TileEntityConversionMachine) tileEntity);
+		if (tileEntity instanceof TileEntityConvertingMachine) {
+			return new GuiConvertingMachine(player, (TileEntityConvertingMachine) tileEntity);
 		}
 		if (tileEntity instanceof TileEntityFusingMachine) {
 			return new GuiFusingMachine(player, (TileEntityFusingMachine) tileEntity);
 		}
-		if (tileEntity instanceof TileEntityTeleportMarker) {
-			return new GuiTeleportMarker(player, (TileEntityTeleportMarker) tileEntity);
+		if (tileEntity instanceof TileEntityTeleportingMarker) {
+			return new GuiTeleportingMarker(player, (TileEntityTeleportingMarker) tileEntity);
 		}
 		if (tileEntity instanceof TileEntityPresentBox) {
 			return new GuiPresentBox(player, (TileEntityPresentBox) tileEntity);
 		}
 		return null;
 	}
-
 }

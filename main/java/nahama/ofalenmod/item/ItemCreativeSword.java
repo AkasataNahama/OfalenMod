@@ -6,10 +6,8 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
 public class ItemCreativeSword extends Item {
-
 	public ItemCreativeSword() {
-		super();
-		this.setCreativeTab(OfalenModCore.tabOfalen);
+		this.setCreativeTab(OfalenModCore.TAB_OFALEN);
 		this.setMaxStackSize(1);
 		this.setFull3D();
 	}
@@ -19,5 +17,4 @@ public class ItemCreativeSword extends Item {
 		target.setHealth(0);
 		return true;
 	}
-
 }

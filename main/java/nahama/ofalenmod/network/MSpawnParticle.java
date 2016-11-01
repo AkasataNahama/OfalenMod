@@ -1,15 +1,14 @@
 package nahama.ofalenmod.network;
 
-import java.util.Random;
-
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
 import cpw.mods.fml.common.network.simpleimpl.MessageContext;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
 
-public class MSpawnParticle implements IMessage {
+import java.util.Random;
 
+public class MSpawnParticle implements IMessage {
 	public byte dimensionId;
 	public double x, y, z;
 	public byte type;
@@ -49,7 +48,6 @@ public class MSpawnParticle implements IMessage {
 	}
 
 	public static class Handler implements IMessageHandler<MSpawnParticle, IMessage> {
-
 		@Override
 		public IMessage onMessage(MSpawnParticle message, MessageContext ctx) {
 			if (Minecraft.getMinecraft().theWorld.provider.dimensionId != message.dimensionId)
@@ -81,7 +79,5 @@ public class MSpawnParticle implements IMessage {
 			}
 			return null;
 		}
-
 	}
-
 }

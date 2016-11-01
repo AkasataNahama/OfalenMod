@@ -3,6 +3,7 @@ package nahama.ofalenmod.item;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import nahama.ofalenmod.OfalenModCore;
+import nahama.ofalenmod.util.OfalenNBTUtil;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -15,10 +16,8 @@ import net.minecraft.world.World;
 import java.util.List;
 
 public class ItemLaserMagazine extends Item {
-
 	public ItemLaserMagazine() {
-		super();
-		this.setCreativeTab(OfalenModCore.tabOfalen);
+		this.setCreativeTab(OfalenModCore.TAB_OFALEN);
 		this.setHasSubtypes(false);
 		this.setMaxDamage(1024);
 		this.setMaxStackSize(1);
@@ -32,7 +31,7 @@ public class ItemLaserMagazine extends Item {
 		// 修繕機での修繕を不可にしたアイテムを登録する。
 		ItemStack itemStack = new ItemStack(this, 1, 0);
 		NBTTagCompound nbt = new NBTTagCompound();
-		nbt.setBoolean("NotRepairable", true);
+		nbt.setBoolean(OfalenNBTUtil.IS_IRREPARABLE, true);
 		itemStack.setTagCompound(nbt);
 		list.add(itemStack);
 	}
@@ -42,7 +41,7 @@ public class ItemLaserMagazine extends Item {
 	public void onCreated(ItemStack itemStack, World world, EntityPlayer player) {
 		// 修繕機での修繕を不可にする。
 		NBTTagCompound nbt = new NBTTagCompound();
-		nbt.setBoolean("NotRepairable", true);
+		nbt.setBoolean(OfalenNBTUtil.IS_IRREPARABLE, true);
 		itemStack.setTagCompound(nbt);
 	}
 
@@ -52,15 +51,15 @@ public class ItemLaserMagazine extends Item {
 		if (!itemStack.hasTagCompound()) {
 			itemStack.setTagCompound(new NBTTagCompound());
 		}
-		if (!itemStack.getTagCompound().getBoolean("NotRepairable")) {
-			itemStack.getTagCompound().setBoolean("NotRepairable", true);
+		if (!itemStack.getTagCompound().getBoolean(OfalenNBTUtil.IS_IRREPARABLE)) {
+			itemStack.getTagCompound().setBoolean(OfalenNBTUtil.IS_IRREPARABLE, true);
 		}
 	}
 
 	/** 説明欄の内容を追加する。 */
 	@Override
 	public void addInformation(ItemStack itemStack, EntityPlayer player, List list, boolean flag) {
-		list.add(StatCollector.translateToLocal("info.OfalenMod.loaded") + " " + (32 - (itemStack.getItemDamage() / 32)));
+		list.add(StatCollector.translateToLocal("info.ofalen.crystal") + " : " + (32 - (itemStack.getItemDamage() / 32)));
 	}
 
 	/** アイテムスタックの最大スタック数を返す。 */
@@ -79,5 +78,4 @@ public class ItemLaserMagazine extends Item {
 	public boolean isDamageable() {
 		return false;
 	}
-
 }

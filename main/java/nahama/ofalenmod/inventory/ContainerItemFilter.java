@@ -6,7 +6,6 @@ import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 
 public class ContainerItemFilter extends ContainerItemBase {
-
 	public ContainerItemFilter(EntityPlayer player) {
 		super(player);
 	}
@@ -72,5 +71,4 @@ public class ContainerItemFilter extends ContainerItemBase {
 			return 1;
 		}
 	}
-
 }

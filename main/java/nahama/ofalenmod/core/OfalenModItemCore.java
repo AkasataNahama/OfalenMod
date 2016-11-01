@@ -14,126 +14,111 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraftforge.oredict.OreDictionary;
 
 public class OfalenModItemCore {
-
-	public static Item ofalen;
+	// 基本アイテム
+	public static Item gemOfalen;
 	public static Item fragmentOfalen;
 	public static Item coreOfalen;
-	/** 0:Machine Cover Plate, 1:Grade 3 Part, 2:Lump of Stone, 3:Stone Fuel, 4:Ofalen Fuel, 5:Laser Magazine, 6:Shielding Ingot, 7:Teleporting Pearl, 8:Floating Dust, 9:Collecting Lump */
+	/** 0:Machine Cover Plate, 1:Grade 3 Part, 2:Lump of Stone, 3:Stone Fuel, 4:Ofalen Fuel, 5:Laser Magazine, 6:Shielding Ingot, 7:Teleporting Pearl, 8:Floating Dust, 9:Collecting Lump。 */
 	public static Item partsOfalen;
-	/** 0: Iron Stick */
+	/** 0: Iron Stick。 */
 	public static Item partsOfalen3D;
-	public static ItemStack plate;
-	public static ItemStack part;
-	public static ItemStack lump;
-	public static ItemStack fuelStone;
-	public static ItemStack fuelOfalen;
-	public static ItemStack magazine;
-	public static ItemStack ingot;
-	public static ItemStack pearl;
-	public static ItemStack dust;
-	public static ItemStack lumpCollecting;
-	public static ItemStack stickIron;
-
-	public static Item helmetOfalen;
-	public static Item chestplateOfalen;
-	public static Item leggingsOfalen;
-	public static Item bootsOfalen;
-
+	// 防具G1
+	public static Item helmetOfalenG1;
+	public static Item chestplateOfalenG1;
+	public static Item leggingsOfalenG1;
+	public static Item bootsOfalenG1;
+	// 防具G2
 	public static Item helmetOfalenG2;
 	public static Item chestplateOfalenG2;
 	public static Item leggingsOfalenG2;
 	public static Item bootsOfalenG2;
-
+	// 防具G3
 	public static Item helmetOfalenG3;
 	public static Item chestplateOfalenG3;
 	public static Item leggingsOfalenG3;
 	public static Item bootsOfalenG3;
-
-	public static Item helmetPerfectOfalen;
-	public static Item chestplatePerfectOfalen;
-	public static Item leggingsPerfectOfalen;
-	public static Item bootsPerfectOfalen;
-
+	// 防具P
+	public static Item helmetOfalenP;
+	public static Item chestplateOfalenP;
+	public static Item leggingsOfalenP;
+	public static Item bootsOfalenP;
+	// 玉
 	public static Item ballEmpty;
-
-	public static Item ballDefense;
+	// 防御玉
+	public static Item ballDefenseG1;
 	public static Item ballDefenseG2;
 	public static Item ballDefenseG3;
-
-	public static Item ballRecovery;
-	public static Item ballRecoveryG2;
-	public static Item ballRecoveryG3;
-
-	public static Item ballAttack;
+	// 攻撃玉
+	public static Item ballAttackG1;
 	public static Item ballAttackG2;
 	public static Item ballAttackG3;
-
+	// 回復玉
+	public static Item ballRecoveryG1;
+	public static Item ballRecoveryG2;
+	public static Item ballRecoveryG3;
+	// その他の玉
 	public static Item ballExplosion;
+	// TODO 橙追加：削除
 	public static Item ballFlame;
 	public static Item ballHungry;
 	public static Item ballFood;
-	public static Item ballPerfectOfalen;
-
-	public static Item swordOfalen;
-	public static Item shovelOfalen;
-	public static Item pickaxeOfalen;
-	public static Item axeOfalen;
-	public static Item hoeOfalen;
-
+	public static Item ballPerfect;
+	// 道具G1
+	public static Item swordOfalenG1;
+	public static Item shovelOfalenG1;
+	public static Item pickaxeOfalenG1;
+	public static Item axeOfalenG1;
+	public static Item hoeOfalenG1;
+	// 道具G2
 	public static Item swordOfalenG2;
 	public static Item shovelOfalenG2;
 	public static Item pickaxeOfalenG2;
 	public static Item axeOfalenG2;
 	public static Item hoeOfalenG2;
-
+	// 道具G3
 	public static Item swordOfalenG3;
 	public static Item shovelOfalenG3;
 	public static Item pickaxeOfalenG3;
 	public static Item axeOfalenG3;
 	public static Item hoeOfalenG3;
-
-	public static Item toolPerfectOfalen;
-	public static Item swordSp;
-
+	// その他の道具
+	public static Item toolOfalenP;
+	public static Item swordCreative;
+	// レーザー関連
 	public static Item pistolLaser;
-	public static Item crystalEnergyLaser;
+	public static Item crystalLaserEnergy;
 	public static Item magazineLaserRed;
 	public static Item magazineLaserGreen;
 	public static Item magazineLaserBlue;
 	public static Item magazineLaserWhite;
-
+	// 未来系
 	public static Item shieldOfalen;
 	public static Item teleporterOfalen;
 	public static Item floaterOfalen;
-
+	public static Item collectorOfalen;
+	// フィルター
+	public static Item filterItem;
+	public static Item installerFilter;
+	// オファレン草
 	public static Item seedOfalen;
 
-	public static Item filter;
-	public static Item filterInstaller;
-
-	public static Item collector;
-
-	/** アイテムを登録する処理。 */
+	/** アイテムを登録する。 */
 	public static void registerItem() {
-		CreativeTabs tab = OfalenModCore.tabOfalen;
-
-		ofalen = new ItemOfalen()
-				.setUnlocalizedName("ofalen")
-				.setTextureName("ofalenmod:ofalen");
-		GameRegistry.registerItem(ofalen, "ofalen");
-		OreDictionary.registerOre("gemOfalenRed", new ItemStack(ofalen, 1, 0));
-		OreDictionary.registerOre("gemOfalenGreen", new ItemStack(ofalen, 1, 1));
-		OreDictionary.registerOre("gemOfalenBlue", new ItemStack(ofalen, 1, 2));
-		OreDictionary.registerOre("gemOfalenWhite", new ItemStack(ofalen, 1, 3));
-		OreDictionary.registerOre("gemOfalenOrange", new ItemStack(ofalen, 1, 4));
-		OreDictionary.registerOre("gemOfalenViridian", new ItemStack(ofalen, 1, 5));
-		OreDictionary.registerOre("gemOfalenPurple", new ItemStack(ofalen, 1, 6));
-		OreDictionary.registerOre("gemOfalenDark", new ItemStack(ofalen, 1, 7));
-		OreDictionary.registerOre("gemOfalen", new ItemStack(ofalen, 1, OreDictionary.WILDCARD_VALUE));
-
-		fragmentOfalen = new ItemOfalen()
-				.setUnlocalizedName("fragmentOfalen")
-				.setTextureName("ofalenmod:ofalen_fragment");
+		CreativeTabs tab = OfalenModCore.TAB_OFALEN;
+		// オファレン
+		gemOfalen = new ItemOfalen().setUnlocalizedName("ofalen.gem").setTextureName("ofalenmod:gem");
+		GameRegistry.registerItem(gemOfalen, "ofalen");
+		OreDictionary.registerOre("gemOfalenRed", new ItemStack(gemOfalen, 1, 0));
+		OreDictionary.registerOre("gemOfalenGreen", new ItemStack(gemOfalen, 1, 1));
+		OreDictionary.registerOre("gemOfalenBlue", new ItemStack(gemOfalen, 1, 2));
+		OreDictionary.registerOre("gemOfalenWhite", new ItemStack(gemOfalen, 1, 3));
+		OreDictionary.registerOre("gemOfalenOrange", new ItemStack(gemOfalen, 1, 4));
+		OreDictionary.registerOre("gemOfalenViridian", new ItemStack(gemOfalen, 1, 5));
+		OreDictionary.registerOre("gemOfalenPurple", new ItemStack(gemOfalen, 1, 6));
+		OreDictionary.registerOre("gemOfalenDark", new ItemStack(gemOfalen, 1, 7));
+		OreDictionary.registerOre("gemOfalen", new ItemStack(gemOfalen, 1, OreDictionary.WILDCARD_VALUE));
+		// オファレンの欠片
+		fragmentOfalen = new ItemOfalen().setUnlocalizedName("ofalen.fragment").setTextureName("ofalenmod:fragment");
 		GameRegistry.registerItem(fragmentOfalen, "fragmentOfalen");
 		OreDictionary.registerOre("fragmentOfalenRed", new ItemStack(fragmentOfalen, 1, 0));
 		OreDictionary.registerOre("fragmentOfalenGreen", new ItemStack(fragmentOfalen, 1, 1));
@@ -144,10 +129,8 @@ public class OfalenModItemCore {
 		OreDictionary.registerOre("fragmentOfalenPurple", new ItemStack(fragmentOfalen, 1, 6));
 		OreDictionary.registerOre("fragmentOfalenDark", new ItemStack(fragmentOfalen, 1, 7));
 		OreDictionary.registerOre("fragmentOfalen", new ItemStack(fragmentOfalen, 1, OreDictionary.WILDCARD_VALUE));
-
-		coreOfalen = new ItemOfalen()
-				.setUnlocalizedName("coreOfalen")
-				.setTextureName("ofalenmod:ofalen_core");
+		// オファレンコア
+		coreOfalen = new ItemOfalen().setUnlocalizedName("ofalen.core").setTextureName("ofalenmod:core");
 		GameRegistry.registerItem(coreOfalen, "coreOfalen");
 		OreDictionary.registerOre("coreOfalenRed", new ItemStack(coreOfalen, 1, 0));
 		OreDictionary.registerOre("coreOfalenGreen", new ItemStack(coreOfalen, 1, 1));
@@ -158,354 +141,150 @@ public class OfalenModItemCore {
 		OreDictionary.registerOre("coreOfalenPurple", new ItemStack(coreOfalen, 1, 6));
 		OreDictionary.registerOre("coreOfalenDark", new ItemStack(coreOfalen, 1, 7));
 		OreDictionary.registerOre("coreOfalen", new ItemStack(coreOfalen, 1, OreDictionary.WILDCARD_VALUE));
-
-		partsOfalen = new ItemParts(10)
-				.setUnlocalizedName("partsOfalen")
-				.setTextureName("ofalenmod:parts");
+		// 中間素材
+		partsOfalen = new ItemParts((byte) 10).setUnlocalizedName("ofalen.parts").setTextureName("ofalenmod:parts");
 		GameRegistry.registerItem(partsOfalen, "partsOfalen");
-
-		partsOfalen3D = new ItemParts(1)
-				.setUnlocalizedName("partsOfalen3D")
-				.setTextureName("ofalenmod:parts3D")
-				.setFull3D();
+		partsOfalen3D = new ItemParts((byte) 1).setUnlocalizedName("ofalen.parts3D").setTextureName("ofalenmod:parts3D").setFull3D();
 		GameRegistry.registerItem(partsOfalen3D, "partsOfalen3D");
-
-		plate = new ItemStack(partsOfalen, 1, 0);
-		part = new ItemStack(partsOfalen, 1, 1);
-		lump = new ItemStack(partsOfalen, 1, 2);
-		fuelStone = new ItemStack(partsOfalen, 1, 3);
-		fuelOfalen = new ItemStack(partsOfalen, 1, 4);
-		magazine = new ItemStack(partsOfalen, 1, 5);
-		ingot = new ItemStack(partsOfalen, 1, 6);
-		pearl = new ItemStack(partsOfalen, 1, 7);
-		dust = new ItemStack(partsOfalen, 1, 8);
-		lumpCollecting = new ItemStack(partsOfalen, 1, 9);
-		stickIron = new ItemStack(partsOfalen3D, 1, 0);
-
-		// アーマー
-		helmetOfalen = new ItemOfalenArmor(OfalenModMaterialCore.OFALENA, 0, 1)
-				.setUnlocalizedName("helmetOfalen")
-				.setTextureName("ofalenmod:ofalen_helmet");
-		GameRegistry.registerItem(helmetOfalen, "helmetOfalen");
-
-		chestplateOfalen = new ItemOfalenArmor(OfalenModMaterialCore.OFALENA, 1, 1)
-				.setUnlocalizedName("chestplateOfalen")
-				.setTextureName("ofalenmod:ofalen_chestplate");
-		GameRegistry.registerItem(chestplateOfalen, "chestplateOfalen");
-
-		leggingsOfalen = new ItemOfalenArmor(OfalenModMaterialCore.OFALENA, 2, 1)
-				.setUnlocalizedName("leggingsOfalen")
-				.setTextureName("ofalenmod:ofalen_leggings");
-		GameRegistry.registerItem(leggingsOfalen, "leggingsOfalen");
-
-		bootsOfalen = new ItemOfalenArmor(OfalenModMaterialCore.OFALENA, 3, 1)
-				.setUnlocalizedName("bootsOfalen")
-				.setTextureName("ofalenmod:ofalen_boots");
-		GameRegistry.registerItem(bootsOfalen, "bootsOfalen");
-
-		helmetOfalenG2 = new ItemOfalenArmor(OfalenModMaterialCore.OFALENG2A, 0, 2)
-				.setUnlocalizedName("helmetOfalenG2")
-				.setTextureName("ofalenmod:ofalen_helmet_G2");
+		// 防具G1
+		helmetOfalenG1 = new ItemOfalenArmor(OfalenModMaterialCore.OFALEN_ARMOR_G1, 0, 1).setUnlocalizedName("ofalen.armor.G1.0").setTextureName("ofalenmod:armor-1-0");
+		GameRegistry.registerItem(helmetOfalenG1, "helmetOfalen");
+		chestplateOfalenG1 = new ItemOfalenArmor(OfalenModMaterialCore.OFALEN_ARMOR_G1, 1, 1).setUnlocalizedName("ofalen.armor.G1.1").setTextureName("ofalenmod:armor-1-1");
+		GameRegistry.registerItem(chestplateOfalenG1, "chestplateOfalen");
+		leggingsOfalenG1 = new ItemOfalenArmor(OfalenModMaterialCore.OFALEN_ARMOR_G1, 2, 1).setUnlocalizedName("ofalen.armor.G1.2").setTextureName("ofalenmod:armor-1-2");
+		GameRegistry.registerItem(leggingsOfalenG1, "leggingsOfalen");
+		bootsOfalenG1 = new ItemOfalenArmor(OfalenModMaterialCore.OFALEN_ARMOR_G1, 3, 1).setUnlocalizedName("ofalen.armor.G1.3").setTextureName("ofalenmod:armor-1-3");
+		GameRegistry.registerItem(bootsOfalenG1, "bootsOfalen");
+		// 防具G2
+		helmetOfalenG2 = new ItemOfalenArmor(OfalenModMaterialCore.OFALEN_ARMOR_G2, 0, 2).setUnlocalizedName("ofalen.armor.G2.0").setTextureName("ofalenmod:armor-2-0");
 		GameRegistry.registerItem(helmetOfalenG2, "helmetOfalenG2");
-
-		chestplateOfalenG2 = new ItemOfalenArmor(OfalenModMaterialCore.OFALENG2A, 1, 2)
-				.setUnlocalizedName("chestplateOfalenG2")
-				.setTextureName("ofalenmod:ofalen_chestplate_G2");
+		chestplateOfalenG2 = new ItemOfalenArmor(OfalenModMaterialCore.OFALEN_ARMOR_G2, 1, 2).setUnlocalizedName("ofalen.armor.G2.1").setTextureName("ofalenmod:armor-2-1");
 		GameRegistry.registerItem(chestplateOfalenG2, "chestplateOfalenG2");
-
-		leggingsOfalenG2 = new ItemOfalenArmor(OfalenModMaterialCore.OFALENG2A, 2, 2)
-				.setUnlocalizedName("leggingsOfalenG2")
-				.setTextureName("ofalenmod:ofalen_leggings_G2");
+		leggingsOfalenG2 = new ItemOfalenArmor(OfalenModMaterialCore.OFALEN_ARMOR_G2, 2, 2).setUnlocalizedName("ofalen.armor.G2.2").setTextureName("ofalenmod:armor-2-2");
 		GameRegistry.registerItem(leggingsOfalenG2, "leggingsOfalenG2");
-
-		bootsOfalenG2 = new ItemOfalenArmor(OfalenModMaterialCore.OFALENG2A, 3, 2)
-				.setUnlocalizedName("bootsOfalenG2")
-				.setTextureName("ofalenmod:ofalen_boots_G2");
+		bootsOfalenG2 = new ItemOfalenArmor(OfalenModMaterialCore.OFALEN_ARMOR_G2, 3, 2).setUnlocalizedName("ofalen.armor.G2.3").setTextureName("ofalenmod:armor-2-3");
 		GameRegistry.registerItem(bootsOfalenG2, "bootsOfalenG2");
-
-		helmetOfalenG3 = new ItemOfalenArmor(OfalenModMaterialCore.OFALENG3A, 0, 3)
-				.setUnlocalizedName("helmetOfalenG3")
-				.setTextureName("ofalenmod:ofalen_helmet_G3");
+		// 防具G3
+		helmetOfalenG3 = new ItemOfalenArmor(OfalenModMaterialCore.OFALEN_ARMOR_G3, 0, 3).setUnlocalizedName("ofalen.armor.G3.0").setTextureName("ofalenmod:armor-3-0");
 		GameRegistry.registerItem(helmetOfalenG3, "helmetOfalenG3");
-
-		chestplateOfalenG3 = new ItemOfalenArmor(OfalenModMaterialCore.OFALENG3A, 1, 3)
-				.setUnlocalizedName("chestplateOfalenG3")
-				.setTextureName("ofalenmod:ofalen_chestplate_G3");
+		chestplateOfalenG3 = new ItemOfalenArmor(OfalenModMaterialCore.OFALEN_ARMOR_G3, 1, 3).setUnlocalizedName("ofalen.armor.G3.1").setTextureName("ofalenmod:armor-3-1");
 		GameRegistry.registerItem(chestplateOfalenG3, "chestplateOfalenG3");
-
-		leggingsOfalenG3 = new ItemOfalenArmor(OfalenModMaterialCore.OFALENG3A, 2, 3)
-				.setUnlocalizedName("leggingsOfalenG3")
-				.setTextureName("ofalenmod:ofalen_leggings_G3");
+		leggingsOfalenG3 = new ItemOfalenArmor(OfalenModMaterialCore.OFALEN_ARMOR_G3, 2, 3).setUnlocalizedName("ofalen.armor.G3.2").setTextureName("ofalenmod:armor-3-2");
 		GameRegistry.registerItem(leggingsOfalenG3, "leggingsOfalenG3");
-
-		bootsOfalenG3 = new ItemOfalenArmor(OfalenModMaterialCore.OFALENG3A, 3, 3)
-				.setUnlocalizedName("bootsOfalenG3")
-				.setTextureName("ofalenmod:ofalen_boots_G3");
+		bootsOfalenG3 = new ItemOfalenArmor(OfalenModMaterialCore.OFALEN_ARMOR_G3, 3, 3).setUnlocalizedName("ofalen.armor.G3.3").setTextureName("ofalenmod:armor-3-3");
 		GameRegistry.registerItem(bootsOfalenG3, "bootsOfalenG3");
-
-		helmetPerfectOfalen = new ItemOfalenArmor(OfalenModMaterialCore.PERFECTA, 0, 4)
-				.setUnlocalizedName("helmetPerfectOfalen")
-				.setTextureName("ofalenmod:ofalen_helmet_P");
-		GameRegistry.registerItem(helmetPerfectOfalen, "helmetPerfectOfalen");
-
-		chestplatePerfectOfalen = new ItemOfalenArmor(OfalenModMaterialCore.PERFECTA, 1, 4)
-				.setUnlocalizedName("chestplatePerfectOfalen")
-				.setTextureName("ofalenmod:ofalen_chestplate_P");
-		GameRegistry.registerItem(chestplatePerfectOfalen, "chestplatePerfectOfalen");
-
-		leggingsPerfectOfalen = new ItemOfalenArmor(OfalenModMaterialCore.PERFECTA, 2, 4)
-				.setUnlocalizedName("leggingsPerfectOfalen")
-				.setTextureName("ofalenmod:ofalen_leggings_P");
-		GameRegistry.registerItem(leggingsPerfectOfalen, "leggingsPerfectOfalen");
-
-		bootsPerfectOfalen = new ItemOfalenArmor(OfalenModMaterialCore.PERFECTA, 3, 4)
-				.setUnlocalizedName("bootsPerfectOfalen")
-				.setTextureName("ofalenmod:ofalen_boots_P");
-		GameRegistry.registerItem(bootsPerfectOfalen, "bootsPerfectOfalen");
-
-		// ボール
-		ballEmpty = new ItemEmptyBall()
-				.setUnlocalizedName("ballEmpty")
-				.setTextureName("ofalenmod:empty_ball-");
+		// 防具P
+		helmetOfalenP = new ItemOfalenArmor(OfalenModMaterialCore.OFALEN_ARMOR_P, 0, 4).setUnlocalizedName("ofalen.armor.P.0").setTextureName("ofalenmod:armor-P-0");
+		GameRegistry.registerItem(helmetOfalenP, "helmetPerfectOfalen");
+		chestplateOfalenP = new ItemOfalenArmor(OfalenModMaterialCore.OFALEN_ARMOR_P, 1, 4).setUnlocalizedName("ofalen.armor.P.1").setTextureName("ofalenmod:armor-P-1");
+		GameRegistry.registerItem(chestplateOfalenP, "chestplatePerfectOfalen");
+		leggingsOfalenP = new ItemOfalenArmor(OfalenModMaterialCore.OFALEN_ARMOR_P, 2, 4).setUnlocalizedName("ofalen.armor.P.2").setTextureName("ofalenmod:armor-P-2");
+		GameRegistry.registerItem(leggingsOfalenP, "leggingsPerfectOfalen");
+		bootsOfalenP = new ItemOfalenArmor(OfalenModMaterialCore.OFALEN_ARMOR_P, 3, 4).setUnlocalizedName("ofalen.armor.P.3").setTextureName("ofalenmod:armor-P-3");
+		GameRegistry.registerItem(bootsOfalenP, "bootsPerfectOfalen");
+		// 玉
+		ballEmpty = new ItemEmptyBall().setUnlocalizedName("ofalen.ball.empty").setTextureName("ofalenmod:empty_ball");
 		GameRegistry.registerItem(ballEmpty, "ballEmpty");
-
-		ballDefense = new ItemOfalenBall(new PotionEffect[] { new PotionEffect(Potion.resistance.id, 2400, 0) })
-				.setUnlocalizedName("ballDefense")
-				.setTextureName("ofalenmod:defense_ball");
-		GameRegistry.registerItem(ballDefense, "ballDefense");
-
-		ballDefenseG2 = new ItemOfalenBall(new PotionEffect[] { new PotionEffect(Potion.resistance.id, 2400, 1) })
-				.setUnlocalizedName("ballDefenseG2")
-				.setTextureName("ofalenmod:defense_ball_G2");
+		// 防御玉
+		ballDefenseG1 = new ItemOfalenBall(new PotionEffect[] { new PotionEffect(Potion.resistance.id, 2400, 0) }).setUnlocalizedName("ofalen.ball.defense.G1").setTextureName("ofalenmod:defense_ball-1");
+		GameRegistry.registerItem(ballDefenseG1, "ballDefense");
+		ballDefenseG2 = new ItemOfalenBall(new PotionEffect[] { new PotionEffect(Potion.resistance.id, 2400, 1) }).setUnlocalizedName("ofalen.ball.defense.G2").setTextureName("ofalenmod:defense_ball-2");
 		GameRegistry.registerItem(ballDefenseG2, "ballDefenseG2");
-
-		ballDefenseG3 = new ItemOfalenBall(new PotionEffect[] { new PotionEffect(Potion.resistance.id, 2400, 3) })
-				.setUnlocalizedName("ballDefenseG3")
-				.setTextureName("ofalenmod:defense_ball_G3");
+		ballDefenseG3 = new ItemOfalenBall(new PotionEffect[] { new PotionEffect(Potion.resistance.id, 2400, 3) }).setUnlocalizedName("ofalen.ball.defense.G3").setTextureName("ofalenmod:defense_ball-3");
 		GameRegistry.registerItem(ballDefenseG3, "ballDefenseG3");
-
-		ballAttack = new ItemOfalenBall(new PotionEffect[] { new PotionEffect(Potion.damageBoost.id, 2400, 0) })
-				.setUnlocalizedName("ballAttack")
-				.setTextureName("ofalenmod:attack_ball");
-		GameRegistry.registerItem(ballAttack, "ballAttack");
-
-		ballAttackG2 = new ItemOfalenBall(new PotionEffect[] { new PotionEffect(Potion.damageBoost.id, 2400, 1) })
-				.setUnlocalizedName("ballAttackG2")
-				.setTextureName("ofalenmod:attack_ball_G2");
+		// 攻撃玉
+		ballAttackG1 = new ItemOfalenBall(new PotionEffect[] { new PotionEffect(Potion.damageBoost.id, 2400, 0) }).setUnlocalizedName("ofalen.ball.attack.G1").setTextureName("ofalenmod:attack_ball-1");
+		GameRegistry.registerItem(ballAttackG1, "ballAttack");
+		ballAttackG2 = new ItemOfalenBall(new PotionEffect[] { new PotionEffect(Potion.damageBoost.id, 2400, 1) }).setUnlocalizedName("ofalen.ball.attack.G2").setTextureName("ofalenmod:attack_ball-2");
 		GameRegistry.registerItem(ballAttackG2, "ballAttackG2");
-
-		ballAttackG3 = new ItemOfalenBall(new PotionEffect[] { new PotionEffect(Potion.damageBoost.id, 2400, 3) })
-				.setUnlocalizedName("ballAttackG3")
-				.setTextureName("ofalenmod:attack_ball_G3");
+		ballAttackG3 = new ItemOfalenBall(new PotionEffect[] { new PotionEffect(Potion.damageBoost.id, 2400, 3) }).setUnlocalizedName("ofalen.ball.attack.G3").setTextureName("ofalenmod:attack_ball-3");
 		GameRegistry.registerItem(ballAttackG3, "ballAttackG3");
-
-		ballRecovery = new ItemOfalenBall(new PotionEffect[] { new PotionEffect(Potion.heal.id, 1, 0) })
-				.setUnlocalizedName("ballRecovery")
-				.setTextureName("ofalenmod:recovery_ball");
-		GameRegistry.registerItem(ballRecovery, "ballRecovery");
-
-		ballRecoveryG2 = new ItemOfalenBall(new PotionEffect[] { new PotionEffect(Potion.heal.id, 1, 1) })
-				.setUnlocalizedName("ballRecoveryG2")
-				.setTextureName("ofalenmod:recovery_ball_G2");
+		// 回復玉
+		ballRecoveryG1 = new ItemOfalenBall(new PotionEffect[] { new PotionEffect(Potion.heal.id, 1, 0) }).setUnlocalizedName("ofalen.ball.recovery.G1").setTextureName("ofalenmod:recovery_ball-1");
+		GameRegistry.registerItem(ballRecoveryG1, "ballRecovery");
+		ballRecoveryG2 = new ItemOfalenBall(new PotionEffect[] { new PotionEffect(Potion.heal.id, 1, 1) }).setUnlocalizedName("ofalen.ball.recovery.G2").setTextureName("ofalenmod:recovery_ball-2");
 		GameRegistry.registerItem(ballRecoveryG2, "ballRecoveryG2");
-
-		ballRecoveryG3 = new ItemOfalenBall(new PotionEffect[] { new PotionEffect(Potion.heal.id, 1, 3) })
-				.setUnlocalizedName("ballRecoveryG3")
-				.setTextureName("ofalenmod:recovery_ball_G3");
+		ballRecoveryG3 = new ItemOfalenBall(new PotionEffect[] { new PotionEffect(Potion.heal.id, 1, 3) }).setUnlocalizedName("ofalen.ball.recovery.G3").setTextureName("ofalenmod:recovery_ball-3");
 		GameRegistry.registerItem(ballRecoveryG3, "ballRecoveryG3");
-
-		ballExplosion = new ItemExplosionBall()
-				.setUnlocalizedName("ballExplosion")
-				.setTextureName("ofalenmod:explosion_ball-");
+		// その他の玉
+		ballExplosion = new ItemExplosionBall().setUnlocalizedName("ofalen.ball.explosion").setTextureName("ofalenmod:explosion_ball");
 		GameRegistry.registerItem(ballExplosion, "ballExplosion");
-
-		ballFlame = new ItemExplosionBall()
-				.setUnlocalizedName("ballFlame")
-				.setTextureName("ofalenmod:flame_ball-");
+		// TODO 橙追加：削除
+		ballFlame = new ItemExplosionBall().setUnlocalizedName("ballFlame").setTextureName("ofalenmod:flame_ball");
 		GameRegistry.registerItem(ballFlame, "ballFlame");
-
-		ballHungry = new ItemOfalenBall(new PotionEffect[] { new PotionEffect(Potion.hunger.id, 2400, 19) })
-				.setUnlocalizedName("ballHungry")
-				.setTextureName("ofalenmod:hungry_ball");
+		ballHungry = new ItemOfalenBall(new PotionEffect[] { new PotionEffect(Potion.hunger.id, 2400, 19) }).setUnlocalizedName("ofalen.ball.hungry").setTextureName("ofalenmod:hungry_ball");
 		GameRegistry.registerItem(ballHungry, "ballHungry");
-
-		ballFood = new ItemOfalenBall(new PotionEffect[] { new PotionEffect(23, 2400, 0) })
-				.setUnlocalizedName("ballFood")
-				.setTextureName("ofalenmod:food_ball");
+		ballFood = new ItemOfalenBall(new PotionEffect[] { new PotionEffect(23, 2400, 0) }).setUnlocalizedName("ofalen.ball.food").setTextureName("ofalenmod:food_ball");
 		GameRegistry.registerItem(ballFood, "ballFood");
-
-		ballPerfectOfalen = new ItemOfalenPerfectBall(new PotionEffect[] {
-				new PotionEffect(Potion.heal.id, 1, 7),
-				new PotionEffect(Potion.damageBoost.id, 2400, 7),
-				new PotionEffect(Potion.resistance.id, 2400, 7) })
-				.setUnlocalizedName("ballPerfectOfalen")
-				.setTextureName("ofalenmod:empty_ball-2");
-		GameRegistry.registerItem(ballPerfectOfalen, "ballPerfectOfalen");
-
-		// ツール
-		swordOfalen = new ItemSword(OfalenModMaterialCore.OFALENT)
-				.setCreativeTab(tab)
-				.setUnlocalizedName("swordOfalen")
-				.setTextureName("ofalenmod:ofalen_sword");
-		GameRegistry.registerItem(swordOfalen, "swordOfalen");
-
-		shovelOfalen = new ItemSpade(OfalenModMaterialCore.OFALENT)
-				.setCreativeTab(tab)
-				.setUnlocalizedName("shovelOfalen")
-				.setTextureName("ofalenmod:ofalen_shovel");
-		GameRegistry.registerItem(shovelOfalen, "shovelOfalen");
-
-		pickaxeOfalen = new ItemOfalenPickaxe(OfalenModMaterialCore.OFALENT)
-				.setUnlocalizedName("pickaxeOfalen")
-				.setTextureName("ofalenmod:ofalen_pickaxe");
-		GameRegistry.registerItem(pickaxeOfalen, "pickaxeOfalen");
-
-		axeOfalen = new ItemOfalenAxe(OfalenModMaterialCore.OFALENT)
-				.setUnlocalizedName("axeOfalen")
-				.setTextureName("ofalenmod:ofalen_axe");
-		GameRegistry.registerItem(axeOfalen, "axeOfalen");
-
-		hoeOfalen = new ItemHoe(OfalenModMaterialCore.OFALENT)
-				.setCreativeTab(tab)
-				.setUnlocalizedName("hoeOfalen")
-				.setTextureName("ofalenmod:ofalen_hoe");
-		GameRegistry.registerItem(hoeOfalen, "hoeOfalen");
-
-		swordOfalenG2 = new ItemSword(OfalenModMaterialCore.OFALENG2T)
-				.setCreativeTab(tab)
-				.setUnlocalizedName("swordOfalenG2")
-				.setTextureName("ofalenmod:ofalen_sword_G2");
+		ballPerfect = new ItemPerfectBall(new PotionEffect[] { new PotionEffect(Potion.heal.id, 1, 7), new PotionEffect(Potion.damageBoost.id, 2400, 7), new PotionEffect(Potion.resistance.id, 2400, 7) }).setUnlocalizedName("ofalen.ball.perfect").setTextureName("ofalenmod:empty_ball-3");
+		GameRegistry.registerItem(ballPerfect, "ballPerfectOfalen");
+		// 道具G1
+		swordOfalenG1 = new ItemSword(OfalenModMaterialCore.OFALEN_TOOL_G1).setCreativeTab(tab).setUnlocalizedName("ofalen.sword.1").setTextureName("ofalenmod:tool-sword-1");
+		GameRegistry.registerItem(swordOfalenG1, "swordOfalen");
+		shovelOfalenG1 = new ItemSpade(OfalenModMaterialCore.OFALEN_TOOL_G1).setCreativeTab(tab).setUnlocalizedName("ofalen.shovel.1").setTextureName("ofalenmod:tool-shovel-1");
+		GameRegistry.registerItem(shovelOfalenG1, "shovelOfalen");
+		pickaxeOfalenG1 = new ItemOfalenPickaxe(OfalenModMaterialCore.OFALEN_TOOL_G1).setUnlocalizedName("ofalen.pickaxe.1").setTextureName("ofalenmod:tool-pickaxe-1");
+		GameRegistry.registerItem(pickaxeOfalenG1, "pickaxeOfalen");
+		axeOfalenG1 = new ItemOfalenAxe(OfalenModMaterialCore.OFALEN_TOOL_G1).setUnlocalizedName("ofalen.axe.1").setTextureName("ofalenmod:tool-axe-1");
+		GameRegistry.registerItem(axeOfalenG1, "axeOfalen");
+		hoeOfalenG1 = new ItemHoe(OfalenModMaterialCore.OFALEN_TOOL_G1).setCreativeTab(tab).setUnlocalizedName("ofalen.hoe.1").setTextureName("ofalenmod:tool-hoe-1");
+		GameRegistry.registerItem(hoeOfalenG1, "hoeOfalen");
+		// 道具G2
+		swordOfalenG2 = new ItemSword(OfalenModMaterialCore.OFALEN_TOOL_G2).setCreativeTab(tab).setUnlocalizedName("ofalen.sword.2").setTextureName("ofalenmod:tool-sword-2");
 		GameRegistry.registerItem(swordOfalenG2, "swordOfalenG2");
-
-		shovelOfalenG2 = new ItemSpade(OfalenModMaterialCore.OFALENG2T)
-				.setCreativeTab(tab)
-				.setUnlocalizedName("shovelOfalenG2")
-				.setTextureName("ofalenmod:ofalen_shovel_G2");
+		shovelOfalenG2 = new ItemSpade(OfalenModMaterialCore.OFALEN_TOOL_G2).setCreativeTab(tab).setUnlocalizedName("ofalen.shovel.2").setTextureName("ofalenmod:tool-shovel-2");
 		GameRegistry.registerItem(shovelOfalenG2, "shovelOfalenG2");
-
-		pickaxeOfalenG2 = new ItemOfalenPickaxe(OfalenModMaterialCore.OFALENG2T)
-				.setUnlocalizedName("pickaxeOfalenG2")
-				.setTextureName("ofalenmod:ofalen_pickaxe_G2");
+		pickaxeOfalenG2 = new ItemOfalenPickaxe(OfalenModMaterialCore.OFALEN_TOOL_G2).setUnlocalizedName("ofalen.pickaxe.2").setTextureName("ofalenmod:tool-pickaxe-2");
 		GameRegistry.registerItem(pickaxeOfalenG2, "pickaxeOfalenG2");
-
-		axeOfalenG2 = new ItemOfalenAxe(OfalenModMaterialCore.OFALENG2T)
-				.setUnlocalizedName("axeOfalenG2")
-				.setTextureName("ofalenmod:ofalen_axe_G2");
+		axeOfalenG2 = new ItemOfalenAxe(OfalenModMaterialCore.OFALEN_TOOL_G2).setUnlocalizedName("ofalen.axe.2").setTextureName("ofalenmod:tool-axe-2");
 		GameRegistry.registerItem(axeOfalenG2, "axeOfalenG2");
-
-		hoeOfalenG2 = new ItemHoe(OfalenModMaterialCore.OFALENG2T)
-				.setCreativeTab(tab)
-				.setUnlocalizedName("hoeOfalenG2")
-				.setTextureName("ofalenmod:ofalen_hoe_G2");
+		hoeOfalenG2 = new ItemHoe(OfalenModMaterialCore.OFALEN_TOOL_G2).setCreativeTab(tab).setUnlocalizedName("ofalen.hoe.2").setTextureName("ofalenmod:tool-hoe-2");
 		GameRegistry.registerItem(hoeOfalenG2, "hoeOfalenG2");
-
-		swordOfalenG3 = new ItemSword(OfalenModMaterialCore.OFALENG3T)
-				.setCreativeTab(tab)
-				.setUnlocalizedName("swordOfalenG3")
-				.setTextureName("ofalenmod:ofalen_sword_G3");
+		// 道具G3
+		swordOfalenG3 = new ItemSword(OfalenModMaterialCore.OFALEN_TOOL_G3).setCreativeTab(tab).setUnlocalizedName("ofalen.sword.3").setTextureName("ofalenmod:tool-sword-3");
 		GameRegistry.registerItem(swordOfalenG3, "swordOfalenG3");
-
-		shovelOfalenG3 = new ItemSpade(OfalenModMaterialCore.OFALENG3T)
-				.setCreativeTab(tab)
-				.setUnlocalizedName("shovelOfalenG3")
-				.setTextureName("ofalenmod:ofalen_shovel_G3");
+		shovelOfalenG3 = new ItemSpade(OfalenModMaterialCore.OFALEN_TOOL_G3).setCreativeTab(tab).setUnlocalizedName("ofalen.shovel.3").setTextureName("ofalenmod:tool-shovel-3");
 		GameRegistry.registerItem(shovelOfalenG3, "shovelOfalenG3");
-
-		pickaxeOfalenG3 = new ItemOfalenPickaxe(OfalenModMaterialCore.OFALENG3T)
-				.setUnlocalizedName("pickaxeOfalenG3")
-				.setTextureName("ofalenmod:ofalen_pickaxe_G3");
+		pickaxeOfalenG3 = new ItemOfalenPickaxe(OfalenModMaterialCore.OFALEN_TOOL_G3).setUnlocalizedName("ofalen.pickaxe.3").setTextureName("ofalenmod:tool-pickaxe-3");
 		GameRegistry.registerItem(pickaxeOfalenG3, "pickaxeOfalenG3");
-
-		axeOfalenG3 = new ItemOfalenAxe(OfalenModMaterialCore.OFALENG3T)
-				.setUnlocalizedName("axeOfalenG3")
-				.setTextureName("ofalenmod:ofalen_axe_G3");
+		axeOfalenG3 = new ItemOfalenAxe(OfalenModMaterialCore.OFALEN_TOOL_G3).setUnlocalizedName("ofalen.axe.3").setTextureName("ofalenmod:tool-axe-3");
 		GameRegistry.registerItem(axeOfalenG3, "axeOfalenG3");
-
-		hoeOfalenG3 = new ItemHoe(OfalenModMaterialCore.OFALENG3T)
-				.setCreativeTab(tab)
-				.setUnlocalizedName("hoeOfalenG3")
-				.setTextureName("ofalenmod:ofalen_hoe_G3");
+		hoeOfalenG3 = new ItemHoe(OfalenModMaterialCore.OFALEN_TOOL_G3).setCreativeTab(tab).setUnlocalizedName("ofalen.hoe.3").setTextureName("ofalenmod:tool-hoe-3");
 		GameRegistry.registerItem(hoeOfalenG3, "hoeOfalenG3");
-
-		toolPerfectOfalen = new ItemOfalenPerfectTool(OfalenModMaterialCore.PERFECTT)
-				.setUnlocalizedName("toolPerfectOfalen")
-				.setTextureName("ofalenmod:ofalen_perfect_tool");
-		GameRegistry.registerItem(toolPerfectOfalen, "toolPerfectOfalen");
-
-		swordSp = new ItemCreativeSword()
-				.setUnlocalizedName("swordSp")
-				.setTextureName("ofalenmod:creative_sword");
-		GameRegistry.registerItem(swordSp, "swordSp");
-
-		// レーザーピストル関連
-		pistolLaser = new ItemLaserPistol()
-				.setUnlocalizedName("pistolLaser")
-				.setTextureName("ofalenmod:laser_pistol");
+		// その他の道具
+		toolOfalenP = new ItemOfalenPerfectTool(OfalenModMaterialCore.OFALEN_TOOL_P).setUnlocalizedName("ofalen.tool.P").setTextureName("ofalenmod:tool-perfect");
+		GameRegistry.registerItem(toolOfalenP, "toolPerfectOfalen");
+		swordCreative = new ItemCreativeSword().setUnlocalizedName("ofalen.sword.creative").setTextureName("ofalenmod:creative_sword");
+		GameRegistry.registerItem(swordCreative, "swordSp");
+		// レーザー関連
+		pistolLaser = new ItemLaserPistol().setUnlocalizedName("ofalen.pistolLaser").setTextureName("ofalenmod:laser_pistol");
 		GameRegistry.registerItem(pistolLaser, "pistolLaser");
-
-		crystalEnergyLaser = new ItemParts(4)
-				.setUnlocalizedName("crystalEnergyLaser")
-				.setTextureName("ofalenmod:laser_energy_crystal");
-		GameRegistry.registerItem(crystalEnergyLaser, "crystalEnergyLaser");
-
-		magazineLaserRed = new ItemLaserMagazine()
-				.setUnlocalizedName("magazineLaserRed")
-				.setTextureName("ofalenmod:laser_magazine_red");
+		crystalLaserEnergy = new ItemParts((byte) 4).setUnlocalizedName("ofalen.crystalLaserEnergy").setTextureName("ofalenmod:laser_energy_crystal");
+		GameRegistry.registerItem(crystalLaserEnergy, "crystalEnergyLaser");
+		magazineLaserRed = new ItemLaserMagazine().setUnlocalizedName("ofalen.magazineLaserRed").setTextureName("ofalenmod:laser_magazine_red");
 		GameRegistry.registerItem(magazineLaserRed, "magazineLaserRed");
-
-		magazineLaserGreen = new ItemLaserMagazine()
-				.setUnlocalizedName("magazineLaserGreen")
-				.setTextureName("ofalenmod:laser_magazine_green");
+		magazineLaserGreen = new ItemLaserMagazine().setUnlocalizedName("ofalen.magazineLaserGreen").setTextureName("ofalenmod:laser_magazine_green");
 		GameRegistry.registerItem(magazineLaserGreen, "magazineLaserGreen");
-
-		magazineLaserBlue = new ItemLaserMagazine()
-				.setUnlocalizedName("magazineLaserBlue")
-				.setTextureName("ofalenmod:laser_magazine_blue");
+		magazineLaserBlue = new ItemLaserMagazine().setUnlocalizedName("ofalen.magazineLaserBlue").setTextureName("ofalenmod:laser_magazine_blue");
 		GameRegistry.registerItem(magazineLaserBlue, "magazineLaserBlue");
-
-		magazineLaserWhite = new ItemLaserMagazine()
-				.setUnlocalizedName("magazineLaserWhite")
-				.setTextureName("ofalenmod:laser_magazine_white");
+		magazineLaserWhite = new ItemLaserMagazine().setUnlocalizedName("ofalen.magazineLaserWhite").setTextureName("ofalenmod:laser_magazine_white");
 		GameRegistry.registerItem(magazineLaserWhite, "magazineLaserWhite");
-
-		// 未来道具
-		shieldOfalen = new ItemShield()
-				.setUnlocalizedName("shieldOfalen")
-				.setTextureName("ofalenmod:shield");
+		// 未来系
+		shieldOfalen = new ItemShield().setUnlocalizedName("ofalen.shield").setTextureName("ofalenmod:future-shield");
 		GameRegistry.registerItem(shieldOfalen, "shieldOfalen");
-
-		teleporterOfalen = new ItemTeleporter()
-				.setUnlocalizedName("teleporterOfalen")
-				.setTextureName("ofalenmod:teleporter");
+		teleporterOfalen = new ItemTeleporter().setUnlocalizedName("ofalen.teleporter").setTextureName("ofalenmod:future-teleporter");
 		GameRegistry.registerItem(teleporterOfalen, "teleporterOfalen");
-
-		floaterOfalen = new ItemFloater()
-				.setUnlocalizedName("floaterOfalen")
-				.setTextureName("ofalenmod:floater");
+		floaterOfalen = new ItemFloater().setUnlocalizedName("ofalen.floater").setTextureName("ofalenmod:future-floater");
 		GameRegistry.registerItem(floaterOfalen, "floaterOfalen");
-
-		// オファレン草
-		seedOfalen = new ItemSeedOfalen(OfalenModBlockCore.grassOfalen)
-				.setUnlocalizedName("seedOfalen")
-				.setTextureName("ofalenmod:seed");
-		GameRegistry.registerItem(seedOfalen, "seedOfalen");
-
+		collectorOfalen = new ItemCollector().setUnlocalizedName("ofalen.collector").setTextureName("ofalenmod:future-collector");
+		GameRegistry.registerItem(collectorOfalen, "collector");
 		// フィルター
-		filter = new ItemFilter()
-				.setUnlocalizedName("OfalenMod.Filter")
-				.setTextureName("ofalenmod:filter");
-		GameRegistry.registerItem(filter, "filter");
-
-		filterInstaller=new ItemFilterInstaller()
-				.setUnlocalizedName("OfalenMod.FilterInstaller")
-				.setTextureName("ofalenmod:filter_installer");
-		GameRegistry.registerItem(filterInstaller, "filterInstaller");
-
-		// コレクター
-		collector = new ItemCollector()
-				.setUnlocalizedName("OfalenMod.Collector")
-				.setTextureName("ofalenmod:collector");
-		GameRegistry.registerItem(collector, "collector");
+		filterItem = new ItemFilter().setUnlocalizedName("ofalen.filterItem").setTextureName("ofalenmod:item_filter");
+		GameRegistry.registerItem(filterItem, "item_filter");
+		installerFilter = new ItemFilterInstaller().setUnlocalizedName("ofalen.installerFilter").setTextureName("ofalenmod:filter_installer");
+		GameRegistry.registerItem(installerFilter, "filter_installer");
+		// オファレン草
+		seedOfalen = new ItemOfalenSeed(OfalenModBlockCore.grassOfalen).setUnlocalizedName("ofalen.seed").setTextureName("ofalenmod:seed");
+		GameRegistry.registerItem(seedOfalen, "seedOfalen");
 	}
-
 }

@@ -10,13 +10,42 @@ import net.minecraft.util.StatCollector;
 import java.util.List;
 
 public class OfalenNBTUtil {
+	// TileEntity
+	public static final String SLOT = "Slot";
+	public static final String ITEMS = "Items";
+	public static final String CUSTOM_NAME = "CustomName";
+	// 機械系
+	public static final String GRADE = "Grade";
+	public static final String WORKING_TIME = "WorkingTime";
+	public static final String BURNING_TIME = "BurningTime";
+	// 変換機
+	public static final String SAMPLE = "Sample";
+	// 修繕機
+	public static final String IS_IRREPARABLE = "IsIrreparable";
+	// レーザー
+	public static final String LASER_COLOR ="LaserColor";
+	public static final String TILE_X = "TileX";
+	public static final String TILE_Y = "TileY";
+	public static final String TILE_Z = "TileZ";
+	public static final String TILE_ID = "TileId";
+	public static final String SHAKE = "Shake";
+	public static final String IS_IN_GROUND="IsInGround";
+	public static final String OWNER_NAME ="OwnerName";
+	// 未来系
 	public static final String INTERVAL = "Interval";
+	public static final String IS_VALID = "IsValid";
+	// テレポーター
+	public static final String MATERIAL = "Material";
+	// テレポーティングマーカー
+	public static final String CHANNEL = "Channel";
+	// フローター
+	public static final String MODE = "Mode";
+	// コレクター
 	public static final String IS_ITEM_DISABLED = "IsItemDisabled";
 	public static final String IS_EXP_DISABLED = "IsExpDisabled";
-
 	public static final String ITEM_RANGE = "ItemRange";
 	public static final String EXP_RANGE = "ExpRange";
-
+	// 詳細設定
 	public static final String IS_SET_IN_DETAIL = "IsSetInDetail";
 
 	public static class FilterUtil {
@@ -76,13 +105,13 @@ public class OfalenNBTUtil {
 
 		public static void addFilterInformation(ItemStack itemStack, List list) {
 			if (!Util.isKeyDown(Minecraft.getMinecraft().gameSettings.keyBindSneak.getKeyCode())) {
-				list.add(StatCollector.translateToLocal("info.OfalenMod.PressShift"));
+				list.add(StatCollector.translateToLocal("info.ofalen.filter.toolTip"));
 				return;
 			} else if (!isAvailableFilterTag(itemStack)) {
 				return;
 			}
 			NBTTagCompound nbtFilter = FilterUtil.getFilterTag(itemStack);
-			list.add("info.OfalenMod.ItemFilter." + (FilterUtil.isWhiteList(nbtFilter) ? "White" : "Black"));
+			list.add(StatCollector.translateToLocal("info.ofalen.filter." + (FilterUtil.isWhiteList(nbtFilter) ? "white" : "black")));
 			NBTTagList nbtTagList = FilterUtil.getSelectingItemList(nbtFilter);
 			for (int i = 0; i < 27 && i < nbtTagList.tagCount(); i++) {
 				NBTTagCompound nbt = nbtTagList.getCompoundTagAt(i);

@@ -1,6 +1,7 @@
 package nahama.ofalenmod.item;
 
 import nahama.ofalenmod.OfalenModCore;
+import nahama.ofalenmod.util.OfalenNBTUtil;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -8,10 +9,8 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 
 public class ItemFuture extends Item {
-
 	public ItemFuture() {
-		super();
-		this.setCreativeTab(OfalenModCore.tabOfalen);
+		this.setCreativeTab(OfalenModCore.TAB_OFALEN);
 		this.setMaxStackSize(1);
 	}
 
@@ -22,11 +21,10 @@ public class ItemFuture extends Item {
 		// NBTを持っていなければ空のものを持たせ、Durationがあれば減らす。
 		if (!itemStack.hasTagCompound())
 			itemStack.setTagCompound(new NBTTagCompound());
-		if (!itemStack.getTagCompound().getBoolean("NotRepairable"))
-			itemStack.getTagCompound().setBoolean("NotRepairable", true);
-		byte duration = itemStack.getTagCompound().getByte("Duration");
-		if (duration > 0)
-			itemStack.getTagCompound().setByte("Duration", (byte) (duration - 1));
+		if (!itemStack.getTagCompound().getBoolean(OfalenNBTUtil.IS_IRREPARABLE))
+			itemStack.getTagCompound().setBoolean(OfalenNBTUtil.IS_IRREPARABLE, true);
+		byte interval = itemStack.getTagCompound().getByte(OfalenNBTUtil.INTERVAL);
+		if (interval > 0)
+			itemStack.getTagCompound().setByte(OfalenNBTUtil.INTERVAL, (byte) (interval - 1));
 	}
-
 }

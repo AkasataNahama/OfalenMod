@@ -1,15 +1,13 @@
 package nahama.ofalenmod.inventory;
 
 import nahama.ofalenmod.item.ItemFilter;
+import nahama.ofalenmod.util.OfalenNBTUtil.FilterUtil;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 
-import static nahama.ofalenmod.util.OfalenNBTUtil.FilterUtil;
-
 public class InventoryItemFilter extends InventoryItemBase {
-
 	public InventoryItemFilter(InventoryPlayer inventory) {
 		super(inventory);
 	}
@@ -22,7 +20,7 @@ public class InventoryItemFilter extends InventoryItemBase {
 
 	@Override
 	public String getInventoryName() {
-		return "container.OfalenMod.ItemFilter";
+		return "container.ofalen.filterItem";
 	}
 
 	/** インベントリが開かれた時の処理。 */
@@ -56,5 +54,4 @@ public class InventoryItemFilter extends InventoryItemBase {
 		itemStacks = new ItemStack[this.getSizeInventory()];
 		FilterUtil.getFilterTag(current).setTag(FilterUtil.SELECTING, nbtTagList);
 	}
-
 }

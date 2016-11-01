@@ -1,7 +1,5 @@
 package nahama.ofalenmod.block;
 
-import java.util.List;
-
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import nahama.ofalenmod.OfalenModCore;
@@ -13,13 +11,14 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 
-public class BlockProcessorCasing extends Block {
+import java.util.List;
 
-	private IIcon[] iicon = new IIcon[7];
+public class BlockProcessorCasing extends Block {
+	private IIcon[] icons = new IIcon[7];
 
 	public BlockProcessorCasing() {
 		super(Material.rock);
-		this.setCreativeTab(OfalenModCore.tabOfalen);
+		this.setCreativeTab(OfalenModCore.TAB_OFALEN);
 		this.setHardness(6.0F);
 		this.setResistance(14.0F);
 		this.setStepSound(Block.soundTypePiston);
@@ -52,7 +51,7 @@ public class BlockProcessorCasing extends Block {
 	public void registerBlockIcons(IIconRegister iicon) {
 		for (int i = 0; i < 7; i++) {
 			if (i != 3)
-				this.iicon[i] = iicon.registerIcon(this.getTextureName() + i);
+				this.icons[i] = iicon.registerIcon(this.getTextureName() + "-" + i);
 		}
 	}
 
@@ -60,7 +59,6 @@ public class BlockProcessorCasing extends Block {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public IIcon getIcon(int side, int meta) {
-		return iicon[meta];
+		return icons[meta];
 	}
-
 }

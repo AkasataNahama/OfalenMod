@@ -3,50 +3,49 @@ package nahama.ofalenmod.handler;
 import java.util.HashMap;
 
 public class OfalenTeleportHandler {
-
 	/** テレポートマーカーのチャンネルと座標のマップ。 */
-	private static HashMap<Integer, MarkerPos> markerList = new HashMap<>();
+	private static HashMap<Short, MarkerPos> listMarker = new HashMap<>();
 
 	/** 初期化処理。 */
 	public static void init() {
 		// マーカーのリストをリセットする。
-		markerList.clear();
+		listMarker.clear();
 	}
 
 	/** チャンネルが登録されているどうか。 */
 	public static boolean isChannelValid(int channel) {
-		return channel >= 1 && markerList.containsKey(channel);
+		return channel >= 1 && listMarker.containsKey((short)channel);
 	}
 
 	/** チャンネルに対応した座標を返す。 */
-	public static MarkerPos getCoord(int channel) {
+	public static MarkerPos getCoord(short channel) {
 		if (channel < 1)
 			return null;
-		return markerList.get(channel);
+		return listMarker.get(channel);
 	}
 
 	/** チャンネルと対応した座標を登録する。 */
-	public static boolean registerMarker(int channel, byte id, int x, int y, int z) {
+	public static boolean registerMarker(short channel, byte id, short x, short y, short z) {
 		if (channel < 1)
 			return false;
-		MarkerPos marker = markerList.get(channel);
+		MarkerPos marker = listMarker.get(channel);
 		// すでにチャンネルが登録されていたら登録しない。
 		if (marker != null)
 			return marker.equals(new MarkerPos(id, x, y, z));
-		markerList.put(channel, new MarkerPos(id, x, y, z));
+		listMarker.put(channel, new MarkerPos(id, x, y, z));
 		return true;
 	}
 
 	/** チャンネルを無効にする。 */
-	public static void removeMarker(int channel) {
-		markerList.remove(channel);
+	public static void removeMarker(short channel) {
+		listMarker.remove(channel);
 	}
 
 	public static class MarkerPos {
 		private byte id;
-		private int x, y, z;
+		private short x, y, z;
 
-		public MarkerPos(byte id, int x, int y, int z) {
+		public MarkerPos(byte id, short x, short y, short z) {
 			this.id = id;
 			this.x = x;
 			this.y = y;
@@ -57,15 +56,15 @@ public class OfalenTeleportHandler {
 			return id;
 		}
 
-		public int getX() {
+		public short getX() {
 			return x;
 		}
 
-		public int getY() {
+		public short getY() {
 			return y;
 		}
 
-		public int getZ() {
+		public short getZ() {
 			return z;
 		}
 
@@ -81,5 +80,4 @@ public class OfalenTeleportHandler {
 			return id == pos.id && x == pos.x && y == pos.y && z == pos.z;
 		}
 	}
-
 }

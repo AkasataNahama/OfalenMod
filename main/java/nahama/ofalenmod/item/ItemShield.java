@@ -4,6 +4,7 @@ import nahama.ofalenmod.OfalenModCore;
 import nahama.ofalenmod.core.OfalenModConfigCore;
 import nahama.ofalenmod.core.OfalenModItemCore;
 import nahama.ofalenmod.handler.OfalenShieldHandler;
+import nahama.ofalenmod.util.OfalenNBTUtil;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -13,11 +14,9 @@ import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 
 public class ItemShield extends ItemFuture {
-
 	private IIcon invalid;
 
 	public ItemShield() {
-		super();
 		this.setMaxDamage(64 * 9 * 3);
 	}
 
@@ -33,33 +32,29 @@ public class ItemShield extends ItemFuture {
 			return itemStack;
 		}
 		// クライアントか、時間がたっていないなら終了。
-		if (world.isRemote || itemStack.getTagCompound().getByte("Duration") > 0)
+		if (world.isRemote || itemStack.getTagCompound().getByte(OfalenNBTUtil.INTERVAL) > 0)
 			return itemStack;
-		if (itemStack.getTagCompound().getBoolean("IsValid")) {
+		if (itemStack.getTagCompound().getBoolean(OfalenNBTUtil.IS_VALID)) {
 			OfalenShieldHandler.unprotectPlayer(player);
-			itemStack.getTagCompound().setBoolean("IsValid", false);
-			itemStack.getTagCompound().setByte("Duration", (byte) 10);
-			itemStack.setItemDamage(itemStack.getItemDamage() - OfalenModConfigCore.amountDamageShield);
+			itemStack.getTagCompound().setBoolean(OfalenNBTUtil.IS_VALID, false);
+			itemStack.getTagCompound().setByte(OfalenNBTUtil.INTERVAL, (byte) 10);
+			itemStack.setItemDamage(itemStack.getItemDamage() - OfalenModConfigCore.amountShieldDamage);
 			return itemStack;
 		}
-		if (itemStack.getItemDamage() + OfalenModConfigCore.amountDamageShield > itemStack.getMaxDamage()) {
+		if (itemStack.getItemDamage() + OfalenModConfigCore.amountShieldDamage > itemStack.getMaxDamage()) {
 			// 材料がないならチャットに出力して終了。
-			player.addChatMessage(new ChatComponentText(StatCollector.translateToLocal("info.OfalenMod.ItemShield.MaterialLacking")));
+			player.addChatMessage(new ChatComponentText(StatCollector.translateToLocal("info.ofalen.shield.lackingMaterial")));
 			return itemStack;
 		}
 		OfalenShieldHandler.protectPlayer(player);
-		itemStack.setItemDamage(itemStack.getItemDamage() + OfalenModConfigCore.amountDamageShield);
-		itemStack.getTagCompound().setBoolean("IsValid", true);
-		itemStack.getTagCompound().setByte("Duration", (byte) 10);
+		itemStack.setItemDamage(itemStack.getItemDamage() + OfalenModConfigCore.amountShieldDamage);
+		itemStack.getTagCompound().setBoolean(OfalenNBTUtil.IS_VALID, true);
+		itemStack.getTagCompound().setByte(OfalenNBTUtil.INTERVAL, (byte) 10);
 		return itemStack;
 	}
 
 	public static boolean isItemMaterial(ItemStack material) {
-		if (material == null)
-			return false;
-		if (material.isItemEqual(OfalenModItemCore.ingot))
-			return true;
-		return false;
+		return material != null && material.isItemEqual(new ItemStack(OfalenModItemCore.partsOfalen, 1, 6));
 	}
 
 	@Override
@@ -69,15 +64,14 @@ public class ItemShield extends ItemFuture {
 
 	@Override
 	public void registerIcons(IIconRegister register) {
-		super.registerIcons(register);
-		invalid = register.registerIcon(this.getIconString() + "0");
+		invalid = register.registerIcon(this.getIconString() + "-0");
+		itemIcon = register.registerIcon(this.getIconString() + "-1");
 	}
 
 	@Override
 	public IIcon getIconIndex(ItemStack itemStack) {
-		if (itemStack.hasTagCompound() && itemStack.getTagCompound().getBoolean("IsValid"))
+		if (itemStack.hasTagCompound() && itemStack.getTagCompound().getBoolean(OfalenNBTUtil.IS_VALID))
 			return super.getIconIndex(itemStack);
 		return invalid;
 	}
-
 }

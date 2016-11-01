@@ -1,23 +1,23 @@
 package nahama.ofalenmod.handler;
 
-import java.util.Random;
-
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import nahama.ofalenmod.OfalenModCore;
 import nahama.ofalenmod.item.ItemFloater;
 import nahama.ofalenmod.network.MFloaterMode;
+import nahama.ofalenmod.util.OfalenNBTUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.entity.Entity;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 
+import java.util.Random;
+
 @SideOnly(Side.CLIENT)
 public class OfalenFlightHandlerClient {
-
 	/** フローターのモード。 */
-	private static byte flightMode;
+	private static byte mode;
 	private static byte time;
 	private static EntityPlayerSP player;
 	private static Random random = new Random();
@@ -26,20 +26,20 @@ public class OfalenFlightHandlerClient {
 	public static void init() {
 		// プレイヤーのインスタンスを代入する。
 		player = Minecraft.getMinecraft().thePlayer;
-		flightMode = -1;
+		mode = -1;
 	}
 
 	/** プレイヤーがフローターを有効にしているか確認する。 */
 	public static void checkPlayer() {
-		flightMode = 0;
+		mode = 0;
 		IInventory inventory = player.inventory;
 		for (int i = 0; i < inventory.getSizeInventory(); i++) {
 			ItemStack itemStack = inventory.getStackInSlot(i);
 			if (itemStack == null || !(itemStack.getItem() instanceof ItemFloater) || !itemStack.hasTagCompound())
 				continue;
-			flightMode = itemStack.getTagCompound().getByte("Mode");
+			mode = itemStack.getTagCompound().getByte(OfalenNBTUtil.MODE);
 		}
-		allowPlayerToFloat(flightMode);
+		allowPlayerToFloat(mode);
 		time = 0;
 	}
 
@@ -51,15 +51,15 @@ public class OfalenFlightHandlerClient {
 			return;
 		}
 		// モードを設定し、サーバーに通知する。
-		flightMode = mode;
-		OfalenModCore.wrapper.sendToServer(new MFloaterMode(flightMode, false));
+		OfalenFlightHandlerClient.mode = mode;
+		OfalenModCore.WRAPPER.sendToServer(new MFloaterMode(OfalenFlightHandlerClient.mode, false));
 	}
 
 	/** プレイヤーの浮遊を禁止する。 */
 	public static void forbidPlayerToFloat() {
 		// モードを0にし、サーバーに通知する。
-		flightMode = 0;
-		OfalenModCore.wrapper.sendToServer(new MFloaterMode(flightMode, false));
+		mode = 0;
+		OfalenModCore.WRAPPER.sendToServer(new MFloaterMode(mode, false));
 		// 滞空時移動速度をもとに戻す。
 		player.jumpMovementFactor = 0.02F;
 	}
@@ -67,9 +67,9 @@ public class OfalenFlightHandlerClient {
 	/** 浮遊が許可されているかどうか。 */
 	public static boolean canFloat() {
 		// 初期化直後ならプレイヤーを調査する。
-		if (flightMode == -1)
+		if (mode == -1)
 			checkPlayer();
-		return flightMode > 0;
+		return mode > 0;
 	}
 
 	/** Entityがプレイヤーかどうか。 */
@@ -79,7 +79,7 @@ public class OfalenFlightHandlerClient {
 
 	/** プレイヤーを浮遊させる。 */
 	public static void floatPlayer() {
-		switch (flightMode) {
+		switch (mode) {
 		case 0:
 			return;
 		case 1:
@@ -168,5 +168,4 @@ public class OfalenFlightHandlerClient {
 		// 上下移動をキャンセル。
 		player.motionY = 0.0D;
 	}
-
 }

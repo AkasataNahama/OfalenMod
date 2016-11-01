@@ -12,12 +12,11 @@ public class ContainerItemCollector extends ContainerItemBase {
 
 	@Override
 	protected IInventory createInventory(EntityPlayer player) {
-		return new InventoryItemFuture(player.inventory, 9, 27, "ItemCollector");
+		return new InventoryItemFuture(player.inventory, (byte) 9, (short) 27, "collector");
 	}
 
 	@Override
 	protected boolean isItemStackEnabled(ItemStack itemStack) {
-		return itemStack.isItemEqual(OfalenModItemCore.lumpCollecting);
+		return itemStack.isItemEqual(new ItemStack(OfalenModItemCore.partsOfalen, 1, 9));
 	}
-
 }

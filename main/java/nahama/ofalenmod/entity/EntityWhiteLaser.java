@@ -9,9 +9,8 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 
-public class EntityWhiteLaser extends EntityLaser {
-
-	private int power = 5;
+public class EntityWhiteLaser extends EntityLaserBase {
+	private byte power = 5;
 
 	public EntityWhiteLaser(World world, EntityLivingBase entity, int dif) {
 		super(world);
@@ -21,7 +20,7 @@ public class EntityWhiteLaser extends EntityLaser {
 		/*
 		 * posX -= (double)(MathHelper.cos(rotationYaw / 180.0F * (float)Math.PI) * 0.16F);
 		 * posZ -= (double)(MathHelper.sin(rotationYaw / 180.0F * (float)Math.PI) * 0.16F);
-		 */
+		。 */
 		posY -= 0.10000000149011612D;
 		this.setPosition(posX, posY, posZ);
 		startX = posX;
@@ -40,7 +39,6 @@ public class EntityWhiteLaser extends EntityLaser {
 			power--;
 			position.entityHit.attackEntityFrom(DamageSource.causePlayerDamage((EntityPlayer) this.getThrower()), 30.0F);
 		}
-
 		Block block = worldObj.getBlock(position.blockX, position.blockY, position.blockZ);
 		if (!block.isOpaqueCube() || !block.isNormalCube() || !block.renderAsNormalBlock()) {
 			return;
@@ -48,10 +46,8 @@ public class EntityWhiteLaser extends EntityLaser {
 			return;
 		}
 		worldObj.createExplosion(this.getThrower(), posX, posY, posZ, 3, false);
-
 		if (power <= 0) {
 			this.setDead();
 		}
 	}
-
 }

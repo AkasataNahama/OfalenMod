@@ -1,7 +1,5 @@
 package nahama.ofalenmod.item;
 
-import java.util.List;
-
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import nahama.ofalenmod.OfalenModCore;
@@ -11,15 +9,15 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 
+import java.util.List;
+
 public class ItemParts extends Item {
+	protected IIcon[] icons;
+	private final byte type;
 
-	protected IIcon[] iicon;
-	private final int type;
-
-	public ItemParts(int type) {
-		super();
+	public ItemParts(byte type) {
 		this.type = type;
-		this.setCreativeTab(OfalenModCore.tabOfalen);
+		this.setCreativeTab(OfalenModCore.TAB_OFALEN);
 		this.setHasSubtypes(true);
 		this.setMaxDamage(0);
 	}
@@ -28,9 +26,9 @@ public class ItemParts extends Item {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void registerIcons(IIconRegister register) {
-		this.iicon = new IIcon[type];
+		this.icons = new IIcon[type];
 		for (int i = 0; i < type; i++) {
-			this.iicon[i] = register.registerIcon(this.getIconString() + "-" + i);
+			this.icons[i] = register.registerIcon(this.getIconString() + "-" + i);
 		}
 	}
 
@@ -38,7 +36,7 @@ public class ItemParts extends Item {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public IIcon getIconFromDamage(int meta) {
-		return iicon[meta];
+		return icons[meta];
 	}
 
 	/** アイテムをクリエイティブタブに登録する処理。 */
@@ -61,5 +59,4 @@ public class ItemParts extends Item {
 	public String getUnlocalizedName(ItemStack itemStack) {
 		return this.getUnlocalizedName() + "." + itemStack.getItemDamage();
 	}
-
 }

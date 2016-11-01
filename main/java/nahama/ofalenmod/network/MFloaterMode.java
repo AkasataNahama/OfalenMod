@@ -6,14 +6,15 @@ import cpw.mods.fml.common.network.simpleimpl.MessageContext;
 import io.netty.buffer.ByteBuf;
 import nahama.ofalenmod.handler.OfalenFlightHandlerServer;
 import nahama.ofalenmod.item.ItemFloater;
+import nahama.ofalenmod.util.OfalenNBTUtil;
 import net.minecraft.item.ItemStack;
 
 public class MFloaterMode implements IMessage {
-
 	public byte mode;
 	public boolean isItem;
 
-	public MFloaterMode() {}
+	public MFloaterMode() {
+	}
 
 	public MFloaterMode(byte mode, boolean isItem) {
 		this.mode = mode;
@@ -33,20 +34,17 @@ public class MFloaterMode implements IMessage {
 	}
 
 	public static class Handler implements IMessageHandler<MFloaterMode, IMessage> {
-
 		@Override
 		public IMessage onMessage(MFloaterMode message, MessageContext ctx) {
 			if (message.isItem) {
 				ItemStack floater = ctx.getServerHandler().playerEntity.getHeldItem();
 				if (floater == null || !(floater.getItem() instanceof ItemFloater) || !floater.hasTagCompound())
 					return null;
-				floater.getTagCompound().setByte("Mode", message.mode);
+				floater.getTagCompound().setByte(OfalenNBTUtil.MODE, message.mode);
 			} else {
 				OfalenFlightHandlerServer.setPlayerFlightMode(ctx.getServerHandler().playerEntity, message.mode);
 			}
 			return null;
 		}
-
 	}
-
 }

@@ -1,27 +1,27 @@
 package nahama.ofalenmod.handler;
 
-import java.util.ArrayList;
-
 import nahama.ofalenmod.OfalenModCore;
 import nahama.ofalenmod.core.OfalenModConfigCore;
 import nahama.ofalenmod.inventory.ContainerItemShield;
 import nahama.ofalenmod.item.ItemShield;
 import nahama.ofalenmod.network.MSpawnParticle;
+import nahama.ofalenmod.util.OfalenNBTUtil;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.StatCollector;
 
-public class OfalenShieldHandler {
+import java.util.ArrayList;
 
+public class OfalenShieldHandler {
 	/** シールドが有効になっているプレイヤーの名前のリスト。 */
-	private static ArrayList<String> protectedPlayers = new ArrayList<String>();
+	private static ArrayList<String> playersProtected = new ArrayList<>();
 
 	/** 初期化処理。 */
 	public static void init() {
 		// リストをリセットする。
-		protectedPlayers.clear();
+		playersProtected.clear();
 	}
 
 	/** プレイヤーがシールドを有効にしているか確認する。 */
@@ -31,24 +31,24 @@ public class OfalenShieldHandler {
 			ItemStack itemStack = inventory.getStackInSlot(i);
 			if (itemStack == null || !(itemStack.getItem() instanceof ItemShield) || !itemStack.hasTagCompound())
 				continue;
-			if (itemStack.getTagCompound().getBoolean("IsValid"))
+			if (itemStack.getTagCompound().getBoolean(OfalenNBTUtil.IS_VALID))
 				protectPlayer(player);
 		}
 	}
 
 	/** プレイヤーをリストに登録する。 */
 	public static void protectPlayer(EntityPlayer player) {
-		protectedPlayers.add(player.getCommandSenderName());
+		playersProtected.add(player.getCommandSenderName());
 	}
 
 	/** プレイヤーをリストから削除する。 */
 	public static void unprotectPlayer(EntityPlayer player) {
-		protectedPlayers.remove(player.getCommandSenderName());
+		playersProtected.remove(player.getCommandSenderName());
 	}
 
 	/** プレイヤーがリストに登録されているかどうか。 */
 	public static boolean isProtecting(EntityPlayer player) {
-		return protectedPlayers.contains(player.getCommandSenderName());
+		return playersProtected.contains(player.getCommandSenderName());
 	}
 
 	/** ダメージを無効にした時の処理。 */
@@ -64,27 +64,26 @@ public class OfalenShieldHandler {
 			ItemStack itemStack = inventory.getStackInSlot(i);
 			if (itemStack == null || !(itemStack.getItem() instanceof ItemShield) || !itemStack.hasTagCompound())
 				continue;
-			if (!itemStack.getTagCompound().getBoolean("IsValid"))
+			if (!itemStack.getTagCompound().getBoolean(OfalenNBTUtil.IS_VALID))
 				continue;
-			if (itemStack.getItemDamage() + OfalenModConfigCore.amountDamageShield > itemStack.getMaxDamage()) {
-				itemStack.getTagCompound().setBoolean("IsValid", false);
+			if (itemStack.getItemDamage() + OfalenModConfigCore.amountShieldDamage > itemStack.getMaxDamage()) {
+				itemStack.getTagCompound().setBoolean(OfalenNBTUtil.IS_VALID, false);
 				continue;
 			}
-			itemStack.setItemDamage(itemStack.getItemDamage() + OfalenModConfigCore.amountDamageShield);
+			itemStack.setItemDamage(itemStack.getItemDamage() + OfalenModConfigCore.amountShieldDamage);
 			flag = true;
-			if (itemStack.getItemDamage() + OfalenModConfigCore.amountDamageShield > itemStack.getMaxDamage()) {
+			if (itemStack.getItemDamage() + OfalenModConfigCore.amountShieldDamage > itemStack.getMaxDamage()) {
 				// ダメージが最大になったら、無効にする。
-				itemStack.getTagCompound().setBoolean("IsValid", false);
+				itemStack.getTagCompound().setBoolean(OfalenNBTUtil.IS_VALID, false);
 			}
 			break;
 		}
 		if (!flag) {
 			// 有効になっているシールドがなければプレイヤーの保護をやめる。
 			unprotectPlayer(player);
-			player.addChatMessage(new ChatComponentText(StatCollector.translateToLocal("info.OfalenMod.ItemShield.ShieldBroken")));
+			player.addChatMessage(new ChatComponentText(StatCollector.translateToLocal("info.ofalen.shield.brokenShield")));
 		}
 		// パーティクルを表示させるようパケットを送る。。
-		OfalenModCore.wrapper.sendToAll(new MSpawnParticle(player.worldObj.provider.dimensionId, player.posX, player.posY, player.posZ, (byte) 0));
+		OfalenModCore.WRAPPER.sendToAll(new MSpawnParticle(player.worldObj.provider.dimensionId, player.posX, player.posY, player.posZ, (byte) 0));
 	}
-
 }

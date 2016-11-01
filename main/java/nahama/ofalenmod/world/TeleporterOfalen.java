@@ -25,5 +25,4 @@ public class TeleporterOfalen extends Teleporter {
 		entity.motionX = entity.motionY = entity.motionZ = 0.0D;
 		return true;
 	}
-
 }

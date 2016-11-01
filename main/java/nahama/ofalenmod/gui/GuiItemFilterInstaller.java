@@ -13,7 +13,6 @@ import net.minecraft.util.StatCollector;
 import org.lwjgl.opengl.GL11;
 
 public class GuiItemFilterInstaller extends GuiContainer {
-
 	private ItemStack currentItem;
 	private static final ResourceLocation GUITEXTURE = new ResourceLocation("ofalenmod:textures/gui/container/filter_installer.png");
 
@@ -30,12 +29,12 @@ public class GuiItemFilterInstaller extends GuiContainer {
 
 	@Override
 	protected void actionPerformed(GuiButton button) {
-		OfalenModCore.wrapper.sendToServer(new MFilterInstaller());
+		OfalenModCore.WRAPPER.sendToServer(new MFilterInstaller());
 	}
 
 	@Override
 	protected void drawGuiContainerForegroundLayer(int par1, int par2) {
-		String s = StatCollector.translateToLocal("container.OfalenMod.ItemFilterInstaller");
+		String s = StatCollector.translateToLocal("container.ofalen.installerFilter");
 		fontRendererObj.drawString(s, xSize / 2 - fontRendererObj.getStringWidth(s) / 2, 6, 4210752);
 		fontRendererObj.drawString(StatCollector.translateToLocal("container.inventory"), 8, ySize - 96 + 2, 4210752);
 	}
@@ -50,7 +49,6 @@ public class GuiItemFilterInstaller extends GuiContainer {
 	}
 
 	public static class Button extends GuiButton {
-
 		public Button(int id, int x, int y) {
 			super(id, x, y, 8, 8, "");
 		}

@@ -7,7 +7,6 @@ import net.minecraft.util.StatCollector;
 import org.lwjgl.opengl.GL11;
 
 public class GuiContainer27 extends GuiContainer {
-
 	private static final ResourceLocation GUITEXTURE = new ResourceLocation("ofalenmod:textures/gui/container/container27.png");
 	private String guiName;
 
@@ -31,5 +30,4 @@ public class GuiContainer27 extends GuiContainer {
 		int l = (height - ySize) / 2;
 		this.drawTexturedModalRect(k, l, 0, 0, xSize, ySize);
 	}
-
 }

@@ -1,16 +1,14 @@
 package nahama.ofalenmod.gui;
 
-import org.lwjgl.opengl.GL11;
-
 import nahama.ofalenmod.inventory.ContainerSmeltingMachine;
 import nahama.ofalenmod.tileentity.TileEntitySmeltingMachine;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.StatCollector;
+import org.lwjgl.opengl.GL11;
 
 public class GuiSmeltingMachine extends GuiContainer {
-
 	private TileEntitySmeltingMachine tileEntity;
 	private static final ResourceLocation GUITEXTURE = new ResourceLocation("textures/gui/container/furnace.png");
 
@@ -43,5 +41,4 @@ public class GuiSmeltingMachine extends GuiContainer {
 		i1 = tileEntity.getWorkProgressScaled(24);
 		this.drawTexturedModalRect(k + 79, l + 34, 176, 14, i1 + 1, 16);
 	}
-
 }

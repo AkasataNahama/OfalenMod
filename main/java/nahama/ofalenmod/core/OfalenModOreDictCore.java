@@ -7,10 +7,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class OfalenModOreDictCore {
-
 	public static ArrayList<ItemStack> listCreeperOfalenBlock = OreDictionary.getOres("CreeperOfalenBlock");
 	public static ArrayList<ItemStack> listTDiamond = OreDictionary.getOres("TDiamond");
-	public static ArrayList<ItemStack> listOreGunPowder = OreDictionary.getOres("oreGunPowder");
+	public static ArrayList<ItemStack> listGunPowderOre = OreDictionary.getOres("oreGunPowder");
 
 	public static boolean isMatchedItemStack(List<ItemStack> inputs, ItemStack... targets) {
 		if (inputs == null || inputs.isEmpty())
@@ -35,5 +34,4 @@ public class OfalenModOreDictCore {
 		index %= list.size();
 		return new ItemStack(list.get(index).getItem(), 1, list.get(index).getItemDamage());
 	}
-
 }

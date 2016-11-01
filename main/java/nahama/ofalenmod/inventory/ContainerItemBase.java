@@ -8,14 +8,14 @@ import net.minecraft.item.ItemStack;
 
 public abstract class ContainerItemBase extends Container {
 	protected IInventory inventory;
-	/** アイテムのインベントリの第一スロットの番号 */
-	protected static int index0;
-	/** プレイヤーのインベントリの第一スロットの番号 */
-	protected static int index1;
-	/** クイックスロットの第一スロットの番号 */
-	protected static int index2;
-	/** このコンテナの全体のスロット数 */
-	protected static int index3;
+	/** アイテムのインベントリの第一スロットの番号。 */
+	protected static byte index0;
+	/** プレイヤーのインベントリの第一スロットの番号。 */
+	protected static byte index1;
+	/** クイックスロットの第一スロットの番号。 */
+	protected static byte index2;
+	/** このコンテナの全体のスロット数。 */
+	protected static byte index3;
 
 	public ContainerItemBase(EntityPlayer player) {
 		inventory = this.createInventory(player);
@@ -30,8 +30,8 @@ public abstract class ContainerItemBase extends Container {
 	protected void initIndexes() {
 		index0 = 0;
 		index1 = 27;
-		index2 = index1 + 27;
-		index3 = index2 + 9;
+		index2 = (byte) (index1 + 27);
+		index3 = (byte) (index2 + 9);
 	}
 
 	protected void initItemSlot() {
@@ -48,7 +48,6 @@ public abstract class ContainerItemBase extends Container {
 				this.addSlotToContainer(new Slot(player.inventory, j + i * 9 + 9, 8 + j * 18, 86 + i * 18));
 			}
 		}
-
 		for (int i = 0; i < 9; ++i) {
 			this.addSlotToContainer(new Slot(player.inventory, i, 8 + i * 18, 144));
 		}
@@ -104,7 +103,6 @@ public abstract class ContainerItemBase extends Container {
 					return null;
 				}
 			}
-
 			if (itemStack1.stackSize == 0) {
 				slot.putStack(null);
 			} else {
@@ -121,11 +119,10 @@ public abstract class ContainerItemBase extends Container {
 	/** 「スロットに入れられるか」と「Shift+左クリック時の処理」に使う。 */
 	protected abstract boolean isItemStackEnabled(ItemStack itemStack);
 
-	/**
+	/** 
 	 * プレイヤーのインベントリかクイックスロットでShift+左クリックされた時に移動する処理。
-	 *
 	 * @return 更新が必要か。
-	 */
+	。 */
 	protected boolean transferStackInItemSlot(ItemStack itemStack, int slotNumber) {
 		// 指定されたアイテムならアイテムのインベントリへ移動。
 		return this.mergeItemStack(itemStack, index0, index1, false);

@@ -1,6 +1,7 @@
 package nahama.ofalenmod.tileentity;
 
 import nahama.ofalenmod.handler.OfalenModAnniversaryHandler;
+import nahama.ofalenmod.util.OfalenNBTUtil;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
@@ -9,15 +10,14 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;
 
 public class TileEntityPresentBox extends TileEntity implements IInventory {
-
 	protected ItemStack[] itemStacks = new ItemStack[54];
 
 	/** プレイヤーがインベントリを開けた時の処理。 */
 	public void openInventory(EntityPlayer player) {
 		if (worldObj.isRemote)
 			return;
-		for (int i = 0; i < itemStacks.length; i++) {
-			if (itemStacks[i] != null)
+		for (ItemStack itemStack : itemStacks) {
+			if (itemStack != null)
 				return;
 		}
 		ItemStack[] presents = OfalenModAnniversaryHandler.getPresents(player);
@@ -34,21 +34,21 @@ public class TileEntityPresentBox extends TileEntity implements IInventory {
 			if (itemStacks[i] == null)
 				continue;
 			NBTTagCompound nbt1 = new NBTTagCompound();
-			nbt1.setByte("Slot", (byte) i);
+			nbt1.setByte(OfalenNBTUtil.SLOT, (byte) i);
 			itemStacks[i].writeToNBT(nbt1);
 			nbttaglist.appendTag(nbt1);
 		}
-		nbt.setTag("Items", nbttaglist);
+		nbt.setTag(OfalenNBTUtil.ITEMS, nbttaglist);
 	}
 
 	@Override
 	public void readFromNBT(NBTTagCompound nbt) {
 		super.readFromNBT(nbt);
-		NBTTagList nbttaglist = nbt.getTagList("Items", 10);
+		NBTTagList nbttaglist = nbt.getTagList(OfalenNBTUtil.ITEMS, 10);
 		itemStacks = new ItemStack[54];
 		for (int i = 0; i < nbttaglist.tagCount(); i++) {
 			NBTTagCompound nbt1 = nbttaglist.getCompoundTagAt(i);
-			byte b0 = nbt1.getByte("Slot");
+			byte b0 = nbt1.getByte(OfalenNBTUtil.SLOT);
 			if (0 <= b0 && b0 < itemStacks.length) {
 				itemStacks[b0] = ItemStack.loadItemStackFromNBT(nbt1);
 			}
@@ -108,7 +108,7 @@ public class TileEntityPresentBox extends TileEntity implements IInventory {
 	/** インベントリの名前を返す。 */
 	@Override
 	public String getInventoryName() {
-		return "container.OfalenMod.PresentBox";
+		return "container.ofalen.boxPresent";
 	}
 
 	/** このインベントリの最大スタック数を返す。 */
@@ -120,19 +120,20 @@ public class TileEntityPresentBox extends TileEntity implements IInventory {
 	/** プレイヤーが使用できるかどうか。 */
 	@Override
 	public boolean isUseableByPlayer(EntityPlayer player) {
-		return worldObj.getTileEntity(xCoord, yCoord, zCoord) != this ? false : player.getDistanceSq(xCoord + 0.5D, yCoord + 0.5D, zCoord + 0.5D) <= 64.0D;
+		return worldObj.getTileEntity(xCoord, yCoord, zCoord) == this && player.getDistanceSq(xCoord + 0.5D, yCoord + 0.5D, zCoord + 0.5D) <= 64.0D;
 	}
 
 	@Override
-	public void openInventory() {}
+	public void openInventory() {
+	}
 
 	@Override
-	public void closeInventory() {}
+	public void closeInventory() {
+	}
 
 	/** スロットにアクセスできるかどうか。 */
 	@Override
 	public boolean isItemValidForSlot(int slot, ItemStack itemStack) {
 		return false;
 	}
-
 }

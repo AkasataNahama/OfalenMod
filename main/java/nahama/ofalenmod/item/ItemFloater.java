@@ -5,6 +5,7 @@ import nahama.ofalenmod.core.OfalenModConfigCore;
 import nahama.ofalenmod.core.OfalenModItemCore;
 import nahama.ofalenmod.handler.OfalenFlightHandlerClient;
 import nahama.ofalenmod.network.MSpawnParticle;
+import nahama.ofalenmod.util.OfalenNBTUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity;
@@ -17,12 +18,10 @@ import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 
 public class ItemFloater extends ItemFuture {
-
 	/** 無効時のアイコン。 */
 	private IIcon invalid;
 
 	public ItemFloater() {
-		super();
 		this.setMaxDamage(64 * 9);
 	}
 
@@ -35,28 +34,28 @@ public class ItemFloater extends ItemFuture {
 		NBTTagCompound nbt = itemStack.getTagCompound();
 		if (entity.onGround) {
 			// 持ち主が地上にいるなら間隔をリセットして終了。
-			nbt.setByte("Duration", OfalenModConfigCore.intervalDamageFloater);
+			nbt.setByte(OfalenNBTUtil.INTERVAL, OfalenModConfigCore.intervalFloaterDamage);
 			return;
 		}
 		// 無効か、時間がたっていないなら終了。
-		if (nbt.getByte("Mode") < 1 || nbt.getByte("Duration") > 0)
+		if (nbt.getByte(OfalenNBTUtil.MODE) < 1 || nbt.getByte(OfalenNBTUtil.INTERVAL) > 0)
 			return;
 		// 耐久値を減らす。
-		itemStack.setItemDamage(itemStack.getItemDamage() + OfalenModConfigCore.amountDamageFloater);
+		itemStack.setItemDamage(itemStack.getItemDamage() + OfalenModConfigCore.amountFloaterDamage);
 		// サーバー側なら全クライアントにパーティクルを生成するようパケットを送信。
 		if (!world.isRemote)
-			OfalenModCore.wrapper.sendToAll(new MSpawnParticle(entity.worldObj.provider.dimensionId, entity.posX, entity.posY - 1.6D, entity.posZ, (byte) 2));
-		if (itemStack.getItemDamage() + OfalenModConfigCore.amountDamageFloater <= itemStack.getMaxDamage()) {
+			OfalenModCore.WRAPPER.sendToAll(new MSpawnParticle(entity.worldObj.provider.dimensionId, entity.posX, entity.posY - 1.6D, entity.posZ, (byte) 2));
+		if (itemStack.getItemDamage() + OfalenModConfigCore.amountFloaterDamage <= itemStack.getMaxDamage()) {
 			// 耐久値が残っているなら間隔をリセットして終了。
-			nbt.setByte("Duration", OfalenModConfigCore.intervalDamageFloater);
+			nbt.setByte(OfalenNBTUtil.INTERVAL, OfalenModConfigCore.intervalFloaterDamage);
 			return;
 		}
 		// 耐久値が尽きたなら、無効にし、ログに出力する。
-		nbt.setByte("Mode", (byte) 0);
+		nbt.setByte(OfalenNBTUtil.MODE, (byte) 0);
 		if (world.isRemote && entity == Minecraft.getMinecraft().thePlayer)
 			OfalenFlightHandlerClient.forbidPlayerToFloat();
 		if (!world.isRemote)
-			((EntityPlayer) entity).addChatMessage(new ChatComponentText(StatCollector.translateToLocal("info.OfalenMod.ItemFloater.MaterialLacking")));
+			((EntityPlayer) entity).addChatMessage(new ChatComponentText(StatCollector.translateToLocal("info.ofalen.floater.lackingMaterial")));
 	}
 
 	/** 右クリック時の処理。 */
@@ -71,13 +70,13 @@ public class ItemFloater extends ItemFuture {
 			player.openGui(OfalenModCore.instance, 4, world, (int) player.posX, (int) player.posY, (int) player.posZ);
 			return itemStack;
 		}
-		byte mode = itemStack.getTagCompound().getByte("Mode");
+		byte mode = itemStack.getTagCompound().getByte(OfalenNBTUtil.MODE);
 		if (itemStack.getItemDamage() >= itemStack.getMaxDamage()) {
 			// 材料がないならチャットに出力して終了。
 			if (!world.isRemote)
-				player.addChatMessage(new ChatComponentText(StatCollector.translateToLocal("info.OfalenMod.ItemFloater.MaterialLacking")));
+				player.addChatMessage(new ChatComponentText(StatCollector.translateToLocal("info.ofalen.floater.lackingMaterial")));
 			if (mode != 0) {
-				itemStack.getTagCompound().setByte("Mode", (byte) 0);
+				itemStack.getTagCompound().setByte(OfalenNBTUtil.MODE, (byte) 0);
 				if (world.isRemote)
 					OfalenFlightHandlerClient.allowPlayerToFloat((byte) 0);
 			}
@@ -87,23 +86,19 @@ public class ItemFloater extends ItemFuture {
 		mode++;
 		if (mode > 5)
 			mode = 1;
-		itemStack.getTagCompound().setByte("Mode", mode);
+		itemStack.getTagCompound().setByte(OfalenNBTUtil.MODE, mode);
 		if (world.isRemote) {
 			OfalenFlightHandlerClient.allowPlayerToFloat(mode);
 		} else {
-			player.addChatMessage(new ChatComponentText(StatCollector.translateToLocal("info.OfalenMod.ItemFloater.ChangeMode" + mode)));
+			player.addChatMessage(new ChatComponentText(StatCollector.translateToLocal("info.ofalen.floater.modeChanged:" + mode)));
 		}
 		return itemStack;
 	}
 
 	/** 材料として使用できるかの判定。 */
 	public static boolean isItemMaterial(ItemStack material) {
-		if (material == null)
-			return false;
 		// フロートパウダーのみ使用可能。
-		if (material.isItemEqual(OfalenModItemCore.dust))
-			return true;
-		return false;
+		return material != null && material.isItemEqual(new ItemStack(OfalenModItemCore.partsOfalen, 1, 8));
 	}
 
 	/** 道具など、耐久値を減らせるかどうか。 */
@@ -116,18 +111,17 @@ public class ItemFloater extends ItemFuture {
 	/** アイテムのアイコンを登録する処理。 */
 	@Override
 	public void registerIcons(IIconRegister register) {
-		super.registerIcons(register);
 		// 無効時のアイコンを登録。
-		invalid = register.registerIcon(this.getIconString() + "0");
+		invalid = register.registerIcon(this.getIconString() + "-0");
+		itemIcon = register.registerIcon(this.getIconString() + "-1");
 	}
 
 	/** アイテムのアイコンを返す。 */
 	@Override
 	public IIcon getIconIndex(ItemStack itemStack) {
 		// 有効なら通常のアイコン、無効なら無効時のアイコン。
-		if (itemStack.hasTagCompound() && itemStack.getTagCompound().getByte("Mode") > 0)
+		if (itemStack.hasTagCompound() && itemStack.getTagCompound().getByte(OfalenNBTUtil.MODE) > 0)
 			return super.getIconIndex(itemStack);
 		return invalid;
 	}
-
 }

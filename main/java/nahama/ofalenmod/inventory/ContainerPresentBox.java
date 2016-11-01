@@ -7,22 +7,21 @@ import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 
 public class ContainerPresentBox extends Container {
-
 	private TileEntityPresentBox tileEntity;
-	/** プレゼントボックスのインベントリの第一スロットの番号 */
-	private static final int index0 = 0;
-	/** プレイヤーのインベントリの第一スロットの番号 */
-	private static final int index1 = 54;
-	/** クイックスロットの第一スロットの番号 */
-	private static final int index2 = 81;
-	/** このコンテナの全体のスロット数 */
-	private static final int index3 = 90;
+	/** プレゼントボックスのインベントリの第一スロットの番号。 */
+	private static final byte INDEX_0 = 0;
+	/** プレイヤーのインベントリの第一スロットの番号。 */
+	private static final byte INDEX_1 = 54;
+	/** クイックスロットの第一スロットの番号。 */
+	private static final byte INDEX_2 = 81;
+	/** このコンテナの全体のスロット数。 */
+	private static final byte INDEX_3 = 90;
 
 	public ContainerPresentBox(EntityPlayer player, TileEntityPresentBox tileEntity) {
 		this.tileEntity = tileEntity;
 		for (int iy = 0; iy < 6; iy++) {
 			for (int ix = 0; ix < 9; ix++) {
-				this.addSlotToContainer(new SlotUnputable(tileEntity, ix + (iy * 9), 8 + (ix * 18), 18 + (iy * 18)));
+				this.addSlotToContainer(new SlotNotPuttable(tileEntity, ix + (iy * 9), 8 + (ix * 18), 18 + (iy * 18)));
 			}
 		}
 		for (int iy = 0; iy < 3; iy++) {
@@ -47,25 +46,24 @@ public class ContainerPresentBox extends Container {
 		if (slot != null && slot.getHasStack()) {
 			ItemStack itemStack1 = slot.getStack();
 			itemStack = itemStack1.copy();
-			if (index0 <= slotNumber && slotNumber < index1) {
+			if (INDEX_0 <= slotNumber && slotNumber < INDEX_1) {
 				// プレゼントボックスのインベントリならプレイヤーのインベントリに移動。
-				if (!this.mergeItemStack(itemStack1, index1, index3, true)) {
+				if (!this.mergeItemStack(itemStack1, INDEX_1, INDEX_3, true)) {
 					return null;
 				}
 			} else {
-				if (index1 <= slotNumber && slotNumber < index2) {
+				if (INDEX_1 <= slotNumber && slotNumber < INDEX_2) {
 					// プレイヤーのインベントリならクイックスロットに移動。
-					if (!this.mergeItemStack(itemStack1, index2, index3, false)) {
+					if (!this.mergeItemStack(itemStack1, INDEX_2, INDEX_3, false)) {
 						return null;
 					}
-				} else if (index2 <= slotNumber && slotNumber < index3 && !this.mergeItemStack(itemStack1, index1, index2, false)) {
+				} else if (INDEX_2 <= slotNumber && slotNumber < INDEX_3 && !this.mergeItemStack(itemStack1, INDEX_1, INDEX_2, false)) {
 					// クイックスロットからプレイヤーのインベントリに移動できなかったら終了。
 					return null;
 				}
 			}
-
 			if (itemStack1.stackSize == 0) {
-				slot.putStack((ItemStack) null);
+				slot.putStack(null);
 			} else {
 				slot.onSlotChanged();
 			}
@@ -76,5 +74,4 @@ public class ContainerPresentBox extends Container {
 		}
 		return itemStack;
 	}
-
 }

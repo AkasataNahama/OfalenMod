@@ -2,10 +2,11 @@ package nahama.ofalenmod.tileentity;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import nahama.ofalenmod.block.BlockMachineProcessor;
+import nahama.ofalenmod.block.BlockProcessor;
 import nahama.ofalenmod.core.OfalenModConfigCore;
 import nahama.ofalenmod.core.OfalenModItemCore;
 import nahama.ofalenmod.core.OfalenModOreDictCore;
+import nahama.ofalenmod.util.OfalenNBTUtil;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
@@ -17,7 +18,6 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityFurnace;
 
 public abstract class TileEntityGradedMachineBase extends TileEntity implements ISidedInventory {
-
 	/** 機械の中にあるアイテムの配列。 */
 	protected ItemStack[] itemStacks = new ItemStack[3];
 	/** 金床で設定された名前。 */
@@ -25,11 +25,11 @@ public abstract class TileEntityGradedMachineBase extends TileEntity implements 
 	/** 機械のグレード。 */
 	protected byte grade;
 	/** 作業した時間。 */
-	public int workTime;
+	public short timeWorking;
 	/** 燃焼が終わるまでの時間。 */
-	public int burnTime;
+	public short timeBurning;
 	/** 燃焼中アイテムの燃焼時間。 */
-	public int maxBurnTime;
+	public short timeMaxBurning;
 
 	/** アップデート時の処理。 */
 	@Override
@@ -41,17 +41,17 @@ public abstract class TileEntityGradedMachineBase extends TileEntity implements 
 		boolean isBurning = this.isBurning();
 		// 燃焼中なら時間を減らす。
 		if (isBurning)
-			burnTime--;
+			timeBurning--;
 		// 燃焼中でなく、材料・燃料のどちらかでも空なら終了する。
 		if (!this.isBurning() && (itemStacks[1] == null || itemStacks[0] == null)) {
-			workTime = 0;
+			timeWorking = 0;
 			if (isBurning)
 				this.updateIsBurning();
 			return;
 		}
 		// 燃焼中でなく作業可能なら、新たに燃料を消費し、燃焼させる。
 		if (!this.isBurning() && this.canWork()) {
-			maxBurnTime = burnTime = this.getItemBurnTime(itemStacks[1]);
+			timeMaxBurning = timeBurning = this.getItemBurnTime(itemStacks[1]);
 			if (this.isBurning()) {
 				if (itemStacks[1] != null) {
 					--itemStacks[1].stackSize;
@@ -63,16 +63,15 @@ public abstract class TileEntityGradedMachineBase extends TileEntity implements 
 		}
 		// 燃焼中で作業可能なら、作業する。
 		if (this.isBurning() && this.canWork()) {
-			++workTime;
-			if (workTime >= this.getWorkTime()) {
-				workTime = 0;
+			++timeWorking;
+			if (timeWorking >= this.getWorkTime()) {
+				timeWorking = 0;
 				this.work();
 			}
 		} else {
 			// 燃焼中でないか作業不可能ならば作業時間をリセットする。
-			workTime = 0;
+			timeWorking = 0;
 		}
-
 		// 燃焼しているかが変わっていたら、更新する。
 		if (isBurning != this.isBurning()) {
 			this.updateIsBurning();
@@ -83,19 +82,19 @@ public abstract class TileEntityGradedMachineBase extends TileEntity implements 
 	protected abstract boolean canWork();
 
 	/** アイテムの燃焼時間を返す。 */
-	public int getItemBurnTime(ItemStack itemStack) {
+	public short getItemBurnTime(ItemStack itemStack) {
 		if (itemStack == null)
 			return 0;
 		if (OfalenModOreDictCore.isMatchedItemStack(OfalenModOreDictCore.listTDiamond, itemStack))
-			return OfalenModConfigCore.timeBurnStone * (4 - grade) / 4;
-		int time = TileEntityFurnace.getItemBurnTime(itemStack) * (4 - grade) / 4 / OfalenModConfigCore.factorTimeBurnFuelFurnace;
+			return (short) (OfalenModConfigCore.timeStoneFuelBurning * (4 - grade) / 4);
+		short time = (short) (TileEntityFurnace.getItemBurnTime(itemStack) * (4 - grade) / 4 / OfalenModConfigCore.factorFurnaceFuelBurningTime);
 		if (itemStack.getItem() != OfalenModItemCore.partsOfalen)
 			return time;
 		int meta = itemStack.getItemDamage();
 		if (meta == 3) {
-			return OfalenModConfigCore.timeBurnStone * (4 - grade) / 4;
+			return (short) (OfalenModConfigCore.timeStoneFuelBurning * (4 - grade) / 4);
 		} else if (meta == 4) {
-			return OfalenModConfigCore.timeBurnOfalen * (4 - grade) / 4;
+			return (short) (OfalenModConfigCore.timeOfalenFuelBurning * (4 - grade) / 4);
 		}
 		return time;
 	}
@@ -109,7 +108,7 @@ public abstract class TileEntityGradedMachineBase extends TileEntity implements 
 	/** 燃焼しているかでメタデータを更新する。 */
 	protected void updateIsBurning() {
 		int direction = this.getBlockMetadata();
-		if (burnTime > 0) {
+		if (timeBurning > 0) {
 			direction = direction | 8;
 		} else {
 			direction = direction & 7;
@@ -140,11 +139,11 @@ public abstract class TileEntityGradedMachineBase extends TileEntity implements 
 			return;
 		}
 		Block block = worldObj.getBlock(getX, getY, getZ);
-		if (!(block instanceof BlockMachineProcessor)) {
+		if (!(block instanceof BlockProcessor)) {
 			grade = 0;
 			return;
 		}
-		int meta = ((BlockMachineProcessor) block).updateMetadata(worldObj, getX, getY, getZ);
+		int meta = ((BlockProcessor) block).updateMetadata(worldObj, getX, getY, getZ);
 		if (meta < 4) {
 			grade = 0;
 			return;
@@ -178,42 +177,42 @@ public abstract class TileEntityGradedMachineBase extends TileEntity implements 
 	@Override
 	public void writeToNBT(NBTTagCompound nbt) {
 		super.writeToNBT(nbt);
-		nbt.setByte("Grade", grade);
-		nbt.setInteger("WorkTime", workTime);
-		nbt.setInteger("BurnTime", burnTime);
+		nbt.setByte(OfalenNBTUtil.GRADE, grade);
+		nbt.setShort(OfalenNBTUtil.WORKING_TIME, timeWorking);
+		nbt.setShort(OfalenNBTUtil.BURNING_TIME, timeBurning);
 		NBTTagList nbttaglist = new NBTTagList();
 		for (int i = 0; i < itemStacks.length; i++) {
 			if (itemStacks[i] == null)
 				continue;
 			NBTTagCompound nbt1 = new NBTTagCompound();
-			nbt1.setByte("Slot", (byte) i);
+			nbt1.setByte(OfalenNBTUtil.SLOT, (byte) i);
 			itemStacks[i].writeToNBT(nbt1);
 			nbttaglist.appendTag(nbt1);
 		}
-		nbt.setTag("Items", nbttaglist);
+		nbt.setTag(OfalenNBTUtil.ITEMS, nbttaglist);
 		if (this.hasCustomInventoryName())
-			nbt.setString("CustomName", customName);
+			nbt.setString(OfalenNBTUtil.CUSTOM_NAME, customName);
 	}
 
 	/** NBTから機械の情報を反映する。 */
 	@Override
 	public void readFromNBT(NBTTagCompound nbt) {
 		super.readFromNBT(nbt);
-		grade = nbt.getByte("Grade");
-		workTime = nbt.getInteger("WorkTime");
-		burnTime = nbt.getInteger("BurnTime");
-		NBTTagList nbttaglist = nbt.getTagList("Items", 10);
+		grade = nbt.getByte(OfalenNBTUtil.GRADE);
+		timeWorking = nbt.getShort(OfalenNBTUtil.WORKING_TIME);
+		timeBurning = nbt.getShort(OfalenNBTUtil.BURNING_TIME);
+		NBTTagList nbttaglist = nbt.getTagList(OfalenNBTUtil.ITEMS, 10);
 		itemStacks = new ItemStack[3];
 		for (int i = 0; i < nbttaglist.tagCount(); i++) {
 			NBTTagCompound nbt1 = nbttaglist.getCompoundTagAt(i);
-			byte b0 = nbt1.getByte("Slot");
+			byte b0 = nbt1.getByte(OfalenNBTUtil.SLOT);
 			if (0 <= b0 && b0 < itemStacks.length) {
 				itemStacks[b0] = ItemStack.loadItemStackFromNBT(nbt1);
 			}
 		}
-		maxBurnTime = this.getItemBurnTime(itemStacks[1]);
-		if (nbt.hasKey("CustomName", 8))
-			customName = nbt.getString("CustomName");
+		timeMaxBurning = this.getItemBurnTime(itemStacks[1]);
+		if (nbt.hasKey(OfalenNBTUtil.CUSTOM_NAME, 8))
+			customName = nbt.getString(OfalenNBTUtil.CUSTOM_NAME);
 	}
 
 	/** アイテムが燃料として使えるかどうか。 */
@@ -223,19 +222,19 @@ public abstract class TileEntityGradedMachineBase extends TileEntity implements 
 
 	@SideOnly(Side.CLIENT)
 	public int getWorkProgressScaled(int par1) {
-		return workTime * par1 / this.getWorkTime();
+		return timeWorking * par1 / this.getWorkTime();
 	}
 
 	@SideOnly(Side.CLIENT)
 	public int getBurnTimeRemainingScaled(int par1) {
-		if (maxBurnTime == 0)
-			maxBurnTime = 200;
-		return burnTime * par1 / maxBurnTime;
+		if (timeMaxBurning == 0)
+			timeMaxBurning = 200;
+		return timeBurning * par1 / timeMaxBurning;
 	}
 
 	/** 燃焼中かどうか。 */
 	public boolean isBurning() {
-		return burnTime > 0;
+		return timeBurning > 0;
 	}
 
 	public void setCustomName(String customName) {
@@ -335,5 +334,4 @@ public abstract class TileEntityGradedMachineBase extends TileEntity implements 
 	public boolean canExtractItem(int slot, ItemStack itemStack, int side) {
 		return side != 0 || slot != 1 || itemStack.getItem() == Items.bucket;
 	}
-
 }

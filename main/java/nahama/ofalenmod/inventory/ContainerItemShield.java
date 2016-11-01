@@ -12,12 +12,11 @@ public class ContainerItemShield extends ContainerItemBase {
 
 	@Override
 	protected IInventory createInventory(EntityPlayer player) {
-		return new InventoryItemFuture(player.inventory, 6, 27, "ItemShield");
+		return new InventoryItemFuture(player.inventory, (byte) 6, (short) 27, "shield");
 	}
 
 	@Override
 	protected boolean isItemStackEnabled(ItemStack itemStack) {
 		return ItemShield.isItemMaterial(itemStack);
 	}
-
 }

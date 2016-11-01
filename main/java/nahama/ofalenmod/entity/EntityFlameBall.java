@@ -1,25 +1,24 @@
 package nahama.ofalenmod.entity;
 
-import java.util.Random;
-
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.projectile.EntityThrowable;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 
-public class EntityFlameBall extends EntityThrowable {
+import java.util.Random;
 
-	private int power;
+public class EntityFlameBall extends EntityThrowable {
+	private byte power;
 
 	public EntityFlameBall(World world, EntityLivingBase entity, int grade) {
 		super(world, entity);
-		power = 5 * (grade * 2);
+		power = (byte) (5 * (grade * 2));
 		if (power == 0)
 			power = 5;
 	}
 
-	/** ブロックかエンティティに当たった時の処理 */
+	/** ブロックかエンティティに当たった時の処理。 */
 	@Override
 	protected void onImpact(MovingObjectPosition position) {
 		Random random = new Random();
@@ -29,13 +28,11 @@ public class EntityFlameBall extends EntityThrowable {
 				int ix = position.blockX + random.nextInt(power) - random.nextInt(power);
 				int iy = position.blockY + random.nextInt(2) - random.nextInt(2);
 				int iz = position.blockZ + random.nextInt(power) - random.nextInt(power);
-
 				if (i == 0) {
 					ix = position.blockX;
 					iy = position.blockY;
 					iz = position.blockZ;
 				}
-
 				// 着火処理。ItemFireBall参照
 				switch (position.sideHit) {
 				case 0:
@@ -56,7 +53,6 @@ public class EntityFlameBall extends EntityThrowable {
 				case 5:
 					++ix;
 				}
-
 				if (this.worldObj.isAirBlock(ix, iy, iz)) {
 					this.worldObj.setBlock(ix, iy, iz, Blocks.fire);
 				}
@@ -67,5 +63,4 @@ public class EntityFlameBall extends EntityThrowable {
 		// 消滅させる
 		this.setDead();
 	}
-
 }

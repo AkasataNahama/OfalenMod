@@ -8,7 +8,6 @@ import nahama.ofalenmod.inventory.ContainerItemFilterInstaller;
 import net.minecraft.inventory.Container;
 
 public class MFilterInstaller implements IMessage {
-
 	public MFilterInstaller() {
 	}
 

@@ -1,18 +1,17 @@
 package nahama.ofalenmod.item;
 
-import java.util.List;
-
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import nahama.ofalenmod.OfalenModCore;
 import nahama.ofalenmod.core.OfalenModItemCore;
-import nahama.ofalenmod.entity.EntityBlueLaser;
-import nahama.ofalenmod.entity.EntityGreenLaser;
-import nahama.ofalenmod.entity.EntityRedLaser;
+import nahama.ofalenmod.entity.EntityLaserBlue;
+import nahama.ofalenmod.entity.EntityLaserGreen;
+import nahama.ofalenmod.entity.EntityLaserRed;
 import nahama.ofalenmod.entity.EntityWhiteLaser;
+import nahama.ofalenmod.util.OfalenNBTUtil;
+import nahama.ofalenmod.util.Util;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumAction;
 import net.minecraft.item.Item;
@@ -21,14 +20,14 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 
-public class ItemLaserPistol extends Item {
+import java.util.List;
 
+public class ItemLaserPistol extends Item {
 	/** 次のレーザーが撃てるようになるまでのカウント。 */
 	private int duration = 0;
 
 	public ItemLaserPistol() {
-		super();
-		this.setCreativeTab(OfalenModCore.tabOfalen);
+		this.setCreativeTab(OfalenModCore.TAB_OFALEN);
 		this.setMaxStackSize(1);
 		this.setFull3D();
 		this.setHasSubtypes(false);
@@ -43,7 +42,7 @@ public class ItemLaserPistol extends Item {
 		// リロード前で、修繕機での修繕を不可にしたアイテムを登録する。
 		ItemStack itemStack = new ItemStack(this, 1, this.getMaxDamage());
 		NBTTagCompound nbt = new NBTTagCompound();
-		nbt.setBoolean("NotRepairable", true);
+		nbt.setBoolean(OfalenNBTUtil.IS_IRREPARABLE, true);
 		itemStack.setTagCompound(nbt);
 		list.add(itemStack);
 	}
@@ -53,7 +52,7 @@ public class ItemLaserPistol extends Item {
 	public void onCreated(ItemStack itemStack, World world, EntityPlayer player) {
 		// 修繕機での修繕を不可にする。
 		NBTTagCompound nbt = new NBTTagCompound();
-		nbt.setBoolean("NotRepairable", true);
+		nbt.setBoolean(OfalenNBTUtil.IS_IRREPARABLE, true);
 		itemStack.setTagCompound(nbt);
 	}
 
@@ -70,8 +69,8 @@ public class ItemLaserPistol extends Item {
 		if (!itemStack.hasTagCompound()) {
 			itemStack.setTagCompound(new NBTTagCompound());
 		}
-		if (!itemStack.getTagCompound().getBoolean("NotRepairable")) {
-			itemStack.getTagCompound().setBoolean("NotRepairable", true);
+		if (!itemStack.getTagCompound().getBoolean(OfalenNBTUtil.IS_IRREPARABLE)) {
+			itemStack.getTagCompound().setBoolean(OfalenNBTUtil.IS_IRREPARABLE, true);
 		}
 	}
 
@@ -88,27 +87,28 @@ public class ItemLaserPistol extends Item {
 				duration = 10;
 		} else if (!world.isRemote || duration <= 0) {
 			// 次のレーザーを発射できるならば、
-			if (itemStack.hasTagCompound() && itemStack.getTagCompound().getString("LaserColor").length() > 0) {
+			if (itemStack.hasTagCompound() && itemStack.getTagCompound().getString(OfalenNBTUtil.LASER_COLOR).length() > 0) {
 				// LaserColorのNBTTagを持っているならば、
-				String color = itemStack.getTagCompound().getString("LaserColor");
+				String color = itemStack.getTagCompound().getString(OfalenNBTUtil.LASER_COLOR);
 				// クリエイティブモードでないならダメージを与える。
 				if (!player.capabilities.isCreativeMode)
 					itemStack.setItemDamage(itemStack.getItemDamage() + 32);
 				// クライアントの処理なら装填時間を設定する。
 				if (world.isRemote)
 					duration = 10;
-				if (color.equals("Red")) {
+				switch (color) {
+				case "Red":
 					for (int i = -2; i < 3; i++) {
-						world.spawnEntityInWorld(new EntityRedLaser(world, player, i));
+						world.spawnEntityInWorld(new EntityLaserRed(world, player, i));
 					}
 					return itemStack;
-				} else if (color.equals("Green")) {
-					world.spawnEntityInWorld(new EntityGreenLaser(world, player));
+				case "Green":
+					world.spawnEntityInWorld(new EntityLaserGreen(world, player));
 					return itemStack;
-				} else if (color.equals("Blue")) {
-					world.spawnEntityInWorld(new EntityBlueLaser(world, player));
+				case "Blue":
+					world.spawnEntityInWorld(new EntityLaserBlue(world, player));
 					return itemStack;
-				} else if (color.equals("White")) {
+				case "White":
 					for (int i = -2; i < 3; i++) {
 						world.spawnEntityInWorld(new EntityWhiteLaser(world, player, i));
 					}
@@ -125,17 +125,15 @@ public class ItemLaserPistol extends Item {
 		// プレイヤーのインベントリを取得。
 		ItemStack[] itemStacks = player.inventory.mainInventory;
 		// インベントリの全アイテムを調査し、
-		for (int i = 0; i < itemStacks.length; i++) {
+		for (ItemStack itemStack1 : itemStacks) {
 			// マガジンで、充填済みなら、
-			if (itemStacks[i] != null && itemStacks[i].getItem() instanceof ItemLaserMagazine && itemStacks[i].getItemDamage() == 0) {
+			if (itemStack1 != null && itemStack1.getItem() instanceof ItemLaserMagazine && itemStack1.getItemDamage() == 0) {
 				// trueを返す。
 				return true;
 			}
 		}
 		// もしマガジンを持っていなくても、ピストル側にLaserColorが設定されていれば、trueを返す。
-		if (itemStack.hasTagCompound() && itemStack.getTagCompound().getString("LaserColor").length() > 0)
-			return true;
-		return false;
+		return itemStack.hasTagCompound() && itemStack.getTagCompound().getString(OfalenNBTUtil.LASER_COLOR).length() > 0;
 	}
 
 	/** リロードにかかる時間を返す。 */
@@ -162,14 +160,13 @@ public class ItemLaserPistol extends Item {
 			// nbtに代入する。
 			nbt = itemStack.getTagCompound();
 			// LaserColorに何かの文字が登録されていたら、
-			if (nbt.getString("LaserColor").length() > 0 && !world.isRemote) {
+			if (nbt.getString(OfalenNBTUtil.LASER_COLOR).length() > 0 && !world.isRemote) {
 				// マガジンをドロップさせ、
-				world.spawnEntityInWorld(new EntityItem(world, player.posX, player.posY, player.posZ, new ItemStack(OfalenModItemCore.partsOfalen, 1, 5)));
+				Util.dropItemStackCopyNearEntity(new ItemStack(OfalenModItemCore.partsOfalen, 1, 5), player);
 				// LaserColorをリセットする。
-				nbt.setString("LaserColor", "");
+				nbt.setString(OfalenNBTUtil.LASER_COLOR, "");
 			}
 		}
-
 		// プレイヤーが所持しているマガジンの色をNBTに保存する。
 		ItemStack[] inventory = player.inventory.mainInventory;
 		for (int i = 0; i < inventory.length; i++) {
@@ -184,7 +181,7 @@ public class ItemLaserPistol extends Item {
 				} else if (inventory[i].getItem() == OfalenModItemCore.magazineLaserWhite) {
 					color = "White";
 				}
-				nbt.setString("LaserColor", color);
+				nbt.setString(OfalenNBTUtil.LASER_COLOR, color);
 				if (!player.capabilities.isCreativeMode)
 					inventory[i].stackSize--;
 				if (inventory[i].stackSize < 1)
@@ -194,7 +191,6 @@ public class ItemLaserPistol extends Item {
 				return itemStack;
 			}
 		}
-
 		return itemStack;
 	}
 
@@ -204,10 +200,10 @@ public class ItemLaserPistol extends Item {
 		NBTTagCompound nbt = itemStack.getTagCompound();
 		if (nbt == null)
 			return;
-		String color = nbt.getString("LaserColor");
+		String color = nbt.getString(OfalenNBTUtil.LASER_COLOR);
 		if (color.length() < 1)
 			return;
-		list.add(StatCollector.translateToLocal("info.OfalenMod.color:" + color.toLowerCase()) + " " + StatCollector.translateToLocal("info.OfalenMod.loaded") + (32 - (itemStack.getItemDamage() / 32)));
+		list.add(StatCollector.translateToLocal("info.ofalen.color:" + color.toLowerCase()) + " " + StatCollector.translateToLocal("info.ofalen.crystal") + " : " + (32 - (itemStack.getItemDamage() / 32)));
 	}
 
 	/** ダメージを受けられるかどうか。 */
@@ -215,5 +211,4 @@ public class ItemLaserPistol extends Item {
 	public boolean isDamageable() {
 		return false;
 	}
-
 }

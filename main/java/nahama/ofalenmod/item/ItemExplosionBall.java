@@ -1,7 +1,5 @@
 package nahama.ofalenmod.item;
 
-import java.util.List;
-
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import nahama.ofalenmod.OfalenModCore;
@@ -16,13 +14,13 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 
-public class ItemExplosionBall extends Item {
+import java.util.List;
 
-	private IIcon[] iicon;
+public class ItemExplosionBall extends Item {
+	private IIcon[] icons;
 
 	public ItemExplosionBall() {
-		super();
-		this.setCreativeTab(OfalenModCore.tabOfalen);
+		this.setCreativeTab(OfalenModCore.TAB_OFALEN);
 		this.setHasSubtypes(true);
 		this.setMaxDamage(0);
 	}
@@ -34,24 +32,21 @@ public class ItemExplosionBall extends Item {
 		if (!player.capabilities.isCreativeMode) {
 			--itemStack.stackSize;
 		}
-
 		// 音を出す
 		world.playSoundAtEntity(player, "random.bow", 0.5F, 0.4F / (itemRand.nextFloat() * 0.4F + 0.8F));
-
 		// Entityを生成する
 		if (itemStack.getItem() == OfalenModItemCore.ballExplosion) {
 			world.spawnEntityInWorld(new EntityExplosionBall(world, player, this.getDamage(itemStack)));
 		} else if (itemStack.getItem() == OfalenModItemCore.ballFlame) {
 			world.spawnEntityInWorld(new EntityFlameBall(world, player, this.getDamage(itemStack)));
 		}
-
 		return itemStack;
 	}
 
 	@Override
 	@SideOnly(Side.CLIENT)
 	public IIcon getIconFromDamage(int meta) {
-		return iicon[meta];
+		return icons[meta];
 	}
 
 	@Override
@@ -75,10 +70,9 @@ public class ItemExplosionBall extends Item {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void registerIcons(IIconRegister iicon) {
-		this.iicon = new IIcon[3];
+		this.icons = new IIcon[3];
 		for (int i = 0; i < 3; i++) {
-			this.iicon[i] = iicon.registerIcon(this.getIconString() + i);
+			this.icons[i] = iicon.registerIcon(this.getIconString() + "-" + (i + 1));
 		}
 	}
-
 }

@@ -1,211 +1,236 @@
 
-//Creative Tab
-itemGroup.ofalentab=Ofalen Mod
+// Key Binding
+key.category.ofalen=Ofalen Mod
+key.description.ofalen.keyOSS=Special Setting Key
 
-//GUI
-container.OfalenMod.smeltingmachine-0=Ofalen Smelting Machine
-container.OfalenMod.smeltingmachine-1=Ofalen Smelting Machine (1)
-container.OfalenMod.smeltingmachine-2=Ofalen Smelting Machine (2)
-container.OfalenMod.smeltingmachine-3=Ofalen Smelting Machine (3)
-container.OfalenMod.conversionmachine-0=Ofalen Converting Machine
-container.OfalenMod.conversionmachine-1=Ofalen Converting Machine (1)
-container.OfalenMod.conversionmachine-2=Ofalen Converting Machine (2)
-container.OfalenMod.conversionmachine-3=Ofalen Converting Machine (3)
-container.OfalenMod.repairmachine-0=Ofalen Repairing Machine
-container.OfalenMod.repairmachine-1=Ofalen Repairing Machine (1)
-container.OfalenMod.repairmachine-2=Ofalen Repairing Machine (2)
-container.OfalenMod.repairmachine-3=Ofalen Repairing Machine (3)
-container.OfalenMod.FusingMachine-0=Ofalen Fusing Machine
-container.OfalenMod.FusingMachine-1=Ofalen Fusing Machine (1)
-container.OfalenMod.FusingMachine-2=Ofalen Fusing Machine (2)
-container.OfalenMod.FusingMachine-3=Ofalen Fusing Machine (3)
-container.OfalenMod.ItemShield=Ofalen Shield
-container.OfalenMod.TeleportMarker=Ofalen Teleport Marker
-container.OfalenMod.ItemTeleporter=Ofalen Teleporter
-container.OfalenMod.ItemFloater=Ofalen Floater
-container.OfalenMod.PresentBox=Ofalen Present Box
+// Creative Tab
+itemGroup.ofalen.tabOfalenMod=Ofalen Mod
 
-//Description
-info.OfalenMod.smeltingrecipe=Ofalen Smelting Machine
-info.OfalenMod.loaded=Crystal :
-info.OfalenMod.color:red=Red
-info.OfalenMod.color:green=Green
-info.OfalenMod.color:blue=Blue
-info.OfalenMod.color:white=White
-info.OfalenMod.metadescription=This mod adds a new ore "Ofalen", to add a new such as tools, armors, balls using it.
-info.OfalenMod.ItemShield.MaterialLacking=Ofalen Shield : Shield Ingot is lacking!
-info.OfalenMod.ItemShield.ShieldBroken=Ofalen Shield : Shield expired!
-info.OfalenMod.ItemTeleporter.MaterialLacking=Ofalen Teleporter : Teleport Pearl is lacking!
-info.OfalenMod.ItemTeleporter.ChannelInvalid=Ofalen Teleporter : This channel is Invalid!
-info.OfalenMod.ItemFloater.ChangeMode1=Ofalen Floater : Flight Mode was changed to 1!
-info.OfalenMod.ItemFloater.ChangeMode2=Ofalen Floater : Flight Mode was changed to 2!
-info.OfalenMod.ItemFloater.ChangeMode3=Ofalen Floater : Flight Mode was changed to 3!
-info.OfalenMod.ItemFloater.ChangeMode4=Ofalen Floater : Flight Mode was changed to 4!
-info.OfalenMod.ItemFloater.ChangeMode5=Ofalen Floater : Flight Mode was changed to 5!
-info.OfalenMod.ItemFloater.MaterialLacking=Ofalen Floater : Float Dust is lacking!
-info.OfalenMod.NewVersionIsAvailable=Ofalen Mod : New version is available!
-info.OfalenMod.Now=  Using :
-info.OfalenMod.New=    Latest :
+// Information
+info.ofalen.metaMod.description=This mod adds a new ore "Ofalen", to add a new such as armors, balls, tools using it.
+info.ofalen.notificationVersion=Ofalen Mod : New version is available!
+info.ofalen.using=Using
+info.ofalen.latest=Latest
+// Smelting Machine
+info.ofalen.recipeSmelting=Ofalen Smelting Machine
+// Laser
+info.ofalen.crystal=Crystal
+info.ofalen.color:red=Red
+info.ofalen.color:green=Green
+info.ofalen.color:blue=Blue
+info.ofalen.color:white=White
+// Future
+info.ofalen.shield.lackingMaterial=Ofalen Shield : Shield Ingot is lacking!
+info.ofalen.shield.brokenShield=Ofalen Shield : Shield expired!
+info.ofalen.teleporter.lackingMaterial=Ofalen Teleporter : Teleport Pearl is lacking!
+info.ofalen.teleporter.channelInvalid=Ofalen Teleporter : This channel is Invalid!
+info.ofalen.floater.lackingMaterial=Ofalen Floater : Float Dust is lacking!
+info.ofalen.floater.modeChanged:1=Ofalen Floater : Flight Mode is changed to 1!
+info.ofalen.floater.modeChanged:2=Ofalen Floater : Flight Mode is changed to 2!
+info.ofalen.floater.modeChanged:3=Ofalen Floater : Flight Mode is changed to 3!
+info.ofalen.floater.modeChanged:4=Ofalen Floater : Flight Mode is changed to 4!
+info.ofalen.floater.modeChanged:5=Ofalen Floater : Flight Mode is changed to 5!
+info.ofalen.collector.item=Item
+info.ofalen.collector.exp=Exp
+// Filter
+info.ofalen.filter.toolTip=Press Shift
+info.ofalen.filter.black=Black List
+info.ofalen.filter.white=White List
 
-//Item
-item.ofalen.0.name=Red Ofalen
-item.ofalen.1.name=Green Ofalen
-item.ofalen.2.name=Blue Ofalen
-item.ofalen.3.name=White Ofalen
-item.ofalen.4.name=Orange Ofalen
-item.ofalen.5.name=Viridian Ofalen
-item.ofalen.6.name=Purple Ofalen
-item.ofalen.7.name=Dark Ofalen
-item.fragmentOfalen.0.name=Red Ofalen Fragment
-item.fragmentOfalen.1.name=Green Ofalen Fragment
-item.fragmentOfalen.2.name=Blue Ofalen Fragment
-item.fragmentOfalen.3.name=White Ofalen Fragment
-item.fragmentOfalen.4.name=Orange Ofalen Fragment
-item.fragmentOfalen.5.name=Viridian Ofalen Fragment
-item.fragmentOfalen.6.name=Purple Ofalen Fragment
-item.fragmentOfalen.7.name=Dark Ofalen Fragment
-item.coreOfalen.0.name=Red Ofalen Core
-item.coreOfalen.1.name=Green Ofalen Core
-item.coreOfalen.2.name=Blue Ofalen Core
-item.coreOfalen.3.name=White Ofalen Core
-item.coreOfalen.4.name=Orange Ofalen Core
-item.coreOfalen.5.name=Viridian Ofalen Core
-item.coreOfalen.6.name=Purple Ofalen Core
-item.coreOfalen.7.name=Dark Ofalen Core
-item.partsOfalen.0.name=Machine Cover Plate
-item.partsOfalen.1.name=Grade 3 Parts
-item.partsOfalen.2.name=Lump of Stone
-item.partsOfalen.3.name=Stone Fuel
-item.partsOfalen.4.name=Ofalen Fuel
-item.partsOfalen.5.name=Ofalen Laser Magazine
-item.partsOfalen.6.name=Ingot of Ofalen Shielding
-item.partsOfalen.7.name=Pearl of Ofalen Teleporting
-item.partsOfalen.8.name=Dust of Ofalen Floating
-item.partsOfalen3D.0.name=Iron Stick
-item.shieldOfalen.name=Ofalen Shield
-item.teleporterOfalen.name=Ofalen Teleporter
-item.floaterOfalen.name=Ofalen Floater
+// GUI
+container.ofalen.machine.smelting-0=Ofalen Smelting Machine
+container.ofalen.machine.smelting-1=Ofalen Smelting Machine (1)
+container.ofalen.machine.smelting-2=Ofalen Smelting Machine (2)
+container.ofalen.machine.smelting-3=Ofalen Smelting Machine (3)
+container.ofalen.machine.converting-0=Ofalen Converting Machine
+container.ofalen.machine.converting-1=Ofalen Converting Machine (1)
+container.ofalen.machine.converting-2=Ofalen Converting Machine (2)
+container.ofalen.machine.converting-3=Ofalen Converting Machine (3)
+container.ofalen.machine.repairing-0=Ofalen Repairing Machine
+container.ofalen.machine.repairing-1=Ofalen Repairing Machine (1)
+container.ofalen.machine.repairing-2=Ofalen Repairing Machine (2)
+container.ofalen.machine.repairing-3=Ofalen Repairing Machine (3)
+container.ofalen.machine.fusing-0=Ofalen Fusing Machine
+container.ofalen.machine.fusing-1=Ofalen Fusing Machine (1)
+container.ofalen.machine.fusing-2=Ofalen Fusing Machine (2)
+container.ofalen.machine.fusing-3=Ofalen Fusing Machine (3)
+container.ofalen.shield=Ofalen Shield
+container.ofalen.teleporter=Ofalen Teleporter
+container.ofalen.markerTeleporting=Ofalen Teleporting Marker
+container.ofalen.floater=Ofalen Floater
+container.ofalen.collector=Ofalen Collector
+container.ofalen.filterItem=Item Filter
+container.ofalen.installerFilter=Filter Installer
+container.ofalen.boxPresent=Ofalen Present Box
 
-//Armor
-item.helmetOfalen.name=Ofalen Helmet
-item.chestplateOfalen.name=Ofalen Chestplate
-item.leggingsOfalen.name=Ofalen Leggings
-item.bootsOfalen.name=Ofalen Boots
+// Item
+item.ofalen.gem.0.name=Red Ofalen
+item.ofalen.gem.1.name=Green Ofalen
+item.ofalen.gem.2.name=Blue Ofalen
+item.ofalen.gem.3.name=White Ofalen
+item.ofalen.gem.4.name=Orange Ofalen
+item.ofalen.gem.5.name=Viridian Ofalen
+item.ofalen.gem.6.name=Purple Ofalen
+item.ofalen.gem.7.name=Dark Ofalen
+item.ofalen.fragment.0.name=Red Ofalen Fragment
+item.ofalen.fragment.1.name=Green Ofalen Fragment
+item.ofalen.fragment.2.name=Blue Ofalen Fragment
+item.ofalen.fragment.3.name=White Ofalen Fragment
+item.ofalen.fragment.4.name=Orange Ofalen Fragment
+item.ofalen.fragment.5.name=Viridian Ofalen Fragment
+item.ofalen.fragment.6.name=Purple Ofalen Fragment
+item.ofalen.fragment.7.name=Dark Ofalen Fragment
+item.ofalen.core.0.name=Red Ofalen Core
+item.ofalen.core.1.name=Green Ofalen Core
+item.ofalen.core.2.name=Blue Ofalen Core
+item.ofalen.core.3.name=White Ofalen Core
+item.ofalen.core.4.name=Orange Ofalen Core
+item.ofalen.core.5.name=Viridian Ofalen Core
+item.ofalen.core.6.name=Purple Ofalen Core
+item.ofalen.core.7.name=Dark Ofalen Core
+item.ofalen.parts.0.name=Machine Cover Plate
+item.ofalen.parts.1.name=Grade 3 Parts
+item.ofalen.parts.2.name=Lump of Stone
+item.ofalen.parts.3.name=Stone Fuel
+item.ofalen.parts.4.name=Ofalen Fuel
+item.ofalen.parts.5.name=Ofalen Laser Magazine
+item.ofalen.parts.6.name=Ingot of Ofalen Shield
+item.ofalen.parts.7.name=Pearl of Ofalen Teleporting
+item.ofalen.parts.8.name=Dust of Ofalen Floating
+item.ofalen.parts.9.name=Lamp of Ofalen Collecting
+// TODO バランス調整：鉄の棒
+item.ofalen.parts3D.0.name=Iron Stick
 
-item.helmetOfalenG2.name=Ofalen Helmet Grade 2
-item.chestplateOfalenG2.name=Ofalen Chestplate Grade 2
-item.leggingsOfalenG2.name=Ofalen Leggings Grade 2
-item.bootsOfalenG2.name=Ofalen Boots Grade 2
+// Armor
+item.ofalen.armor.G1.0.name=Ofalen Helmet Grade 1
+item.ofalen.armor.G1.1.name=Ofalen Chestplate Grade 1
+item.ofalen.armor.G1.2.name=Ofalen Leggings Grade 1
+item.ofalen.armor.G1.3.name=Ofalen Boots Grade 1
 
-item.helmetOfalenG3.name=Ofalen Helmet Grade 3
-item.chestplateOfalenG3.name=Ofalen Chestplate Grade 3
-item.leggingsOfalenG3.name=Ofalen Leggings Grade 3
-item.bootsOfalenG3.name=Ofalen Boots Grade 3
+item.ofalen.armor.G2.0.name=Ofalen Helmet Grade 2
+item.ofalen.armor.G2.1.name=Ofalen Chestplate Grade 2
+item.ofalen.armor.G2.2.name=Ofalen Leggings Grade 2
+item.ofalen.armor.G2.3.name=Ofalen Boots Grade 2
 
-item.helmetPerfectOfalen.name=Ofalen Perfect Helmet
-item.chestplatePerfectOfalen.name=Ofalen Perfect Chestplate
-item.leggingsPerfectOfalen.name=Ofalen Perfect Leggings
-item.bootsPerfectOfalen.name=Ofalen Perfect Boots
+item.ofalen.armor.G3.0.name=Ofalen Helmet Grade 3
+item.ofalen.armor.G3.1.name=Ofalen Chestplate Grade 3
+item.ofalen.armor.G3.2.name=Ofalen Leggings Grade 3
+item.ofalen.armor.G3.3.name=Ofalen Boots Grade 3
 
-//Ball
-item.ballEmpty.0.name=Empty Ball
-item.ballEmpty.1.name=Empty Ball Grade 2
-item.ballEmpty.2.name=Empty Ball Grade 3
+item.ofalen.armor.P.0.name=Ofalen Perfect Helmet
+item.ofalen.armor.P.1.name=Ofalen Perfect Chestplate
+item.ofalen.armor.P.2.name=Ofalen Perfect Leggings
+item.ofalen.armor.P.3.name=Ofalen Perfect Boots
 
-item.ballDefense.name=Defense Ball
-item.ballDefenseG2.name=Defense Ball Grade 2
-item.ballDefenseG3.name=Defense Ball Grade 3
+// Ball
+item.ofalen.ball.empty.0.name=Empty Ball Grade 1
+item.ofalen.ball.empty.1.name=Empty Ball Grade 2
+item.ofalen.ball.empty.2.name=Empty Ball Grade 3
 
-item.ballAttack.name=Attack Ball
-item.ballAttackG2.name=Attack Ball Grade 2
-item.ballAttackG3.name=Attack Ball Grade 3
+item.ofalen.ball.defense.G1.name=Defense Ball Grade 1
+item.ofalen.ball.defense.G2.name=Defense Ball Grade 2
+item.ofalen.ball.defense.G3.name=Defense Ball Grade 3
 
-item.ballRecovery.name=Recovery Ball
-item.ballRecoveryG2.name=Recovery Ball Grade 2
-item.ballRecoveryG3.name=Recovery Ball Grade 3
+item.ofalen.ball.attack.G1.name=Attack Ball Grade 1
+item.ofalen.ball.attack.G2.name=Attack Ball Grade 2
+item.ofalen.ball.attack.G3.name=Attack Ball Grade 3
 
-item.ballExplosion.0.name=Explosion Ball
-item.ballExplosion.1.name=Explosion Ball Grade 2
-item.ballExplosion.2.name=Explosion Ball Grade 3
+item.ofalen.ball.recovery.G1.name=Recovery Ball Grade 1
+item.ofalen.ball.recovery.G2.name=Recovery Ball Grade 2
+item.ofalen.ball.recovery.G3.name=Recovery Ball Grade 3
 
-item.ballFlame.0.name=Flame Ball
+item.ofalen.ball.explosion.0.name=Explosion Ball Grade 1
+item.ofalen.ball.explosion.1.name=Explosion Ball Grade 2
+item.ofalen.ball.explosion.2.name=Explosion Ball Grade 3
+
+item.ballFlame.0.name=Flame Ball Grade 1
 item.ballFlame.1.name=Flame Ball Grade 2
 item.ballFlame.2.name=Flame Ball Grade 3
 
-item.ballHungry.name=Hungry Ball
-item.ballFood.name=Food Ball
-item.ballPerfectOfalen.name=Ofalen Perfect Ball
+item.ofalen.ball.hungry.name=Hungry Ball
+item.ofalen.ball.food.name=Food Ball
+item.ofalen.ball.perfect.name=Ofalen Perfect Ball
 
-//Tool
-item.swordOfalen.name=Ofalen Sword
-item.shovelOfalen.name=Ofalen Shovel
-item.pickaxeOfalen.name=Ofalen Pickaxe
-item.axeOfalen.name=Ofalen Axe
-item.hoeOfalen.name=Ofalen Hoe
+// Tool
+item.ofalen.sword.1.name=Ofalen Sword Grade 1
+item.ofalen.shovel.1.name=Ofalen Shovel Grade 1
+item.ofalen.pickaxe.1.name=Ofalen Pickaxe Grade 1
+item.ofalen.axe.1.name=Ofalen Axe Grade 1
+item.ofalen.hoe.1.name=Ofalen Hoe Grade 1
 
-item.swordOfalenG2.name=Ofalen Sword Grade 2
-item.shovelOfalenG2.name=Ofalen Shovel Grade 2
-item.pickaxeOfalenG2.name=Ofalen Pickaxe Grade 2
-item.axeOfalenG2.name=Ofalen Axe Grade 2
-item.hoeOfalenG2.name=Ofalen Hoe Grade 2
+item.ofalen.sword.2.name=Ofalen Sword Grade 2
+item.ofalen.shovel.2.name=Ofalen Shovel Grade 2
+item.ofalen.pickaxe.2.name=Ofalen Pickaxe Grade 2
+item.ofalen.axe.2.name=Ofalen Axe Grade 2
+item.ofalen.hoe.2.name=Ofalen Hoe Grade 2
 
-item.swordOfalenG3.name=Ofalen Sword Grade 3
-item.shovelOfalenG3.name=Ofalen Shovel Grade 3
-item.pickaxeOfalenG3.name=Ofalen Pickaxe Grade 3
-item.axeOfalenG3.name=Ofalen Axe Grade 3
-item.hoeOfalenG3.name=Ofalen Hoe Grade 3
+item.ofalen.sword.3.name=Ofalen Sword Grade 3
+item.ofalen.shovel.3.name=Ofalen Shovel Grade 3
+item.ofalen.pickaxe.3.name=Ofalen Pickaxe Grade 3
+item.ofalen.axe.3.name=Ofalen Axe Grade 3
+item.ofalen.hoe.3.name=Ofalen Hoe Grade 3
 
-item.bowOfalen.name=Ofalen Bow
-item.toolPerfectOfalen.name=Ofalen Perfect Tool
-item.swordSp.name=Creative Sword
+item.ofalen.tool.P.name=Ofalen Perfect Tool
+item.ofalen.sword.creative.name=Creative Sword
 
-//Laser
-item.pistolLaser.name=Ofalen Laser Pistol
-item.crystalEnergyLaser.0.name=Ofalen Laser Energy Crystal [Red]
-item.crystalEnergyLaser.1.name=Ofalen Laser Energy Crystal [Green]
-item.crystalEnergyLaser.2.name=Ofalen Laser Energy Crystal [Blue]
-item.crystalEnergyLaser.3.name=Ofalen Laser Energy Crystal [White]
-item.magazineLaserRed.name=Ofalen Laser Magazine [Red]
-item.magazineLaserGreen.name=Ofalen Laser Magazine [Green]
-item.magazineLaserBlue.name=Ofalen Laser Magazine [Blue]
-item.magazineLaserWhite.name=Ofalen Laser Magazine [White]
+// Laser
+item.ofalen.pistolLaser.name=Ofalen Laser Pistol
+item.ofalen.crystalLaserEnergy.0.name=Ofalen Laser Energy Crystal [Red]
+item.ofalen.crystalLaserEnergy.1.name=Ofalen Laser Energy Crystal [Green]
+item.ofalen.crystalLaserEnergy.2.name=Ofalen Laser Energy Crystal [Blue]
+item.ofalen.crystalLaserEnergy.3.name=Ofalen Laser Energy Crystal [White]
+item.ofalen.magazineLaserRed.name=Ofalen Laser Magazine [Red]
+item.ofalen.magazineLaserGreen.name=Ofalen Laser Magazine [Green]
+item.ofalen.magazineLaserBlue.name=Ofalen Laser Magazine [Blue]
+item.ofalen.magazineLaserWhite.name=Ofalen Laser Magazine [White]
 
-//Ofalen Grass
-item.seedOfalen.0.name=Red Ofalen Grass Seeds
-item.seedOfalen.1.name=Green Ofalen Grass Seeds
-item.seedOfalen.2.name=Blue Ofalen Grass Seeds
-item.seedOfalen.3.name=White Ofalen Grass Seeds
+// Future
+item.ofalen.shield.name=Ofalen Shield
+item.ofalen.teleporter.name=Ofalen Teleporter
+item.ofalen.floater.name=Ofalen Floater
+item.ofalen.collector.name=Ofalen Collector
 
-//Block
-tile.oreOfalen.0.name=Red Ofalen Ore
-tile.oreOfalen.1.name=Green Ofalen Ore
-tile.oreOfalen.2.name=Blue Ofalen Ore
-tile.oreOfalen.3.name=White Ofalen Ore
-tile.blockOfalen.0.name=Red Ofalen Block
-tile.blockOfalen.1.name=Green Ofalen Block
-tile.blockOfalen.2.name=Blue Ofalen Block
-tile.blockOfalen.3.name=White Ofalen Block
-tile.blockOfalen.4.name=Orange Ofalen Block
-tile.blockOfalen.5.name=Viridian Ofalen Block
-tile.blockOfalen.6.name=Purple Ofalen Block
-tile.blockOfalen.7.name=Dark Ofalen Block
-tile.markerTeleportOfalen.name=Ofalen Teleport Marker
-tile.boxPresentOfalen.name=Ofalen Present Box
+// Filter
+item.ofalen.filterItem.0.name=Item Filter
+item.ofalen.filterItem.1.name=Item Filter (block)
+item.ofalen.installerFilter.name=Filter Installer
 
-//Machine
-tile.machineSmelting.name=Ofalen Smelting Machine
-tile.machineConversion.name=Ofalen Converting Machine
-tile.machineRepair.name=Ofalen Repairing Machine
-tile.machineFusing.name=Ofalen Fusing Machine
-tile.processorMachine.0.name=Ofalen Machine Processor Grade 1
-tile.processorMachine.1.name=Ofalen Machine Processor Grade 2
-tile.processorMachine.2.name=Ofalen Machine Processor Grade 3
-tile.casingProcessor.0.name=Processor Casing Grade 1
-tile.casingProcessor.1.name=Processor Casing Grade 2
-tile.casingProcessor.2.name=Processor Casing Grade 3
-tile.casingProcessor.4.name=Processor Casing Fixing Block Grade 1
-tile.casingProcessor.5.name=Processor Casing Fixing Block Grade 2
-tile.casingProcessor.6.name=Processor Casing Fixing Block Grade 3
+// Ofalen Grass
+item.ofalen.seed.0.name=Red Ofalen Grass Seeds
+item.ofalen.seed.1.name=Green Ofalen Grass Seeds
+item.ofalen.seed.2.name=Blue Ofalen Grass Seeds
+item.ofalen.seed.3.name=White Ofalen Grass Seeds
 
-//Ofalen Grass
-tile.grassOfalen.name=Ofalen Grass
+// Block
+tile.ofalen.ore.0.name=Red Ofalen Ore
+tile.ofalen.ore.1.name=Green Ofalen Ore
+tile.ofalen.ore.2.name=Blue Ofalen Ore
+tile.ofalen.ore.3.name=White Ofalen Ore
+tile.ofalen.block.0.name=Red Ofalen Block
+tile.ofalen.block.1.name=Green Ofalen Block
+tile.ofalen.block.2.name=Blue Ofalen Block
+tile.ofalen.block.3.name=White Ofalen Block
+tile.ofalen.block.4.name=Orange Ofalen Block
+tile.ofalen.block.5.name=Viridian Ofalen Block
+tile.ofalen.block.6.name=Purple Ofalen Block
+tile.ofalen.block.7.name=Dark Ofalen Block
+tile.ofalen.markerTeleporting.name=Ofalen Teleporting Marker
+tile.ofalen.boxPresent.name=Ofalen Present Box
+
+// Machine
+tile.ofalen.machineSmelting.name=Ofalen Smelting Machine
+tile.ofalen.machineConverting.name=Ofalen Converting Machine
+tile.ofalen.machineRepairing.name=Ofalen Repairing Machine
+tile.ofalen.machineFusing.name=Ofalen Fusing Machine
+tile.ofalen.processor.0.name=Ofalen Machine Processor Grade 1
+tile.ofalen.processor.1.name=Ofalen Machine Processor Grade 2
+tile.ofalen.processor.2.name=Ofalen Machine Processor Grade 3
+tile.ofalen.casingProcessor.0.name=Processor Casing Grade 1
+tile.ofalen.casingProcessor.1.name=Processor Casing Grade 2
+tile.ofalen.casingProcessor.2.name=Processor Casing Grade 3
+tile.ofalen.casingProcessor.4.name=Processor Casing Fixing Block Grade 1
+tile.ofalen.casingProcessor.5.name=Processor Casing Fixing Block Grade 2
+tile.ofalen.casingProcessor.6.name=Processor Casing Fixing Block Grade 3
+
+// Ofalen Grass
+tile.ofalen.grass.name=Ofalen Grass

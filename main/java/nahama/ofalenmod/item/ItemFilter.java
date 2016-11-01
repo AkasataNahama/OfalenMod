@@ -3,8 +3,10 @@ package nahama.ofalenmod.item;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import nahama.ofalenmod.OfalenModCore;
+import nahama.ofalenmod.util.OfalenNBTUtil.FilterUtil;
 import nahama.ofalenmod.util.Util;
 import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -16,15 +18,11 @@ import net.minecraft.world.World;
 
 import java.util.List;
 
-import static nahama.ofalenmod.util.OfalenNBTUtil.FilterUtil;
-
 public class ItemFilter extends Item {
-
-	private IIcon[] iicon;
+	private IIcon[] icons;
 
 	public ItemFilter() {
-		super();
-		this.setCreativeTab(OfalenModCore.tabOfalen);
+		this.setCreativeTab(OfalenModCore.TAB_OFALEN);
 		this.setHasSubtypes(true);
 		this.setMaxDamage(0);
 	}
@@ -42,9 +40,11 @@ public class ItemFilter extends Item {
 
 	@Override
 	public ItemStack onItemRightClick(ItemStack itemStack, World world, EntityPlayer player) {
-		if (!Util.isKeyDown(OfalenModCore.keyOSS.getKeyCode())) {
-			if (itemStack.getItemDamage() < 1)
+		if (!Util.isKeyDown(OfalenModCore.KEY_OSS.getKeyCode())) {
+			if (itemStack.getItemDamage() < 1) {
+				Util.debuggingInfo("openGui", "ItemFilter.onItemRightClick");
 				player.openGui(OfalenModCore.instance, 5, world, (int) player.posX, (int) player.posY, (int) player.posZ);
+			}
 			return itemStack;
 		}
 		if (player.isSneaking()) {
@@ -72,13 +72,21 @@ public class ItemFilter extends Item {
 		return true;
 	}
 
+	/** クリエイティブタブにアイテムを登録する処理。 */
+	@Override
+	public void getSubItems(Item item, CreativeTabs tabs, List list) {
+		ItemStack itemStack = new ItemStack(item);
+		FilterUtil.initFilterTag(itemStack);
+		list.add(itemStack);
+	}
+
 	/** アイテムのテクスチャを登録する処理。 */
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void registerIcons(IIconRegister register) {
-		iicon = new IIcon[4];
+		icons = new IIcon[4];
 		for (int i = 0; i < 4; i++) {
-			iicon[i] = register.registerIcon(this.getIconString() + "-" + i);
+			icons[i] = register.registerIcon(this.getIconString() + "-" + i);
 		}
 	}
 
@@ -86,7 +94,7 @@ public class ItemFilter extends Item {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public IIcon getIconFromDamage(int meta) {
-		return iicon[meta & 1];
+		return icons[meta & 1];
 	}
 
 	/** メタデータを返す。 */

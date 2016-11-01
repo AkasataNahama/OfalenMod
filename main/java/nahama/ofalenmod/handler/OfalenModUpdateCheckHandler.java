@@ -1,62 +1,48 @@
 package nahama.ofalenmod.handler;
 
-import nahama.ofalenmod.util.Util;
 import nahama.ofalenmod.OfalenModCore;
+import nahama.ofalenmod.util.Util;
 import net.minecraft.util.StatCollector;
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.regex.Pattern;
 
 public class OfalenModUpdateCheckHandler {
-
-	public static boolean isAvailableNewVersion;
-	public static String latestVersion;
-	public static ArrayList<String> notifiedNames = new ArrayList<>();
+	/** 新しいバージョンがリリースされているか。 */
+	public static boolean isNewVersionAvailable;
+	/** 最新版のバージョン番号。 */
+	public static String versionLatest = "";
+	/** 告知済みのプレイヤーの名前。 */
+	public static ArrayList<String> namesNotified = new ArrayList<>();
 
 	/** 新しいバージョンがリリースされているか確認する。 */
 	public static void checkUpdate() {
 		try {
+			// ネット上のファイルに接続し、テキストを取得する。
 			HttpURLConnection connect = (HttpURLConnection) new URL(OfalenModCore.meta.updateUrl).openConnection();
 			connect.setRequestMethod("GET");
-			InputStream in = connect.getInputStream();
-			String str = readString(in);
-			while (str != null) {
+			InputStream inputStream = connect.getInputStream();
+			// 一行ずつ読み込み、比較していく。
+			while (true) {
+				String str = Util.readString(inputStream);
+				if (str == null)
+					break;
 				if (compareVersion(str))
 					break;
-				str = readString(in);
 			}
-			in.close();
+			inputStream.close();
+			// 接続を切断する。
 			connect.disconnect();
 		} catch (Exception e) {
 			Util.error("Error on checking update.", "OfalenModUpdateCheckCore");
+			e.printStackTrace();
 		}
 	}
 
-	private static String readString(InputStream in) {
-		try {
-			int l, a;
-			byte b[] = new byte[2048];
-			a = in.read();
-			if (a < 0)
-				return null;
-			l = 0;
-			while (a > 10) {
-				if (a >= ' ') {
-					b[l] = (byte) a;
-					l++;
-				}
-				a = in.read();
-			}
-			return new String(b, 0, l);
-		} catch (IOException e) {
-			Util.error("Error on reading string.", "OfalenModUpdateCheckCore");
-			return null;
-		}
-	}
-
+	/** 新しいバージョンがあるかどうか。 */
 	private static boolean compareVersion(String str) {
 		String[] array0 = str.split(":");
 		// MODIDが違うなら終了。
@@ -68,42 +54,32 @@ public class OfalenModUpdateCheckHandler {
 		if (!OfalenModCore.MCVERSION.equals(version.substring(1, index)))
 			return false;
 		String versionOfalenMod = version.substring(index + 1);
-		String[] array1 = splitVersion(versionOfalenMod);
-		String[] array2 = splitVersion(OfalenModCore.MODVERSION);
-		for (int i = 0; i < array1.length && i < array2.length; i++) {
+		String[] latest = versionOfalenMod.split(Pattern.quote("."));
+		String[] using = OfalenModCore.MODVERSION.split(Pattern.quote("."));
+		for (int i = 0; i < latest.length && i < using.length; i++) {
 			try {
-				if (Integer.parseInt(array1[i]) > Integer.parseInt(array2[i])) {
-					isAvailableNewVersion = true;
-					latestVersion = version;
-					return true;
-				}
+				int iLatest = Integer.parseInt(latest[i]);
+				int iUsing = Integer.parseInt(using[i]);
+				// 使用中のバージョンの方が新しいなら終了。
+				if (iLatest < iUsing)
+					return false;
+				// この桁の数が同じなら次の桁へ。
+				if (iLatest == iUsing)
+					continue;
+				isNewVersionAvailable = true;
+				versionLatest = version;
+				return true;
 			} catch (NumberFormatException e) {
 				Util.error("Error on comparing version.", "OfalenModUpdateCheckCore");
 			}
 		}
-		return false;
-	}
-
-	public static String[] splitVersion(String version) {
-		String[] result = new String[3];
-		int index = 0;
-		for (int i = 0; i < version.length(); i++) {
-			char c = version.charAt(i);
-			if (c == '.') {
-				index++;
-			} else {
-				if (result[index] == null)
-					result[index] = "";
-				result[index] += c;
-			}
-		}
-		return result;
+		// 使用中のバージョンより桁数が多いならtrue。
+		return latest.length > using.length;
 	}
 
 	public static String getMessage() {
-		String s1 = StatCollector.translateToLocal("info.OfalenMod.Now");
-		String s2 = StatCollector.translateToLocal("info.OfalenMod.New");
-		return s1 + " " + OfalenModCore.VERSION + s2 + " " + latestVersion;
+		String s1 = StatCollector.translateToLocal("info.ofalen.using");
+		String s2 = StatCollector.translateToLocal("info.ofalen.latest");
+		return "  " + s1 + " : " + OfalenModCore.VERSION + "    " + s2 + " : " + versionLatest;
 	}
-
 }

@@ -11,16 +11,15 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.world.World;
 
 public class ItemOfalenArmor extends ItemArmor {
-
-	private int grade = 0;
+	private byte grade = 0;
 
 	public ItemOfalenArmor(ArmorMaterial material, int type, int grade) {
 		super(material, 0, type);
-		this.setCreativeTab(OfalenModCore.tabOfalen);
-		this.grade = grade;
+		this.setCreativeTab(OfalenModCore.TAB_OFALEN);
+		this.grade = (byte) grade;
 	}
 
-	/** モデルのテクスチャを指定する */
+	/** モデルのテクスチャを指定する。 */
 	@Override
 	public String getArmorTexture(ItemStack itemStack, Entity entity, int slot, String type) {
 		int i = 1;
@@ -31,36 +30,32 @@ public class ItemOfalenArmor extends ItemArmor {
 		return "ofalenmod:textures/models/armor/ofalen_G" + grade + "_layer_" + i + ".png";
 	}
 
-	/** アップデート時の処理 */
+	/** アップデート時の処理。 */
 	@Override
 	public void onArmorTick(World world, EntityPlayer player, ItemStack itemStack) {
 		// ヘルメット
 		if (player.getCurrentArmor(3) != null) {
-			if (player.getCurrentArmor(3).getItem() == OfalenModItemCore.helmetPerfectOfalen) {
+			if (player.getCurrentArmor(3).getItem() == OfalenModItemCore.helmetOfalenP) {
 				player.addPotionEffect(new PotionEffect(Potion.waterBreathing.id, 10, 0));
 			}
 		}
-
 		// チェストプレート
 		if (player.getCurrentArmor(2) != null) {
-			if (player.getCurrentArmor(2).getItem() == OfalenModItemCore.chestplatePerfectOfalen && !player.isPotionActive(Potion.regeneration)) {
+			if (player.getCurrentArmor(2).getItem() == OfalenModItemCore.chestplateOfalenP && !player.isPotionActive(Potion.regeneration)) {
 				player.addPotionEffect(new PotionEffect(Potion.regeneration.id, 20, 2));
 			}
 		}
-
 		// レギンス
 		if (player.getCurrentArmor(1) != null) {
-			if (player.getCurrentArmor(1).getItem() == OfalenModItemCore.leggingsPerfectOfalen) {
+			if (player.getCurrentArmor(1).getItem() == OfalenModItemCore.leggingsOfalenP) {
 				player.addPotionEffect(new PotionEffect(Potion.moveSpeed.id, 10, 2));
 			}
 		}
-
 		// ブーツ
 		if (player.getCurrentArmor(0) != null) {
-			if (player.getCurrentArmor(0).getItem() == OfalenModItemCore.bootsPerfectOfalen) {
+			if (player.getCurrentArmor(0).getItem() == OfalenModItemCore.bootsOfalenP) {
 				player.addPotionEffect(new PotionEffect(Potion.jump.id, 10, 2));
 			}
 		}
 	}
-
 }

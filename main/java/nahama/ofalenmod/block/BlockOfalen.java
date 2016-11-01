@@ -14,12 +14,11 @@ import net.minecraft.util.IIcon;
 import java.util.List;
 
 public class BlockOfalen extends Block {
-
-	private IIcon[] iicon = new IIcon[8];
+	private IIcon[] icons = new IIcon[8];
 
 	public BlockOfalen() {
 		super(Material.rock);
-		this.setCreativeTab(OfalenModCore.tabOfalen);
+		this.setCreativeTab(OfalenModCore.TAB_OFALEN);
 		this.setHardness(7.5F);
 		this.setResistance(15.0F);
 		this.setStepSound(Block.soundTypeMetal);
@@ -47,7 +46,7 @@ public class BlockOfalen extends Block {
 	@SideOnly(Side.CLIENT)
 	public void registerBlockIcons(IIconRegister register) {
 		for (int i = 0; i < 8; i++) {
-			this.iicon[i] = register.registerIcon(this.getTextureName() + i);
+			this.icons[i] = register.registerIcon(this.getTextureName() + "-" + i);
 		}
 	}
 
@@ -55,7 +54,6 @@ public class BlockOfalen extends Block {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public IIcon getIcon(int side, int meta) {
-		return iicon[meta & 7];
+		return icons[meta & 7];
 	}
-
 }

@@ -1,13 +1,13 @@
 package nahama.ofalenmod.inventory;
 
 import nahama.ofalenmod.core.OfalenModItemCore;
+import nahama.ofalenmod.util.OfalenNBTUtil;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 
 public class InventoryItemFloater implements IInventory {
-
 	private InventoryPlayer inventoryPlayer;
 	private ItemStack currentItem;
 	private ItemStack[] itemStacks = new ItemStack[9];
@@ -68,7 +68,7 @@ public class InventoryItemFloater implements IInventory {
 
 	@Override
 	public String getInventoryName() {
-		return "container.OfalenMod.ItemFloater";
+		return "container.ofalen.floater";
 	}
 
 	/** このインベントリの最大スタック数を返す。 */
@@ -78,7 +78,8 @@ public class InventoryItemFloater implements IInventory {
 	}
 
 	@Override
-	public void markDirty() {}
+	public void markDirty() {
+	}
 
 	/** プレイヤーが使用できるかどうか。 */
 	@Override
@@ -102,7 +103,6 @@ public class InventoryItemFloater implements IInventory {
 			}
 			itemStacks[i] = new ItemStack(OfalenModItemCore.partsOfalen, 64, 8);
 			amount -= 64;
-			continue;
 		}
 	}
 
@@ -119,7 +119,7 @@ public class InventoryItemFloater implements IInventory {
 		itemStacks = new ItemStack[9];
 		inventoryPlayer.mainInventory[inventoryPlayer.currentItem].setItemDamage(currentItem.getMaxDamage() - amount);
 		if (inventoryPlayer.getCurrentItem().getItemDamage() >= 64 * 9)
-			inventoryPlayer.getCurrentItem().getTagCompound().setByte("Mode", (byte) 0);
+			inventoryPlayer.getCurrentItem().getTagCompound().setByte(OfalenNBTUtil.MODE, (byte) 0);
 	}
 
 	/** スロットにアクセスできるかどうか。 */
@@ -127,5 +127,4 @@ public class InventoryItemFloater implements IInventory {
 	public boolean isItemValidForSlot(int slot, ItemStack itemStack) {
 		return true;
 	}
-
 }

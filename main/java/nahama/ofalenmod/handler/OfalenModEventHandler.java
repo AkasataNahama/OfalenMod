@@ -15,7 +15,6 @@ import net.minecraftforge.event.entity.living.LivingFallEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 
 public class OfalenModEventHandler {
-
 	/** Entityがワールドに追加された時の処理。 */
 	@SubscribeEvent
 	public void onEntityJoinWorld(EntityJoinWorldEvent event) {
@@ -29,11 +28,11 @@ public class OfalenModEventHandler {
 			OfalenShieldHandler.checkPlayer(player);
 			// プレゼントの調査。
 			OfalenModAnniversaryHandler.checkPlayer(player);
-			if (OfalenModUpdateCheckHandler.isAvailableNewVersion && !OfalenModUpdateCheckHandler.notifiedNames.contains(player.getCommandSenderName())) {
+			if (OfalenModUpdateCheckHandler.isNewVersionAvailable && !OfalenModUpdateCheckHandler.namesNotified.contains(player.getCommandSenderName())) {
 				// 最新バージョンの通知をする。
-				player.addChatMessage(new ChatComponentText(StatCollector.translateToLocal("info.OfalenMod.NewVersionIsAvailable")));
+				player.addChatMessage(new ChatComponentText(StatCollector.translateToLocal("info.ofalen.notificationVersion")));
 				player.addChatMessage(new ChatComponentText(OfalenModUpdateCheckHandler.getMessage()));
-				OfalenModUpdateCheckHandler.notifiedNames.add(player.getCommandSenderName());
+				OfalenModUpdateCheckHandler.namesNotified.add(player.getCommandSenderName());
 			}
 		} else {
 			// クライアント側
@@ -88,5 +87,4 @@ public class OfalenModEventHandler {
 		if (event.modID.equals(OfalenModCore.MODID))
 			OfalenModConfigCore.syncConfig();
 	}
-
 }

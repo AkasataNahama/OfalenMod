@@ -14,10 +14,9 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.player.UseHoeEvent;
 
 public class ItemOfalenPerfectTool extends ItemTool {
-
 	public ItemOfalenPerfectTool(ToolMaterial material) {
 		super(0.0F, material, null);
-		this.setCreativeTab(OfalenModCore.tabOfalen);
+		this.setCreativeTab(OfalenModCore.TAB_OFALEN);
 	}
 
 	@Override
@@ -25,22 +24,20 @@ public class ItemOfalenPerfectTool extends ItemTool {
 		return true;
 	}
 
-	/** 採掘速度の設定 */
+	/** 採掘速度の設定。 */
 	@Override
 	public float func_150893_a(ItemStack itemStack, Block block) {
 		// 他のツールでは適正ブロックの判定をするが、ここではすべてに適正採掘速度を適用する
 		return this.efficiencyOnProperMaterial;
 	}
-
 	// クワの処理
 
-	/** アイテムが使われた(右クリック)時の処理 */
+	/** アイテムが使われた(右クリック)時の処理。 */
 	@Override
 	public boolean onItemUse(ItemStack itemStack, EntityPlayer player, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ) {
 		// プレイヤーが編集不可ならば使えない。
 		if (!player.canPlayerEdit(x, y, z, side, itemStack))
 			return false;
-
 		// eventの呼び出し
 		UseHoeEvent event = new UseHoeEvent(player, itemStack, world, x, y, z);
 		// キャンセルされたら終了。
@@ -51,7 +48,6 @@ public class ItemOfalenPerfectTool extends ItemTool {
 			itemStack.damageItem(1, player);
 			return true;
 		}
-
 		// 右クリックされたブロックを取得する
 		Block block = world.getBlock(x, y, z);
 		// 右クリックされたブロックの上が空気ブロックで、右クリックされたブロックが草ブロックか土ブロックならば
@@ -70,10 +66,9 @@ public class ItemOfalenPerfectTool extends ItemTool {
 		}
 		return false;
 	}
-
 	// 剣の処理
 
-	/** Entityを叩いたときの処理。ItemToolでは2のダメージをアイテムに与えるが、剣と同じように1与えるようにする。 */
+	/** Entityを叩いた時の処理。ItemToolでは2のダメージをアイテムに与えるが、剣と同じように1与えるようにする。 */
 	@Override
 	public boolean hitEntity(ItemStack itemStack, EntityLivingBase target, EntityLivingBase player) {
 		itemStack.damageItem(1, player);
@@ -95,5 +90,4 @@ public class ItemOfalenPerfectTool extends ItemTool {
 		player.setItemInUse(itemStack, this.getMaxItemUseDuration(itemStack));
 		return itemStack;
 	}
-
 }

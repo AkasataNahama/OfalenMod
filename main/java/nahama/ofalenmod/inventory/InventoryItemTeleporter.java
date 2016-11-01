@@ -1,13 +1,13 @@
 package nahama.ofalenmod.inventory;
 
+import nahama.ofalenmod.core.OfalenModItemCore;
+import nahama.ofalenmod.util.OfalenNBTUtil;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
 
 public class InventoryItemTeleporter implements IInventory {
-
 	private InventoryPlayer inventoryPlayer;
 	private ItemStack currentItem;
 	private ItemStack material;
@@ -69,7 +69,7 @@ public class InventoryItemTeleporter implements IInventory {
 
 	@Override
 	public String getInventoryName() {
-		return "container.OfalenMod.ItemTeleporter";
+		return "container.ofalen.teleporter";
 	}
 
 	/** このインベントリの最大スタック数を返す。 */
@@ -79,7 +79,8 @@ public class InventoryItemTeleporter implements IInventory {
 	}
 
 	@Override
-	public void markDirty() {}
+	public void markDirty() {
+	}
 
 	/** プレイヤーが使用できるかどうか。 */
 	@Override
@@ -91,11 +92,11 @@ public class InventoryItemTeleporter implements IInventory {
 	@Override
 	public void openInventory() {
 		// アイテムを読み込む。
-		if (currentItem.getTagCompound().hasKey("Material")) {
-			material = ItemStack.loadItemStackFromNBT(currentItem.getTagCompound().getCompoundTag("Material"));
-			return;
+		if (currentItem.getTagCompound().getByte(OfalenNBTUtil.MATERIAL) > 0) {
+			material = new ItemStack(OfalenModItemCore.partsOfalen, currentItem.getTagCompound().getByte(OfalenNBTUtil.MATERIAL), 7);
+		} else {
+			material = null;
 		}
-		material = null;
 	}
 
 	/** インベントリが閉じられた時の処理。 */
@@ -104,11 +105,9 @@ public class InventoryItemTeleporter implements IInventory {
 		// アイテムを保存する。
 		ItemStack result = inventoryPlayer.getCurrentItem().copy();
 		if (material == null) {
-			result.getTagCompound().removeTag("Material");
+			result.getTagCompound().setByte(OfalenNBTUtil.MATERIAL, (byte) 0);
 		} else {
-			NBTTagCompound nbt = new NBTTagCompound();
-			material.writeToNBT(nbt);
-			result.getTagCompound().setTag("Material", nbt);
+			result.getTagCompound().setByte(OfalenNBTUtil.MATERIAL, (byte) material.stackSize);
 		}
 		inventoryPlayer.mainInventory[inventoryPlayer.currentItem] = result;
 	}
@@ -118,5 +117,4 @@ public class InventoryItemTeleporter implements IInventory {
 	public boolean isItemValidForSlot(int slot, ItemStack itemStack) {
 		return true;
 	}
-
 }

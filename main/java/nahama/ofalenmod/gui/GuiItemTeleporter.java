@@ -1,10 +1,9 @@
 package nahama.ofalenmod.gui;
 
-import org.lwjgl.opengl.GL11;
-
 import nahama.ofalenmod.OfalenModCore;
 import nahama.ofalenmod.inventory.ContainerItemTeleporter;
 import nahama.ofalenmod.network.MTeleporterMeta;
+import nahama.ofalenmod.util.OfalenNBTUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.inventory.GuiContainer;
@@ -12,9 +11,9 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.StatCollector;
+import org.lwjgl.opengl.GL11;
 
 public class GuiItemTeleporter extends GuiContainer {
-
 	private ItemStack currentItem;
 	private static final ResourceLocation GUITEXTURE = new ResourceLocation("ofalenmod:textures/gui/container/teleporter.png");
 
@@ -26,12 +25,12 @@ public class GuiItemTeleporter extends GuiContainer {
 	@Override
 	public void initGui() {
 		super.initGui();
-		buttonList.add(new GuiTeleportMarker.Button(-1, guiLeft + 62, guiTop + 17, true));
-		buttonList.add(new GuiTeleportMarker.Button(-2, guiLeft + 80, guiTop + 17, true));
-		buttonList.add(new GuiTeleportMarker.Button(-3, guiLeft + 98, guiTop + 17, true));
-		buttonList.add(new GuiTeleportMarker.Button(-4, guiLeft + 62, guiTop + 54, false));
-		buttonList.add(new GuiTeleportMarker.Button(-5, guiLeft + 80, guiTop + 54, false));
-		buttonList.add(new GuiTeleportMarker.Button(-6, guiLeft + 98, guiTop + 54, false));
+		buttonList.add(new GuiTeleportingMarker.Button(-1, guiLeft + 62, guiTop + 17, true));
+		buttonList.add(new GuiTeleportingMarker.Button(-2, guiLeft + 80, guiTop + 17, true));
+		buttonList.add(new GuiTeleportingMarker.Button(-3, guiLeft + 98, guiTop + 17, true));
+		buttonList.add(new GuiTeleportingMarker.Button(-4, guiLeft + 62, guiTop + 54, false));
+		buttonList.add(new GuiTeleportingMarker.Button(-5, guiLeft + 80, guiTop + 54, false));
+		buttonList.add(new GuiTeleportingMarker.Button(-6, guiLeft + 98, guiTop + 54, false));
 	}
 
 	@Override
@@ -63,12 +62,12 @@ public class GuiItemTeleporter extends GuiContainer {
 			channel = 999;
 		}
 		currentItem.setItemDamage(channel);
-		OfalenModCore.wrapper.sendToServer(new MTeleporterMeta(channel));
+		OfalenModCore.WRAPPER.sendToServer(new MTeleporterMeta((short) channel));
 	}
 
 	@Override
 	protected void drawGuiContainerForegroundLayer(int par1, int par2) {
-		String s = StatCollector.translateToLocal("container.OfalenMod.ItemTeleporter");
+		String s = StatCollector.translateToLocal("container.ofalen.teleporter");
 		fontRendererObj.drawString(s, xSize / 2 - fontRendererObj.getStringWidth(s) / 2, 6, 4210752);
 		fontRendererObj.drawString(StatCollector.translateToLocal("container.inventory"), 8, ySize - 96 + 2, 4210752);
 	}
@@ -80,22 +79,22 @@ public class GuiItemTeleporter extends GuiContainer {
 		int k = (width - xSize) / 2;
 		int l = (height - ySize) / 2;
 		this.drawTexturedModalRect(k, l, 0, 0, xSize, ySize);
-
 		currentItem = Minecraft.getMinecraft().thePlayer.getHeldItem();
-		int offY = currentItem.getTagCompound().getBoolean("IsValid") ? 0 : 26;
+		int offY = currentItem.getTagCompound().getBoolean(OfalenNBTUtil.IS_VALID) ? 0 : 26;
 		String s = String.valueOf(currentItem.getItemDamage());
 		for (int i = 0; i < 3; i++) {
 			char c = '0';
 			try {
 				c = s.charAt(i - 3 + s.length());
-			} catch (StringIndexOutOfBoundsException e) {}
+			} catch (StringIndexOutOfBoundsException e) {
+				e.printStackTrace();
+			}
 			// チャンネルを表示する。
 			this.drawTexturedModalRect(k + 62 + (i * 18), l + 27, 16 * Integer.parseInt(c + ""), 166 + offY, 16, 26);
 		}
 	}
 
 	public static class Button extends GuiButton {
-
 		private boolean isPlus;
 
 		public Button(int id, int x, int y, boolean isPlus) {
@@ -115,7 +114,5 @@ public class GuiItemTeleporter extends GuiContainer {
 			int offY = field_146123_n ? 0 : height;
 			this.drawTexturedModalRect(xPosition, yPosition, 176 + offX, offY, width, height);
 		}
-
 	}
-
 }

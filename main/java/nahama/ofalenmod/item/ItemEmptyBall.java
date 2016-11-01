@@ -1,7 +1,5 @@
 package nahama.ofalenmod.item;
 
-import java.util.List;
-
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import nahama.ofalenmod.OfalenModCore;
@@ -11,13 +9,13 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 
-public class ItemEmptyBall extends Item {
+import java.util.List;
 
-	private IIcon[] iicon;
+public class ItemEmptyBall extends Item {
+	private IIcon[] icons;
 
 	public ItemEmptyBall() {
-		super();
-		this.setCreativeTab(OfalenModCore.tabOfalen);
+		this.setCreativeTab(OfalenModCore.TAB_OFALEN);
 		this.setHasSubtypes(true);
 		this.setMaxDamage(0);
 	}
@@ -25,7 +23,7 @@ public class ItemEmptyBall extends Item {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public IIcon getIconFromDamage(int meta) {
-		return iicon[meta];
+		return icons[meta];
 	}
 
 	@Override
@@ -49,10 +47,9 @@ public class ItemEmptyBall extends Item {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void registerIcons(IIconRegister iicon) {
-		this.iicon = new IIcon[3];
+		this.icons = new IIcon[3];
 		for (int i = 0; i < 3; i++) {
-			this.iicon[i] = iicon.registerIcon(this.getIconString() + i);
+			this.icons[i] = iicon.registerIcon(this.getIconString() + "-" + (i + 1));
 		}
 	}
-
 }

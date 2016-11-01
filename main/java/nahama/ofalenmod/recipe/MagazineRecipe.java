@@ -1,24 +1,22 @@
 package nahama.ofalenmod.recipe;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.world.World;
 import net.minecraftforge.oredict.OreDictionary;
 
-public class MagazineRecipe implements IRecipe {
+import java.util.ArrayList;
 
+public class MagazineRecipe implements IRecipe {
 	private ItemStack output = null;
-	private ArrayList<Object> input = new ArrayList<Object>();
+	private ArrayList<ItemStack> input = new ArrayList<>();
 
 	public MagazineRecipe(ItemStack result, ItemStack magazine, ItemStack crystal, int amount) {
 		output = result.copy();
 		input.add(magazine.copy());
 		for (int i = 0; i < amount; i++) {
-			input.add((crystal).copy());
+			input.add(crystal.copy());
 		}
 	}
 
@@ -37,46 +35,27 @@ public class MagazineRecipe implements IRecipe {
 		return output.copy();
 	}
 
+	/** クラフティングインベントリがレシピに適合しているか。 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public boolean matches(InventoryCrafting inv, World world) {
-		ArrayList<Object> required = new ArrayList<Object>(input);
-
+		ArrayList<ItemStack> required = new ArrayList<>(input);
 		for (int x = 0; x < inv.getSizeInventory(); x++) {
 			ItemStack slot = inv.getStackInSlot(x);
-
-			if (slot != null) {
-				boolean inRecipe = false;
-				Iterator<Object> req = required.iterator();
-
-				while (req.hasNext()) {
-					boolean match = false;
-
-					Object next = req.next();
-
-					if (next instanceof ItemStack) {
-						match = OreDictionary.itemMatches((ItemStack) next, slot, false);
-					} else if (next instanceof ArrayList) {
-						Iterator<ItemStack> itr = ((ArrayList<ItemStack>) next).iterator();
-						while (itr.hasNext() && !match) {
-							match = OreDictionary.itemMatches(itr.next(), slot, false);
-						}
-					}
-
-					if (match) {
-						inRecipe = true;
-						required.remove(next);
-						break;
-					}
-				}
-
-				if (!inRecipe) {
-					return false;
-				}
+			if (slot == null)
+				continue;
+			boolean inRecipe = false;
+			for (ItemStack aRequired : required) {
+				if (!OreDictionary.itemMatches(aRequired, slot, false))
+					continue;
+				inRecipe = true;
+				required.remove(aRequired);
+				break;
+			}
+			if (!inRecipe) {
+				return false;
 			}
 		}
-
 		return required.isEmpty();
 	}
-
 }

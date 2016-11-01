@@ -6,7 +6,6 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 
 public abstract class InventoryItemBase implements IInventory {
-
 	protected InventoryPlayer inventoryPlayer;
 	protected ItemStack[] itemStacks;
 
@@ -94,5 +93,4 @@ public abstract class InventoryItemBase implements IInventory {
 	public boolean isItemValidForSlot(int slot, ItemStack itemStack) {
 		return true;
 	}
-
 }

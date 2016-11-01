@@ -1,8 +1,5 @@
 package nahama.ofalenmod.block;
 
-import java.util.List;
-import java.util.Random;
-
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import nahama.ofalenmod.OfalenModCore;
@@ -18,14 +15,16 @@ import net.minecraft.util.IIcon;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.IBlockAccess;
 
-public class BlockOfalenOre extends Block {
+import java.util.List;
+import java.util.Random;
 
-	private IIcon[] iicon = new IIcon[4];
+public class BlockOfalenOre extends Block {
+	private IIcon[] icons = new IIcon[4];
 	private Random random = new Random();
 
 	public BlockOfalenOre() {
 		super(Material.rock);
-		this.setCreativeTab(OfalenModCore.tabOfalen);
+		this.setCreativeTab(OfalenModCore.TAB_OFALEN);
 		this.setHardness(5.0F);
 		this.setResistance(7.5F);
 		this.setStepSound(Block.soundTypePiston);
@@ -87,7 +86,7 @@ public class BlockOfalenOre extends Block {
 	@SideOnly(Side.CLIENT)
 	public void registerBlockIcons(IIconRegister iicon) {
 		for (int i = 0; i < 4; i++) {
-			this.iicon[i] = iicon.registerIcon(this.getTextureName() + i);
+			this.icons[i] = iicon.registerIcon(this.getTextureName() + "-" + i);
 		}
 	}
 
@@ -95,7 +94,6 @@ public class BlockOfalenOre extends Block {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public IIcon getIcon(int side, int meta) {
-		return iicon[meta & 3];
+		return icons[meta & 3];
 	}
-
 }

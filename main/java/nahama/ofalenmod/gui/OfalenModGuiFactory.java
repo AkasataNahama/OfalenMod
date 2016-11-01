@@ -11,7 +11,6 @@ import net.minecraftforge.common.config.ConfigElement;
 import java.util.Set;
 
 public class OfalenModGuiFactory implements IModGuiFactory {
-
 	@Override
 	public void initialize(Minecraft minecraftInstance) {
 	}
@@ -36,5 +35,4 @@ public class OfalenModGuiFactory implements IModGuiFactory {
 			super(parent, new ConfigElement(OfalenModConfigCore.cfg.getCategory(OfalenModConfigCore.GENERAL)).getChildElements(), OfalenModCore.MODID, false, false, OfalenModCore.MODNAME);
 		}
 	}
-
 }

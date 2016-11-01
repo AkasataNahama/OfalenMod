@@ -6,12 +6,11 @@ import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.item.ItemStack;
 
 public class InventoryItemFuture extends InventoryItemBase {
-
-	private int meta;
-	private int size;
+	private byte meta;
+	private short size;
 	private String name;
 
-	public InventoryItemFuture(InventoryPlayer inventory, int meta, int size, String name) {
+	public InventoryItemFuture(InventoryPlayer inventory, byte meta, short size, String name) {
 		super(inventory);
 		this.meta = meta;
 		this.size = size;
@@ -26,7 +25,7 @@ public class InventoryItemFuture extends InventoryItemBase {
 
 	@Override
 	public String getInventoryName() {
-		return "container.OfalenMod." + name;
+		return "container.ofalen." + name;
 	}
 
 	/** インベントリが開かれた時の処理。 */
@@ -59,5 +58,4 @@ public class InventoryItemFuture extends InventoryItemBase {
 		itemStacks = new ItemStack[this.getSizeInventory()];
 		inventoryPlayer.getCurrentItem().setItemDamage(inventoryPlayer.getCurrentItem().getMaxDamage() - amount);
 	}
-
 }

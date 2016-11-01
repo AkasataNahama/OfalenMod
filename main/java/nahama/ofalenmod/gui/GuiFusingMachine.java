@@ -9,7 +9,6 @@ import net.minecraft.util.StatCollector;
 import org.lwjgl.opengl.GL11;
 
 public class GuiFusingMachine extends GuiContainer {
-
 	private TileEntityFusingMachine tileEntity;
 	private static final ResourceLocation GUITEXTURE = new ResourceLocation("ofalenmod:textures/gui/container/fusing_machine.png");
 
@@ -42,5 +41,4 @@ public class GuiFusingMachine extends GuiContainer {
 		i1 = tileEntity.getWorkProgressScaled(24);
 		this.drawTexturedModalRect(k + 79, l + 34 - 17, 176, 14, i1 + 1, 16);
 	}
-
 }

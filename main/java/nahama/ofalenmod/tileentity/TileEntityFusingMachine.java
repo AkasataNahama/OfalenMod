@@ -4,6 +4,7 @@ import nahama.ofalenmod.block.BlockOfalen;
 import nahama.ofalenmod.core.OfalenModConfigCore;
 import nahama.ofalenmod.core.OfalenModItemCore;
 import nahama.ofalenmod.item.ItemOfalen;
+import nahama.ofalenmod.util.OfalenNBTUtil;
 import net.minecraft.block.Block;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
@@ -13,7 +14,7 @@ import net.minecraft.nbt.NBTTagList;
 
 public class TileEntityFusingMachine extends TileEntityGradedMachineBase {
 	/** 機械の中にあるアイテムの配列。 */
-	protected ItemStack[] stacks = new ItemStack[5];
+	protected ItemStack[] itemStacksFusing = new ItemStack[5];
 
 	/** アップデート時の処理。 */
 	@Override
@@ -25,10 +26,10 @@ public class TileEntityFusingMachine extends TileEntityGradedMachineBase {
 		boolean isBurning = this.isBurning();
 		// 燃焼中なら時間を減らす。
 		if (isBurning)
-			burnTime--;
+			timeBurning--;
 		// 燃焼中でなく、燃料が空なら終了する。
-		if (!this.isBurning() && stacks[3] == null) {
-			workTime = 0;
+		if (!this.isBurning() && itemStacksFusing[3] == null) {
+			timeWorking = 0;
 			if (isBurning)
 				this.updateIsBurning();
 			return;
@@ -36,32 +37,31 @@ public class TileEntityFusingMachine extends TileEntityGradedMachineBase {
 		if (this.canWork()) {
 			// 燃焼中でなく作業可能なら、新たに燃料を消費し、燃焼させる。
 			if (!this.isBurning()) {
-				maxBurnTime = burnTime = this.getItemBurnTime(stacks[3]);
+				timeMaxBurning = timeBurning = this.getItemBurnTime(itemStacksFusing[3]);
 				if (this.isBurning()) {
-					if (stacks[3] != null) {
-						--stacks[3].stackSize;
-						if (stacks[3].stackSize == 0) {
-							stacks[3] = stacks[3].getItem().getContainerItem(stacks[3]);
+					if (itemStacksFusing[3] != null) {
+						--itemStacksFusing[3].stackSize;
+						if (itemStacksFusing[3].stackSize == 0) {
+							itemStacksFusing[3] = itemStacksFusing[3].getItem().getContainerItem(itemStacksFusing[3]);
 						}
 					}
 				}
 			}
 			// 燃焼中で作業可能なら、作業する。
 			if (this.isBurning()) {
-				++workTime;
-				if (workTime >= this.getWorkTime()) {
-					workTime = 0;
+				++timeWorking;
+				if (timeWorking >= this.getWorkTime()) {
+					timeWorking = 0;
 					this.work();
 				}
 			} else {
 				// 燃焼中でないなら作業時間をリセットする。
-				workTime = 0;
+				timeWorking = 0;
 			}
 		} else {
 			// 作業不可能なら作業時間をリセットする。
-			workTime = 0;
+			timeWorking = 0;
 		}
-
 		// 燃焼しているかが変わっていたら、更新する。
 		if (isBurning != this.isBurning()) {
 			this.updateIsBurning();
@@ -73,35 +73,30 @@ public class TileEntityFusingMachine extends TileEntityGradedMachineBase {
 	protected boolean canWork() {
 		Item item = null;
 		for (int i = 0; i < 3; i++) {
-			if (stacks[i] == null)
+			if (itemStacksFusing[i] == null)
 				continue;
 			if (item == null)
-				item = stacks[i].getItem();
-			else if (item != stacks[i].getItem())
+				item = itemStacksFusing[i].getItem();
+			else if (item != itemStacksFusing[i].getItem())
 				return false;
 		}
-
 		int color = this.getResultColor();
 		if (color < 0) {
 			return false;
 		}
-
 		int amount = this.getResultAmount(color, item);
 		if (amount < 0) {
 			return false;
 		}
-
 		ItemStack result = new ItemStack(item, amount, color);
-
-		if (stacks[4] != null) {
+		if (itemStacksFusing[4] != null) {
 			// 完成品スロットに空きがないなら不可。
-			if (!stacks[4].isItemEqual(result))
+			if (!itemStacksFusing[4].isItemEqual(result))
 				return false;
-			int size = stacks[4].stackSize + result.stackSize;
-			if (size > this.getInventoryStackLimit() || size > stacks[4].getMaxStackSize())
+			int size = itemStacksFusing[4].stackSize + result.stackSize;
+			if (size > this.getInventoryStackLimit() || size > itemStacksFusing[4].getMaxStackSize())
 				return false;
 		}
-
 		return true;
 	}
 
@@ -109,11 +104,11 @@ public class TileEntityFusingMachine extends TileEntityGradedMachineBase {
 	protected int getResultColor() {
 		int flag = 0;
 		for (int i = 0; i < 3; i++) {
-			if (stacks[i] == null) {
+			if (itemStacksFusing[i] == null) {
 				continue;
 			}
-			if (this.isFusableOfalen(stacks[i].getItem())) {
-				flag += 1 << stacks[i].getItemDamage();
+			if (this.isFusableOfalen(itemStacksFusing[i].getItem())) {
+				flag += 1 << itemStacksFusing[i].getItemDamage();
 			} else {
 				return -1;
 			}
@@ -158,7 +153,7 @@ public class TileEntityFusingMachine extends TileEntityGradedMachineBase {
 	/** 作業にかかる時間を返す。 */
 	@Override
 	protected int getWorkTime() {
-		return OfalenModConfigCore.timeConversion * (4 - grade) / 4;
+		return OfalenModConfigCore.timeConverting * (4 - grade) / 4;
 	}
 
 	/** 作業時の処理。 */
@@ -166,27 +161,27 @@ public class TileEntityFusingMachine extends TileEntityGradedMachineBase {
 	public void work() {
 		Item item = null;
 		for (int i = 0; i < 3; i++) {
-			if (stacks[i] == null)
+			if (itemStacksFusing[i] == null)
 				continue;
-			item = stacks[i].getItem();
+			item = itemStacksFusing[i].getItem();
 			break;
 		}
 		int color = this.getResultColor();
 		int amount = this.getResultAmount(color, item);
 		ItemStack result = new ItemStack(item, amount, color);
 		// 完成品スロットに融合結果を代入/追加する。
-		if (stacks[4] == null) {
-			stacks[4] = result;
-		} else if (stacks[4].isItemEqual(result)) {
-			stacks[4].stackSize += amount;
+		if (itemStacksFusing[4] == null) {
+			itemStacksFusing[4] = result;
+		} else if (itemStacksFusing[4].isItemEqual(result)) {
+			itemStacksFusing[4].stackSize += amount;
 		}
 		// 変換前スロットのスタック数を減らす。
 		for (int i = 0; i < 3; i++) {
-			if (stacks[i] == null)
+			if (itemStacksFusing[i] == null)
 				continue;
-			--stacks[i].stackSize;
-			if (stacks[i].stackSize < 1) {
-				stacks[i] = null;
+			--itemStacksFusing[i].stackSize;
+			if (itemStacksFusing[i].stackSize < 1) {
+				itemStacksFusing[i] = null;
 			}
 		}
 		this.updateGrade();
@@ -202,31 +197,31 @@ public class TileEntityFusingMachine extends TileEntityGradedMachineBase {
 	public void writeToNBT(NBTTagCompound nbt) {
 		super.writeToNBT(nbt);
 		NBTTagList nbttaglist = new NBTTagList();
-		for (int i = 0; i < stacks.length; i++) {
-			if (stacks[i] == null)
+		for (int i = 0; i < itemStacksFusing.length; i++) {
+			if (itemStacksFusing[i] == null)
 				continue;
 			NBTTagCompound nbt1 = new NBTTagCompound();
-			nbt1.setByte("Slot", (byte) i);
-			stacks[i].writeToNBT(nbt1);
+			nbt1.setByte(OfalenNBTUtil.SLOT, (byte) i);
+			itemStacksFusing[i].writeToNBT(nbt1);
 			nbttaglist.appendTag(nbt1);
 		}
-		nbt.setTag("Items", nbttaglist);
+		nbt.setTag(OfalenNBTUtil.ITEMS, nbttaglist);
 	}
 
 	/** NBTから機械の情報を反映する。 */
 	@Override
 	public void readFromNBT(NBTTagCompound nbt) {
 		super.readFromNBT(nbt);
-		NBTTagList nbttaglist = nbt.getTagList("Items", 10);
-		stacks = new ItemStack[5];
+		NBTTagList nbttaglist = nbt.getTagList(OfalenNBTUtil.ITEMS, 10);
+		itemStacksFusing = new ItemStack[5];
 		for (int i = 0; i < nbttaglist.tagCount(); i++) {
 			NBTTagCompound nbt1 = nbttaglist.getCompoundTagAt(i);
-			byte b0 = nbt1.getByte("Slot");
-			if (0 <= b0 && b0 < stacks.length) {
-				stacks[b0] = ItemStack.loadItemStackFromNBT(nbt1);
+			byte b0 = nbt1.getByte(OfalenNBTUtil.SLOT);
+			if (0 <= b0 && b0 < itemStacksFusing.length) {
+				itemStacksFusing[b0] = ItemStack.loadItemStackFromNBT(nbt1);
 			}
 		}
-		maxBurnTime = this.getItemBurnTime(stacks[3]);
+		timeMaxBurning = this.getItemBurnTime(itemStacksFusing[3]);
 	}
 
 	@Override
@@ -237,23 +232,23 @@ public class TileEntityFusingMachine extends TileEntityGradedMachineBase {
 	/** スロットのアイテムを返す。 */
 	@Override
 	public ItemStack getStackInSlot(int slot) {
-		return stacks[slot];
+		return itemStacksFusing[slot];
 	}
 
 	/** スロットのスタック数を減らす。 */
 	@Override
 	public ItemStack decrStackSize(int slot, int amount) {
-		if (stacks[slot] == null)
+		if (itemStacksFusing[slot] == null)
 			return null;
 		ItemStack itemstack;
-		if (stacks[slot].stackSize <= amount) {
-			itemstack = stacks[slot];
-			stacks[slot] = null;
+		if (itemStacksFusing[slot].stackSize <= amount) {
+			itemstack = itemStacksFusing[slot];
+			itemStacksFusing[slot] = null;
 			return itemstack;
 		}
-		itemstack = stacks[slot].splitStack(amount);
-		if (stacks[slot].stackSize < 1) {
-			stacks[slot] = null;
+		itemstack = itemStacksFusing[slot].splitStack(amount);
+		if (itemStacksFusing[slot].stackSize < 1) {
+			itemStacksFusing[slot] = null;
 		}
 		return itemstack;
 	}
@@ -261,7 +256,7 @@ public class TileEntityFusingMachine extends TileEntityGradedMachineBase {
 	/** スロットの中身を設定する。 */
 	@Override
 	public void setInventorySlotContents(int slot, ItemStack itemStack) {
-		stacks[slot] = itemStack;
+		itemStacksFusing[slot] = itemStack;
 		if (itemStack != null && itemStack.stackSize > this.getInventoryStackLimit()) {
 			itemStack.stackSize = this.getInventoryStackLimit();
 		}
@@ -269,7 +264,7 @@ public class TileEntityFusingMachine extends TileEntityGradedMachineBase {
 
 	@Override
 	public String getInventoryName() {
-		return this.hasCustomInventoryName() ? customName : "container.OfalenMod.FusingMachine-" + grade;
+		return this.hasCustomInventoryName() ? customName : "container.ofalen.machine.fusing-" + grade;
 	}
 
 	@Override

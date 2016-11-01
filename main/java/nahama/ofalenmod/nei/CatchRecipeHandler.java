@@ -1,27 +1,26 @@
 package nahama.ofalenmod.nei;
 
-import java.awt.Rectangle;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map.Entry;
-
 import codechicken.nei.NEIServerUtils;
 import codechicken.nei.PositionedStack;
 import codechicken.nei.recipe.TemplateRecipeHandler;
 import nahama.ofalenmod.gui.GuiSmeltingMachine;
-import nahama.ofalenmod.recipe.OfalenSmeltingRecipes;
+import nahama.ofalenmod.recipe.OfalenSmeltingRecipe;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.StatCollector;
 
-public class CatchRecipeHandler extends TemplateRecipeHandler {
+import java.awt.*;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map.Entry;
 
+public class CatchRecipeHandler extends TemplateRecipeHandler {
 	private HashMap<ItemStack, ItemStack> newRecipe;
 
 	private HashMap<ItemStack, ItemStack> recipeLoader() {
-		if (OfalenSmeltingRecipes.getInstance().smeltingList != null && !OfalenSmeltingRecipes.getInstance().smeltingList.isEmpty()) {
-			newRecipe = new HashMap<ItemStack, ItemStack>();
-			Iterator<Entry<ItemStack[], Boolean>> iterator = OfalenSmeltingRecipes.getInstance().smeltingList.entrySet().iterator();
+		if (OfalenSmeltingRecipe.getInstance().listRecipe != null && !OfalenSmeltingRecipe.getInstance().listRecipe.isEmpty()) {
+			newRecipe = new HashMap<>();
+			Iterator<Entry<ItemStack[], Boolean>> iterator = OfalenSmeltingRecipe.getInstance().listRecipe.entrySet().iterator();
 			Entry<ItemStack[], Boolean> entry;
 			while (iterator.hasNext()) {
 				entry = iterator.next();
@@ -31,12 +30,11 @@ public class CatchRecipeHandler extends TemplateRecipeHandler {
 		return newRecipe;
 	}
 
-	public class recipeCacher extends CachedRecipe {
-
+	public class recipeCatcher extends CachedRecipe {
 		private PositionedStack input;
 		private PositionedStack result;
 
-		public recipeCacher(ItemStack in, ItemStack out) {
+		public recipeCatcher(ItemStack in, ItemStack out) {
 			in.stackSize = 1;
 			input = new PositionedStack(in, 51, 6);
 			result = new PositionedStack(out, 111, 23);
@@ -51,7 +49,6 @@ public class CatchRecipeHandler extends TemplateRecipeHandler {
 		public PositionedStack getIngredient() {
 			return input;
 		}
-
 	}
 
 	public PositionedStack getResult() {
@@ -77,13 +74,12 @@ public class CatchRecipeHandler extends TemplateRecipeHandler {
 	public void loadCraftingRecipes(String outputId, Object... results) {
 		if (outputId.equals("OfalenSmeltingRecipe")) {
 			HashMap<ItemStack, ItemStack> recipes = this.recipeLoader();
-
 			if (recipes == null || recipes.isEmpty())
 				return;
 			for (Entry<ItemStack, ItemStack> recipe : recipes.entrySet()) {
 				ItemStack item = recipe.getValue();
 				ItemStack in = recipe.getKey();
-				arecipes.add(new recipeCacher(in, item));
+				arecipes.add(new recipeCatcher(in, item));
 			}
 		} else {
 			super.loadCraftingRecipes(outputId, results);
@@ -93,14 +89,13 @@ public class CatchRecipeHandler extends TemplateRecipeHandler {
 	@Override
 	public void loadCraftingRecipes(ItemStack result) {
 		HashMap<ItemStack, ItemStack> recipes = this.recipeLoader();
-
 		if (recipes == null || recipes.isEmpty())
 			return;
 		for (Entry<ItemStack, ItemStack> recipe : recipes.entrySet()) {
 			ItemStack item = recipe.getValue();
 			ItemStack in = recipe.getKey();
 			if (NEIServerUtils.areStacksSameType(item, result)) {
-				arecipes.add(new recipeCacher(in, item));
+				arecipes.add(new recipeCatcher(in, item));
 			}
 		}
 	}
@@ -108,26 +103,24 @@ public class CatchRecipeHandler extends TemplateRecipeHandler {
 	@Override
 	public void loadUsageRecipes(ItemStack ingredient) {
 		HashMap<ItemStack, ItemStack> recipes = this.recipeLoader();
-
 		if (recipes == null || recipes.isEmpty())
 			return;
 		for (Entry<ItemStack, ItemStack> recipe : recipes.entrySet()) {
 			ItemStack item = recipe.getValue();
 			ItemStack in = recipe.getKey();
 			if (ingredient.isItemEqual(in)) {
-				arecipes.add(new recipeCacher(ingredient, item));
+				arecipes.add(new recipeCatcher(ingredient, item));
 			}
 		}
 	}
 
 	@Override
 	public String getRecipeName() {
-		return StatCollector.translateToLocal("info.OfalenMod.smeltingrecipe");
+		return StatCollector.translateToLocal("info.ofalen.recipeSmelting");
 	}
 
 	@Override
 	public String getGuiTexture() {
 		return "textures/gui/container/furnace.png";
 	}
-
 }

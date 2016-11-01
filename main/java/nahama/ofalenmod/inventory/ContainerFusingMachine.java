@@ -10,19 +10,18 @@ import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 
 public class ContainerFusingMachine extends Container {
-
 	private TileEntityFusingMachine tileEntity;
-	private int lastFusingTime;
-	private int lastBurnTime;
-	private int lastItemBurnTime;
-	/** 変換機のインベントリの第一スロットの番号 */
-	private static final int index0 = 0;
-	/** プレイヤーのインベントリの第一スロットの番号 */
-	private static final int index1 = 5;
-	/** クイックスロットの第一スロットの番号 */
-	private static final int index2 = index1 + 27;
-	/** このコンテナの全体のスロット数 */
-	private static final int index3 = index2 + 9;
+	private short lastFusingTime;
+	private short lastBurningTime;
+	private short lastItemBurningTime;
+	/** 変換機のインベントリの第一スロットの番号。 */
+	private static final byte INDEX_0 = 0;
+	/** プレイヤーのインベントリの第一スロットの番号。 */
+	private static final byte INDEX_1 = 5;
+	/** クイックスロットの第一スロットの番号。 */
+	private static final byte INDEX_2 = INDEX_1 + 27;
+	/** このコンテナの全体のスロット数。 */
+	private static final byte INDEX_3 = INDEX_2 + 9;
 
 	public ContainerFusingMachine(EntityPlayer player, TileEntityFusingMachine tileEntity) {
 		this.tileEntity = tileEntity;
@@ -30,7 +29,7 @@ public class ContainerFusingMachine extends Container {
 		this.addSlotToContainer(new Slot(tileEntity, 1, 14, 53));
 		this.addSlotToContainer(new Slot(tileEntity, 2, 56, 53));
 		this.addSlotToContainer(new Slot(tileEntity, 3, 83, 53));
-		this.addSlotToContainer(new SlotUnputable(tileEntity, 4, 116, 35));
+		this.addSlotToContainer(new SlotNotPuttable(tileEntity, 4, 116, 35));
 		int i;
 		for (i = 0; i < 3; ++i) {
 			for (int j = 0; j < 9; ++j) {
@@ -45,9 +44,9 @@ public class ContainerFusingMachine extends Container {
 	@Override
 	public void addCraftingToCrafters(ICrafting iCrafting) {
 		super.addCraftingToCrafters(iCrafting);
-		iCrafting.sendProgressBarUpdate(this, 0, tileEntity.workTime);
-		iCrafting.sendProgressBarUpdate(this, 1, tileEntity.burnTime);
-		iCrafting.sendProgressBarUpdate(this, 2, tileEntity.maxBurnTime);
+		iCrafting.sendProgressBarUpdate(this, 0, tileEntity.timeWorking);
+		iCrafting.sendProgressBarUpdate(this, 1, tileEntity.timeBurning);
+		iCrafting.sendProgressBarUpdate(this, 2, tileEntity.timeMaxBurning);
 	}
 
 	@Override
@@ -55,32 +54,32 @@ public class ContainerFusingMachine extends Container {
 		super.detectAndSendChanges();
 		for (Object crafter : crafters) {
 			ICrafting icrafting = (ICrafting) crafter;
-			if (lastFusingTime != tileEntity.workTime) {
-				icrafting.sendProgressBarUpdate(this, 0, tileEntity.workTime);
+			if (lastFusingTime != tileEntity.timeWorking) {
+				icrafting.sendProgressBarUpdate(this, 0, tileEntity.timeWorking);
 			}
-			if (lastBurnTime != tileEntity.burnTime) {
-				icrafting.sendProgressBarUpdate(this, 1, tileEntity.burnTime);
+			if (lastBurningTime != tileEntity.timeBurning) {
+				icrafting.sendProgressBarUpdate(this, 1, tileEntity.timeBurning);
 			}
-			if (lastItemBurnTime != tileEntity.maxBurnTime) {
-				icrafting.sendProgressBarUpdate(this, 2, tileEntity.maxBurnTime);
+			if (lastItemBurningTime != tileEntity.timeMaxBurning) {
+				icrafting.sendProgressBarUpdate(this, 2, tileEntity.timeMaxBurning);
 			}
 		}
-		lastFusingTime = tileEntity.workTime;
-		lastBurnTime = tileEntity.burnTime;
-		lastItemBurnTime = tileEntity.maxBurnTime;
+		lastFusingTime = tileEntity.timeWorking;
+		lastBurningTime = tileEntity.timeBurning;
+		lastItemBurningTime = tileEntity.timeMaxBurning;
 	}
 
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void updateProgressBar(int par1, int par2) {
 		if (par1 == 0) {
-			tileEntity.workTime = par2;
+			tileEntity.timeWorking = (short) par2;
 		}
 		if (par1 == 1) {
-			tileEntity.burnTime = par2;
+			tileEntity.timeBurning = (short) par2;
 		}
 		if (par1 == 2) {
-			tileEntity.maxBurnTime = par2;
+			tileEntity.timeMaxBurning = (short) par2;
 		}
 	}
 
@@ -97,11 +96,11 @@ public class ContainerFusingMachine extends Container {
 			ItemStack itemStack1 = slot.getStack();
 			itemStack = itemStack1.copy();
 			if (slotNumber == 2) {
-				if (!this.mergeItemStack(itemStack1, index1, index3, true)) {
+				if (!this.mergeItemStack(itemStack1, INDEX_1, INDEX_3, true)) {
 					return null;
 				}
 				slot.onSlotChange(itemStack1, itemStack);
-			} else if (slotNumber >= index1) {
+			} else if (slotNumber >= INDEX_1) {
 				int meta = itemStack1.getItemDamage() & 3;
 				if (tileEntity.isFusableOfalen(itemStack1.getItem()) && meta != 3) {
 					if (!this.mergeItemStack(itemStack1, meta, meta + 1, false)) {
@@ -111,17 +110,16 @@ public class ContainerFusingMachine extends Container {
 					if (!this.mergeItemStack(itemStack1, 3, 4, false)) {
 						return null;
 					}
-				} else if (slotNumber >= index1 && slotNumber < index2) {
-					if (!this.mergeItemStack(itemStack1, index2, index3, false)) {
+				} else if (slotNumber >= INDEX_1 && slotNumber < INDEX_2) {
+					if (!this.mergeItemStack(itemStack1, INDEX_2, INDEX_3, false)) {
 						return null;
 					}
-				} else if (slotNumber >= index2 && slotNumber < index3 && !this.mergeItemStack(itemStack1, index1, index2, false)) {
+				} else if (slotNumber >= INDEX_2 && slotNumber < INDEX_3 && !this.mergeItemStack(itemStack1, INDEX_1, INDEX_2, false)) {
 					return null;
 				}
-			} else if (!this.mergeItemStack(itemStack1, index1, index3, false)) {
+			} else if (!this.mergeItemStack(itemStack1, INDEX_1, INDEX_3, false)) {
 				return null;
 			}
-
 			if (itemStack1.stackSize == 0) {
 				slot.putStack(null);
 			} else {
@@ -134,5 +132,4 @@ public class ContainerFusingMachine extends Container {
 		}
 		return itemStack;
 	}
-
 }

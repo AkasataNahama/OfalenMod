@@ -8,8 +8,7 @@ import net.minecraft.world.World;
 
 public class ItemFilterInstaller extends Item {
 	public ItemFilterInstaller() {
-		super();
-		this.setCreativeTab(OfalenModCore.tabOfalen);
+		this.setCreativeTab(OfalenModCore.TAB_OFALEN);
 	}
 
 	@Override

@@ -5,13 +5,11 @@ import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
 
 public class ModelLaser extends ModelBase {
-
 	ModelRenderer laser;
 
 	public ModelLaser() {
 		textureWidth = 1;
 		textureHeight = 1;
-
 		laser = new ModelRenderer(this, 0, 0);
 		laser.addBox(-0.5F, -0.5F, -5.0F, 1, 1, 10);
 		laser.setRotationPoint(0F, 0F, 0F);
@@ -37,5 +35,4 @@ public class ModelLaser extends ModelBase {
 	public void setRotationAngles(float f, float f1, float f2, float f3, float f4, float f5, Entity entity) {
 		super.setRotationAngles(f, f1, f2, f3, f4, f5, entity);
 	}
-
 }

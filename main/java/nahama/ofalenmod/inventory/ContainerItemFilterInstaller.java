@@ -24,8 +24,8 @@ public class ContainerItemFilterInstaller extends ContainerItemBase {
 	protected void initIndexes() {
 		index0 = 0;
 		index1 = 3;
-		index2 = index1 + 27;
-		index3 = index2 + 9;
+		index2 = (byte) (index1 + 27);
+		index3 = (byte) (index2 + 9);
 	}
 
 	@Override
@@ -42,7 +42,6 @@ public class ContainerItemFilterInstaller extends ContainerItemBase {
 				this.addSlotToContainer(new Slot(player.inventory, j + i * 9 + 9, 8 + j * 18, 84 + i * 18));
 			}
 		}
-
 		for (int i = 0; i < 9; ++i) {
 			this.addSlotToContainer(new Slot(player.inventory, i, 8 + i * 18, 142));
 		}
