@@ -56,10 +56,12 @@ public class OfalenModConfigCore {
 
 	/** Configを同期する。 */
 	public static void syncConfig() {
+		String separator = System.lineSeparator();
+		String restart = separator + "Please restart Minecraft to reflect this setting." + separator;
 		try {
 			// General
-			isUpdateCheckEnabled = cfg.getBoolean("enabledUpdateCheck", GENERAL, isUpdateCheckEnabled, "Update Check is valid when true.");
-			efficiencyPerfectTool = cfg.getFloat("efficiencyPerfectTool", GENERAL, efficiencyPerfectTool, 1, Float.MAX_VALUE, "Efficiency of Ofalen Perfect Tool.");
+			isUpdateCheckEnabled = cfg.getBoolean("enabledUpdateCheck", GENERAL, isUpdateCheckEnabled, "Update Check is valid when true." + restart);
+			efficiencyPerfectTool = cfg.getFloat("efficiencyPerfectTool", GENERAL, efficiencyPerfectTool, 1, Float.MAX_VALUE, "Efficiency of Ofalen Perfect Tool." + restart);
 			sizeExplosion = (byte) cfg.getInt("sizeExplosion", GENERAL, sizeExplosion, 0, Byte.MAX_VALUE, "Explosion size of Explosion Ball.");
 			// Difficulty
 			amountDrop = (byte) cfg.getInt("amountDrop", DIFFICULTY, amountDrop, 1, Byte.MAX_VALUE, "Drop amount of Ofalen Fragment from Ofalen Ore.");
@@ -76,12 +78,12 @@ public class OfalenModConfigCore {
 			timeConverting = (short) cfg.getInt("timeConverting", MACHINE, timeConverting, 1, Short.MAX_VALUE, "Working time of Ofalen Converting Machine.(tick)");
 			timeRepairing = (short) cfg.getInt("timeRepairing", MACHINE, timeRepairing, 1, Short.MAX_VALUE, "Working time of Ofalen Repairing Machine.(tick)");
 			timeFusing = (short) cfg.getInt("timeFusing", MACHINE, timeFusing, 1, Short.MAX_VALUE, "Working time of Ofalen Fusing Machine.(tick)");
-			baseOfalenSmeltingAmount = (byte) cfg.getInt("baseOfalenSmeltingAmount", MACHINE, baseOfalenSmeltingAmount, 1, 64, "Smelting amount of Ofalen Smelting Machine from Ofalen Ore to Ofalen.");
+			baseOfalenSmeltingAmount = (byte) cfg.getInt("baseOfalenSmeltingAmount", MACHINE, baseOfalenSmeltingAmount, 1, 64, "Smelting amount of Ofalen Smelting Machine from Ofalen Ore to Ofalen." + restart);
 			// Recipe
-			blankLumpRecipe = (byte) cfg.getInt("blankLumpRecipe", RECIPE, blankLumpRecipe, 0, 8, "Recipe of \"Lump of Stone\". Number is location of space.\n0 1 2\n3 4 5\n6 7 8\n");
-			amountShieldIngotRecipe = (byte) cfg.getInt("amountShieldIngotRecipe", RECIPE, amountShieldIngotRecipe, 1, 64, "Amount of Ofalen Shield Ingot when made by normal recipe.");
-			amountTeleportPearlRecipe = (byte) cfg.getInt("amountTeleportPearlRecipe", RECIPE, amountTeleportPearlRecipe, 1, 64, "Amount of Ofalen Teleport Pearl when made by normal recipe.");
-			amountFloatDustRecipe = (byte) cfg.getInt("amountFloatDustRecipe", RECIPE, amountFloatDustRecipe, 1, 64, "Amount of Ofalen Float Dust when made by normal recipe.");
+			blankLumpRecipe = (byte) cfg.getInt("blankLumpRecipe", RECIPE, blankLumpRecipe, 0, 8, "Recipe of \"Lump of Stone\". Number is location of space." + separator + "0 1 2" + separator + "3 4 5" + separator + "6 7 8" + restart);
+			amountShieldIngotRecipe = (byte) cfg.getInt("amountShieldIngotRecipe", RECIPE, amountShieldIngotRecipe, 1, 64, "Amount of Ofalen Shield Ingot when made by normal recipe." + restart);
+			amountTeleportPearlRecipe = (byte) cfg.getInt("amountTeleportPearlRecipe", RECIPE, amountTeleportPearlRecipe, 1, 64, "Amount of Ofalen Teleport Pearl when made by normal recipe." + restart);
+			amountFloatDustRecipe = (byte) cfg.getInt("amountFloatDustRecipe", RECIPE, amountFloatDustRecipe, 1, 64, "Amount of Ofalen Float Dust when made by normal recipe." + restart);
 			// Future
 			amountShieldDamage = (short) cfg.getInt("amountShieldDamage", FUTURE, amountShieldDamage, 0, 64 * 9, "Damage amount of Ofalen Shield when protect player.");
 			amountTeleporterDamage = (short) cfg.getInt("amountTeleporterDamage", FUTURE, amountTeleporterDamage, 0, 64, "Damage amount of Ofalen Teleporter when teleport player.");

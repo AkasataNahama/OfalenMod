@@ -15,11 +15,11 @@ import java.util.HashMap;
 import java.util.Map.Entry;
 
 public class OfalenModAnniversaryHandler {
-	private static final String URL_ANNIVERSARY_LIST = "https:// dl.dropboxusercontent.com/s/wmx074ypp4yhv7c/OfalenModAnniversary.txt";
-	/** 
+	private static final String URL_ANNIVERSARY_LIST = "https://dl.dropboxusercontent.com/s/wmx074ypp4yhv7c/OfalenModAnniversary.txt";
+	/**
 	 * マルチプレイの場合は、プレイヤー名と最後にプレゼントを渡した日付のマップ。
 	 * シングルプレイの場合は、ワールド名と最後にプレゼントを渡した日付のマップ。
-	。 */
+	 */
 	private static HashMap<String, String> presentedDate = new HashMap<>();
 	/** サーバー起動時の日付。 */
 	private static String today;

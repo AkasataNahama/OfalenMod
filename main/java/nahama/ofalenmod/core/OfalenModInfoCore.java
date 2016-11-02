@@ -11,8 +11,8 @@ public class OfalenModInfoCore {
 		meta.name = OfalenModCore.MODNAME;
 		meta.description = StatCollector.translateToLocal("info.ofalen.metaMod.description");
 		meta.version = OfalenModCore.VERSION;
-		meta.url = "http:// www63.atwiki.jp/akasatanahama/pages/15.html";
-		meta.updateUrl = "https:// dl.dropboxusercontent.com/s/cdp8031ki7jz9rl/versions.txt";
+		meta.url = "http://www63.atwiki.jp/akasatanahama/pages/15.html";
+		meta.updateUrl = "https://dl.dropboxusercontent.com/s/cdp8031ki7jz9rl/versions.txt";
 		meta.authorList.add("Akasata Nahama");
 		meta.credits = "Logo was designed by Kaneryu. \"Takumi Craft\" is making by Tom Kate.";
 		meta.logoFile = "assets/ofalenmod/logo.png";

@@ -12,7 +12,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 
 public class TileEntityConvertingMachine extends TileEntityGradedMachineBase {
-	/** 変換色指定用スロット。(No.3)。 */
+	/** 変換色指定用スロット。(No.3) */
 	protected ItemStack sample;
 
 	/** インベントリ名を返す。 */

@@ -119,10 +119,10 @@ public abstract class ContainerItemBase extends Container {
 	/** 「スロットに入れられるか」と「Shift+左クリック時の処理」に使う。 */
 	protected abstract boolean isItemStackEnabled(ItemStack itemStack);
 
-	/** 
+	/**
 	 * プレイヤーのインベントリかクイックスロットでShift+左クリックされた時に移動する処理。
 	 * @return 更新が必要か。
-	。 */
+	 */
 	protected boolean transferStackInItemSlot(ItemStack itemStack, int slotNumber) {
 		// 指定されたアイテムならアイテムのインベントリへ移動。
 		return this.mergeItemStack(itemStack, index0, index1, false);

@@ -22,7 +22,7 @@ import java.util.Random;
 
 public class BlockPresentBox extends Block implements ITileEntityProvider {
 	private Random random = new Random();
-	/** 0:下,1:上,2:横。 */
+	/** 0:下, 1:上, 2:横 */
 	private IIcon[] icons = new IIcon[3];
 
 	public BlockPresentBox() {

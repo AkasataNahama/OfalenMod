@@ -101,4 +101,13 @@ public class Util {
 			return null;
 		}
 	}
+
+	public static String getTripleFiguresNum(int i) {
+		i %= 1000;
+		String ret = String.valueOf(i);
+		while (ret.length() < 3) {
+			ret = '0' + ret;
+		}
+		return ret;
+	}
 }

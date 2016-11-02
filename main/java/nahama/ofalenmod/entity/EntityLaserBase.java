@@ -73,7 +73,7 @@ public abstract class EntityLaserBase extends Entity {
 		return 1.5F;
 	}
 
-	/** IProjectileのオーバーライド。ディスペンサーなどで利用される。(?)。 */
+	/** IProjectileのオーバーライド。ディスペンサーなどで利用される(?)。 */
 	public void setThrowableHeading(double x, double y, double z, float speed, float par5) {
 		float f2 = MathHelper.sqrt_double(x * x + y * y + z * z);
 		x /= f2;
