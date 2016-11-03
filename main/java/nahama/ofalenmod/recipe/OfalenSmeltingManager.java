@@ -9,26 +9,29 @@ import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
 
-import java.util.HashMap;
-import java.util.Map.Entry;
+import java.util.ArrayList;
 
-public class OfalenSmeltingRecipe {
-	private static OfalenSmeltingRecipe instance;
-	public HashMap<ItemStack, OfalenSmeltingResultSet> listRecipe;
+public class OfalenSmeltingManager {
+	private static OfalenSmeltingManager instance;
+	public ArrayList<OfalenSmeltingRecipe> recipes;
 
 	static {
-		instance = new OfalenSmeltingRecipe();
-		instance.listRecipe = new HashMap<>();
+		instance = new OfalenSmeltingManager();
+		instance.recipes = new ArrayList<>();
 		instance.addDefaultRecipes();
 	}
 
 	/** インスタンスを返す。 */
-	public static OfalenSmeltingRecipe getInstance() {
+	public static OfalenSmeltingManager getInstance() {
 		return instance;
 	}
 
+	public boolean isValid() {
+		return recipes != null && !recipes.isEmpty();
+	}
+
 	/** デフォルトのレシピを設定する。 */
-	public void addDefaultRecipes() {
+	private void addDefaultRecipes() {
 		this.addRecipe(new ItemStack(OfalenModBlockCore.oreOfalen, 1, 0), new ItemStack(OfalenModItemCore.gemOfalen, OfalenModConfigCore.baseOfalenSmeltingAmount, 0), true);
 		this.addRecipe(new ItemStack(OfalenModBlockCore.oreOfalen, 1, 1), new ItemStack(OfalenModItemCore.gemOfalen, OfalenModConfigCore.baseOfalenSmeltingAmount, 1), true);
 		this.addRecipe(new ItemStack(OfalenModBlockCore.oreOfalen, 1, 2), new ItemStack(OfalenModItemCore.gemOfalen, OfalenModConfigCore.baseOfalenSmeltingAmount, 2), true);
@@ -46,42 +49,44 @@ public class OfalenSmeltingRecipe {
 
 	/** 新しくレシピを登録する。 */
 	public void addRecipe(ItemStack material, ItemStack result, boolean canIncrease) {
-		listRecipe.put(material, new OfalenSmeltingResultSet(result, canIncrease));
+		recipes.add(new OfalenSmeltingRecipe(material, result, canIncrease));
 	}
 
 	/** アイテムの製錬結果を返す。 */
 	public ItemStack getSmeltingResult(ItemStack itemStack) {
-		OfalenSmeltingResultSet set = this.getMatchedResult(itemStack);
-		if (set == null)
+		OfalenSmeltingRecipe recipe = this.getMatchedRecipe(itemStack);
+		if (recipe == null)
 			return null;
-		return set.result;
+		return recipe.result;
 	}
 
 	/** グレードによってスタック数を変えた製錬結果を返す。 */
-	public ItemStack getSmeltingResultFromGrade(ItemStack itemStack, int grade) {
-		OfalenSmeltingResultSet set = this.getMatchedResult(itemStack);
-		if (set == null)
+	public ItemStack getSmeltingResultWithGrade(ItemStack itemStack, int grade) {
+		OfalenSmeltingRecipe recipe = this.getMatchedRecipe(itemStack);
+		if (recipe == null)
 			return null;
-		ItemStack resultStack = set.result;
+		ItemStack resultStack = recipe.result;
 		int size = resultStack.stackSize;
-		if (set.canIncrease)
+		if (recipe.canIncrease)
 			size *= (grade + 1);
 		return new ItemStack(resultStack.getItem(), size, resultStack.getItemDamage());
 	}
 
-	private OfalenSmeltingResultSet getMatchedResult(ItemStack itemStack) {
-		for (Entry<ItemStack, OfalenSmeltingResultSet> entry : listRecipe.entrySet()) {
-			if (OreDictionary.itemMatches(itemStack, entry.getKey(), false))
-				return entry.getValue();
+	private OfalenSmeltingRecipe getMatchedRecipe(ItemStack itemStack) {
+		for (OfalenSmeltingRecipe recipe : recipes) {
+			if (OreDictionary.itemMatches(itemStack, recipe.material, false))
+				return recipe;
 		}
 		return null;
 	}
 
-	public static class OfalenSmeltingResultSet {
+	public static class OfalenSmeltingRecipe {
+		public ItemStack material;
 		public ItemStack result;
 		public boolean canIncrease;
 
-		public OfalenSmeltingResultSet(ItemStack result, boolean canIncrease) {
+		public OfalenSmeltingRecipe(ItemStack material, ItemStack result, boolean canIncrease) {
+			this.material = material;
 			this.result = result;
 			this.canIncrease = canIncrease;
 		}

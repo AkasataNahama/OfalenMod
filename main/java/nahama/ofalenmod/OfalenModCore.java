@@ -21,7 +21,7 @@ import nahama.ofalenmod.entity.*;
 import nahama.ofalenmod.generator.WorldGenOfalenOre;
 import nahama.ofalenmod.handler.*;
 import nahama.ofalenmod.model.ModelLaser;
-import nahama.ofalenmod.nei.OfalenModNEILoad;
+import nahama.ofalenmod.nei.OfalenModNEILoader;
 import nahama.ofalenmod.network.*;
 import nahama.ofalenmod.render.RenderItemPistol;
 import nahama.ofalenmod.render.RenderLaser;
@@ -102,23 +102,23 @@ public class OfalenModCore {
 	/** クライアントの初期化処理。 */
 	@SideOnly(Side.CLIENT)
 	private void clientInit() {
-		// キーバインディングの登録
+		// キーバインディングの登録。
 		ClientRegistry.registerKeyBinding(KEY_OSS);
-		// タイルエンティティとレンダラーの紐づけ
+		// タイルエンティティとレンダラーの紐づけ。
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityTeleportingMarker.class, new RenderTeleportingMarker());
-		// エンティティとレンダラーの紐付け
+		// エンティティとレンダラーの紐付け。
 		RenderingRegistry.registerEntityRenderingHandler(EntityExplosionBall.class, new RenderSnowball(OfalenModItemCore.ballExplosion));
 		RenderingRegistry.registerEntityRenderingHandler(EntityFlameBall.class, new RenderSnowball(OfalenModItemCore.ballFlame));
 		RenderingRegistry.registerEntityRenderingHandler(EntityLaserRed.class, new RenderLaser(new ModelLaser(), "red"));
 		RenderingRegistry.registerEntityRenderingHandler(EntityLaserGreen.class, new RenderLaser(new ModelLaser(), "green"));
 		RenderingRegistry.registerEntityRenderingHandler(EntityLaserBlue.class, new RenderLaser(new ModelLaser(), "blue"));
 		RenderingRegistry.registerEntityRenderingHandler(EntityWhiteLaser.class, new RenderLaser(new ModelLaser(), "white"));
-		// アイテムとモデルの紐付け
+		// アイテムとモデルの紐付け。
 		MinecraftForgeClient.registerItemRenderer(OfalenModItemCore.pistolLaser, new RenderItemPistol());
 		// NEIへのレシピ表示の登録。
 		if (Loader.isModLoaded("NotEnoughItems")) {
 			try {
-				OfalenModNEILoad.load();
+				OfalenModNEILoader.load();
 			} catch (Exception e) {
 				Util.error("Error on loading NEI.", "OfalenModCore.clientInit");
 				e.printStackTrace();

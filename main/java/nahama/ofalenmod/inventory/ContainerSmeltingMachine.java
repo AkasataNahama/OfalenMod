@@ -2,7 +2,7 @@ package nahama.ofalenmod.inventory;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import nahama.ofalenmod.recipe.OfalenSmeltingRecipe;
+import nahama.ofalenmod.recipe.OfalenSmeltingManager;
 import nahama.ofalenmod.tileentity.TileEntitySmeltingMachine;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
@@ -92,7 +92,7 @@ public class ContainerSmeltingMachine extends Container {
 				}
 				slot.onSlotChange(itemStack1, itemStack);
 			} else if (slotNumber != 1 && slotNumber != 0) {
-				if (OfalenSmeltingRecipe.getInstance().getSmeltingResult(itemStack1) != null) {
+				if (OfalenSmeltingManager.getInstance().getSmeltingResult(itemStack1) != null) {
 					if (!this.mergeItemStack(itemStack1, 0, 1, false)) {
 						return null;
 					}

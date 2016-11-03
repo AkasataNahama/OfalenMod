@@ -1,7 +1,7 @@
 package nahama.ofalenmod.tileentity;
 
 import nahama.ofalenmod.core.OfalenModConfigCore;
-import nahama.ofalenmod.recipe.OfalenSmeltingRecipe;
+import nahama.ofalenmod.recipe.OfalenSmeltingManager;
 import net.minecraft.item.ItemStack;
 
 public class TileEntitySmeltingMachine extends TileEntityGradedMachineBase {
@@ -23,7 +23,7 @@ public class TileEntitySmeltingMachine extends TileEntityGradedMachineBase {
 			return false;
 		boolean flag = true;
 		// 製錬レシピに登録されていて、完成品スロットに空きがあるなら可。
-		ItemStack itemStack = OfalenSmeltingRecipe.getInstance().getSmeltingResultFromGrade(itemStacks[0], grade);
+		ItemStack itemStack = OfalenSmeltingManager.getInstance().getSmeltingResultWithGrade(itemStacks[0], grade);
 		if (itemStack == null)
 			flag = false;
 		if (flag && itemStacks[2] == null)
@@ -43,7 +43,7 @@ public class TileEntitySmeltingMachine extends TileEntityGradedMachineBase {
 	@Override
 	public void work() {
 		// 製錬結果を取得し、完成品スロットに代入/追加する。
-		ItemStack itemStack = OfalenSmeltingRecipe.getInstance().getSmeltingResultFromGrade(itemStacks[0], grade);
+		ItemStack itemStack = OfalenSmeltingManager.getInstance().getSmeltingResultWithGrade(itemStacks[0], grade);
 		if (itemStacks[2] == null) {
 			itemStacks[2] = itemStack;
 		} else if (itemStacks[2].isItemEqual(itemStack)) {
