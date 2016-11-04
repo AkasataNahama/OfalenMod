@@ -279,6 +279,8 @@ public abstract class TileEntityGradedMachineBase extends TileEntity implements 
 	/** スロットの中身を設定する。 */
 	@Override
 	public void setInventorySlotContents(int slot, ItemStack itemStack) {
+		if (slot < 0 || this.getSizeInventory() < slot)
+			return;
 		itemStacks[slot] = itemStack;
 		if (itemStack != null && itemStack.stackSize > this.getInventoryStackLimit()) {
 			itemStack.stackSize = this.getInventoryStackLimit();
