@@ -84,9 +84,9 @@ public class ItemFilter extends Item {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void registerIcons(IIconRegister register) {
-		icons = new IIcon[4];
-		for (int i = 0; i < 4; i++) {
-			icons[i] = register.registerIcon(this.getIconString() + "-" + i);
+		icons = new IIcon[6];
+		for (int i = 0; i < 6; i++) {
+			icons[i] = register.registerIcon(this.getIconString() + "-" + (i / 3) + "-" + (i % 3));
 		}
 	}
 
@@ -94,13 +94,23 @@ public class ItemFilter extends Item {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public IIcon getIconFromDamage(int meta) {
-		return icons[meta & 1];
+		return icons[meta % 2 * 3 + 2];
+	}
+
+	@Override
+	public IIcon getIconIndex(ItemStack itemStack) {
+		if (!FilterUtil.isAvailableFilterTag(itemStack))
+			return super.getIconIndex(itemStack);
+		int i = 0;
+		if (FilterUtil.isWhiteList(FilterUtil.getFilterTag(itemStack)))
+			i = 1;
+		return icons[itemStack.getItemDamage() % 2 * 3 + i];
 	}
 
 	/** メタデータを返す。 */
 	@Override
 	public int getMetadata(int meta) {
-		return meta & 3;
+		return meta % 2;
 	}
 
 	/** 内部名を返す。 */
