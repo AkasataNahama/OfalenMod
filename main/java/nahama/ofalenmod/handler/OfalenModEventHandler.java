@@ -73,13 +73,18 @@ public class OfalenModEventHandler {
 	/** EntityLivingBaseが落下した時の処理。 */
 	@SubscribeEvent
 	public void onLivingFall(LivingFallEvent event) {
-		if (event.entityLiving.worldObj.isRemote || event.isCanceled() || !event.isCancelable() || !(event.entityLiving instanceof EntityPlayer))
+		// キャンセル不可能か、プレイヤー以外なら終了。
+		if (event.isCanceled() || !event.isCancelable() || !(event.entityLiving instanceof EntityPlayer))
 			return;
-		// サーバー側で、キャンセル可能で、本人プレイヤーの時。
-		// フローターが有効なら落下（ダメージ）をキャンセル。
-		if (!OfalenFlightHandlerServer.canFlightPlayer((EntityPlayer) event.entityLiving))
+		if (event.entityLiving.worldObj.isRemote) {
+			// クライアント側では、フローターが有効なら落下（音とか）をキャンセル。
+			if (OfalenFlightHandlerClient.isPlayer(event.entityLiving) && OfalenFlightHandlerClient.canFloat())
+				event.setCanceled(true);
 			return;
-		event.setCanceled(true);
+		}
+		// サーバー側では、フローターが有効なら落下（ダメージとか）をキャンセル。
+		if (OfalenFlightHandlerServer.canFlightPlayer((EntityPlayer) event.entityLiving))
+			event.setCanceled(true);
 	}
 
 	@SubscribeEvent
