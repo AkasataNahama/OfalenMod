@@ -3,6 +3,7 @@ package nahama.ofalenmod.util;
 import nahama.ofalenmod.OfalenModCore;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -66,9 +67,29 @@ public class Util {
 		return itemStack.getMaxDamage() - itemStack.getItemDamage();
 	}
 
+	public static int getRemainingItemAmountInInventory(EntityPlayer player, ItemStack sampleStack) {
+		int ret = 0;
+		int limit = Math.min(sampleStack.getMaxStackSize(), player.inventory.getInventoryStackLimit());
+		for (ItemStack invStack : player.inventory.mainInventory) {
+			// 空のスロットがあるなら、最大スタック数を足す。
+			if (invStack == null) {
+				ret += limit;
+				continue;
+			}
+			// 同じアイテムで、メタデータで区別するなら一致していて、NBTが一致しているなら、限界までの量を足す。
+			if (invStack.getItem() == sampleStack.getItem() && (!invStack.getHasSubtypes() || invStack.getItemDamage() == sampleStack.getItemDamage()) && ItemStack.areItemStackTagsEqual(invStack, sampleStack)) {
+				ret += limit - invStack.stackSize;
+			}
+		}
+		return ret;
+	}
+
+	public static EntityItem getEntityItemNearEntity(ItemStack itemStack, Entity entity) {
+		return new EntityItem(entity.worldObj, entity.posX, entity.posY, entity.posZ, itemStack.copy());
+	}
+
 	public static void dropItemStackCopyNearEntity(ItemStack itemStack, Entity entity) {
-		EntityItem entityItem = new EntityItem(entity.worldObj, entity.posX, entity.posY, entity.posZ, itemStack.copy());
-		entity.worldObj.spawnEntityInWorld(entityItem);
+		entity.worldObj.spawnEntityInWorld(getEntityItemNearEntity(itemStack, entity));
 	}
 
 	public static ItemStack[] copyItemStacks(ItemStack[] itemStacks) {

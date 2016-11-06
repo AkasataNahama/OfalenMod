@@ -33,12 +33,14 @@ public class OfalenModConfigCore {
 	public static byte amountShieldIngotRecipe = 4;
 	public static byte amountTeleportPearlRecipe = 4;
 	public static byte amountFloatDustRecipe = 4;
+	public static byte amountCollectingLampRecipe = 64;
 	// TODO コレクター：コレクティングランプの追加
 	// Future
 	public static short amountShieldDamage = 1;
 	public static short amountTeleporterDamage = 1;
 	public static short amountFloaterDamage = 1;
-	// TODO コレクター：Item,Experience別
+	public static short amountCollectorDamageItem = 1;
+	public static short amountCollectorDamageExp = 1;
 	public static byte intervalFloaterDamage = 20;
 	public static final String GENERAL = "General";
 	private static final String DIFFICULTY = GENERAL + ".Difficulty";
@@ -84,10 +86,13 @@ public class OfalenModConfigCore {
 			amountShieldIngotRecipe = (byte) cfg.getInt("amountShieldIngotRecipe", RECIPE, amountShieldIngotRecipe, 1, 64, "Amount of Ofalen Shield Ingot when made by normal recipe." + restart);
 			amountTeleportPearlRecipe = (byte) cfg.getInt("amountTeleportPearlRecipe", RECIPE, amountTeleportPearlRecipe, 1, 64, "Amount of Ofalen Teleport Pearl when made by normal recipe." + restart);
 			amountFloatDustRecipe = (byte) cfg.getInt("amountFloatDustRecipe", RECIPE, amountFloatDustRecipe, 1, 64, "Amount of Ofalen Float Dust when made by normal recipe." + restart);
+			amountCollectingLampRecipe = (byte) cfg.getInt("amountCollectingLampRecipe", RECIPE, amountCollectingLampRecipe, 1, 64, "Amount of Ofalen Collecting Dust when made by normal recipe." + restart);
 			// Future
 			amountShieldDamage = (short) cfg.getInt("amountShieldDamage", FUTURE, amountShieldDamage, 0, 64 * 9, "Damage amount of Ofalen Shield when protect player.");
 			amountTeleporterDamage = (short) cfg.getInt("amountTeleporterDamage", FUTURE, amountTeleporterDamage, 0, 64, "Damage amount of Ofalen Teleporter when teleport player.");
 			amountFloaterDamage = (short) cfg.getInt("amountFloaterDamage", FUTURE, amountFloaterDamage, 0, 64 * 9, "Damage amount of Ofalen Floater when float player.");
+			amountCollectorDamageItem = (short) cfg.getInt("amountCollectorDamageItem", FUTURE, amountCollectorDamageItem, 0, 64 * 9, "Damage amount of Ofalen Collector when collect item.");
+			amountCollectorDamageExp = (short) cfg.getInt("amountCollectorDamageExp", FUTURE, amountCollectorDamageExp, 0, 64 * 9, "Damage amount of Ofalen Collector when collect experience orb.");
 			intervalFloaterDamage = (byte) cfg.getInt("intervalFloaterDamage", FUTURE, intervalFloaterDamage, 0, Byte.MAX_VALUE, "Damage interval of Ofalen Floater.(tick)");
 		} catch (Exception e) {
 			Util.error("Error on loading config.", "OfalenModConfigCore");

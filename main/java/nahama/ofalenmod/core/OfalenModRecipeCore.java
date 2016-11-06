@@ -166,8 +166,8 @@ public class OfalenModRecipeCore {
 		addShaped(new ItemStack(partsOfalen, OfalenModConfigCore.amountFloatDustRecipe, 8), "GOG", "ODO", "GOG", 'G', "ingotGold", 'O', FRAG[2], 'D', "dustGlowstone");
 		addShaped(new ItemStack(floaterOfalen, 1, 576), "IOI", "OEO", "IOI", 'I', "ingotGold", 'O', CORE[2], 'E', new ItemStack(partsOfalen, 1, 8));
 		// コレクター関連
-		addShaped(new ItemStack(partsOfalen, OfalenModConfigCore.amountFloatDustRecipe, 9), "GOG", "ODO", "GOG", 'G', "Gold", 'O', FRAG[2], 'D', "dustGlowstone");// TODO コンフィグ
-		addShaped(new ItemStack(collectorOfalen, 1, 8), "IOI", "OEO", "IOI", 'I', "ingotGold", 'O', CORE[2], 'E', new ItemStack(partsOfalen, 1, 8));
+		addShaped(new ItemStack(partsOfalen, OfalenModConfigCore.amountCollectingLampRecipe, 9), "GOG", "ODO", "GOG", 'G', "ingotGold", 'O', FRAG[7], 'D', new ItemStack(partsOfalen, 1, 2));
+		addShaped(new ItemStack(collectorOfalen, 1, collectorOfalen.getMaxDamage()), "IOI", "OEO", "IOI", 'I', "ingotGold", 'O', CORE[7], 'E', new ItemStack(partsOfalen, 1, 9));
 		// フィルター関連
 		addShaped(installerFilter, "XYX", "YZY", "XYX", 'X', new ItemStack(partsOfalen, 1, 2), 'Y', Items.string, 'Z', Blocks.hopper);
 		addShaped(filterItem, "XYX", "YZY", "XYX", 'X', new ItemStack(partsOfalen, 1, 2), 'Y', Items.string, 'Z', Blocks.chest);
