@@ -1,6 +1,7 @@
 package nahama.ofalenmod.inventory;
 
 import nahama.ofalenmod.item.ItemFilter;
+import nahama.ofalenmod.util.OfalenNBTUtil;
 import nahama.ofalenmod.util.OfalenNBTUtil.FilterUtil;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.item.ItemStack;
@@ -48,7 +49,9 @@ public class InventoryItemFilter extends InventoryItemBase {
 			if (itemStacks[i] == null)
 				continue;
 			NBTTagCompound nbt = new NBTTagCompound();
-			itemStacks[i].writeToNBT(nbt);
+			new ItemStack(itemStacks[i].getItem(), 1, itemStacks[i].getItemDamage()).writeToNBT(nbt);
+			if (OfalenNBTUtil.containsNBT(nbtTagList, nbt))
+				continue;
 			nbtTagList.appendTag(nbt);
 		}
 		itemStacks = new ItemStack[this.getSizeInventory()];

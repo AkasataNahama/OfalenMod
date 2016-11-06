@@ -3,6 +3,7 @@ package nahama.ofalenmod.item;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import nahama.ofalenmod.OfalenModCore;
+import nahama.ofalenmod.util.OfalenNBTUtil;
 import nahama.ofalenmod.util.OfalenNBTUtil.FilterUtil;
 import nahama.ofalenmod.util.Util;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -41,10 +42,8 @@ public class ItemFilter extends Item {
 	@Override
 	public ItemStack onItemRightClick(ItemStack itemStack, World world, EntityPlayer player) {
 		if (!Util.isKeyDown(OfalenModCore.KEY_OSS.getKeyCode())) {
-			if (itemStack.getItemDamage() < 1) {
-				Util.debuggingInfo("openGui", "ItemFilter.onItemRightClick");
+			if (itemStack.getItemDamage() < 1)
 				player.openGui(OfalenModCore.instance, 5, world, (int) player.posX, (int) player.posY, (int) player.posZ);
-			}
 			return itemStack;
 		}
 		if (player.isSneaking()) {
@@ -61,14 +60,15 @@ public class ItemFilter extends Item {
 		if (itemStack.getItemDamage() < 1)
 			return false;
 		NBTTagCompound nbtFilter = FilterUtil.getFilterTag(itemStack);
-		if (FilterUtil.getSelectingItemList(nbtFilter).tagCount() > 27)
+		NBTTagList listSelectingItem = FilterUtil.getSelectingItemList(nbtFilter);
+		if (listSelectingItem.tagCount() > 27)
 			return false;
 		ItemStack selecting = new ItemStack(world.getBlock(x, y, z), 1, world.getBlockMetadata(x, y, z));
-		if (FilterUtil.isEnabledItem(nbtFilter, selecting))
-			return true;
 		NBTTagCompound nbt = new NBTTagCompound();
 		selecting.writeToNBT(nbt);
-		FilterUtil.getSelectingItemList(nbtFilter).appendTag(nbt);
+		if (OfalenNBTUtil.containsNBT(listSelectingItem, nbt))
+			return true;
+		listSelectingItem.appendTag(nbt);
 		return true;
 	}
 

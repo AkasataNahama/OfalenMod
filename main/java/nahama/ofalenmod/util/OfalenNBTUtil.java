@@ -21,16 +21,16 @@ public class OfalenNBTUtil {
 	// 変換機
 	public static final String SAMPLE = "Sample";
 	// 修繕機
-	public static final String IS_IRREPARABLE = "IsIrreparable";
+	public static final String IS_IRREPARABLE = "IsIrreparableOfalen";
 	// レーザー
-	public static final String LASER_COLOR ="LaserColor";
+	public static final String LASER_COLOR = "LaserColor";
 	public static final String TILE_X = "TileX";
 	public static final String TILE_Y = "TileY";
 	public static final String TILE_Z = "TileZ";
 	public static final String TILE_ID = "TileId";
 	public static final String SHAKE = "Shake";
-	public static final String IS_IN_GROUND="IsInGround";
-	public static final String OWNER_NAME ="OwnerName";
+	public static final String IS_IN_GROUND = "IsInGround";
+	public static final String OWNER_NAME = "OwnerName";
 	// 未来系
 	public static final String INTERVAL = "Interval";
 	public static final String IS_VALID = "IsValid";
@@ -48,12 +48,20 @@ public class OfalenNBTUtil {
 	// 詳細設定
 	public static final String IS_SET_IN_DETAIL = "IsSetInDetail";
 
+	public static boolean containsNBT(NBTTagList list, NBTTagCompound nbt) {
+		for (int i = 0; i < list.tagCount(); i++) {
+			if (list.getCompoundTagAt(i).equals(nbt))
+				return true;
+		}
+		return false;
+	}
+
 	public static class FilterUtil {
 		public static final String ITEM_FILTER = "OfalenItemFilter";
 		public static final String IS_WHITE = "IsWhiteOfalenFilter";
 		public static final String SELECTING = "OfalenFilterSelectingItems";
 
-		public static boolean isEnabledItem(NBTTagCompound filter, ItemStack checking) {
+		public static boolean canItemFilterThrough(NBTTagCompound filter, ItemStack checking) {
 			boolean isWhite = isWhiteList(filter);
 			NBTTagList nbtTagList = getSelectingItemList(filter);
 			for (int i = 0; i < nbtTagList.tagCount(); i++) {
@@ -66,7 +74,7 @@ public class OfalenNBTUtil {
 				if (itemStack.isItemEqual(checking))
 					return isWhite;
 			}
-			return false;
+			return !isWhite;
 		}
 
 		public static void initFilterTag(ItemStack itemStack) {
@@ -79,9 +87,9 @@ public class OfalenNBTUtil {
 			itemStack.setTagCompound(nbt);
 		}
 
-		public static void setFilterTag(NBTTagCompound nbtFilterable, NBTTagCompound nbtFilter) {
-			nbtFilterable.setBoolean(IS_WHITE, isWhiteList(nbtFilter));
-			nbtFilterable.setTag(SELECTING, getSelectingItemList(nbtFilter));
+		public static void copyFilterTag(NBTTagCompound nbtFilterCopying, NBTTagCompound nbtFilterModel) {
+			nbtFilterCopying.setBoolean(IS_WHITE, isWhiteList(nbtFilterModel));
+			nbtFilterCopying.setTag(SELECTING, getSelectingItemList(nbtFilterModel));
 		}
 
 		public static boolean isAvailableFilterTag(ItemStack itemStack) {

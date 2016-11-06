@@ -1,6 +1,7 @@
 package nahama.ofalenmod.inventory;
 
 import nahama.ofalenmod.util.OfalenNBTUtil;
+import nahama.ofalenmod.util.Util;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
@@ -54,7 +55,15 @@ public class ContainerItemFilterInstaller extends ContainerItemBase {
 
 	@Override
 	public void onContainerClosed(EntityPlayer player) {
-		((InventoryItemFilterInstaller) inventory).dropContents(player);
+		if (player.worldObj.isRemote) {
+			super.onContainerClosed(player);
+			return;
+		}
+		for (int i = 0; i < inventory.getSizeInventory(); i++) {
+			ItemStack itemStack = inventory.getStackInSlotOnClosing(i);
+			if (itemStack != null)
+				player.dropPlayerItemWithRandomChoice(itemStack, false);
+		}
 		super.onContainerClosed(player);
 	}
 

@@ -1,8 +1,6 @@
 package nahama.ofalenmod.inventory;
 
 import nahama.ofalenmod.util.OfalenNBTUtil.FilterUtil;
-import nahama.ofalenmod.util.Util;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.item.ItemStack;
 
@@ -22,15 +20,16 @@ public class InventoryItemFilterInstaller extends InventoryItemBase {
 			FilterUtil.initFilterTag(itemStacks[2]);
 			return;
 		}
-		FilterUtil.setFilterTag(FilterUtil.getFilterTag(itemStacks[2]), FilterUtil.getFilterTag(itemStacks[1]));
+		FilterUtil.copyFilterTag(FilterUtil.getFilterTag(itemStacks[2]), FilterUtil.getFilterTag(itemStacks[1]));
 	}
 
-	public void dropContents(EntityPlayer player) {
-		for (ItemStack itemStack : itemStacks) {
-			if (itemStack == null)
-				continue;
-			Util.dropItemStackCopyNearEntity(itemStack, player);
-		}
+	@Override
+	public ItemStack getStackInSlotOnClosing(int slot) {
+		if (itemStacks[slot] == null)
+			return null;
+		ItemStack itemstack = itemStacks[slot];
+		itemStacks[slot] = null;
+		return itemstack;
 	}
 
 	@Override
