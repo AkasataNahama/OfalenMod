@@ -14,9 +14,4 @@ public class ItemOfalen extends ItemParts {
 	public IIcon getIconFromDamage(int meta) {
 		return icons[meta & 7];
 	}
-
-	@Override
-	public int getMetadata(int meta) {
-		return meta & 7;
-	}
 }

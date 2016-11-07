@@ -74,4 +74,14 @@ public class ItemShield extends ItemFuture {
 			return super.getIconIndex(itemStack);
 		return invalid;
 	}
+
+	@Override
+	public IIcon getIcon(ItemStack stack, int pass) {
+		return this.getIconIndex(stack);
+	}
+
+	@Override
+	public boolean requiresMultipleRenderPasses() {
+		return true;
+	}
 }

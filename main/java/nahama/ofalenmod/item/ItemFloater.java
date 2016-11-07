@@ -101,10 +101,9 @@ public class ItemFloater extends ItemFuture {
 		return material != null && material.isItemEqual(new ItemStack(OfalenModItemCore.partsOfalen, 1, 8));
 	}
 
-	/** 道具など、耐久値を減らせるかどうか。 */
+	/** 道具などのように、耐久値を減らせるかどうか。 */
 	@Override
 	public boolean isDamageable() {
-		// 耐久力エンチャントなどが付かないよう、false。
 		return false;
 	}
 
@@ -123,5 +122,15 @@ public class ItemFloater extends ItemFuture {
 		if (itemStack.hasTagCompound() && itemStack.getTagCompound().getByte(OfalenNBTUtil.MODE) > 0)
 			return super.getIconIndex(itemStack);
 		return invalid;
+	}
+
+	@Override
+	public IIcon getIcon(ItemStack stack, int pass) {
+		return this.getIconIndex(stack);
+	}
+
+	@Override
+	public boolean requiresMultipleRenderPasses() {
+		return true;
 	}
 }

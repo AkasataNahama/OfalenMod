@@ -45,18 +45,17 @@ public class ItemExplosionBall extends Item {
 
 	@Override
 	@SideOnly(Side.CLIENT)
+	public void registerIcons(IIconRegister iicon) {
+		icons = new IIcon[3];
+		for (int i = 0; i < 3; i++) {
+			icons[i] = iicon.registerIcon(this.getIconString() + "-" + (i + 1));
+		}
+	}
+
+	@Override
+	@SideOnly(Side.CLIENT)
 	public IIcon getIconFromDamage(int meta) {
 		return icons[meta];
-	}
-
-	@Override
-	public int getMetadata(int meta) {
-		return meta;
-	}
-
-	@Override
-	public String getUnlocalizedName(ItemStack itemStack) {
-		return this.getUnlocalizedName() + "." + itemStack.getItemDamage();
 	}
 
 	@Override
@@ -68,11 +67,7 @@ public class ItemExplosionBall extends Item {
 	}
 
 	@Override
-	@SideOnly(Side.CLIENT)
-	public void registerIcons(IIconRegister iicon) {
-		this.icons = new IIcon[3];
-		for (int i = 0; i < 3; i++) {
-			this.icons[i] = iicon.registerIcon(this.getIconString() + "-" + (i + 1));
-		}
+	public String getUnlocalizedName(ItemStack itemStack) {
+		return this.getUnlocalizedName() + "." + itemStack.getItemDamage();
 	}
 }

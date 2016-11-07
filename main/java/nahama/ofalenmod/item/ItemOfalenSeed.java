@@ -62,9 +62,9 @@ public class ItemOfalenSeed extends Item implements IPlantable {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void registerIcons(IIconRegister register) {
-		this.icons = new IIcon[4];
+		icons = new IIcon[4];
 		for (int i = 0; i < 4; i++) {
-			this.icons[i] = register.registerIcon(this.getIconString() + "-" + i);
+			icons[i] = register.registerIcon(this.getIconString() + "-" + i);
 		}
 	}
 
@@ -82,12 +82,6 @@ public class ItemOfalenSeed extends Item implements IPlantable {
 		for (int i = 0; i < 4; i++) {
 			list.add(new ItemStack(this, 1, i));
 		}
-	}
-
-	/** メタデータを返す。 */
-	@Override
-	public int getMetadata(int meta) {
-		return meta & 3;
 	}
 
 	/** 内部名を返す。 */

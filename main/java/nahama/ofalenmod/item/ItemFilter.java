@@ -72,6 +72,13 @@ public class ItemFilter extends Item {
 		return true;
 	}
 
+	/** 説明欄の内容を追加する。 */
+	@Override
+	@SideOnly(Side.CLIENT)
+	public void addInformation(ItemStack itemStack, EntityPlayer player, List list, boolean flag) {
+		list.addAll(FilterUtil.getFilterInformation(itemStack));
+	}
+
 	/** クリエイティブタブにアイテムを登録する処理。 */
 	@Override
 	public void getSubItems(Item item, CreativeTabs tabs, List list) {
@@ -84,17 +91,10 @@ public class ItemFilter extends Item {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void registerIcons(IIconRegister register) {
-		icons = new IIcon[6];
-		for (int i = 0; i < 6; i++) {
-			icons[i] = register.registerIcon(this.getIconString() + "-" + (i / 3) + "-" + (i % 3));
+		icons = new IIcon[4];
+		for (int i = 0; i < 4; i++) {
+			icons[i] = register.registerIcon(this.getIconString() + "-" + (i / 2) + "-" + (i % 2));
 		}
-	}
-
-	/** アイテムのテクスチャを返す。 */
-	@Override
-	@SideOnly(Side.CLIENT)
-	public IIcon getIconFromDamage(int meta) {
-		return icons[meta % 2 * 3 + 2];
 	}
 
 	@Override
@@ -104,26 +104,23 @@ public class ItemFilter extends Item {
 		int i = 0;
 		if (FilterUtil.isWhiteList(FilterUtil.getFilterTag(itemStack)))
 			i = 1;
-		return icons[itemStack.getItemDamage() % 2 * 3 + i];
+		return icons[itemStack.getItemDamage() % 2 * 2 + i];
 	}
 
-	/** メタデータを返す。 */
 	@Override
-	public int getMetadata(int meta) {
-		return meta % 2;
+	public IIcon getIcon(ItemStack stack, int pass) {
+		return this.getIconIndex(stack);
+	}
+
+	@Override
+	public boolean requiresMultipleRenderPasses() {
+		return true;
 	}
 
 	/** 内部名を返す。 */
 	@Override
 	public String getUnlocalizedName(ItemStack itemStack) {
 		return this.getUnlocalizedName() + "." + itemStack.getItemDamage();
-	}
-
-	/** 説明欄の内容を追加する。 */
-	@Override
-	@SideOnly(Side.CLIENT)
-	public void addInformation(ItemStack itemStack, EntityPlayer player, List list, boolean flag) {
-		list.addAll(FilterUtil.getFilterInformation(itemStack));
 	}
 }
 

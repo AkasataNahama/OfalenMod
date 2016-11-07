@@ -26,9 +26,9 @@ public class ItemParts extends Item {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void registerIcons(IIconRegister register) {
-		this.icons = new IIcon[type];
+		icons = new IIcon[type];
 		for (int i = 0; i < type; i++) {
-			this.icons[i] = register.registerIcon(this.getIconString() + "-" + i);
+			icons[i] = register.registerIcon(this.getIconString() + "-" + i);
 		}
 	}
 
@@ -46,12 +46,6 @@ public class ItemParts extends Item {
 		for (int i = 0; i < type; i++) {
 			list.add(new ItemStack(this, 1, i));
 		}
-	}
-
-	/** メタデータを返す。 */
-	@Override
-	public int getMetadata(int meta) {
-		return meta;
 	}
 
 	/** 内部名を返す。 */
