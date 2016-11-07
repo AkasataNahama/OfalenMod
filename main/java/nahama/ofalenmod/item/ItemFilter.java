@@ -100,11 +100,11 @@ public class ItemFilter extends Item {
 	@Override
 	public IIcon getIconIndex(ItemStack itemStack) {
 		if (!FilterUtil.isAvailableFilterTag(itemStack))
-			return super.getIconIndex(itemStack);
-		int i = 0;
+			return icons[0];
+		int i = itemStack.getItemDamage() % 2 * 2;
 		if (FilterUtil.isWhiteList(FilterUtil.getFilterTag(itemStack)))
-			i = 1;
-		return icons[itemStack.getItemDamage() % 2 * 2 + i];
+			i += 1;
+		return icons[i];
 	}
 
 	@Override
