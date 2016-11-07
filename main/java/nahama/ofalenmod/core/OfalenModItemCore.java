@@ -18,9 +18,20 @@ public class OfalenModItemCore {
 	public static Item gemOfalen;
 	public static Item fragmentOfalen;
 	public static Item coreOfalen;
-	/** 0:Machine Cover Plate, 1:Grade 3 Part, 2:Lump of Stone, 3:Stone Fuel, 4:Ofalen Fuel, 5:Laser Magazine, 6:Shielding Ingot, 7:Teleporting Pearl, 8:Floating Dust, 9:Collecting Lump */
+	/**
+	 * 0 : Machine Cover Plate<br>
+	 * 1 : Grade 3 Part<br>
+	 * 2 : Lump of Stone<br>
+	 * 3 : Stone Fuel<br>
+	 * 4 : Ofalen Fuel<br>
+	 * 5 : Laser Magazine<br>
+	 * 6 : Shielding Ingot<br>
+	 * 7 : Teleporting Pearl<br>
+	 * 8 : Floating Dust<br>
+	 * 9 : Collecting Lump<br>
+	 */
 	public static Item partsOfalen;
-	/** 0: Iron Stick */
+	/** 0 : Iron Stick */
 	public static Item partsOfalen3D;
 	// 防具G1
 	public static Item helmetOfalenG1;

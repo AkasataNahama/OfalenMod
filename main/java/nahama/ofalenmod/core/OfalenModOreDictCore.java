@@ -16,16 +16,11 @@ public class OfalenModOreDictCore {
 			return false;
 		for (ItemStack input : inputs) {
 			for (ItemStack target : targets) {
-				if (OreDictionary.itemMatches(target, input, false)) {
+				if (OreDictionary.itemMatches(target, input, false))
 					return true;
-				}
 			}
 		}
 		return false;
-	}
-
-	public static ItemStack getFirstItem(List<ItemStack> list) {
-		return getItem(list, 0);
 	}
 
 	public static ItemStack getItem(List<ItemStack> list, int index) {
