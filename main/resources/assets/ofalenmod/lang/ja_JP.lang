@@ -34,6 +34,7 @@ info.ofalen.collector.item=アイテム
 info.ofalen.collector.exp=経験値
 // フィルター
 info.ofalen.filter.toolTip=フィルター情報 : 「Shift」
+info.ofalen.filter.item.installed=アイテムフィルター
 info.ofalen.filter.black=ブラックリスト
 info.ofalen.filter.white=ホワイトリスト
 

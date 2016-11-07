@@ -160,7 +160,7 @@ public class ItemCollector extends Item {
 			return;
 		list.add(StatCollector.translateToLocal("info.ofalen.collector.item") + " : " + (itemStack.getTagCompound().getBoolean(OfalenNBTUtil.IS_ITEM_DISABLED) ? "Off" : "On"));
 		list.add(StatCollector.translateToLocal("info.ofalen.collector.exp") + " : " + (itemStack.getTagCompound().getBoolean(OfalenNBTUtil.IS_EXP_DISABLED) ? "Off" : "On"));
-		FilterUtil.addFilterInformation(itemStack, list);
+		list.addAll(FilterUtil.getFilterInformation(itemStack));
 	}
 
 	@Override

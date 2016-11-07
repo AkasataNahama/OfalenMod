@@ -123,7 +123,7 @@ public class ItemFilter extends Item {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void addInformation(ItemStack itemStack, EntityPlayer player, List list, boolean flag) {
-		FilterUtil.addFilterInformation(itemStack, list);
+		list.addAll(FilterUtil.getFilterInformation(itemStack));
 	}
 }
 

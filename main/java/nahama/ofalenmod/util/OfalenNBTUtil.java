@@ -7,7 +7,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.StatCollector;
 
-import java.util.List;
+import java.util.ArrayList;
 
 public class OfalenNBTUtil {
 	// TileEntity
@@ -111,27 +111,30 @@ public class OfalenNBTUtil {
 			return nbtFilter.getTagList(SELECTING, 10);
 		}
 
-		public static void addFilterInformation(ItemStack itemStack, List list) {
+		/** フィルターの情報を返す。ToolTip表示用。 */
+		public static ArrayList<String> getFilterInformation(ItemStack itemStack) {
+			ArrayList<String> ret = new ArrayList<>();
+			// Shiftが押されていなければフィルターに対応していることを表示。
 			if (!Util.isKeyDown(Minecraft.getMinecraft().gameSettings.keyBindSneak.getKeyCode())) {
-				list.add(StatCollector.translateToLocal("info.ofalen.filter.toolTip"));
-				return;
-			} else if (!isAvailableFilterTag(itemStack)) {
-				return;
+				ret.add(StatCollector.translateToLocal("info.ofalen.filter.toolTip"));
+				return ret;
 			}
+			// フィルターが無効なら終了。
+			if (!isAvailableFilterTag(itemStack))
+				return ret;
 			NBTTagCompound nbtFilter = FilterUtil.getFilterTag(itemStack);
-			list.add(StatCollector.translateToLocal("info.ofalen.filter." + (FilterUtil.isWhiteList(nbtFilter) ? "white" : "black")));
+			ret.add(StatCollector.translateToLocal("info.ofalen.filter.item.installed"));
+			ret.add("  " + StatCollector.translateToLocal("info.ofalen.filter." + (FilterUtil.isWhiteList(nbtFilter) ? "white" : "black")));
 			NBTTagList nbtTagList = FilterUtil.getSelectingItemList(nbtFilter);
 			for (int i = 0; i < 27 && i < nbtTagList.tagCount(); i++) {
 				NBTTagCompound nbt = nbtTagList.getCompoundTagAt(i);
 				if (nbt == null)
 					continue;
 				ItemStack itemStack1 = ItemStack.loadItemStackFromNBT(nbt);
-				try {
-					list.add(itemStack1.getDisplayName() + " (" + Item.getIdFromItem(itemStack1.getItem()) + ", " + itemStack1.getItemDamage() + ")");
-				} catch (Exception e) {
-					Util.error("Error on getting filter information.", "ItemFilter");
-				}
+				if (itemStack1 != null)
+					ret.add("    " + itemStack1.getDisplayName() + " (" + Item.getIdFromItem(itemStack1.getItem()) + ", " + itemStack1.getItemDamage() + ")");
 			}
+			return ret;
 		}
 	}
 }
