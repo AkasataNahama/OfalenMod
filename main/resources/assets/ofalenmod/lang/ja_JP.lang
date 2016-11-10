@@ -99,8 +99,7 @@ item.ofalen.parts.6.name=オファレンシールドインゴット
 item.ofalen.parts.7.name=オファレンテレポーテートパール
 item.ofalen.parts.8.name=オファレンフロートダスト
 item.ofalen.parts.9.name=オファレンコレクトランプ
-// TODO バランス調整：鉄の棒
-item.ofalen.parts3D.0.name=鉄の棒
+item.ofalen.parts3D.0.name=白色オファレンの棒
 
 // 防具
 item.ofalen.armor.G1.0.name=オファレンのヘルメット Grade 1

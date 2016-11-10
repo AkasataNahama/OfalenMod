@@ -34,7 +34,7 @@ public class OfalenModItemCore {
 	 * 9 : Collecting Lump<br>
 	 */
 	public static Item partsOfalen;
-	/** 0 : Iron Stick */
+	/** 0 : White Ofalen Stick */
 	public static Item partsOfalen3D;
 	// 防具G1
 	public static Item helmetOfalenG1;

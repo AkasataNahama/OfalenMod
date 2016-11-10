@@ -99,8 +99,7 @@ item.ofalen.parts.6.name=Ingot of Ofalen Shield
 item.ofalen.parts.7.name=Pearl of Ofalen Teleporting
 item.ofalen.parts.8.name=Dust of Ofalen Floating
 item.ofalen.parts.9.name=Lamp of Ofalen Collecting
-// TODO バランス調整：鉄の棒
-item.ofalen.parts3D.0.name=Iron Stick
+item.ofalen.parts3D.0.name=White Ofalen Stick
 
 // Armor
 item.ofalen.armor.G1.0.name=Ofalen Helmet Grade 1
