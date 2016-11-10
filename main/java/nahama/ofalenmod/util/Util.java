@@ -131,4 +131,13 @@ public class Util {
 		}
 		return ret;
 	}
+
+	/** (base)の(index)乗を返す。0未満のindexには未対応。 */
+	public static int power(int base, int index) {
+		int ret = 1;
+		for (int i = 0; i < index; i++) {
+			ret *= base;
+		}
+		return ret;
+	}
 }

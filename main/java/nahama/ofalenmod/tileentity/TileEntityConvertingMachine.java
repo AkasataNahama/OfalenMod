@@ -22,8 +22,8 @@ public class TileEntityConvertingMachine extends TileEntityGradedMachineBase {
 	}
 
 	@Override
-	protected int getWorkTime() {
-		return OfalenModConfigCore.timeConverting * (4 - grade) / 4;
+	protected int getMaxWorkingTimeBase() {
+		return OfalenModConfigCore.timeConverting;
 	}
 
 	@Override

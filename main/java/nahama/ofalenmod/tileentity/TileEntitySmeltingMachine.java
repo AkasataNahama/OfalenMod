@@ -12,8 +12,8 @@ public class TileEntitySmeltingMachine extends TileEntityGradedMachineBase {
 	}
 
 	@Override
-	protected int getWorkTime() {
-		return OfalenModConfigCore.timeSmelting * (4 - grade) / 4;
+	protected int getMaxWorkingTimeBase() {
+		return OfalenModConfigCore.timeSmelting;
 	}
 
 	@Override

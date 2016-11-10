@@ -50,7 +50,7 @@ public class TileEntityFusingMachine extends TileEntityGradedMachineBase {
 			// 燃焼中で作業可能なら、作業する。
 			if (this.isBurning()) {
 				++timeWorking;
-				if (timeWorking >= this.getWorkTime()) {
+				if (timeWorking >= this.getMaxWorkingTimeWithGrade()) {
 					timeWorking = 0;
 					this.work();
 				}
@@ -152,8 +152,8 @@ public class TileEntityFusingMachine extends TileEntityGradedMachineBase {
 
 	/** 作業にかかる時間を返す。 */
 	@Override
-	protected int getWorkTime() {
-		return OfalenModConfigCore.timeConverting * (4 - grade) / 4;
+	protected int getMaxWorkingTimeBase() {
+		return OfalenModConfigCore.timeFusing;
 	}
 
 	/** 作業時の処理。 */

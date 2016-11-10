@@ -11,8 +11,8 @@ public class TileEntityRepairingMachine extends TileEntityGradedMachineBase {
 	}
 
 	@Override
-	protected int getWorkTime() {
-		return OfalenModConfigCore.timeRepairing * (4 - grade) / 4;
+	protected int getMaxWorkingTimeBase() {
+		return OfalenModConfigCore.timeRepairing;
 	}
 
 	@Override

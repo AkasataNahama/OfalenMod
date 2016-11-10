@@ -7,6 +7,7 @@ import nahama.ofalenmod.core.OfalenModConfigCore;
 import nahama.ofalenmod.core.OfalenModItemCore;
 import nahama.ofalenmod.core.OfalenModOreDictCore;
 import nahama.ofalenmod.util.OfalenNBTUtil;
+import nahama.ofalenmod.util.Util;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
@@ -64,7 +65,7 @@ public abstract class TileEntityGradedMachineBase extends TileEntity implements 
 		// 燃焼中で作業可能なら、作業する。
 		if (this.isBurning() && this.canWork()) {
 			++timeWorking;
-			if (timeWorking >= this.getWorkTime()) {
+			if (timeWorking >= this.getMaxWorkingTimeWithGrade()) {
 				timeWorking = 0;
 				this.work();
 			}
@@ -86,21 +87,31 @@ public abstract class TileEntityGradedMachineBase extends TileEntity implements 
 		if (itemStack == null)
 			return 0;
 		if (OfalenModOreDictCore.isMatchedItemStack(OfalenModOreDictCore.listTDiamond, itemStack))
-			return (short) (OfalenModConfigCore.timeStoneFuelBurning * (4 - grade) / 4);
-		short time = (short) (TileEntityFurnace.getItemBurnTime(itemStack) * (4 - grade) / 4 / OfalenModConfigCore.factorFurnaceFuelBurningTime);
+			return (short) (this.getTimeWithGrade(OfalenModConfigCore.timeStoneFuelBurning));
+		short time = (short) (this.getTimeWithGrade(TileEntityFurnace.getItemBurnTime(itemStack)) / OfalenModConfigCore.factorFurnaceFuelBurningTime);
 		if (itemStack.getItem() != OfalenModItemCore.partsOfalen)
 			return time;
 		int meta = itemStack.getItemDamage();
 		if (meta == 3) {
-			return (short) (OfalenModConfigCore.timeStoneFuelBurning * (4 - grade) / 4);
+			return (short) (this.getTimeWithGrade(OfalenModConfigCore.timeStoneFuelBurning));
 		} else if (meta == 4) {
-			return (short) (OfalenModConfigCore.timeOfalenFuelBurning * (4 - grade) / 4);
+			return (short) (this.getTimeWithGrade(OfalenModConfigCore.timeOfalenFuelBurning));
 		}
 		return time;
 	}
 
+	/** 作業時間などにGradeを反映させる。 */
+	protected int getTimeWithGrade(int time) {
+		return time / Util.power(2, grade);
+	}
+
 	/** 作業にかかる時間を返す。 */
-	protected abstract int getWorkTime();
+	protected int getMaxWorkingTimeWithGrade() {
+		return this.getTimeWithGrade(this.getMaxWorkingTimeBase());
+	}
+
+	/** 作業にかかる時間の基準値を返す。 */
+	protected abstract int getMaxWorkingTimeBase();
 
 	/** 作業時の処理。 */
 	protected abstract void work();
@@ -222,7 +233,7 @@ public abstract class TileEntityGradedMachineBase extends TileEntity implements 
 
 	@SideOnly(Side.CLIENT)
 	public int getWorkProgressScaled(int par1) {
-		return timeWorking * par1 / this.getWorkTime();
+		return timeWorking * par1 / this.getMaxWorkingTimeWithGrade();
 	}
 
 	@SideOnly(Side.CLIENT)
