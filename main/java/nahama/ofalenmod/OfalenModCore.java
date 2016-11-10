@@ -108,7 +108,6 @@ public class OfalenModCore {
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityTeleportingMarker.class, new RenderTeleportingMarker());
 		// エンティティとレンダラーの紐付け。
 		RenderingRegistry.registerEntityRenderingHandler(EntityExplosionBall.class, new RenderSnowball(OfalenModItemCore.ballExplosion));
-		RenderingRegistry.registerEntityRenderingHandler(EntityFlameBall.class, new RenderSnowball(OfalenModItemCore.ballFlame));
 		RenderingRegistry.registerEntityRenderingHandler(EntityLaserRed.class, new RenderLaser(new ModelLaser(), "red"));
 		RenderingRegistry.registerEntityRenderingHandler(EntityLaserGreen.class, new RenderLaser(new ModelLaser(), "green"));
 		RenderingRegistry.registerEntityRenderingHandler(EntityLaserBlue.class, new RenderLaser(new ModelLaser(), "blue"));

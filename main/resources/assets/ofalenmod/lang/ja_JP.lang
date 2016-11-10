@@ -143,10 +143,6 @@ item.ofalen.ball.explosion.0.name=爆発玉 Grade 1
 item.ofalen.ball.explosion.1.name=爆発玉 Grade 2
 item.ofalen.ball.explosion.2.name=爆発玉 Grade 3
 
-item.ballFlame.0.name=火炎玉 Grade 1
-item.ballFlame.1.name=火炎玉 Grade 2
-item.ballFlame.2.name=火炎玉 Grade 3
-
 item.ofalen.ball.hungry.name=空腹玉
 item.ofalen.ball.food.name=満腹玉
 item.ofalen.ball.perfect.name=オファレンの万能玉

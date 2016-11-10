@@ -110,7 +110,6 @@ public class OfalenModRecipeCore {
 		addGradedBallRecipe(GEM[3], ballRecoveryG1, ballRecoveryG2, ballRecoveryG3);
 		for (int i = 0; i < 3; i++) {
 			addBallRecipe(new ItemStack(ballExplosion, 1, i), Items.gunpowder, i);
-			addBallRecipe(new ItemStack(ballFlame, 1, i), Items.blaze_powder, i);
 		}
 		addSingleBallRecipe(ballHungry, Items.rotten_flesh);
 		addSingleBallRecipe(ballFood, INGOT_GOLD);

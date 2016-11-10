@@ -143,10 +143,6 @@ item.ofalen.ball.explosion.0.name=Explosion Ball Grade 1
 item.ofalen.ball.explosion.1.name=Explosion Ball Grade 2
 item.ofalen.ball.explosion.2.name=Explosion Ball Grade 3
 
-item.ballFlame.0.name=Flame Ball Grade 1
-item.ballFlame.1.name=Flame Ball Grade 2
-item.ballFlame.2.name=Flame Ball Grade 3
-
 item.ofalen.ball.hungry.name=Hungry Ball
 item.ofalen.ball.food.name=Food Ball
 item.ofalen.ball.perfect.name=Ofalen Perfect Ball

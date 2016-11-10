@@ -5,7 +5,6 @@ import cpw.mods.fml.relauncher.SideOnly;
 import nahama.ofalenmod.OfalenModCore;
 import nahama.ofalenmod.core.OfalenModItemCore;
 import nahama.ofalenmod.entity.EntityExplosionBall;
-import nahama.ofalenmod.entity.EntityFlameBall;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
@@ -35,11 +34,8 @@ public class ItemExplosionBall extends Item {
 		// 音を出す
 		world.playSoundAtEntity(player, "random.bow", 0.5F, 0.4F / (itemRand.nextFloat() * 0.4F + 0.8F));
 		// Entityを生成する
-		if (itemStack.getItem() == OfalenModItemCore.ballExplosion) {
+		if (itemStack.getItem() == OfalenModItemCore.ballExplosion)
 			world.spawnEntityInWorld(new EntityExplosionBall(world, player, this.getDamage(itemStack)));
-		} else if (itemStack.getItem() == OfalenModItemCore.ballFlame) {
-			world.spawnEntityInWorld(new EntityFlameBall(world, player, this.getDamage(itemStack)));
-		}
 		return itemStack;
 	}
 

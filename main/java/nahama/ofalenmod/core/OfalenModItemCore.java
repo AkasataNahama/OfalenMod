@@ -72,8 +72,6 @@ public class OfalenModItemCore {
 	public static Item ballRecoveryG3;
 	// その他の玉
 	public static Item ballExplosion;
-	// TODO 橙追加：削除
-	public static Item ballFlame;
 	public static Item ballHungry;
 	public static Item ballFood;
 	public static Item ballPerfect;
@@ -231,9 +229,6 @@ public class OfalenModItemCore {
 		// その他の玉
 		ballExplosion = new ItemExplosionBall().setUnlocalizedName("ofalen.ball.explosion").setTextureName("ofalenmod:explosion_ball");
 		GameRegistry.registerItem(ballExplosion, "ballExplosion");
-		// TODO 橙追加：削除
-		ballFlame = new ItemExplosionBall().setUnlocalizedName("ballFlame").setTextureName("ofalenmod:flame_ball");
-		GameRegistry.registerItem(ballFlame, "ballFlame");
 		ballHungry = new ItemOfalenBall(new PotionEffect[] { new PotionEffect(Potion.hunger.id, 40, 1599) }).setUnlocalizedName("ofalen.ball.hungry").setTextureName("ofalenmod:hungry_ball");
 		GameRegistry.registerItem(ballHungry, "ballHungry");
 		ballFood = new ItemOfalenBall(new PotionEffect[] { new PotionEffect(23, 20, 0) }).setUnlocalizedName("ofalen.ball.food").setTextureName("ofalenmod:food_ball");
