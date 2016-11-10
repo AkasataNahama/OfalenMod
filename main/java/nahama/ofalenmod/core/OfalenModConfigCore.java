@@ -29,12 +29,10 @@ public class OfalenModConfigCore {
 	public static byte baseOfalenSmeltingAmount = 1;
 	// Recipe
 	public static byte blankLumpRecipe = 7;
-	// TODO バランス調整：16に
-	public static byte amountShieldIngotRecipe = 4;
-	public static byte amountTeleportPearlRecipe = 4;
-	public static byte amountFloatDustRecipe = 4;
+	public static byte amountShieldIngotRecipe = 32;
+	public static byte amountTeleportPearlRecipe = 32;
+	public static byte amountFloatDustRecipe = 32;
 	public static byte amountCollectingLampRecipe = 64;
-	// TODO コレクター：コレクティングランプの追加
 	// Future
 	public static short amountShieldDamage = 1;
 	public static short amountTeleporterDamage = 1;
@@ -42,6 +40,7 @@ public class OfalenModConfigCore {
 	public static short amountCollectorDamageItem = 1;
 	public static short amountCollectorDamageExp = 1;
 	public static byte intervalFloaterDamage = 20;
+	// Category
 	public static final String GENERAL = "General";
 	private static final String DIFFICULTY = GENERAL + ".Difficulty";
 	private static final String GENERATE = GENERAL + ".Generate";

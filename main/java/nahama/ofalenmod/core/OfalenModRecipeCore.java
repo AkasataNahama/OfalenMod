@@ -1,6 +1,5 @@
 package nahama.ofalenmod.core;
 
-import cpw.mods.fml.common.IFuelHandler;
 import cpw.mods.fml.common.registry.GameRegistry;
 import nahama.ofalenmod.recipe.MagazineRecipe;
 import net.minecraft.block.Block;
@@ -29,6 +28,7 @@ public class OfalenModRecipeCore {
 		final String NUGGET_GOLD = "nuggetGold";
 		final String GEM_QUARTZ = "gemQuartz";
 		final String GEM_DIAMOND = "gemDiamond";
+		final String DUST_GLOWSTONE = "dustGlowstone";
 		final String STONE = "stone";
 		final String COBBLESTONE = "cobblestone";
 		// 石の塊レシピのConfig設定を反映。
@@ -49,99 +49,89 @@ public class OfalenModRecipeCore {
 			addShaped(new ItemStack(gemOfalen, 9, i), "X", 'X', BLOCK[i]);
 			addShaped(new ItemStack(fragmentOfalen, 9, i), "X", 'X', GEM[i]);
 		}
-		addShapeless(new ItemStack(blockOfalen, 3, 3), BLOCK[0], BLOCK[1], BLOCK[2]);
-		addShapeless(new ItemStack(coreOfalen, 1, 3), CORE[0], CORE[1], CORE[2]);
+		addShapeless(new ItemStack(blockOfalen, 1, 3), BLOCK[0], BLOCK[1], BLOCK[2]);
 		// 中間素材・機械類
-		// 鉄の棒
-		addShaped(new ItemStack(partsOfalen3D, 1, 0), "X", "X", 'X', INGOT_IRON);
+		// オファレンの棒
+		addShaped(new ItemStack(partsOfalen3D, 1, 0), "W", "W", 'W', GEM[3]);
 		// 機械用カバープレート
-		addShaped(getParts(0), "LQL", "QOQ", "LQL", 'L', getParts(2), 'Q', GEM_QUARTZ, 'O', FRAG[3]);
+		addShaped(new ItemStack(partsOfalen, 6, 0), "LOL", "OQO", "LOL", 'L', getParts(2), 'Q', GEM_QUARTZ, 'O', FRAG[3]);
 		// Grade 3の部品
-		addShaped(getParts(1), "XYX", "YZY", "XYX", 'X', INGOT_IRON, 'Y', GEM_DIAMOND, 'Z', BLOCK[3]);
+		addShaped(getParts(1), "DWD", "WIW", "DID", 'W', GEM[3], 'D', GEM_DIAMOND, 'I', INGOT_IRON);
 		// 製錬機
-		addShaped(machineSmelting, "XYX", "XZX", "XYX", 'X', getParts(0), 'Y', Blocks.furnace, 'Z', BLOCK[0]);
+		addShaped(machineSmelting, "XYX", "XZX", "XYX", 'X', getParts(0), 'Y', GEM[0], 'Z', BLOCK[0]);
 		// 変換機
-		addShaped(machineConverting, "XYX", "XZX", "XYX", 'X', getParts(0), 'Y', Blocks.enchanting_table, 'Z', BLOCK[1]);
+		addShaped(machineConverting, "XYX", "XZX", "XYX", 'X', getParts(0), 'Y', GEM[1], 'Z', BLOCK[1]);
 		// 修繕機
-		addShaped(machineRepairing, "XYX", "XZX", "XYX", 'X', getParts(0), 'Y', Blocks.anvil, 'Z', BLOCK[2]);
+		addShaped(machineRepairing, "XYX", "XZX", "XYX", 'X', getParts(0), 'Y', GEM[2], 'Z', BLOCK[2]);
 		// 融合機
-		addShaped(machineFusing, "XYX", "XZX", "XYX", 'X', getParts(0), 'Y', CORE[3], 'Z', BLOCK[3]);
+		addShaped(machineFusing, "XRX", "XGX", "XBX", 'X', getParts(0), 'R', CORE[0], 'G', CORE[1], 'B', CORE[2]);
 		// 処理装置
-		addShaped(processor, "RXG", "YZY", "BXW", 'X', GEM_DIAMOND, 'Y', INGOT_GOLD, 'Z', casingProcessor, 'R', GEM[0], 'G', GEM[1], 'B', GEM[2], 'W', GEM[3]);
-		addShaped(new ItemStack(processor, 1, 1), "RIG", "SMS", "BIW", 'I', INGOT_IRON, 'S', getParts(2), 'M', processor, 'R', GEM[0], 'G', GEM[1], 'B', GEM[2], 'W', GEM[3]);
-		addShaped(new ItemStack(processor, 1, 2), "RDG", "IMI", "BOW", 'D', GEM_DIAMOND, 'O', INGOT_GOLD, 'I', INGOT_IRON, 'M', new ItemStack(processor, 1, 1), 'R', GEM[0], 'G', GEM[1], 'B', GEM[2], 'W', GEM[3]);
+		addShaped(processor, "RXG", "YMY", "BXW", 'X', INGOT_IRON, 'Y', INGOT_GOLD, 'M', new ItemStack(casingProcessor), 'R', GEM[0], 'G', GEM[1], 'B', GEM[2], 'W', GEM[3]);
+		addShaped(new ItemStack(processor, 1, 1), "RXG", "YMY", "BZW", 'X', INGOT_IRON, 'Y', INGOT_GOLD, 'Z', GEM_DIAMOND, 'M', new ItemStack(processor), 'R', GEM[0], 'G', GEM[1], 'B', GEM[2], 'W', GEM[3]);
+		addShaped(new ItemStack(processor, 1, 2), "RZG", "YMY", "BZW", 'Y', INGOT_GOLD, 'Z', GEM_DIAMOND, 'M', new ItemStack(processor, 1, 1), 'R', GEM[0], 'G', GEM[1], 'B', GEM[2], 'W', GEM[3]);
 		// 筐体
 		addShaped(casingProcessor, "XYX", "XZX", "XYX", 'X', getParts(0), 'Y', INGOT_IRON, 'Z', GEM[3]);
-		addShaped(new ItemStack(casingProcessor, 1, 1), "SIS", "OCO", "SIS", 'S', getParts(2), 'I', INGOT_IRON, 'O', FRAG[3], 'C', casingProcessor);
-		addShaped(new ItemStack(casingProcessor, 1, 2), "IDI", "OCO", "IDI", 'D', GEM_DIAMOND, 'I', INGOT_IRON, 'O', GEM[3], 'C', new ItemStack(casingProcessor, 1, 1));
+		addShaped(new ItemStack(casingProcessor, 1, 1), "LIL", "OMO", "LIL", 'L', getParts(2), 'I', INGOT_IRON, 'O', GEM[3], 'M', new ItemStack(casingProcessor));
+		addShaped(new ItemStack(casingProcessor, 1, 2), "OIO", "DMD", "OIO", 'D', GEM_DIAMOND, 'I', INGOT_IRON, 'O', GEM[3], 'M', new ItemStack(casingProcessor, 1, 1));
 		// 固定ブロック
 		addShaped(new ItemStack(casingProcessor, 1, 4), "XYX", "XZX", "XYX", 'X', getParts(0), 'Y', GEM[3], 'Z', BLOCK_IRON);
-		addShaped(new ItemStack(casingProcessor, 1, 5), "IOI", "SCS", "IOI", 'I', INGOT_IRON, 'S', getParts(2), 'O', GEM[3], 'C', new ItemStack(casingProcessor, 1, 4));
-		addShaped(new ItemStack(casingProcessor, 1, 6), "OIO", "DCD", "OIO", 'D', GEM_DIAMOND, 'I', INGOT_IRON, 'O', GEM[3], 'C', new ItemStack(casingProcessor, 1, 5));
+		addShaped(new ItemStack(casingProcessor, 1, 5), "LIL", "OMO", "LIL", 'L', getParts(2), 'I', INGOT_IRON, 'O', GEM[3], 'M', new ItemStack(casingProcessor, 1, 4));
+		addShaped(new ItemStack(casingProcessor, 1, 6), "OIO", "DMD", "OIO", 'D', GEM_DIAMOND, 'I', INGOT_IRON, 'O', GEM[3], 'M', new ItemStack(casingProcessor, 1, 5));
 		// 石の塊
 		addShaped(getParts(2), recipeArray, 'X', COBBLESTONE);
 		addShaped(getParts(2), recipeArray, 'X', STONE);
 		addShaped(new ItemStack(Blocks.cobblestone, 8), "X", 'X', getParts(2));
-		// 石燃料
-		addShaped(getParts(3), " XX", "XXX", "XXX", 'X', getParts(2));
 		// オファレン燃料
-		addShaped(getParts(4), "XXX", "XYX", "XXX", 'X', getParts(3), 'Y', GEM[0]);
+		addShaped(new ItemStack(partsOfalen, 8, 3), "OLO", "LQL", "OLO", 'L', getParts(2), 'O', GEM[3], 'Q', GEM_QUARTZ);
+		addShaped(new ItemStack(partsOfalen, 8, 4), "OLO", "LQL", "OLO", 'L', getParts(2), 'O', GEM[7], 'Q', GEM_QUARTZ);
 		// 防具
-		addShaped(helmetOfalenG1, "XXX", "X X", 'X', GEM[0]);
-		addShaped(chestplateOfalenG1, "X X", "XXX", "XXX", 'X', GEM[0]);
-		addShaped(leggingsOfalenG1, "XXX", "X X", "X X", 'X', GEM[0]);
-		addShaped(bootsOfalenG1, "X X", "X X", 'X', GEM[0]);
-		addShaped(helmetOfalenG2, " X ", "YZY", " X ", 'X', GEM[0], 'Y', BLOCK[0], 'Z', helmetOfalenG1);
-		addShaped(chestplateOfalenG2, " X ", "YZY", " X ", 'X', GEM[0], 'Y', BLOCK[0], 'Z', chestplateOfalenG1);
-		addShaped(leggingsOfalenG2, " X ", "YZY", " X ", 'X', GEM[0], 'Y', BLOCK[0], 'Z', leggingsOfalenG1);
-		addShaped(bootsOfalenG2, " X ", "YZY", " X ", 'X', GEM[0], 'Y', BLOCK[0], 'Z', bootsOfalenG1);
-		addShaped(helmetOfalenG3, "ZXZ", "XYX", "ZXZ", 'X', getParts(1), 'Y', helmetOfalenG2, 'Z', GEM[0]);
-		addShaped(chestplateOfalenG3, "ZXZ", "XYX", "ZXZ", 'X', getParts(1), 'Y', chestplateOfalenG2, 'Z', GEM[0]);
-		addShaped(leggingsOfalenG3, "ZXZ", "XYX", "ZXZ", 'X', getParts(1), 'Y', leggingsOfalenG2, 'Z', GEM[0]);
-		addShaped(bootsOfalenG3, "ZXZ", "XYX", "ZXZ", 'X', getParts(1), 'Y', bootsOfalenG2, 'Z', GEM[0]);
-		addShaped(helmetOfalenP, "BCB", "DAD", "BCB", 'A', helmetOfalenG3, 'B', BLOCK[0], 'C', CORE[0], 'D', CORE[3]);
-		addShaped(chestplateOfalenP, "BCB", "DAD", "BCB", 'A', chestplateOfalenG3, 'B', BLOCK[0], 'C', CORE[0], 'D', CORE[3]);
-		addShaped(leggingsOfalenP, "BCB", "DAD", "BCB", 'A', leggingsOfalenG3, 'B', BLOCK[0], 'C', CORE[0], 'D', CORE[3]);
-		addShaped(bootsOfalenP, "BCB", "DAD", "BCB", 'A', bootsOfalenG3, 'B', BLOCK[0], 'C', CORE[0], 'D', CORE[3]);
+		addShaped(helmetOfalenG1, "RRR", "R R", 'R', GEM[0]);
+		addShaped(chestplateOfalenG1, "R R", "RRR", "RRR", 'R', GEM[0]);
+		addShaped(leggingsOfalenG1, "RRR", "R R", "R R", 'R', GEM[0]);
+		addShaped(bootsOfalenG1, "R R", "R R", 'R', GEM[0]);
+		addShaped(helmetOfalenG2, "RRR", "RXR", "RRR", 'R', GEM[0], 'X', helmetOfalenG1);
+		addShaped(chestplateOfalenG2, "RRR", "RXR", "RRR", 'R', GEM[0], 'X', chestplateOfalenG1);
+		addShaped(leggingsOfalenG2, "RRR", "RXR", "RRR", 'R', GEM[0], 'X', leggingsOfalenG1);
+		addShaped(bootsOfalenG2, "RRR", "RXR", "RRR", 'R', GEM[0], 'X', bootsOfalenG1);
+		addShaped(helmetOfalenG3, "RPR", "PXP", "RPR", 'P', getParts(1), 'R', GEM[0], 'X', helmetOfalenG2);
+		addShaped(chestplateOfalenG3, "RPR", "PXP", "RPR", 'P', getParts(1), 'R', GEM[0], 'X', chestplateOfalenG2);
+		addShaped(leggingsOfalenG3, "RPR", "PXP", "RPR", 'P', getParts(1), 'R', GEM[0], 'X', leggingsOfalenG2);
+		addShaped(bootsOfalenG3, "RPR", "PXP", "RPR", 'P', getParts(1), 'R', GEM[0], 'X', bootsOfalenG2);
+		addShaped(helmetOfalenP, " R ", "WXW", " R ", 'R', CORE[0], 'W', CORE[3], 'X', helmetOfalenG3);
+		addShaped(chestplateOfalenP, " R ", "WXW", " R ", 'R', CORE[0], 'W', CORE[3], 'X', chestplateOfalenG3);
+		addShaped(leggingsOfalenP, " R ", "WXW", " R ", 'R', CORE[0], 'W', CORE[3], 'X', leggingsOfalenG3);
+		addShaped(bootsOfalenP, " R ", "WXW", " R ", 'R', CORE[0], 'W', CORE[3], 'X', bootsOfalenG3);
 		// 玉
-		addShaped(new ItemStack(ballEmpty, 4), " X ", "X X", " X ", 'X', GEM[1]);
-		addShaped(new ItemStack(ballEmpty, 1, 1), " X ", "XYX", " X ", 'X', GEM[1], 'Y', ballEmpty);
-		addShaped(new ItemStack(ballEmpty, 2, 2), " Z ", "XYX", " Z ", 'X', new ItemStack(ballEmpty, 1, 1), 'Y', GEM[1], 'Z', getParts(1));
-		addBallRecipe(GEM[0], ballDefenseG1, ballDefenseG2, ballDefenseG3);
-		addBallRecipe(GEM[2], ballAttackG1, ballAttackG2, ballAttackG3);
-		addBallRecipe(GEM[3], ballRecoveryG1, ballRecoveryG2, ballRecoveryG3);
-		addShaped(new ItemStack(ballExplosion, 4), " X ", "XYX", " X ", 'X', ballEmpty, 'Y', Items.gunpowder);
-		addShaped(new ItemStack(ballExplosion, 4, 1), " X ", "XYX", " X ", 'X', new ItemStack(ballEmpty, 1, 1), 'Y', Items.gunpowder);
-		addShaped(new ItemStack(ballExplosion, 4, 2), " X ", "XYX", " X ", 'X', new ItemStack(ballEmpty, 1, 2), 'Y', Items.gunpowder);
-		addShaped(new ItemStack(ballFlame, 4), " X ", "XYX", " X ", 'X', ballEmpty, 'Y', Items.blaze_powder);
-		addShaped(new ItemStack(ballFlame, 4, 1), " X ", "XYX", " X ", 'X', new ItemStack(ballEmpty, 1, 1), 'Y', Items.blaze_powder);
-		addShaped(new ItemStack(ballFlame, 4, 2), " X ", "XYX", " X ", 'X', new ItemStack(ballEmpty, 1, 2), 'Y', Items.blaze_powder);
+		addShaped(new ItemStack(ballEmpty, 4), " G ", "G G", " G ", 'G', GEM[1]);
+		addShaped(new ItemStack(ballEmpty, 4, 1), "GXG", "X X", "GXG", 'G', GEM[1], 'X', ballEmpty);
+		addShaped(new ItemStack(ballEmpty, 4, 2), "XGX", "P P", "XGX", 'P', getParts(1), 'G', GEM[1], 'X', new ItemStack(ballEmpty, 1, 1));
+		addGradedBallRecipe(GEM[0], ballDefenseG1, ballDefenseG2, ballDefenseG3);
+		addGradedBallRecipe(GEM[2], ballAttackG1, ballAttackG2, ballAttackG3);
+		addGradedBallRecipe(GEM[3], ballRecoveryG1, ballRecoveryG2, ballRecoveryG3);
 		for (int i = 0; i < 3; i++) {
-			addShapeless(new ItemStack(ballExplosion, 1, i), new ItemStack(ballEmpty, 1, i), Items.gunpowder);
-			addShapeless(new ItemStack(ballFlame, 1, i), new ItemStack(ballEmpty, 1, i), Items.blaze_powder);
+			addBallRecipe(new ItemStack(ballExplosion, 1, i), Items.gunpowder, i);
+			addBallRecipe(new ItemStack(ballFlame, 1, i), Items.blaze_powder, i);
 		}
-		addShapeless(ballHungry, ballEmpty, Items.rotten_flesh);
-		addShaped(new ItemStack(ballHungry, 4), " X ", "XYX", " X ", 'X', ballEmpty, 'Y', Items.rotten_flesh);
-		addShapeless(ballFood, ballEmpty, INGOT_GOLD);
-		addShaped(new ItemStack(ballFood, 4), " X ", "XYX", " X ", 'X', ballEmpty, 'Y', INGOT_GOLD);
-		addShaped(ballPerfect, "XAX", "BYC", "XZX", 'A', ballRecoveryG3, 'B', ballDefenseG3, 'C', ballAttackG3, 'X', BLOCK[1], 'Y', CORE[1], 'Z', CORE[3]);
+		addSingleBallRecipe(ballHungry, Items.rotten_flesh);
+		addSingleBallRecipe(ballFood, INGOT_GOLD);
+		addShaped(ballPerfect, "XWX", "R B", "YGY", 'X', CORE[1], 'Y', CORE[3], 'W', ballRecoveryG3, 'R', ballDefenseG3, 'G', new ItemStack(ballEmpty, 1, 2), 'B', ballAttackG3);
 		// 道具
-		addShaped(pickaxeOfalenG1, "XXX", " Y ", " Y ", 'X', GEM[2], 'Y', new ItemStack(partsOfalen3D, 1, 0));
+		addShaped(swordOfalenG1, "X", "X", "Y", 'X', GEM[2], 'Y', new ItemStack(partsOfalen3D, 1, 0));
 		addShaped(shovelOfalenG1, "X", "Y", "Y", 'X', GEM[2], 'Y', new ItemStack(partsOfalen3D, 1, 0));
-		addShaped(hoeOfalenG1, "XX", " Y", " Y", 'X', GEM[2], 'Y', new ItemStack(partsOfalen3D, 1, 0));
+		addShaped(pickaxeOfalenG1, "XXX", " Y ", " Y ", 'X', GEM[2], 'Y', new ItemStack(partsOfalen3D, 1, 0));
 		addShaped(axeOfalenG1, "XX", "XY", " Y", 'X', GEM[2], 'Y', new ItemStack(partsOfalen3D, 1, 0));
-		addShaped(new ItemStack(swordOfalenG1), "X", "X", "Y", 'X', GEM[2], 'Y', new ItemStack(partsOfalen3D, 1, 0));
-		addShaped(pickaxeOfalenG2, " X ", "YZY", " X ", 'X', GEM[2], 'Y', BLOCK[2], 'Z', pickaxeOfalenG1);
-		addShaped(shovelOfalenG2, " X ", "YZY", " X ", 'X', GEM[2], 'Y', BLOCK[2], 'Z', shovelOfalenG1);
-		addShaped(hoeOfalenG2, " X ", "YZY", " X ", 'X', GEM[2], 'Y', BLOCK[2], 'Z', hoeOfalenG1);
-		addShaped(axeOfalenG2, " X ", "YZY", " X ", 'X', GEM[2], 'Y', BLOCK[2], 'Z', axeOfalenG1);
-		addShaped(swordOfalenG2, " X ", "YZY", " X ", 'X', GEM[2], 'Y', BLOCK[2], 'Z', swordOfalenG1);
-		addShaped(pickaxeOfalenG3, "ZXZ", "XYX", "ZXZ", 'X', getParts(1), 'Y', pickaxeOfalenG2, 'Z', GEM[2]);
-		addShaped(shovelOfalenG3, "ZXZ", "XYX", "ZXZ", 'X', getParts(1), 'Y', shovelOfalenG2, 'Z', GEM[2]);
-		addShaped(hoeOfalenG3, "ZXZ", "XYX", "ZXZ", 'X', getParts(1), 'Y', hoeOfalenG2, 'Z', GEM[2]);
-		addShaped(axeOfalenG3, "ZXZ", "XYX", "ZXZ", 'X', getParts(1), 'Y', axeOfalenG2, 'Z', GEM[2]);
-		addShaped(swordOfalenG3, "ZXZ", "XYX", "ZXZ", 'X', getParts(1), 'Y', swordOfalenG2, 'Z', GEM[2]);
-		addShaped(toolOfalenP, "ABC", "XZX", "DYE", 'A', shovelOfalenG3, 'B', swordOfalenG3, 'C', axeOfalenG3, 'D', pickaxeOfalenG3, 'E', hoeOfalenG3, 'X', CORE[3], 'Y', BLOCK[2], 'Z', CORE[2]);
+		addShaped(hoeOfalenG1, "XX", " Y", " Y", 'X', GEM[2], 'Y', new ItemStack(partsOfalen3D, 1, 0));
+		addShaped(swordOfalenG2, "BBB", "BXB", "BBB", 'B', GEM[2], 'X', swordOfalenG1);
+		addShaped(shovelOfalenG2, "BBB", "BXB", "BBB", 'B', GEM[2], 'X', shovelOfalenG1);
+		addShaped(pickaxeOfalenG2, "BBB", "BXB", "BBB", 'B', GEM[2], 'X', pickaxeOfalenG1);
+		addShaped(axeOfalenG2, "BBB", "BXB", "BBB", 'B', GEM[2], 'X', axeOfalenG1);
+		addShaped(hoeOfalenG2, "BBB", "BXB", "BBB", 'B', GEM[2], 'X', hoeOfalenG1);
+		addShaped(swordOfalenG3, "BPB", "PXP", "BPB", 'P', getParts(1), 'B', GEM[2], 'X', swordOfalenG2);
+		addShaped(shovelOfalenG3, "BPB", "PXP", "BPB", 'P', getParts(1), 'B', GEM[2], 'X', shovelOfalenG2);
+		addShaped(pickaxeOfalenG3, "BPB", "PXP", "BPB", 'P', getParts(1), 'B', GEM[2], 'X', pickaxeOfalenG2);
+		addShaped(axeOfalenG3, "BPB", "PXP", "BPB", 'P', getParts(1), 'B', GEM[2], 'X', axeOfalenG2);
+		addShaped(hoeOfalenG3, "BPB", "PXP", "BPB", 'P', getParts(1), 'B', GEM[2], 'X', hoeOfalenG2);
+		addShaped(toolOfalenP, "ABC", "DXE", " Y ", 'A', shovelOfalenG3, 'B', swordOfalenG3, 'C', pickaxeOfalenG3, 'D', axeOfalenG3, 'E', hoeOfalenG3, 'X', CORE[2], 'Y', CORE[3]);
 		// レーザー関連
 		addShaped(getParts(5), "X Y", "X Y", "XXX", 'X', GEM[3], 'Y', INGOT_IRON);
 		addShapeless(new ItemStack(magazineLaserRed, 1, 1024), getParts(5), GEM[0]);
@@ -152,7 +142,7 @@ public class OfalenModRecipeCore {
 			addShaped(new ItemStack(crystalLaserEnergy, 4, i), "XYY", 'X', NUGGET_GOLD, 'Y', FRAG[i]);
 		}
 		final ItemStack[] CRYSTAL = { new ItemStack(crystalLaserEnergy, 1, 0), new ItemStack(crystalLaserEnergy, 1, 1), new ItemStack(crystalLaserEnergy, 1, 2), new ItemStack(crystalLaserEnergy, 1, 3) };
-		GameRegistry.addRecipe(new ShapelessOreRecipe(CRYSTAL[3], CRYSTAL[0], CRYSTAL[1], CRYSTAL[2], GEM[3]));
+		GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(crystalLaserEnergy, 3, 3), CRYSTAL[0], CRYSTAL[1], CRYSTAL[2], GEM[3]));
 		addShaped(new ItemStack(pistolLaser, 1, 1024), "OOO", "OII", "GC ", 'O', GEM[3], 'I', INGOT_IRON, 'G', INGOT_GOLD, 'C', CORE[3]);
 		// マガジンへのクリスタル格納レシピ
 		RecipeSorter.register("ofalenmod:magazine", MagazineRecipe.class, RecipeSorter.Category.SHAPELESS, "after:minecraft:shapeless");
@@ -165,17 +155,17 @@ public class OfalenModRecipeCore {
 			}
 		}
 		// シールド関連
-		addShaped(new ItemStack(partsOfalen, OfalenModConfigCore.amountShieldIngotRecipe, 6), "GOG", "OEO", "GOG", 'G', INGOT_GOLD, 'O', FRAG[0], 'E', INGOT_IRON);
+		addShaped(new ItemStack(partsOfalen, OfalenModConfigCore.amountShieldIngotRecipe, 6), "OMO", "MGM", "OMO", 'G', INGOT_GOLD, 'O', GEM[0], 'M', INGOT_IRON);
 		addShaped(new ItemStack(shieldOfalen, 1, shieldOfalen.getMaxDamage()), "IOI", "OEO", "IOI", 'I', INGOT_GOLD, 'O', CORE[0], 'E', getParts(6));
 		// テレポーター関連
-		addShaped(new ItemStack(partsOfalen, OfalenModConfigCore.amountTeleportPearlRecipe, 7), "GOG", "OEO", "GOG", 'G', INGOT_GOLD, 'O', FRAG[1], 'E', Items.ender_pearl);
+		addShaped(new ItemStack(partsOfalen, OfalenModConfigCore.amountTeleportPearlRecipe, 7), "OMO", "MGM", "OMO", 'G', INGOT_GOLD, 'O', GEM[1], 'M', Items.ender_pearl);
 		addShaped(teleporterOfalen, "IOI", "OEO", "IOI", 'I', INGOT_GOLD, 'O', CORE[1], 'E', getParts(7));
 		addShaped(markerTeleporting, "GTG", "OCO", "GTG", 'G', INGOT_GOLD, 'T', getParts(7), 'O', GEM[1], 'C', CORE[1]);
 		// フローター関連
-		addShaped(new ItemStack(partsOfalen, OfalenModConfigCore.amountFloatDustRecipe, 8), "GOG", "ODO", "GOG", 'G', INGOT_GOLD, 'O', FRAG[2], 'D', "dustGlowstone");
+		addShaped(new ItemStack(partsOfalen, OfalenModConfigCore.amountFloatDustRecipe, 8), "OMO", "MGM", "OMO", 'G', INGOT_GOLD, 'O', GEM[2], 'M', DUST_GLOWSTONE);
 		addShaped(new ItemStack(floaterOfalen, 1, floaterOfalen.getMaxDamage()), "IOI", "OEO", "IOI", 'I', INGOT_GOLD, 'O', CORE[2], 'E', getParts(8));
 		// コレクター関連
-		addShaped(new ItemStack(partsOfalen, OfalenModConfigCore.amountCollectingLampRecipe, 9), "GOG", "ODO", "GOG", 'G', INGOT_GOLD, 'O', FRAG[7], 'D', getParts(2));
+		addShaped(new ItemStack(partsOfalen, OfalenModConfigCore.amountCollectingLampRecipe, 9), "OMO", "MGM", "OMO", 'G', INGOT_GOLD, 'O', GEM[7], 'M', getParts(2));
 		addShaped(new ItemStack(collectorOfalen, 1, collectorOfalen.getMaxDamage()), "IOI", "OEO", "IOI", 'I', INGOT_GOLD, 'O', CORE[7], 'E', getParts(9));
 		// フィルター関連
 		addShaped(installerFilter, "XYX", "YZY", "XYX", 'X', getParts(2), 'Y', Items.string, 'Z', Blocks.hopper);
@@ -184,16 +174,6 @@ public class OfalenModRecipeCore {
 		for (int i = 0; i < 4; i++) {
 			addShaped(new ItemStack(seedOfalen, 1, i), "SSS", "SOS", "SSS", 'S', Items.wheat_seeds, 'O', GEM[i]);
 		}
-		// 燃料の登録
-		GameRegistry.registerFuelHandler(new IFuelHandler() {
-			@Override
-			public int getBurnTime(ItemStack fuel) {
-				if (fuel.isItemEqual(new ItemStack(gemOfalen, 1, 0))) {
-					return 4000;
-				}
-				return 0;
-			}
-		});
 	}
 
 	/** @return new ItemStack({@link OfalenModItemCore#partsOfalen}, 1, meta) */
@@ -221,12 +201,22 @@ public class OfalenModRecipeCore {
 		GameRegistry.addRecipe(new ShapelessOreRecipe(result, recipe));
 	}
 
-	private static void addBallRecipe(Object material, Item... balls) {
+	private static void addBallRecipe(ItemStack ball, Object material, int grade) {
+		ball = ball.copy();
+		ball.stackSize = 1;
+		addShapeless(ball, new ItemStack(ballEmpty, 1, grade), material);
+		ball = ball.copy();
+		ball.stackSize = 4;
+		addShaped(ball, " X ", "XYX", " X ", 'X', new ItemStack(ballEmpty, 1, grade), 'Y', material);
+	}
+
+	private static void addGradedBallRecipe(Object material, Item... balls) {
 		for (int i = 0; i < 3; i++) {
-			addShapeless(new ItemStack(balls[i]), new ItemStack(ballEmpty, 1, i), material);
+			addBallRecipe(new ItemStack(balls[i]), material, i);
 		}
-		addShaped(new ItemStack(balls[0], 4), " X ", "XYX", " X ", 'X', ballEmpty, 'Y', material);
-		addShaped(new ItemStack(balls[1], 4), " X ", "XYX", " X ", 'X', new ItemStack(ballEmpty, 1, 1), 'Y', material);
-		addShaped(new ItemStack(balls[2], 4), " X ", "XYX", " X ", 'X', new ItemStack(ballEmpty, 1, 2), 'Y', material);
+	}
+
+	private static void addSingleBallRecipe(Item ball, Object material) {
+		addBallRecipe(new ItemStack(ball), material, 0);
 	}
 }
