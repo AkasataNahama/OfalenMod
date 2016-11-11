@@ -14,7 +14,7 @@ import net.minecraft.util.IIcon;
 import java.util.List;
 
 public class BlockOfalen extends Block {
-	private IIcon[] icons = new IIcon[8];
+	private IIcon[] icons;
 
 	public BlockOfalen() {
 		super(Material.rock);
@@ -45,8 +45,9 @@ public class BlockOfalen extends Block {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void registerBlockIcons(IIconRegister register) {
+		icons = new IIcon[8];
 		for (int i = 0; i < 8; i++) {
-			this.icons[i] = register.registerIcon(this.getTextureName() + "-" + i);
+			icons[i] = register.registerIcon(this.getTextureName() + "-" + i);
 		}
 	}
 

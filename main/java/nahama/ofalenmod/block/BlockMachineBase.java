@@ -11,8 +11,9 @@ import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.IBlockAccess;
@@ -21,7 +22,7 @@ import net.minecraft.world.World;
 import java.util.Random;
 
 public abstract class BlockMachineBase extends BlockContainer {
-	private IIcon[] icons = new IIcon[4];
+	private IIcon[] icons;
 	private Random random = new Random();
 
 	protected BlockMachineBase() {
@@ -70,35 +71,35 @@ public abstract class BlockMachineBase extends BlockContainer {
 	/** ブロックが破壊された時の処理。 */
 	@Override
 	public void breakBlock(World world, int x, int y, int z, Block block, int meta) {
+		TileEntity tileEntity = world.getTileEntity(x, y, z);
+		if (tileEntity == null || !(tileEntity instanceof IInventory)) {
+			super.breakBlock(world, x, y, z, block, meta);
+			return;
+		}
 		// TileEntityの内部にあるアイテムをドロップさせる。
-		TileEntityGradedMachineBase tileEntity = (TileEntityGradedMachineBase) world.getTileEntity(x, y, z);
-		if (tileEntity != null) {
-			for (int i = 0; i < tileEntity.getSizeInventory(); i++) {
-				ItemStack itemStack = tileEntity.getStackInSlot(i);
-				if (itemStack != null) {
-					float f = random.nextFloat() * 0.6F + 0.1F;
-					float f1 = random.nextFloat() * 0.6F + 0.1F;
-					float f2 = random.nextFloat() * 0.6F + 0.1F;
-					while (itemStack.stackSize > 0) {
-						int j = random.nextInt(21) + 10;
-						if (j > itemStack.stackSize) {
-							j = itemStack.stackSize;
-						}
-						itemStack.stackSize -= j;
-						EntityItem entityItem = new EntityItem(world, x + f, y + f1, z + f2, new ItemStack(itemStack.getItem(), j, itemStack.getItemDamage()));
-						if (itemStack.hasTagCompound()) {
-							entityItem.getEntityItem().setTagCompound(((NBTTagCompound) itemStack.getTagCompound().copy()));
-						}
-						float f3 = 0.025F;
-						entityItem.motionX = (float) random.nextGaussian() * f3;
-						entityItem.motionY = (float) random.nextGaussian() * f3 + 0.1F;
-						entityItem.motionZ = (float) random.nextGaussian() * f3;
-						world.spawnEntityInWorld(entityItem);
-					}
+		IInventory inventory = (IInventory) tileEntity;
+		for (int i = 0; i < inventory.getSizeInventory(); i++) {
+			ItemStack itemStack = inventory.getStackInSlot(i);
+			if (itemStack != null) {
+				float fx = random.nextFloat() * 0.6F + 0.1F;
+				float fy = random.nextFloat() * 0.6F + 0.1F;
+				float fz = random.nextFloat() * 0.6F + 0.1F;
+				while (itemStack.stackSize > 0) {
+					int j = random.nextInt(21) + 10;
+					if (j > itemStack.stackSize)
+						j = itemStack.stackSize;
+					itemStack.stackSize -= j;
+					EntityItem entityItem = new EntityItem(world, x + fx, y + fy, z + fz, itemStack.copy());
+					entityItem.getEntityItem().stackSize = j;
+					float f3 = 0.025F;
+					entityItem.motionX = (float) random.nextGaussian() * f3;
+					entityItem.motionY = (float) random.nextGaussian() * f3 + 0.1F;
+					entityItem.motionZ = (float) random.nextGaussian() * f3;
+					world.spawnEntityInWorld(entityItem);
 				}
 			}
-			world.func_147453_f(x, y, z, block);
 		}
+		world.func_147453_f(x, y, z, block);
 		super.breakBlock(world, x, y, z, block, meta);
 	}
 
@@ -106,6 +107,7 @@ public abstract class BlockMachineBase extends BlockContainer {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void registerBlockIcons(IIconRegister register) {
+		icons = new IIcon[4];
 		for (int i = 0; i < 4; i++) {
 			icons[i] = register.registerIcon(this.getTextureName() + "-" + i);
 		}

@@ -39,8 +39,10 @@ public class BlockTeleportingMarker extends Block implements ITileEntityProvider
 			return;
 		}
 		TileEntity tileEntity = world.getTileEntity(x, y, z);
-		if (tileEntity == null || !(tileEntity instanceof TileEntityTeleportingMarker))
+		if (tileEntity == null || !(tileEntity instanceof TileEntityTeleportingMarker)) {
+			super.breakBlock(world, x, y, z, block, meta);
 			return;
+		}
 		((TileEntityTeleportingMarker) tileEntity).onBreaking();
 		super.breakBlock(world, x, y, z, block, meta);
 	}

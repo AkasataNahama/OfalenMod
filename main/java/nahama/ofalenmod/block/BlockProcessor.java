@@ -15,7 +15,7 @@ import net.minecraft.world.World;
 import java.util.List;
 
 public class BlockProcessor extends Block {
-	private IIcon[] icons = new IIcon[3];
+	private IIcon[] icons;
 
 	public BlockProcessor() {
 		super(Material.rock);
@@ -45,8 +45,9 @@ public class BlockProcessor extends Block {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void registerBlockIcons(IIconRegister iicon) {
+		icons = new IIcon[3];
 		for (int i = 0; i < 3; i++) {
-			this.icons[i] = iicon.registerIcon(this.getTextureName() + "-" + i);
+			icons[i] = iicon.registerIcon(this.getTextureName() + "-" + i);
 		}
 	}
 

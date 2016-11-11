@@ -166,16 +166,16 @@ public class BlockOfalenGrass extends Block implements IPlantable, IGrowable {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public IIcon getIcon(int side, int meta) {
-		return this.icons[meta & 15];
+		return icons[meta & 15];
 	}
 
 	/** アイコンを登録する。 */
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void registerBlockIcons(IIconRegister register) {
-		this.icons = new IIcon[16];
-		for (int i = 0; i < this.icons.length; ++i) {
-			this.icons[i] = register.registerIcon(this.getTextureName() + "-" + (i / 4) + "-" + (i & 3));
+		icons = new IIcon[16];
+		for (int i = 0; i < icons.length; ++i) {
+			icons[i] = register.registerIcon(this.getTextureName() + "-" + (i / 4) + "-" + (i & 3));
 		}
 	}
 

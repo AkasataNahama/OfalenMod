@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.Random;
 
 public class BlockOfalenOre extends Block {
-	private IIcon[] icons = new IIcon[4];
+	private IIcon[] icons;
 	private Random random = new Random();
 
 	public BlockOfalenOre() {
@@ -85,8 +85,9 @@ public class BlockOfalenOre extends Block {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void registerBlockIcons(IIconRegister iicon) {
+		icons = new IIcon[4];
 		for (int i = 0; i < 4; i++) {
-			this.icons[i] = iicon.registerIcon(this.getTextureName() + "-" + i);
+			icons[i] = iicon.registerIcon(this.getTextureName() + "-" + i);
 		}
 	}
 

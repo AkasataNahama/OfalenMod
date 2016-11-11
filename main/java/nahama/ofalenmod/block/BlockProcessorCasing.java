@@ -14,7 +14,7 @@ import net.minecraft.util.IIcon;
 import java.util.List;
 
 public class BlockProcessorCasing extends Block {
-	private IIcon[] icons = new IIcon[7];
+	private IIcon[] icons;
 
 	public BlockProcessorCasing() {
 		super(Material.rock);
@@ -49,9 +49,10 @@ public class BlockProcessorCasing extends Block {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void registerBlockIcons(IIconRegister iicon) {
+		icons = new IIcon[7];
 		for (int i = 0; i < 7; i++) {
 			if (i != 3)
-				this.icons[i] = iicon.registerIcon(this.getTextureName() + "-" + i);
+				icons[i] = iicon.registerIcon(this.getTextureName() + "-" + i);
 		}
 	}
 
