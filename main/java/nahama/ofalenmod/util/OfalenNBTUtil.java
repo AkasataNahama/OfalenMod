@@ -45,6 +45,22 @@ public class OfalenNBTUtil {
 	public static final String IS_EXP_DISABLED = "IsExpDisabled";
 	public static final String ITEM_RANGE = "ItemRange";
 	public static final String EXP_RANGE = "ExpRange";
+	// 世界系 (INTERVALも使用)
+	public static final String MAX_RANGE = "MaxRange";
+	public static final String MIN_RANGE = "MinRange";
+	public static final String WORKING_COORD = "WorkingCoord";
+	public static final String PROCESSING_INTERVAL = "ProcessingInterval";
+	public static final String RESTARTING_INTERVAL = "RestartingInterval";
+	public static final String FUEL_AMOUNT = "FuelAmount";
+	// 移動機
+	public static final String CAN_MOVE_TILE_ENTITY = "CanMoveTileEntity";
+	public static final String MOVING_BLOCKS = "MovingBlocks";
+	public static final String BLOCK_POS = "BlockPos";
+	public static final String BLOCK_DATA = "BlockData";
+	public static final String META = "Meta";
+	public static final String TILE_ENTITY = "TileEntity";
+	// 破壊機
+	public static final String CAN_DROP_BROKEN_BLOCK = "CanDropBrokenBlock";
 	// 詳細設定
 	public static final String IS_SET_IN_DETAIL = "IsSetInDetail";
 
@@ -100,7 +116,7 @@ public class OfalenNBTUtil {
 		}
 
 		public static NBTTagCompound getFilterTag(ItemStack itemStack) {
-			return (NBTTagCompound) itemStack.getTagCompound().getTag(ITEM_FILTER);
+			return itemStack.getTagCompound().getCompoundTag(ITEM_FILTER);
 		}
 
 		public static boolean isWhiteList(NBTTagCompound nbtFilter) {

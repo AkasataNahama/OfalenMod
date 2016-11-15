@@ -5,6 +5,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.world.World;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.lwjgl.input.Keyboard;
@@ -12,6 +13,7 @@ import org.lwjgl.input.Mouse;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Random;
 
 public class Util {
 	private static Logger logger = LogManager.getLogger(OfalenModCore.MODID);
@@ -85,11 +87,32 @@ public class Util {
 	}
 
 	public static EntityItem getEntityItemNearEntity(ItemStack itemStack, Entity entity) {
-		return new EntityItem(entity.worldObj, entity.posX, entity.posY, entity.posZ, itemStack.copy());
+		return new EntityItem(entity.worldObj, entity.posX, entity.posY, entity.posZ, itemStack);
 	}
 
-	public static void dropItemStackCopyNearEntity(ItemStack itemStack, Entity entity) {
+	public static void dropItemStackNearEntity(ItemStack itemStack, Entity entity) {
 		entity.worldObj.spawnEntityInWorld(getEntityItemNearEntity(itemStack, entity));
+	}
+
+	public static void dropItemStackNearBlock(ItemStack itemStack, World world, int x, int y, int z) {
+		itemStack = itemStack.copy();
+		Random random = new Random();
+		float fx = random.nextFloat() * 0.6F + 0.1F;
+		float fy = random.nextFloat() * 0.6F + 0.1F;
+		float fz = random.nextFloat() * 0.6F + 0.1F;
+		while (itemStack.stackSize > 0) {
+			int j = random.nextInt(21) + 10;
+			if (j > itemStack.stackSize)
+				j = itemStack.stackSize;
+			itemStack.stackSize -= j;
+			EntityItem entityItem = new EntityItem(world, x + fx, y + fy, z + fz, itemStack.copy());
+			entityItem.getEntityItem().stackSize = j;
+			float f3 = 0.025F;
+			entityItem.motionX = (float) random.nextGaussian() * f3;
+			entityItem.motionY = (float) random.nextGaussian() * f3 + 0.1F;
+			entityItem.motionZ = (float) random.nextGaussian() * f3;
+			world.spawnEntityInWorld(entityItem);
+		}
 	}
 
 	public static ItemStack[] copyItemStacks(ItemStack[] itemStacks) {

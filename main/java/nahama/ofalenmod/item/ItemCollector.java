@@ -43,20 +43,23 @@ public class ItemCollector extends Item {
 			thisStack.getTagCompound().setBoolean(OfalenNBTUtil.IS_IRREPARABLE, true);
 		boolean isItemDisabled = thisStack.getTagCompound().getBoolean(OfalenNBTUtil.IS_ITEM_DISABLED);
 		boolean isExpDisabled = thisStack.getTagCompound().getBoolean(OfalenNBTUtil.IS_EXP_DISABLED);
+		// アイテムも経験値も無効化されていたら終了。
 		if (isItemDisabled && isExpDisabled)
 			return;
+		// 耐久値が残っていなかったら終了。
 		if (Util.getRemainingDamage(thisStack) < 1)
 			return;
 		if (entity instanceof EntityPlayer) {
 			EntityPlayer player = (EntityPlayer) entity;
+			// プレイヤーが持っていて、コレクターのGUIを開いているなら終了。
 			if (player.openContainer != null && player.openContainer instanceof ContainerItemCollector)
 				return;
 		}
 		// 無効時間の残りを取得。
-		byte interval2 = thisStack.getTagCompound().getByte(OfalenNBTUtil.INTERVAL);
-		if (interval2 > 0) {
+		byte interval = thisStack.getTagCompound().getByte(OfalenNBTUtil.INTERVAL);
+		if (interval > 0) {
 			// 無効時間が残っていたら減らして終了。
-			thisStack.getTagCompound().setByte(OfalenNBTUtil.INTERVAL, --interval2);
+			thisStack.getTagCompound().setByte(OfalenNBTUtil.INTERVAL, --interval);
 			return;
 		}
 		// 無効時間をリセット。TODO 詳細設定
@@ -68,7 +71,7 @@ public class ItemCollector extends Item {
 			rangeItem = thisStack.getTagCompound().getShort(OfalenNBTUtil.ITEM_RANGE);
 			rangeExp = thisStack.getTagCompound().getShort(OfalenNBTUtil.EXP_RANGE);
 		}
-		ArrayList<Entity> waitingForSpawningList = new ArrayList<>();
+		ArrayList<Entity> listWaitingEntity = new ArrayList<>();
 		// EntityItemとEntityXPOrbがあれば移動する。
 		for (Object o : world.loadedEntityList) {
 			if (!isItemDisabled && o instanceof EntityItem) {
@@ -90,43 +93,44 @@ public class ItemCollector extends Item {
 				if (entity instanceof EntityPlayer)
 					remaining = Math.min(remaining, Util.getRemainingItemAmountInInventory((EntityPlayer) entity, eItemStack));
 				// 一個も移動できないなら次のEntityへ。
-				if (remaining < 1)
+				if (remaining < OfalenModConfigCore.amountCollectorDamageItem)
 					continue;
 				// スタック数が限界以下ならそのまま移動。
-				if (remaining >= eItemStack.stackSize) {
+				if (remaining >= eItemStack.stackSize * OfalenModConfigCore.amountCollectorDamageItem) {
 					entityItem.setPosition(entity.posX, entity.posY, entity.posZ);
 					thisStack.setItemDamage(thisStack.getItemDamage() + (eItemStack.stackSize * OfalenModConfigCore.amountCollectorDamageItem));
 					continue;
 				}
 				// 耐久値か空きスロットが足りなかったら足りる分だけ移動して終了。
 				ItemStack itemStack1 = eItemStack.copy();
-				itemStack1.stackSize = remaining;
-				waitingForSpawningList.add(Util.getEntityItemNearEntity(itemStack1, entity));
-				eItemStack.stackSize -= remaining;
-				thisStack.setItemDamage(thisStack.getItemDamage() + (remaining * OfalenModConfigCore.amountCollectorDamageItem));
+				itemStack1.stackSize = remaining / OfalenModConfigCore.amountCollectorDamageItem;
+				listWaitingEntity.add(Util.getEntityItemNearEntity(itemStack1, entity));
+				eItemStack.stackSize -= remaining / OfalenModConfigCore.amountCollectorDamageItem;
+				thisStack.setItemDamage(thisStack.getItemDamage() + (remaining / OfalenModConfigCore.amountCollectorDamageItem * OfalenModConfigCore.amountCollectorDamageItem));
 			} else if (!isExpDisabled && (o instanceof EntityXPOrb)) {
 				// EntityXPOrbにキャスト。
 				EntityXPOrb e = (EntityXPOrb) o;
+				// 範囲外なら次のEntityへ。
 				if (entity.getDistanceToEntity(e) > rangeExp)
 					continue;
-				// 範囲以内なら移動。
+				// 耐久値の残りを取得。
 				int remaining = Util.getRemainingDamage(thisStack);
 				// 耐久値が尽きていたら終了。
 				if (remaining < 1)
 					return;
-				if (remaining >= e.xpValue) {
+				if (remaining >= e.xpValue * OfalenModConfigCore.amountCollectorDamageExp) {
 					e.setPosition(entity.posX, entity.posY, entity.posZ);
 					thisStack.setItemDamage(thisStack.getItemDamage() + (e.xpValue * OfalenModConfigCore.amountCollectorDamageExp));
 					continue;
 				}
 				// 耐久値が足りなかったら足りる分だけ移動して終了。
-				waitingForSpawningList.add(new EntityXPOrb(world, entity.posX, entity.posY, entity.posZ, remaining));
-				e.xpValue -= remaining;
-				thisStack.setItemDamage(thisStack.getItemDamage() + (remaining * OfalenModConfigCore.amountCollectorDamageExp));
+				listWaitingEntity.add(new EntityXPOrb(world, entity.posX, entity.posY, entity.posZ, remaining / OfalenModConfigCore.amountCollectorDamageExp));
+				e.xpValue -= remaining / OfalenModConfigCore.amountCollectorDamageExp;
+				thisStack.setItemDamage(thisStack.getItemDamage() + (remaining / OfalenModConfigCore.amountCollectorDamageExp * OfalenModConfigCore.amountCollectorDamageExp));
 			}
 		}
-		// waitingForSpawningListに入っているentityをworldにspawnさせる。ConcurrentModificationException回避。
-		for (Entity e : waitingForSpawningList) {
+		// listWaitingEntityに入っているentityをworldにspawnさせる。ConcurrentModificationException回避。
+		for (Entity e : listWaitingEntity) {
 			world.spawnEntityInWorld(e);
 		}
 	}

@@ -162,7 +162,7 @@ public class ItemLaserPistol extends Item {
 			// LaserColorに何かの文字が登録されていたら、
 			if (nbt.getString(OfalenNBTUtil.LASER_COLOR).length() > 0 && !world.isRemote) {
 				// マガジンをドロップさせ、
-				Util.dropItemStackCopyNearEntity(new ItemStack(OfalenModItemCore.partsOfalen, 1, 5), player);
+				Util.dropItemStackNearEntity(new ItemStack(OfalenModItemCore.partsOfalen, 1, 5), player);
 				// LaserColorをリセットする。
 				nbt.setString(OfalenNBTUtil.LASER_COLOR, "");
 			}

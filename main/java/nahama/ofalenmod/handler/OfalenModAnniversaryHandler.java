@@ -180,7 +180,7 @@ public class OfalenModAnniversaryHandler {
 		if (presentedDate.containsKey(name))
 			return;
 		// プレゼントボックスを渡していなかったら渡す。
-		Util.dropItemStackCopyNearEntity(new ItemStack(OfalenModBlockCore.boxPresent), player);
+		Util.dropItemStackNearEntity(new ItemStack(OfalenModBlockCore.boxPresent), player);
 		presentedDate.put(name, "0/0/0");
 	}
 
