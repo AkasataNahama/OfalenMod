@@ -32,11 +32,8 @@ public class ItemFilter extends Item {
 	public void onUpdate(ItemStack itemStack, World world, Entity entity, int slot, boolean flag) {
 		if (FilterUtil.isAvailableFilterTag(itemStack))
 			return;
-		NBTTagCompound filter = new NBTTagCompound();
-		filter.setTag(FilterUtil.SELECTING, new NBTTagList());
-		NBTTagCompound nbt = new NBTTagCompound();
-		nbt.setTag(FilterUtil.ITEM_FILTER, filter);
-		itemStack.setTagCompound(nbt);
+		if (!OfalenNBTUtil.FilterUtil.isAvailableFilterTag(itemStack))
+			OfalenNBTUtil.FilterUtil.initFilterTag(itemStack);
 	}
 
 	@Override

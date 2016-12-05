@@ -5,7 +5,9 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.StatCollector;
+import net.minecraft.world.World;
 
 import java.util.ArrayList;
 
@@ -46,12 +48,16 @@ public class OfalenNBTUtil {
 	public static final String ITEM_RANGE = "ItemRange";
 	public static final String EXP_RANGE = "ExpRange";
 	// 世界系 (INTERVALも使用)
-	public static final String MAX_RANGE = "MaxRange";
-	public static final String MIN_RANGE = "MinRange";
+	public static final String IS_NBT_SAVED = "IsNBTSaved";
+	public static final String IS_RANGE_SAVING_ABSOLUTE = "IsRangeSavingAbsolute";
+	public static final String RANGE = "Range";
 	public static final String WORKING_COORD = "WorkingCoord";
 	public static final String PROCESSING_INTERVAL = "ProcessingInterval";
 	public static final String RESTARTING_INTERVAL = "RestartingInterval";
 	public static final String FUEL_AMOUNT = "FuelAmount";
+	public static final String CAN_RESTART = "CanRestart";
+	public static final String IS_WORKING = "IsWorking";
+	public static final String TILE_ENTITY_WORLD_EDITOR_BASE = "TileEntityWorldEditorBase";
 	// 移動機
 	public static final String CAN_MOVE_TILE_ENTITY = "CanMoveTileEntity";
 	public static final String MOVING_BLOCKS = "MovingBlocks";
@@ -60,9 +66,20 @@ public class OfalenNBTUtil {
 	public static final String META = "Meta";
 	public static final String TILE_ENTITY = "TileEntity";
 	// 破壊機
-	public static final String CAN_DROP_BROKEN_BLOCK = "CanDropBrokenBlock";
+	public static final String CAN_DELETE_BROKEN_BLOCK = "CanDeleteBrokenBlock";
+	// 収集機
+	public static final String CAN_DELETE_ITEM = "CanDeleteItem";
+	public static final String CAN_DELETE_EXP = "CanDeleteExp";
 	// 詳細設定
 	public static final String IS_SET_IN_DETAIL = "IsSetInDetail";
+	// BlockPos, BlockRange
+	public static final String X = "X";
+	public static final String Y = "Y";
+	public static final String Z = "Z";
+	public static final String MIN_POS = "MinPos";
+	public static final String MAX_POS = "MaxPos";
+	public static final String POS_A = "PosA";
+	public static final String POS_B = "PosB";
 
 	public static boolean containsNBT(NBTTagList list, NBTTagCompound nbt) {
 		for (int i = 0; i < list.tagCount(); i++) {
@@ -70,6 +87,30 @@ public class OfalenNBTUtil {
 				return true;
 		}
 		return false;
+	}
+
+	public static NBTTagList writeItemStacksToNBTTagList(ItemStack[] itemStacks) {
+		NBTTagList nbtTagList = new NBTTagList();
+		for (int i = 0; i < itemStacks.length; i++) {
+			if (itemStacks[i] == null)
+				continue;
+			NBTTagCompound nbt1 = new NBTTagCompound();
+			nbt1.setByte(OfalenNBTUtil.SLOT, (byte) i);
+			itemStacks[i].writeToNBT(nbt1);
+			nbtTagList.appendTag(nbt1);
+		}
+		return nbtTagList;
+	}
+
+	public static ItemStack[] loadItemStacksFromNBTTagList(NBTTagList nbtTagList, int length) {
+		ItemStack[] itemStacks = new ItemStack[length];
+		for (int i = 0; i < nbtTagList.tagCount(); i++) {
+			NBTTagCompound nbt1 = nbtTagList.getCompoundTagAt(i);
+			byte b0 = nbt1.getByte(OfalenNBTUtil.SLOT);
+			if (0 <= b0 && b0 < itemStacks.length)
+				itemStacks[b0] = ItemStack.loadItemStackFromNBT(nbt1);
+		}
+		return itemStacks;
 	}
 
 	public static class FilterUtil {
@@ -97,9 +138,7 @@ public class OfalenNBTUtil {
 			NBTTagCompound nbt = new NBTTagCompound();
 			if (itemStack.hasTagCompound())
 				nbt = itemStack.getTagCompound();
-			NBTTagCompound nbtFilter = new NBTTagCompound();
-			nbtFilter.setTag(SELECTING, new NBTTagList());
-			nbt.setTag(ITEM_FILTER, nbtFilter);
+			nbt.setTag(ITEM_FILTER, getInitializedFilterTag());
 			itemStack.setTagCompound(nbt);
 		}
 
@@ -117,6 +156,12 @@ public class OfalenNBTUtil {
 
 		public static NBTTagCompound getFilterTag(ItemStack itemStack) {
 			return itemStack.getTagCompound().getCompoundTag(ITEM_FILTER);
+		}
+
+		public static NBTTagCompound getInitializedFilterTag() {
+			NBTTagCompound nbtFilter = new NBTTagCompound();
+			nbtFilter.setTag(SELECTING, new NBTTagList());
+			return nbtFilter;
 		}
 
 		public static boolean isWhiteList(NBTTagCompound nbtFilter) {
@@ -151,6 +196,18 @@ public class OfalenNBTUtil {
 					ret.add("    " + itemStack1.getDisplayName() + " (" + Item.getIdFromItem(itemStack1.getItem()) + ", " + itemStack1.getItemDamage() + ")");
 			}
 			return ret;
+		}
+
+		public static void installFilterToTileEntity(World world, int x, int y, int z, NBTTagCompound filter) {
+			TileEntity tileEntity = world.getTileEntity(x, y, z);
+			if (tileEntity == null || !(tileEntity instanceof IFilterable))
+				return;
+			IFilterable filterable = (IFilterable) tileEntity;
+			filterable.setTagItemFilter(filter);
+		}
+
+		public interface IFilterable {
+			void setTagItemFilter(NBTTagCompound filter);
 		}
 	}
 }

@@ -173,6 +173,16 @@ public class OfalenModRecipeCore {
 		for (int i = 0; i < 4; i++) {
 			addShaped(new ItemStack(seedOfalen, 1, i), "SSS", "SOS", "SSS", 'S', Items.wheat_seeds, 'O', GEM[i]);
 		}
+		// 世界系
+		addShaped(placerOfalen, "XYX", "XZX", "XYX", 'X', getParts(0), 'Y', GEM[4], 'Z', BLOCK[4]);
+		addShaped(moverOfalen, "XYX", "XZX", "XYX", 'X', getParts(0), 'Y', GEM[5], 'Z', BLOCK[5]);
+		addShaped(breakerOfalen, "XYX", "XZX", "XYX", 'X', getParts(0), 'Y', GEM[6], 'Z', BLOCK[6]);
+		addShaped(blockCollectorOfalen, "XYX", "XZX", "XYX", 'X', getParts(0), 'Y', GEM[7], 'Z', BLOCK[7]);
+		// NBT初期化レシピ
+		addShaped(placerOfalen, "X", 'X', new ItemStack(placerOfalen));
+		addShaped(moverOfalen, "X", 'X', new ItemStack(moverOfalen));
+		addShaped(breakerOfalen, "X", 'X', new ItemStack(breakerOfalen));
+		addShaped(blockCollectorOfalen, "X", 'X', new ItemStack(blockCollectorOfalen));
 	}
 
 	/** @return new ItemStack({@link OfalenModItemCore#partsOfalen}, 1, meta) */

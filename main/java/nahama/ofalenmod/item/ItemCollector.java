@@ -91,7 +91,7 @@ public class ItemCollector extends Item {
 					return;
 				// プレイヤーが持っているなら、インベントリの空きスロット数も考慮。 TODO 詳細設定
 				if (entity instanceof EntityPlayer)
-					remaining = Math.min(remaining, Util.getRemainingItemAmountInInventory((EntityPlayer) entity, eItemStack));
+					remaining = Math.min(remaining, Util.getRemainingItemAmountInInventory(((EntityPlayer) entity).inventory.mainInventory, eItemStack, ((EntityPlayer) entity).inventory.getInventoryStackLimit()));
 				// 一個も移動できないなら次のEntityへ。
 				if (remaining < OfalenModConfigCore.amountCollectorDamageItem)
 					continue;

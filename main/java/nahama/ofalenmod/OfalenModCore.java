@@ -77,6 +77,8 @@ public class OfalenModCore {
 		WRAPPER.registerMessage(MFloaterMode.Handler.class, MFloaterMode.class, 2, Side.SERVER);
 		WRAPPER.registerMessage(MSpawnParticle.Handler.class, MSpawnParticle.class, 3, Side.CLIENT);
 		WRAPPER.registerMessage(MFilterInstaller.Handler.class, MFilterInstaller.class, 4, Side.SERVER);
+		WRAPPER.registerMessage(MWorldEditorSetting.Handler.class, MWorldEditorSetting.class, 5, Side.SERVER);
+		WRAPPER.registerMessage(MSpawnParticleWithRange.Handler.class, MSpawnParticleWithRange.class, 6, Side.CLIENT);
 		OfalenModAnniversaryHandler.isSinglePlay = FMLCommonHandler.instance().getSide() == Side.CLIENT;
 	}
 

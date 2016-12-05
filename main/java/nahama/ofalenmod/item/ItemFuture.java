@@ -18,7 +18,7 @@ public class ItemFuture extends Item {
 	@Override
 	public void onUpdate(ItemStack itemStack, World world, Entity entity, int slot, boolean flag) {
 		super.onUpdate(itemStack, world, entity, slot, flag);
-		// NBTを持っていなければ空のものを持たせ、Durationがあれば減らす。
+		// NBTを持っていなければ空のものを持たせ、Intervalがあれば減らす。
 		if (!itemStack.hasTagCompound())
 			itemStack.setTagCompound(new NBTTagCompound());
 		if (!itemStack.getTagCompound().getBoolean(OfalenNBTUtil.IS_IRREPARABLE))

@@ -5,6 +5,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 import nahama.ofalenmod.OfalenModCore;
 import nahama.ofalenmod.core.OfalenModConfigCore;
 import nahama.ofalenmod.core.OfalenModItemCore;
+import nahama.ofalenmod.util.Util;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -20,7 +21,6 @@ import java.util.Random;
 
 public class BlockOfalenOre extends Block {
 	private IIcon[] icons;
-	private Random random = new Random();
 
 	public BlockOfalenOre() {
 		super(Material.rock);
@@ -63,7 +63,7 @@ public class BlockOfalenOre extends Block {
 	@Override
 	public int getExpDrop(IBlockAccess iBlockAccess, int meta, int fortune) {
 		// ダイヤモンドと同様。
-		return MathHelper.getRandomIntegerInRange(random, 3, 7);
+		return MathHelper.getRandomIntegerInRange(Util.random, 3, 7);
 	}
 
 	/** クリエイティブタブにブロックを登録する処理。 */

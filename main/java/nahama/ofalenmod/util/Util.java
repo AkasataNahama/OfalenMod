@@ -3,7 +3,6 @@ package nahama.ofalenmod.util;
 import nahama.ofalenmod.OfalenModCore;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import org.apache.logging.log4j.LogManager;
@@ -16,6 +15,7 @@ import java.io.InputStream;
 import java.util.Random;
 
 public class Util {
+	public static Random random = new Random();
 	private static Logger logger = LogManager.getLogger(OfalenModCore.MODID);
 
 	public static void info(String msg) {
@@ -69,21 +69,26 @@ public class Util {
 		return itemStack.getMaxDamage() - itemStack.getItemDamage();
 	}
 
-	public static int getRemainingItemAmountInInventory(EntityPlayer player, ItemStack sampleStack) {
+	public static int getRemainingItemAmountInInventory(ItemStack[] stacks, ItemStack sampleStack, int limitStack) {
 		int ret = 0;
-		int limit = Math.min(sampleStack.getMaxStackSize(), player.inventory.getInventoryStackLimit());
-		for (ItemStack invStack : player.inventory.mainInventory) {
+		int limit = Math.min(sampleStack.getMaxStackSize(), limitStack);
+		for (ItemStack invStack : stacks) {
 			// 空のスロットがあるなら、最大スタック数を足す。
 			if (invStack == null) {
 				ret += limit;
 				continue;
 			}
-			// 同じアイテムで、メタデータで区別するなら一致していて、NBTが一致しているなら、限界までの量を足す。
-			if (invStack.getItem() == sampleStack.getItem() && (!invStack.getHasSubtypes() || invStack.getItemDamage() == sampleStack.getItemDamage()) && ItemStack.areItemStackTagsEqual(invStack, sampleStack)) {
+			// スタックできるなら、限界までの量を足す。
+			if (canStack(invStack, sampleStack)) {
 				ret += limit - invStack.stackSize;
 			}
 		}
 		return ret;
+	}
+
+	public static boolean canStack(ItemStack stack0, ItemStack stack1) {
+		// 同じアイテムで、メタデータで区別するなら一致していて、NBTが一致しているなら、スタック可能。
+		return stack0.getItem() == stack1.getItem() && (!stack0.getHasSubtypes() || stack0.getItemDamage() == stack1.getItemDamage()) && ItemStack.areItemStackTagsEqual(stack0, stack1);
 	}
 
 	public static EntityItem getEntityItemNearEntity(ItemStack itemStack, Entity entity) {
@@ -96,7 +101,6 @@ public class Util {
 
 	public static void dropItemStackNearBlock(ItemStack itemStack, World world, int x, int y, int z) {
 		itemStack = itemStack.copy();
-		Random random = new Random();
 		float fx = random.nextFloat() * 0.6F + 0.1F;
 		float fy = random.nextFloat() * 0.6F + 0.1F;
 		float fz = random.nextFloat() * 0.6F + 0.1F;

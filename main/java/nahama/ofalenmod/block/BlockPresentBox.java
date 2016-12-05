@@ -18,10 +18,10 @@ import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 
 import java.util.Calendar;
-import java.util.Random;
+
+import static nahama.ofalenmod.util.Util.random;
 
 public class BlockPresentBox extends Block implements ITileEntityProvider {
-	private Random random = new Random();
 	/** 0:下, 1:上, 2:横 */
 	private IIcon[] icons;
 

@@ -19,11 +19,10 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
-import java.util.Random;
+import static nahama.ofalenmod.util.Util.random;
 
 public abstract class BlockMachineBase extends BlockContainer {
 	private IIcon[] icons;
-	private Random random = new Random();
 
 	protected BlockMachineBase() {
 		super(Material.rock);

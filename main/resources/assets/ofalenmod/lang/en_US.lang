@@ -37,6 +37,39 @@ info.ofalen.filter.toolTip=Press Shift
 info.ofalen.filter.item.installed=Item Filter
 info.ofalen.filter.black=Black List
 info.ofalen.filter.white=White List
+// World Editor
+info.ofalen.setting.editor.range.isAbsolute=Coord Saving
+info.ofalen.setting.editor.range.isAbsolute.0=Relative
+info.ofalen.setting.editor.range.isAbsolute.1=Absolute
+info.ofalen.setting.editor.range.x.max=X Max Coord
+info.ofalen.setting.editor.range.x.min=X Min Coord
+info.ofalen.setting.editor.range.y.max=Y Max Coord
+info.ofalen.setting.editor.range.y.min=Y Min Coord
+info.ofalen.setting.editor.range.z.max=Z Max Coord
+info.ofalen.setting.editor.range.z.min=Z Min Coord
+info.ofalen.setting.editor.interval.processing=Processing Interval
+info.ofalen.setting.editor.interval.restarting=Restarting Interval
+info.ofalen.setting.editor.canRestart=Restarting
+info.ofalen.setting.editor.canRestart.0=Disabled
+info.ofalen.setting.editor.canRestart.1=Enabled
+info.ofalen.setting.mover.canMoveTileEntity=Tile Entity Moving
+info.ofalen.setting.mover.canMoveTileEntity.0=Disabled
+info.ofalen.setting.mover.canMoveTileEntity.1=Enabled
+info.ofalen.setting.breaker.canDeleteBrokenBlock=Broken Block
+info.ofalen.setting.breaker.canDeleteBrokenBlock.0=Drop
+info.ofalen.setting.breaker.canDeleteBrokenBlock.1=Delete
+info.ofalen.setting.collector.isDisabled.item=Item Collecting
+info.ofalen.setting.collector.isDisabled.item.0=Enabled
+info.ofalen.setting.collector.isDisabled.item.1=Disabled
+info.ofalen.setting.collector.isDisabled.exp=Exp Collecting
+info.ofalen.setting.collector.isDisabled.exp.0=Enabled
+info.ofalen.setting.collector.isDisabled.exp.1=Disabled
+info.ofalen.setting.collector.canDelete.item=Collected Item
+info.ofalen.setting.collector.canDelete.item.0=Store
+info.ofalen.setting.collector.canDelete.item.1=Delete
+info.ofalen.setting.collector.canDelete.exp=Collected Exp
+info.ofalen.setting.collector.canDelete.exp.0=Store
+info.ofalen.setting.collector.canDelete.exp.1=Delete
 
 // GUI
 container.ofalen.machine.smelting-0=Ofalen Smelting Machine
@@ -62,6 +95,10 @@ container.ofalen.floater=Ofalen Floater
 container.ofalen.collector=Ofalen Collector
 container.ofalen.filterItem=Item Filter
 container.ofalen.installerFilter=Filter Installer
+container.ofalen.placer=Ofalen Block Placer
+container.ofalen.mover=Ofalen Block Mover
+container.ofalen.breaker=Ofalen Block Breaker
+container.ofalen.blockCollector=Ofalen Collector Block
 container.ofalen.boxPresent=Ofalen Present Box
 
 // Item
@@ -197,6 +234,12 @@ item.ofalen.seed.1.name=Green Ofalen Grass Seeds
 item.ofalen.seed.2.name=Blue Ofalen Grass Seeds
 item.ofalen.seed.3.name=White Ofalen Grass Seeds
 
+// 測量杖
+item.ofalen.caneSurveying.name=Cane of Surveying
+
+// 経験値結晶
+item.ofalen.crystalExp.name=Experience Crystal
+
 // Block
 tile.ofalen.ore.0.name=Red Ofalen Ore
 tile.ofalen.ore.1.name=Green Ofalen Ore
@@ -227,6 +270,13 @@ tile.ofalen.casingProcessor.2.name=Processor Casing Grade 3
 tile.ofalen.casingProcessor.4.name=Processor Casing Fixing Block Grade 1
 tile.ofalen.casingProcessor.5.name=Processor Casing Fixing Block Grade 2
 tile.ofalen.casingProcessor.6.name=Processor Casing Fixing Block Grade 3
+
+// World Editor
+tile.ofalen.placer.name=Ofalen Block Placer
+tile.ofalen.mover.name=Ofalen Block Mover
+tile.ofalen.breaker.name=Ofalen Block Breaker
+tile.ofalen.collector.name=Ofalen Collector Block
+tile.ofalen.surveyor.name=Ofalen Surveyor
 
 // Ofalen Grass
 tile.ofalen.grass.name=Ofalen Grass

@@ -37,6 +37,39 @@ info.ofalen.filter.toolTip=フィルター情報 : 「Shift」
 info.ofalen.filter.item.installed=アイテムフィルター
 info.ofalen.filter.black=ブラックリスト
 info.ofalen.filter.white=ホワイトリスト
+// World Editor
+info.ofalen.setting.editor.range.isAbsolute=座標記録
+info.ofalen.setting.editor.range.isAbsolute.0=相対値
+info.ofalen.setting.editor.range.isAbsolute.1=絶対値
+info.ofalen.setting.editor.range.x.max=X 最大座標
+info.ofalen.setting.editor.range.x.min=X 最小座標
+info.ofalen.setting.editor.range.y.max=Y 最大座標
+info.ofalen.setting.editor.range.y.min=Y 最小座標
+info.ofalen.setting.editor.range.z.max=Z 最大座標
+info.ofalen.setting.editor.range.z.min=Z 最小座標
+info.ofalen.setting.editor.interval.processing=作業間隔
+info.ofalen.setting.editor.interval.restarting=再起動間隔
+info.ofalen.setting.editor.canRestart=再起動
+info.ofalen.setting.editor.canRestart.0=無効
+info.ofalen.setting.editor.canRestart.1=有効
+info.ofalen.setting.mover.canMoveTileEntity=Tile Entity 移動機能
+info.ofalen.setting.mover.canMoveTileEntity.0=無効
+info.ofalen.setting.mover.canMoveTileEntity.1=有効
+info.ofalen.setting.breaker.canDeleteBrokenBlock=破壊したブロック
+info.ofalen.setting.breaker.canDeleteBrokenBlock.0=ドロップ
+info.ofalen.setting.breaker.canDeleteBrokenBlock.1=消去
+info.ofalen.setting.collector.isDisabled.item=アイテムの収集
+info.ofalen.setting.collector.isDisabled.item.0=有効
+info.ofalen.setting.collector.isDisabled.item.1=無効
+info.ofalen.setting.collector.isDisabled.exp=経験値の収集
+info.ofalen.setting.collector.isDisabled.exp.0=有効
+info.ofalen.setting.collector.isDisabled.exp.1=無効
+info.ofalen.setting.collector.canDelete.item=収集したアイテム
+info.ofalen.setting.collector.canDelete.item.0=格納
+info.ofalen.setting.collector.canDelete.item.1=消去
+info.ofalen.setting.collector.canDelete.exp=収集した経験値
+info.ofalen.setting.collector.canDelete.exp.0=格納
+info.ofalen.setting.collector.canDelete.exp.1=消去
 
 // GUI
 container.ofalen.machine.smelting-0=オファレン製錬機
@@ -62,6 +95,10 @@ container.ofalen.floater=オファレンフローター
 container.ofalen.collector=オファレンコレクター
 container.ofalen.filterItem=アイテムフィルター
 container.ofalen.installerFilter=フィルターインストーラー
+container.ofalen.placer=オファレンブロックプレイサー
+container.ofalen.mover=オファレンブロックムーバー
+container.ofalen.breaker=オファレンブロックブレイカー
+container.ofalen.blockCollector=オファレンコレクターブロック
 container.ofalen.boxPresent=オファレンプレゼントボックス
 
 // アイテム
@@ -186,16 +223,22 @@ item.ofalen.teleporter.name=オファレンテレポーター
 item.ofalen.floater.name=オファレンフローター
 item.ofalen.collector.name=オファレンコレクター
 
+// フィルター
+item.ofalen.filterItem.0.name=アイテムフィルター
+item.ofalen.filterItem.1.name=アイテムフィルター (block)
+item.ofalen.installerFilter.name=フィルターインストーラー
+
 // オファレン草
 item.ofalen.seed.0.name=赤色オファレン草の種
 item.ofalen.seed.1.name=緑色オファレン草の種
 item.ofalen.seed.2.name=青色オファレン草の種
 item.ofalen.seed.3.name=白色オファレン草の種
 
-// フィルター
-item.ofalen.filterItem.0.name=アイテムフィルター
-item.ofalen.filterItem.1.name=アイテムフィルター (block)
-item.ofalen.installerFilter.name=フィルターインストーラー
+// 測量杖
+item.ofalen.caneSurveying.name=測量杖
+
+// 経験値結晶
+item.ofalen.crystalExp.name=経験値の結晶
 
 // ブロック
 tile.ofalen.ore.0.name=赤色オファレン鉱石
@@ -227,6 +270,13 @@ tile.ofalen.casingProcessor.2.name=処理装置筐体 Grade 3
 tile.ofalen.casingProcessor.4.name=処理装置筐体固定ブロック Grade 1
 tile.ofalen.casingProcessor.5.name=処理装置筐体固定ブロック Grade 2
 tile.ofalen.casingProcessor.6.name=処理装置筐体固定ブロック Grade 3
+
+// World Editor
+tile.ofalen.placer.name=オファレンブロックプレイサー
+tile.ofalen.mover.name=オファレンブロックムーバー
+tile.ofalen.breaker.name=オファレンブロックブレイカー
+tile.ofalen.collector.name=オファレンコレクターブロック
+tile.ofalen.surveyor.name=オファレン測量器
 
 // オファレン草
 tile.ofalen.grass.name=オファレン草

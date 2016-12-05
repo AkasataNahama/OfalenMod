@@ -1,4 +1,4 @@
-package nahama.ofalenmod.itemblock;
+package nahama.ofalenmod.item.block;
 
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemBlockWithMetadata;

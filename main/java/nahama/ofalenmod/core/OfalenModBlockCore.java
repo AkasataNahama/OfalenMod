@@ -2,10 +2,13 @@ package nahama.ofalenmod.core;
 
 import cpw.mods.fml.common.registry.GameRegistry;
 import nahama.ofalenmod.block.*;
-import nahama.ofalenmod.itemblock.ItemOfalenBlock;
+import nahama.ofalenmod.item.block.ItemBlockFilterable;
+import nahama.ofalenmod.item.block.ItemOfalenBlock;
 import nahama.ofalenmod.tileentity.*;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.world.World;
 import net.minecraftforge.oredict.OreDictionary;
 
 public class OfalenModBlockCore {
@@ -19,6 +22,12 @@ public class OfalenModBlockCore {
 	public static Block machineFusing;
 	public static Block processor;
 	public static Block casingProcessor;
+	// 世界系
+	public static Block placerOfalen;
+	public static Block moverOfalen;
+	public static Block breakerOfalen;
+	public static Block blockCollectorOfalen;
+	public static Block surveyorOfalen;
 	// その他
 	public static Block markerTeleporting;
 	public static Block boxPresent;
@@ -68,6 +77,45 @@ public class OfalenModBlockCore {
 		// 処理装置筐体
 		casingProcessor = new BlockProcessorCasing().setBlockName("ofalen.casingProcessor").setBlockTextureName("ofalenmod:processor_casing");
 		GameRegistry.registerBlock(casingProcessor, ItemOfalenBlock.class, "casingProcessor");
+		// 設置機
+		placerOfalen = new BlockWorldEditorBase() {
+			@Override
+			public TileEntity createNewTileEntity(World world, int meta) {
+				return new TileEntityPlacer();
+			}
+		}.setBlockName("ofalen.placer").setBlockTextureName("ofalenmod:placer");
+		GameRegistry.registerBlock(placerOfalen, ItemBlockFilterable.class, "placer");
+		GameRegistry.registerTileEntity(TileEntityPlacer.class, "OfalenMod.Placer");
+		// 移動機
+		moverOfalen = new BlockWorldEditorBase() {
+			@Override
+			public TileEntity createNewTileEntity(World world, int meta) {
+				return new TileEntityMover();
+			}
+		}.setBlockName("ofalen.mover").setBlockTextureName("ofalenmod:mover");
+		GameRegistry.registerBlock(moverOfalen, ItemBlockFilterable.class, "mover");
+		GameRegistry.registerTileEntity(TileEntityMover.class, "OfalenMod.Mover");
+		// 移動機
+		breakerOfalen = new BlockWorldEditorBase() {
+			@Override
+			public TileEntity createNewTileEntity(World world, int meta) {
+				return new TileEntityBreaker();
+			}
+		}.setBlockName("ofalen.breaker").setBlockTextureName("ofalenmod:breaker");
+		GameRegistry.registerBlock(breakerOfalen, ItemBlockFilterable.class, "breaker");
+		GameRegistry.registerTileEntity(TileEntityBreaker.class, "OfalenMod.Breaker");
+		// 収集機
+		blockCollectorOfalen = new BlockWorldEditorBase() {
+			@Override
+			public TileEntity createNewTileEntity(World world, int meta) {
+				return new TileEntityCollector();
+			}
+		}.setBlockName("ofalen.collector").setBlockTextureName("ofalenmod:collector");
+		GameRegistry.registerBlock(blockCollectorOfalen, ItemBlockFilterable.class, "collector_block");
+		GameRegistry.registerTileEntity(TileEntityCollector.class, "OfalenMod.Collector");
+		// 測量器
+		surveyorOfalen = new BlockSurveyor().setBlockName("ofalen.surveyor").setBlockTextureName("ofalenmod:surveyor");
+		GameRegistry.registerBlock(surveyorOfalen, "surveyor");
 		// テレポートマーカー
 		markerTeleporting = new BlockTeleportingMarker().setBlockName("ofalen.markerTeleporting").setBlockTextureName("ofalenmod:teleporting_marker");
 		GameRegistry.registerBlock(markerTeleporting, "markerTeleportOfalen");

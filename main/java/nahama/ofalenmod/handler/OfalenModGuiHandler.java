@@ -14,6 +14,7 @@ public class OfalenModGuiHandler implements IGuiHandler {
 	@Override
 	public Object getServerGuiElement(int id, EntityPlayer player, World world, int x, int y, int z) {
 		switch (id) {
+		case 0:
 		case 1:
 			break;
 		case 2:
@@ -32,23 +33,28 @@ public class OfalenModGuiHandler implements IGuiHandler {
 		if (!world.blockExists(x, y, z))
 			return null;
 		TileEntity tileEntity = world.getTileEntity(x, y, z);
-		if (tileEntity instanceof TileEntitySmeltingMachine) {
+		if (tileEntity instanceof TileEntitySmeltingMachine)
 			return new ContainerSmeltingMachine(player, (TileEntitySmeltingMachine) tileEntity);
-		}
-		if (tileEntity instanceof TileEntityRepairingMachine) {
+		if (tileEntity instanceof TileEntityRepairingMachine)
 			return new ContainerRepairingMachine(player, (TileEntityRepairingMachine) tileEntity);
-		}
-		if (tileEntity instanceof TileEntityConvertingMachine) {
+		if (tileEntity instanceof TileEntityConvertingMachine)
 			return new ContainerConvertingMachine(player, (TileEntityConvertingMachine) tileEntity);
-		}
-		if (tileEntity instanceof TileEntityFusingMachine) {
+		if (tileEntity instanceof TileEntityFusingMachine)
 			return new ContainerFusingMachine(player, (TileEntityFusingMachine) tileEntity);
-		}
-		if (tileEntity instanceof TileEntityTeleportingMarker) {
+		if (tileEntity instanceof TileEntityTeleportingMarker)
 			return new ContainerTeleportingMarker(player, (TileEntityTeleportingMarker) tileEntity);
-		}
-		if (tileEntity instanceof TileEntityPresentBox) {
+		if (tileEntity instanceof TileEntityPresentBox)
 			return new ContainerPresentBox(player, (TileEntityPresentBox) tileEntity);
+		if (id == 1) {
+			if (tileEntity instanceof TileEntityPlacer)
+				return new ContainerPlacer(player, (TileEntityPlacer) tileEntity);
+			if (tileEntity instanceof TileEntityCollector)
+				return new ContainerBlockCollector(player, (TileEntityCollector) tileEntity);
+			if (tileEntity instanceof TileEntityWorldEditorBase)
+				return new ContainerWorldEditorBase(player, (TileEntityWorldEditorBase) tileEntity);
+		} else if (id == 0) {
+			if (tileEntity instanceof TileEntityWorldEditorBase)
+				return new ContainerSettingWorldEditorBase((TileEntityWorldEditorBase) tileEntity);
 		}
 		return null;
 	}
@@ -56,41 +62,47 @@ public class OfalenModGuiHandler implements IGuiHandler {
 	@Override
 	public Object getClientGuiElement(int id, EntityPlayer player, World world, int x, int y, int z) {
 		switch (id) {
+		case 0:
 		case 1:
 			break;
 		case 2:
-			return new GuiContainer27(new ContainerItemShield(player), prefix + "shield");
+			return new GuiContainerBasic(new ContainerItemShield(player), prefix + "shield");
 		case 3:
 			return new GuiItemTeleporter(player);
 		case 4:
 			return new GuiItemFloater(player);
 		case 5:
-			return new GuiContainer27(new ContainerItemFilter(player), prefix + "filterItem");
+			return new GuiContainerBasic(new ContainerItemFilter(player), prefix + "filterItem");
 		case 6:
 			return new GuiItemFilterInstaller(player);
 		case 7:
-			return new GuiContainer27(new ContainerItemCollector(player), prefix + "collector");
+			return new GuiContainerBasic(new ContainerItemCollector(player), prefix + "collector");
 		}
 		if (!world.blockExists(x, y, z))
 			return null;
 		TileEntity tileEntity = world.getTileEntity(x, y, z);
-		if (tileEntity instanceof TileEntitySmeltingMachine) {
+		if (tileEntity instanceof TileEntitySmeltingMachine)
 			return new GuiSmeltingMachine(player, (TileEntitySmeltingMachine) tileEntity);
-		}
-		if (tileEntity instanceof TileEntityRepairingMachine) {
+		if (tileEntity instanceof TileEntityRepairingMachine)
 			return new GuiRepairingMachine(player, (TileEntityRepairingMachine) tileEntity);
-		}
-		if (tileEntity instanceof TileEntityConvertingMachine) {
+		if (tileEntity instanceof TileEntityConvertingMachine)
 			return new GuiConvertingMachine(player, (TileEntityConvertingMachine) tileEntity);
-		}
-		if (tileEntity instanceof TileEntityFusingMachine) {
+		if (tileEntity instanceof TileEntityFusingMachine)
 			return new GuiFusingMachine(player, (TileEntityFusingMachine) tileEntity);
-		}
-		if (tileEntity instanceof TileEntityTeleportingMarker) {
+		if (tileEntity instanceof TileEntityTeleportingMarker)
 			return new GuiTeleportingMarker(player, (TileEntityTeleportingMarker) tileEntity);
-		}
-		if (tileEntity instanceof TileEntityPresentBox) {
+		if (tileEntity instanceof TileEntityPresentBox)
 			return new GuiPresentBox(player, (TileEntityPresentBox) tileEntity);
+		if (id == 1) {
+			if (tileEntity instanceof TileEntityPlacer)
+				return new GuiWorldEditorBase.GuiPlacer(player, (TileEntityPlacer) tileEntity);
+			if (tileEntity instanceof TileEntityCollector)
+				return new GuiWorldEditorBase.GuiCollector(player, (TileEntityCollector) tileEntity);
+			if (tileEntity instanceof TileEntityWorldEditorBase)
+				return new GuiWorldEditorBase(player, (TileEntityWorldEditorBase) tileEntity);
+		} else if (id == 0) {
+			if (tileEntity instanceof TileEntityWorldEditorBase)
+				return new GuiSettingWorldEditorBase((TileEntityWorldEditorBase) tileEntity);
 		}
 		return null;
 	}

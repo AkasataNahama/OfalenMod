@@ -6,11 +6,11 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.StatCollector;
 import org.lwjgl.opengl.GL11;
 
-public class GuiContainer27 extends GuiContainer {
-	private static final ResourceLocation GUITEXTURE = new ResourceLocation("ofalenmod:textures/gui/container/container27.png");
-	private String guiName;
+public class GuiContainerBasic extends GuiContainer {
+	protected ResourceLocation texture = new ResourceLocation("ofalenmod:textures/gui/container/container27.png");
+	protected String guiName;
 
-	public GuiContainer27(Container container, String name) {
+	public GuiContainerBasic(Container container, String name) {
 		super(container);
 		guiName = name;
 		ySize = 168;
@@ -25,7 +25,7 @@ public class GuiContainer27 extends GuiContainer {
 	@Override
 	protected void drawGuiContainerBackgroundLayer(float par1, int par2, int par3) {
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-		mc.getTextureManager().bindTexture(GUITEXTURE);
+		mc.getTextureManager().bindTexture(texture);
 		int k = (width - xSize) / 2;
 		int l = (height - ySize) / 2;
 		this.drawTexturedModalRect(k, l, 0, 0, xSize, ySize);

@@ -113,6 +113,10 @@ public class OfalenModItemCore {
 	public static Item installerFilter;
 	// オファレン草
 	public static Item seedOfalen;
+	// 測量杖
+	public static Item caneSurveying;
+	// 経験値の結晶
+	public static Item crystalExp;
 	// アーマーマテリアル
 	public static final ArmorMaterial OFALEN_ARMOR_G2 = EnumHelper.addArmorMaterial("OFALEN_ARMOR_G2", 66, new int[] { 3, 8, 6, 3 }, 20);
 	public static final ArmorMaterial OFALEN_ARMOR_G3 = EnumHelper.addArmorMaterial("OFALEN_ARMOR_G3", 132, new int[] { 3, 8, 6, 3 }, 40);
@@ -303,5 +307,11 @@ public class OfalenModItemCore {
 		// オファレン草
 		seedOfalen = new ItemOfalenSeed(OfalenModBlockCore.grassOfalen).setUnlocalizedName("ofalen.seed").setTextureName("ofalenmod:seed");
 		GameRegistry.registerItem(seedOfalen, "seedOfalen");
+		// 測量杖
+		caneSurveying = new ItemSurveyingCane().setUnlocalizedName("ofalen.caneSurveying").setTextureName("ofalenmod:surveying_cane");
+		GameRegistry.registerItem(caneSurveying, "caneSurveying");
+		// 経験値の結晶
+		crystalExp = new ItemExpCrystal().setUnlocalizedName("ofalen.crystalExp").setTextureName("ofalenmod:exp_crystal");
+		GameRegistry.registerItem(crystalExp, "crystalExp");
 	}
 }
