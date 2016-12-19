@@ -81,7 +81,7 @@ public class BlockOfalenGrass extends Block implements IPlantable, IGrowable {
 	/** ドロップアイテムのメタデータを返す。 */
 	@Override
 	public int damageDropped(int meta) {
-		return meta & 3;
+		return meta % 4;
 	}
 
 	/** 「幸運」を適用してアイテムをドロップする。 */
@@ -99,7 +99,7 @@ public class BlockOfalenGrass extends Block implements IPlantable, IGrowable {
 		if (meta < 12)
 			return ret;
 		// 成長しきっているなら、作物（オファレンの欠片）が既に登録されているので、種を追加して返す。
-		ret.add(new ItemStack(this.getSeed(), 1, meta & 3));
+		ret.add(new ItemStack(this.getSeed(), 1, meta % 4));
 		return ret;
 	}
 
@@ -166,7 +166,7 @@ public class BlockOfalenGrass extends Block implements IPlantable, IGrowable {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public IIcon getIcon(int side, int meta) {
-		return icons[meta & 15];
+		return icons[meta % 16];
 	}
 
 	/** アイコンを登録する。 */
@@ -175,7 +175,7 @@ public class BlockOfalenGrass extends Block implements IPlantable, IGrowable {
 	public void registerBlockIcons(IIconRegister register) {
 		icons = new IIcon[16];
 		for (int i = 0; i < icons.length; ++i) {
-			icons[i] = register.registerIcon(this.getTextureName() + "-" + (i / 4) + "-" + (i & 3));
+			icons[i] = register.registerIcon(this.getTextureName() + "-" + (i / 4) + "-" + (i % 4));
 		}
 	}
 

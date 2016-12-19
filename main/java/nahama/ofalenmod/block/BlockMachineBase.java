@@ -47,7 +47,7 @@ public abstract class BlockMachineBase extends BlockContainer {
 	public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase entity, ItemStack itemStack) {
 		// 設置したEntityの向きによってメタデータを設定する。
 		int meta = 0;
-		switch (MathHelper.floor_double(entity.rotationYaw * 4.0F / 360.0F + 0.5D) & 3) {
+		switch (MathHelper.floor_double(entity.rotationYaw * 4.0F / 360.0F + 0.5D) % 4) {
 		case 0:
 			meta = 2;
 			break;
@@ -62,9 +62,8 @@ public abstract class BlockMachineBase extends BlockContainer {
 		}
 		world.setBlockMetadataWithNotify(x, y, z, meta, 2);
 		// 名づけがされていたら反映する。
-		if (itemStack.hasDisplayName()) {
+		if (itemStack.hasDisplayName())
 			((TileEntityGradedMachineBase) world.getTileEntity(x, y, z)).setCustomName(itemStack.getDisplayName());
-		}
 	}
 
 	/** ブロックが破壊された時の処理。 */
@@ -119,7 +118,7 @@ public abstract class BlockMachineBase extends BlockContainer {
 		if (meta < 8) {
 			return side == meta ? icons[2] : icons[0];
 		} else {
-			return side == (meta & 7) ? icons[3] : icons[1];
+			return side == meta % 8 ? icons[3] : icons[1];
 		}
 	}
 

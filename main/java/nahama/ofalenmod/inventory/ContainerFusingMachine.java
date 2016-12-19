@@ -101,9 +101,9 @@ public class ContainerFusingMachine extends Container {
 				}
 				slot.onSlotChange(itemStack1, itemStack);
 			} else if (slotNumber >= INDEX_1) {
-				int meta = itemStack1.getItemDamage() & 3;
-				if (tileEntity.isFusableOfalen(itemStack1.getItem()) && meta != 3) {
-					if (!this.mergeItemStack(itemStack1, meta, meta + 1, false)) {
+				int color = itemStack1.getItemDamage() % 4;
+				if (tileEntity.isFusableOfalen(itemStack1.getItem()) && color != 3) {
+					if (!this.mergeItemStack(itemStack1, color, color + 1, false)) {
 						return null;
 					}
 				} else if (tileEntity.isItemFuel(itemStack1)) {

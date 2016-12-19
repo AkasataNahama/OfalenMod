@@ -120,9 +120,9 @@ public abstract class TileEntityGradedMachineBase extends TileEntity implements 
 	protected void updateIsBurning() {
 		int direction = this.getBlockMetadata();
 		if (timeBurning > 0) {
-			direction = direction | 8;
+			direction = direction % 8 + 8;
 		} else {
-			direction = direction & 7;
+			direction = direction % 8;
 		}
 		worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, direction, 2);
 		this.markDirty();
@@ -132,7 +132,7 @@ public abstract class TileEntityGradedMachineBase extends TileEntity implements 
 	/** グレードを更新する。 */
 	public void updateGrade() {
 		int getX = xCoord, getY = yCoord, getZ = zCoord;
-		switch (this.getBlockMetadata() & 7) {
+		switch (this.getBlockMetadata() % 8) {
 		case 2:
 			getZ += 2;
 			break;
@@ -159,7 +159,7 @@ public abstract class TileEntityGradedMachineBase extends TileEntity implements 
 			grade = 0;
 			return;
 		}
-		grade = (byte) ((meta & 3) + 1);
+		grade = (byte) (meta % 4 + 1);
 	}
 
 	/** 材料スロットから完成品スロットにアイテムを移動する。 */

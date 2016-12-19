@@ -78,7 +78,7 @@ public class BlockOfalenOre extends Block {
 	/** ドロップアイテムのメタデータを返す。 */
 	@Override
 	public int damageDropped(int meta) {
-		return meta & 3;
+		return meta % 4;
 	}
 
 	/** ブロックのテクスチャを登録する処理。 */
@@ -95,6 +95,6 @@ public class BlockOfalenOre extends Block {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public IIcon getIcon(int side, int meta) {
-		return icons[meta & 3];
+		return icons[meta % 4];
 	}
 }

@@ -38,11 +38,11 @@ public class BlockProcessorCasing extends Block {
 	/** ドロップアイテムのメタデータを返す。 */
 	@Override
 	public int damageDropped(int meta) {
-		if ((meta & 7) == 3)
+		if ((meta % 8) == 3)
 			return 0;
-		if ((meta & 7) == 7)
+		if ((meta % 8) == 7)
 			return 4;
-		return meta & 7;
+		return meta % 8;
 	}
 
 	/** ブロックのテクスチャを登録する処理。 */

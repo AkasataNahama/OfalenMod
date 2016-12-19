@@ -38,7 +38,7 @@ public class ItemOfalenSeed extends Item implements IPlantable {
 		if (!world.getBlock(x, y, z).canSustainPlant(world, x, y, z, ForgeDirection.UP, this) || !world.isAirBlock(x, y + 1, z))
 			return false;
 		world.setBlock(x, y + 1, z, this.plant);
-		world.setBlockMetadataWithNotify(x, y + 1, z, itemStack.getItemDamage() & 3, 2);
+		world.setBlockMetadataWithNotify(x, y + 1, z, itemStack.getItemDamage() % 4, 2);
 		--itemStack.stackSize;
 		return true;
 	}
@@ -72,7 +72,7 @@ public class ItemOfalenSeed extends Item implements IPlantable {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public IIcon getIconFromDamage(int meta) {
-		return icons[meta & 3];
+		return icons[meta % 4];
 	}
 
 	/** アイテムをクリエイティブタブに登録する処理。 */

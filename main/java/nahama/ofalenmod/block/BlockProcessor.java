@@ -38,7 +38,7 @@ public class BlockProcessor extends Block {
 	/** ドロップアイテムのメタデータを返す。 */
 	@Override
 	public int damageDropped(int meta) {
-		return meta & 3;
+		return meta % 4;
 	}
 
 	/** ブロックのテクスチャを登録する処理。 */
@@ -55,7 +55,7 @@ public class BlockProcessor extends Block {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public IIcon getIcon(int side, int meta) {
-		return icons[meta & 3];
+		return icons[meta % 4];
 	}
 
 	/** シルクタッチで回収できるか。 */
@@ -74,7 +74,7 @@ public class BlockProcessor extends Block {
 	/** 周囲のブロックを調査し、メタデータを返す。 */
 	private int getUpdatedMeta(World world, int x, int y, int z) {
 		// 無効時のメタデータ。
-		int grade = world.getBlockMetadata(x, y, z) & 3;
+		int grade = world.getBlockMetadata(x, y, z) % 4;
 		for (int iy = -1; iy <= 1; iy++) {
 			for (int iz = -1; iz <= 1; iz++) {
 				for (int ix = -1; ix <= 1; ix++) {

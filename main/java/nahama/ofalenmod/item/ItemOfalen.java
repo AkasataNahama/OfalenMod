@@ -12,6 +12,6 @@ public class ItemOfalen extends ItemParts {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public IIcon getIconFromDamage(int meta) {
-		return icons[meta & 7];
+		return icons[meta % 8];
 	}
 }

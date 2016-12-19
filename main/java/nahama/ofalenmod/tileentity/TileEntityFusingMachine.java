@@ -275,7 +275,7 @@ public class TileEntityFusingMachine extends TileEntityGradedMachineBase {
 			return false;
 		if (slot == 3)
 			return this.isItemFuel(itemStack);
-		return this.isFusableOfalen(itemStack.getItem()) && slot == (itemStack.getItemDamage() & 3);
+		return this.isFusableOfalen(itemStack.getItem()) && slot == (itemStack.getItemDamage() % 4);
 	}
 
 	@Override
