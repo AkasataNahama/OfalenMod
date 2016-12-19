@@ -50,6 +50,8 @@ public class BlockRange {
 	}
 
 	public static BlockRange loadFromNBT(NBTTagCompound nbt) {
+		if (nbt == null || !nbt.hasKey(OfalenNBTUtil.MIN_POS) || !nbt.hasKey(OfalenNBTUtil.MAX_POS))
+			return null;
 		return new BlockRange(BlockPos.loadFromNBT(nbt.getCompoundTag(OfalenNBTUtil.MIN_POS)), BlockPos.loadFromNBT(nbt.getCompoundTag(OfalenNBTUtil.MAX_POS)));
 	}
 

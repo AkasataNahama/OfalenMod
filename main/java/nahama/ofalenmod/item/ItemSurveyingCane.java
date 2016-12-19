@@ -2,6 +2,7 @@ package nahama.ofalenmod.item;
 
 import nahama.ofalenmod.OfalenModCore;
 import nahama.ofalenmod.util.*;
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -24,7 +25,7 @@ public class ItemSurveyingCane extends Item {
 		byte interval = itemStack.getTagCompound().getByte(OfalenNBTUtil.INTERVAL);
 		if (interval > 0)
 			itemStack.getTagCompound().setByte(OfalenNBTUtil.INTERVAL, (byte) (interval - 1));
-		if (!isHeld || !world.isRemote || interval > 0)
+		if (!isHeld || !world.isRemote || interval > 0 || entity != Minecraft.getMinecraft().thePlayer)
 			return;
 		itemStack.getTagCompound().setByte(OfalenNBTUtil.INTERVAL, (byte) 20);
 		BlockRangeWithStandard range = BlockRangeWithStandard.loadFromNBT(nbt.getCompoundTag(OfalenNBTUtil.RANGE));

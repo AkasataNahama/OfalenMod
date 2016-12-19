@@ -8,7 +8,6 @@ import nahama.ofalenmod.util.BlockPos;
 import nahama.ofalenmod.util.BlockRange;
 import nahama.ofalenmod.util.OfalenNBTUtil;
 import nahama.ofalenmod.util.OfalenNBTUtil.FilterUtil;
-import nahama.ofalenmod.util.Util;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.ISidedInventory;
@@ -109,7 +108,6 @@ public abstract class TileEntityWorldEditorBase extends TileEntity implements IS
 
 	/** 範囲内のブロックを指定座標から調べ始め、最初に見つかった作業対象の座標を返す。 */
 	protected BlockPos searchNextBlock(BlockRange range, BlockPos start) {
-		Util.debuggingInfo("search. range(" + range.toStringRange() + "), start(" + start.toStringCoord() + ")");
 		BlockPos checking = start.copy();
 		if (!range.isInRange(checking)) {
 			checking = range.posMin.copy();
@@ -128,10 +126,8 @@ public abstract class TileEntityWorldEditorBase extends TileEntity implements IS
 					}
 				}
 			}
-			Util.debuggingInfo("searching : (" + checking.toStringCoord() + ")");
 			if (!this.isCoordThis(checking.x, checking.y, checking.z) && this.canWorkWithCoord(checking.x, checking.y, checking.z))
 				return new BlockPos(checking.x, checking.y, checking.z);
-			Util.debuggingInfo("next");
 		}
 	}
 

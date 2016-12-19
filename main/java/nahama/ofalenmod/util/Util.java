@@ -3,7 +3,9 @@ package nahama.ofalenmod.util;
 import nahama.ofalenmod.OfalenModCore;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ChatComponentText;
 import net.minecraft.world.World;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -145,7 +147,7 @@ public class Util {
 			}
 			return new String(bytes, 0, length);
 		} catch (IOException e) {
-			Util.error("Error on reading string.", "OfalenModUpdateCheckCore");
+			Util.error("Error on reading string.", "Util");
 			return null;
 		}
 	}
@@ -166,5 +168,9 @@ public class Util {
 			ret *= base;
 		}
 		return ret;
+	}
+
+	public static void addChatMessage(EntityPlayer player, String message) {
+		player.addChatMessage(new ChatComponentText(message));
 	}
 }

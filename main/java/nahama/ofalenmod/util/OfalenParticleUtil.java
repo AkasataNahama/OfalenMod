@@ -40,7 +40,6 @@ public class OfalenParticleUtil {
 	}
 
 	public static void spawnParticleWithBlockRange(World world, BlockRangeWithStandard range, int type) {
-		Util.debuggingInfo("spawnParticleWithBlockRange. range : " + range.toStringRange(), "OfalenParticleUtil");
 		spawnParticleWithBlockRange(world, range.convertToNormal(), type);
 		spawnParticleAroundBlock(world, range.posA, type);
 		spawnParticleAroundBlock(world, range.posB, type);
@@ -81,6 +80,10 @@ public class OfalenParticleUtil {
 	public static double[] getColorWithTypeForParticle(int type) {
 		double[] color = new double[3];
 		switch (type) {
+		case 2:
+			color[0] = 0.127D;
+			color[1] = 0.578D;
+			color[2] = 1.0D;
 		case 4:
 			color[0] = 1.0D;
 			color[1] = 0.578D;

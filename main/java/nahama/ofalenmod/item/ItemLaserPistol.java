@@ -47,15 +47,6 @@ public class ItemLaserPistol extends Item {
 		list.add(itemStack);
 	}
 
-	/** クラフト時の処理。 */
-	@Override
-	public void onCreated(ItemStack itemStack, World world, EntityPlayer player) {
-		// 修繕機での修繕を不可にする。
-		NBTTagCompound nbt = new NBTTagCompound();
-		nbt.setBoolean(OfalenNBTUtil.IS_IRREPARABLE, true);
-		itemStack.setTagCompound(nbt);
-	}
-
 	/** 更新時の処理。 */
 	@Override
 	public void onUpdate(ItemStack itemStack, World world, Entity entity, int slot, boolean flag) {
@@ -63,15 +54,12 @@ public class ItemLaserPistol extends Item {
 		// 時間を減少させる。
 		if (itemStack.getItem() != this)
 			return;
-		if (world.isRemote && duration > 0) {
+		if (world.isRemote && duration > 0)
 			duration--;
-		}
-		if (!itemStack.hasTagCompound()) {
+		if (!itemStack.hasTagCompound())
 			itemStack.setTagCompound(new NBTTagCompound());
-		}
-		if (!itemStack.getTagCompound().getBoolean(OfalenNBTUtil.IS_IRREPARABLE)) {
+		if (!itemStack.getTagCompound().getBoolean(OfalenNBTUtil.IS_IRREPARABLE))
 			itemStack.getTagCompound().setBoolean(OfalenNBTUtil.IS_IRREPARABLE, true);
-		}
 	}
 
 	/** 右クリック時の処理。 */

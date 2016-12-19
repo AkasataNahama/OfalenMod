@@ -35,9 +35,10 @@ public class TileEntityPlacer extends TileEntityWorldEditorBase implements IInve
 		try {
 			block.onBlockPlacedBy(worldObj, x, y, z, null, itemStack);
 		} catch (NullPointerException e) {
-			Util.error("NullPointerException on placing block. (name=" + block.getLocalizedName() + ", id=" + Block.getIdFromBlock(block) + ", meta=" + meta + ")", "TileEntityPlacer");
+			Util.error("Failed to place block. (name=" + block.getLocalizedName() + ", id=" + Block.getIdFromBlock(block) + ", meta=" + meta + ")", "TileEntityPlacer");
 			Util.error("This error was anticipated. Probably Placer failed to place the block.", "TileEntityPlacer");
 			e.printStackTrace();
+			return false;
 		}
 		block.onPostBlockPlaced(worldObj, x, y, z, meta);
 		worldObj.playSoundEffect(x + 0.5D, y + 0.5D, z + 0.5D, block.stepSound.func_150496_b(), (block.stepSound.getVolume() + 1.0F) / 2.0F, block.stepSound.getPitch() * 0.8F);

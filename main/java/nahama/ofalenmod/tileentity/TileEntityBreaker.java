@@ -24,16 +24,20 @@ public class TileEntityBreaker extends TileEntityWorldEditorBase {
 	@Override
 	protected boolean work(int x, int y, int z) {
 		Block block = worldObj.getBlock(x, y, z);
+		if (block.getBlockHardness(worldObj, x, y, z) < 0.0F)
+			return false;
 		int meta = worldObj.getBlockMetadata(x, y, z);
-		boolean flag = true;
+		boolean flag;
 		try {
 			block.onBlockHarvested(worldObj, x, y, z, meta, null);
 			flag = block.removedByPlayer(worldObj, null, x, y, z, true);
 		} catch (NullPointerException e) {
-			Util.error("NullPointerException on breaking block. (name=" + block.getLocalizedName() + ", id=" + Block.getIdFromBlock(block) + ", meta=" + meta + ")", "TileEntityBreaker");
+			Util.error("Failed to break block. (name=" + block.getLocalizedName() + ", id=" + Block.getIdFromBlock(block) + ", meta=" + meta + ")", "TileEntityBreaker");
 			Util.error("This error was anticipated. Probably Breaker failed to break the block.", "TileEntityBreaker");
 			e.printStackTrace();
+			return false;
 		}
+		worldObj.playAuxSFX(2001, x, y, z, Block.getIdFromBlock(block) + (meta << 12));
 		if (flag)
 			block.onBlockDestroyedByPlayer(worldObj, x, y, z, meta);
 		if (!canDeleteBrokenBlock)

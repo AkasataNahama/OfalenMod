@@ -48,12 +48,10 @@ public class ItemLaserMagazine extends Item {
 	@Override
 	public void onUpdate(ItemStack itemStack, World world, Entity entity, int slot, boolean flag) {
 		super.onUpdate(itemStack, world, entity, slot, flag);
-		if (!itemStack.hasTagCompound()) {
+		if (!itemStack.hasTagCompound())
 			itemStack.setTagCompound(new NBTTagCompound());
-		}
-		if (!itemStack.getTagCompound().getBoolean(OfalenNBTUtil.IS_IRREPARABLE)) {
+		if (!itemStack.getTagCompound().getBoolean(OfalenNBTUtil.IS_IRREPARABLE))
 			itemStack.getTagCompound().setBoolean(OfalenNBTUtil.IS_IRREPARABLE, true);
-		}
 	}
 
 	/** 説明欄の内容を追加する。 */
