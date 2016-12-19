@@ -13,6 +13,13 @@ info.ofalen.using=現在
 info.ofalen.latest=最新
 // 製錬機
 info.ofalen.recipeSmelting=オファレン製錬機
+// 万能ツール
+info.ofalen.toolPerfect.mode=右クリック効果
+info.ofalen.toolPerfect.mode.changed=右クリック効果が「%s」に変更されました。
+info.ofalen.toolPerfect.mode.0=単一破壊
+info.ofalen.toolPerfect.mode.1=範囲破壊
+info.ofalen.toolPerfect.mode.2=クワ
+info.ofalen.toolPerfect.mode.3=防御
 // レーザー
 info.ofalen.crystal=クリスタル
 info.ofalen.color:red=赤

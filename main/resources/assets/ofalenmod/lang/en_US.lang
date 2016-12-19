@@ -13,6 +13,13 @@ info.ofalen.using=Using
 info.ofalen.latest=Latest
 // Smelting Machine
 info.ofalen.recipeSmelting=Ofalen Smelting Machine
+// Perfect Tool
+info.ofalen.toolPerfect.mode=Right Click Effect
+info.ofalen.toolPerfect.mode.changed=Right Click Effect is changed to %s
+info.ofalen.toolPerfect.mode.0=Single Breaking
+info.ofalen.toolPerfect.mode.1=Range Breaking
+info.ofalen.toolPerfect.mode.2=Hoe
+info.ofalen.toolPerfect.mode.3=Sword Guard
 // Laser
 info.ofalen.crystal=Crystal
 info.ofalen.color:red=Red
