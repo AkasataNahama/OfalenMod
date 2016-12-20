@@ -5,8 +5,8 @@ import nahama.ofalenmod.core.OfalenModConfigCore;
 import nahama.ofalenmod.core.OfalenModItemCore;
 import nahama.ofalenmod.handler.OfalenTeleportHandler;
 import nahama.ofalenmod.network.MSpawnParticle;
+import nahama.ofalenmod.util.OfalenLog;
 import nahama.ofalenmod.util.OfalenNBTUtil;
-import nahama.ofalenmod.util.OfalenUtil;
 import nahama.ofalenmod.world.TeleporterOfalen;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
@@ -63,7 +63,7 @@ public class ItemTeleporter extends ItemFuture {
 		OfalenTeleportHandler.MarkerPos pos = OfalenTeleportHandler.getCoord(channel);
 		// 座標が取得できなかったらログに出力して終了。
 		if (pos == null) {
-			OfalenUtil.error("Error on getting marker coord. channel : " + channel, "ItemTeleporter.onItemRightClick");
+			OfalenLog.error("Error on getting marker coord. channel : " + channel, "ItemTeleporter.onItemRightClick");
 			return itemStack;
 		}
 		player.mountEntity(null);

@@ -487,7 +487,7 @@ public abstract class TileEntityWorldEditorBase extends TileEntity implements IS
 	/** スロットにアクセスできるかどうか。 */
 	@Override
 	public boolean isItemValidForSlot(int slot, ItemStack itemStack) {
-		return slot == 0 && itemStack.isItemEqual(this.getFuelStack(1));
+		return 0 <= slot && slot < this.getSizeInventory() && itemStack.isItemEqual(this.getFuelStack(1));
 	}
 
 	@Override

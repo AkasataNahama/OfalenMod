@@ -1,10 +1,7 @@
 package nahama.ofalenmod.tileentity;
 
 import nahama.ofalenmod.core.OfalenModItemCore;
-import nahama.ofalenmod.util.BlockPos;
-import nahama.ofalenmod.util.BlockRange;
-import nahama.ofalenmod.util.OfalenNBTUtil;
-import nahama.ofalenmod.util.OfalenUtil;
+import nahama.ofalenmod.util.*;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.item.EntityXPOrb;
 import net.minecraft.item.ItemStack;
@@ -145,8 +142,8 @@ public class TileEntityCollector extends TileEntityWorldEditorBase {
 			itemStack.stackSize -= limit - itemStacks[i].stackSize;
 			itemStacks[i].stackSize = limit;
 		}
-		OfalenUtil.error("ItemStack deleted on addInInventory.", "TileEntityCollector");
-		OfalenUtil.error(itemStack.toString(), "TileEntityCollector");
+		OfalenLog.error("ItemStack deleted on addInInventory.", "TileEntityCollector");
+		OfalenLog.error(itemStack.toString(), "TileEntityCollector");
 		return itemStack.stackSize;
 	}
 
