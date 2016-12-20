@@ -4,7 +4,7 @@ import nahama.ofalenmod.OfalenModCore;
 import nahama.ofalenmod.inventory.ContainerSettingWorldEditorBase;
 import nahama.ofalenmod.network.MWorldEditorSetting;
 import nahama.ofalenmod.tileentity.TileEntityWorldEditorBase;
-import nahama.ofalenmod.util.Util;
+import nahama.ofalenmod.util.OfalenUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.inventory.GuiContainer;
@@ -85,9 +85,9 @@ public class GuiSettingWorldEditorBase extends GuiContainer {
 			// type == 0はBooleanなので反転。
 			factor = tileEntity.getWithID(buttonSetting.idSetting) == 1 ? -1 : 1;
 		} else {
-			if (Util.isKeyDown(Minecraft.getMinecraft().gameSettings.keyBindSneak.getKeyCode()))
+			if (OfalenUtil.isKeyDown(Minecraft.getMinecraft().gameSettings.keyBindSneak.getKeyCode()))
 				factor *= 10;
-			if (Util.isKeyDown(OfalenModCore.KEY_OSS.getKeyCode()))
+			if (OfalenUtil.isKeyDown(OfalenModCore.KEY_OSS.getKeyCode()))
 				factor *= 100;
 		}
 		OfalenModCore.WRAPPER.sendToServer(new MWorldEditorSetting(tileEntity, buttonSetting.idSetting, tileEntity.getWithID(buttonSetting.idSetting) + factor));

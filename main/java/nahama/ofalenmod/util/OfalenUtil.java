@@ -1,14 +1,11 @@
 package nahama.ofalenmod.util;
 
-import nahama.ofalenmod.OfalenModCore;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.world.World;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 
@@ -16,49 +13,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Random;
 
-public class Util {
+public class OfalenUtil {
 	public static Random random = new Random();
-	private static Logger logger = LogManager.getLogger(OfalenModCore.MODID);
-
-	public static void info(String msg) {
-		logger.info(msg);
-	}
-
-	public static void info(String msg, String name) {
-		info(msg + " [" + name + "]");
-	}
-
-	public static void info(String msg, String name, boolean flag) {
-		if (flag)
-			info(msg, name);
-	}
-
-	public static void error(String msg) {
-		logger.error(msg);
-	}
-
-	public static void error(String msg, String name) {
-		error(msg + " [" + name + "]");
-	}
-
-	public static void error(String msg, String name, boolean flag) {
-		if (flag)
-			error(msg, name);
-	}
-
-	public static void debuggingInfo(String msg) {
-		if (OfalenModCore.IS_DEBUGGING)
-			logger.info(msg + " [DEBUG]");
-	}
-
-	public static void debuggingInfo(String msg, String name) {
-		debuggingInfo(msg + " [" + name + "]");
-	}
-
-	public static void debuggingInfo(String msg, String name, boolean flag) {
-		if (flag)
-			debuggingInfo(msg, name);
-	}
 
 	public static boolean isKeyDown(int key) {
 		if (key > 0)
@@ -147,7 +103,7 @@ public class Util {
 			}
 			return new String(bytes, 0, length);
 		} catch (IOException e) {
-			Util.error("Error on reading string.", "Util");
+			OfalenLog.error("Error on reading string.", "OfalenUtil");
 			return null;
 		}
 	}

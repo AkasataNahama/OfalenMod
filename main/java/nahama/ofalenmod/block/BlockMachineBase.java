@@ -19,7 +19,7 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
-import static nahama.ofalenmod.util.Util.random;
+import static nahama.ofalenmod.util.OfalenUtil.random;
 
 public abstract class BlockMachineBase extends BlockContainer {
 	private IIcon[] icons;

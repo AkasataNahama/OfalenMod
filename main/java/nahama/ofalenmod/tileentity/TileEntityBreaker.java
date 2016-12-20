@@ -1,7 +1,7 @@
 package nahama.ofalenmod.tileentity;
 
 import nahama.ofalenmod.util.OfalenNBTUtil;
-import nahama.ofalenmod.util.Util;
+import nahama.ofalenmod.util.OfalenUtil;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -32,8 +32,8 @@ public class TileEntityBreaker extends TileEntityWorldEditorBase {
 			block.onBlockHarvested(worldObj, x, y, z, meta, null);
 			flag = block.removedByPlayer(worldObj, null, x, y, z, true);
 		} catch (NullPointerException e) {
-			Util.error("Failed to break block. (name=" + block.getLocalizedName() + ", id=" + Block.getIdFromBlock(block) + ", meta=" + meta + ")", "TileEntityBreaker");
-			Util.error("This error was anticipated. Probably Breaker failed to break the block.", "TileEntityBreaker");
+			OfalenUtil.error("Failed to break block. (name=" + block.getLocalizedName() + ", id=" + Block.getIdFromBlock(block) + ", meta=" + meta + ")", "TileEntityBreaker");
+			OfalenUtil.error("This error was anticipated. Probably Breaker failed to break the block.", "TileEntityBreaker");
 			e.printStackTrace();
 			return false;
 		}

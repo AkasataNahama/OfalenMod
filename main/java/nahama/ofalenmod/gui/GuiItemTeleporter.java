@@ -4,7 +4,7 @@ import nahama.ofalenmod.OfalenModCore;
 import nahama.ofalenmod.inventory.ContainerItemTeleporter;
 import nahama.ofalenmod.network.MTeleporterMeta;
 import nahama.ofalenmod.util.OfalenNBTUtil;
-import nahama.ofalenmod.util.Util;
+import nahama.ofalenmod.util.OfalenUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.inventory.GuiContainer;
@@ -82,7 +82,7 @@ public class GuiItemTeleporter extends GuiContainer {
 		this.drawTexturedModalRect(k, l, 0, 0, xSize, ySize);
 		currentItem = Minecraft.getMinecraft().thePlayer.getHeldItem();
 		int offY = currentItem.getTagCompound().getBoolean(OfalenNBTUtil.IS_VALID) ? 0 : 26;
-		String s = Util.getTripleFiguresNum(currentItem.getItemDamage());
+		String s = OfalenUtil.getTripleFiguresNum(currentItem.getItemDamage());
 		for (int i = 0; i < 3; i++) {
 			char c = s.charAt(i);
 			// チャンネルを表示する。

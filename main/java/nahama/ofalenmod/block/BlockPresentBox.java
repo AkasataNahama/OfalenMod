@@ -19,7 +19,7 @@ import net.minecraft.world.World;
 
 import java.util.Calendar;
 
-import static nahama.ofalenmod.util.Util.random;
+import static nahama.ofalenmod.util.OfalenUtil.random;
 
 public class BlockPresentBox extends Block implements ITileEntityProvider {
 	/** 0:下, 1:上, 2:横 */

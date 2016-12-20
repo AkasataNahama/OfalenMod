@@ -1,7 +1,8 @@
 package nahama.ofalenmod.handler;
 
 import nahama.ofalenmod.OfalenModCore;
-import nahama.ofalenmod.util.Util;
+import nahama.ofalenmod.util.OfalenLog;
+import nahama.ofalenmod.util.OfalenUtil;
 import net.minecraft.util.StatCollector;
 
 import java.io.InputStream;
@@ -27,7 +28,7 @@ public class OfalenModUpdateCheckHandler {
 			InputStream inputStream = connect.getInputStream();
 			// 一行ずつ読み込み、比較していく。
 			while (true) {
-				String str = Util.readString(inputStream);
+				String str = OfalenUtil.readString(inputStream);
 				if (str == null)
 					break;
 				if (compareVersion(str))
@@ -37,7 +38,7 @@ public class OfalenModUpdateCheckHandler {
 			// 接続を切断する。
 			connect.disconnect();
 		} catch (Exception e) {
-			Util.error("Error on checking update.", "OfalenModUpdateCheckCore");
+			OfalenLog.error("Error on checking update.", "OfalenModUpdateCheckCore");
 			e.printStackTrace();
 		}
 	}
@@ -70,7 +71,7 @@ public class OfalenModUpdateCheckHandler {
 				versionLatest = version;
 				return true;
 			} catch (NumberFormatException e) {
-				Util.error("Error on comparing version.", "OfalenModUpdateCheckCore");
+				OfalenLog.error("Error on comparing version.", "OfalenModUpdateCheckCore");
 			}
 		}
 		// 使用中のバージョンより桁数が多いならtrue。

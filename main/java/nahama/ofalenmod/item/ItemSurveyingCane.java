@@ -41,7 +41,7 @@ public class ItemSurveyingCane extends Item {
 		if (range == null) {
 			range = new BlockRangeWithStandard(x, y, z, x, y, z);
 		} else {
-			if (!Util.isKeyDown(OfalenModCore.KEY_OSS.getKeyCode())) {
+			if (!OfalenUtil.isKeyDown(OfalenModCore.KEY_OSS.getKeyCode())) {
 				range.posA = new BlockPos(x, y, z);
 			} else {
 				range.posB = new BlockPos(x, y, z);

@@ -7,7 +7,7 @@ import nahama.ofalenmod.core.OfalenModConfigCore;
 import nahama.ofalenmod.core.OfalenModItemCore;
 import nahama.ofalenmod.core.OfalenModOreDictCore;
 import nahama.ofalenmod.util.OfalenNBTUtil;
-import nahama.ofalenmod.util.Util;
+import nahama.ofalenmod.util.OfalenUtil;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
@@ -102,7 +102,7 @@ public abstract class TileEntityGradedMachineBase extends TileEntity implements 
 
 	/** 作業時間などにGradeを反映させる。 */
 	protected int getTimeWithGrade(int time) {
-		return time / Util.power(2, grade);
+		return time / OfalenUtil.power(2, grade);
 	}
 
 	/** 作業にかかる時間を返す。 */

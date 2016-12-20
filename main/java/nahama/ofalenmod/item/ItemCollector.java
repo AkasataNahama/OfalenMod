@@ -5,7 +5,7 @@ import nahama.ofalenmod.core.OfalenModConfigCore;
 import nahama.ofalenmod.inventory.ContainerItemCollector;
 import nahama.ofalenmod.util.OfalenNBTUtil;
 import nahama.ofalenmod.util.OfalenNBTUtil.FilterUtil;
-import nahama.ofalenmod.util.Util;
+import nahama.ofalenmod.util.OfalenUtil;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
@@ -47,7 +47,7 @@ public class ItemCollector extends Item {
 		if (isItemDisabled && isExpDisabled)
 			return;
 		// 耐久値が残っていなかったら終了。
-		if (Util.getRemainingDamage(thisStack) < 1)
+		if (OfalenUtil.getRemainingDamage(thisStack) < 1)
 			return;
 		if (entity instanceof EntityPlayer) {
 			EntityPlayer player = (EntityPlayer) entity;
@@ -85,13 +85,13 @@ public class ItemCollector extends Item {
 				if (!FilterUtil.canItemFilterThrough(FilterUtil.getFilterTag(thisStack), eItemStack))
 					continue;
 				// 耐久値の残りを取得。
-				int remaining = Util.getRemainingDamage(thisStack);
+				int remaining = OfalenUtil.getRemainingDamage(thisStack);
 				// 耐久値が尽きていたら終了。
 				if (remaining < 1)
 					return;
 				// プレイヤーが持っているなら、インベントリの空きスロット数も考慮。 TODO 詳細設定
 				if (entity instanceof EntityPlayer)
-					remaining = Math.min(remaining, Util.getRemainingItemAmountInInventory(((EntityPlayer) entity).inventory.mainInventory, eItemStack, ((EntityPlayer) entity).inventory.getInventoryStackLimit()));
+					remaining = Math.min(remaining, OfalenUtil.getRemainingItemAmountInInventory(((EntityPlayer) entity).inventory.mainInventory, eItemStack, ((EntityPlayer) entity).inventory.getInventoryStackLimit()));
 				// 一個も移動できないなら次のEntityへ。
 				if (remaining < OfalenModConfigCore.amountCollectorDamageItem)
 					continue;
@@ -104,7 +104,7 @@ public class ItemCollector extends Item {
 				// 耐久値か空きスロットが足りなかったら足りる分だけ移動して終了。
 				ItemStack itemStack1 = eItemStack.copy();
 				itemStack1.stackSize = remaining / OfalenModConfigCore.amountCollectorDamageItem;
-				listWaitingEntity.add(Util.getEntityItemNearEntity(itemStack1, entity));
+				listWaitingEntity.add(OfalenUtil.getEntityItemNearEntity(itemStack1, entity));
 				eItemStack.stackSize -= remaining / OfalenModConfigCore.amountCollectorDamageItem;
 				thisStack.setItemDamage(thisStack.getItemDamage() + (remaining / OfalenModConfigCore.amountCollectorDamageItem * OfalenModConfigCore.amountCollectorDamageItem));
 			} else if (!isExpDisabled && (o instanceof EntityXPOrb)) {
@@ -114,7 +114,7 @@ public class ItemCollector extends Item {
 				if (entity.getDistanceToEntity(e) > rangeExp)
 					continue;
 				// 耐久値の残りを取得。
-				int remaining = Util.getRemainingDamage(thisStack);
+				int remaining = OfalenUtil.getRemainingDamage(thisStack);
 				// 耐久値が尽きていたら終了。
 				if (remaining < 1)
 					return;
@@ -137,7 +137,7 @@ public class ItemCollector extends Item {
 
 	@Override
 	public ItemStack onItemRightClick(ItemStack itemStack, World world, EntityPlayer player) {
-		if (!Util.isKeyDown(OfalenModCore.KEY_OSS.getKeyCode())) {
+		if (!OfalenUtil.isKeyDown(OfalenModCore.KEY_OSS.getKeyCode())) {
 			player.openGui(OfalenModCore.instance, 7, world, (int) player.posX, (int) player.posY, (int) player.posZ);
 			return itemStack;
 		}

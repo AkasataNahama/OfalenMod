@@ -1,7 +1,6 @@
 package nahama.ofalenmod.inventory;
 
 import nahama.ofalenmod.util.OfalenNBTUtil;
-import nahama.ofalenmod.util.Util;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;

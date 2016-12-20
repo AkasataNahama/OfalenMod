@@ -9,7 +9,7 @@ import nahama.ofalenmod.entity.EntityLaserGreen;
 import nahama.ofalenmod.entity.EntityLaserRed;
 import nahama.ofalenmod.entity.EntityWhiteLaser;
 import nahama.ofalenmod.util.OfalenNBTUtil;
-import nahama.ofalenmod.util.Util;
+import nahama.ofalenmod.util.OfalenUtil;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -150,7 +150,7 @@ public class ItemLaserPistol extends Item {
 			// LaserColorに何かの文字が登録されていたら、
 			if (nbt.getString(OfalenNBTUtil.LASER_COLOR).length() > 0 && !world.isRemote) {
 				// マガジンをドロップさせ、
-				Util.dropItemStackNearEntity(new ItemStack(OfalenModItemCore.partsOfalen, 1, 5), player);
+				OfalenUtil.dropItemStackNearEntity(new ItemStack(OfalenModItemCore.partsOfalen, 1, 5), player);
 				// LaserColorをリセットする。
 				nbt.setString(OfalenNBTUtil.LASER_COLOR, "");
 			}

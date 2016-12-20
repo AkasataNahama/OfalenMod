@@ -4,7 +4,7 @@ import nahama.ofalenmod.OfalenModCore;
 import nahama.ofalenmod.inventory.ContainerTeleportingMarker;
 import nahama.ofalenmod.network.MTeleporterChannel;
 import nahama.ofalenmod.tileentity.TileEntityTeleportingMarker;
-import nahama.ofalenmod.util.Util;
+import nahama.ofalenmod.util.OfalenUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.inventory.GuiContainer;
@@ -79,7 +79,7 @@ public class GuiTeleportingMarker extends GuiContainer {
 		int l = (height - ySize) / 2;
 		this.drawTexturedModalRect(k, l, 0, 0, xSize, ySize);
 		int offY = tileEntity.isValid ? 0 : 26;
-		String s = Util.getTripleFiguresNum(tileEntity.getChannel());
+		String s = OfalenUtil.getTripleFiguresNum(tileEntity.getChannel());
 		for (int i = 0; i < 3; i++) {
 			char c = s.charAt(i);
 			// チャンネルを表示する。

@@ -2,7 +2,8 @@ package nahama.ofalenmod.handler;
 
 import cpw.mods.fml.common.registry.GameRegistry;
 import nahama.ofalenmod.core.OfalenModBlockCore;
-import nahama.ofalenmod.util.Util;
+import nahama.ofalenmod.util.OfalenLog;
+import nahama.ofalenmod.util.OfalenUtil;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -66,7 +67,7 @@ public class OfalenModAnniversaryHandler {
 			}
 			br.close();
 		} catch (Exception e) {
-			Util.error("Error on loading OfalenModPresentedDate.txt.", "OfalenModAnniversaryHandler");
+			OfalenLog.error("Error on loading OfalenModPresentedDate.txt.", "OfalenModAnniversaryHandler");
 			e.printStackTrace();
 		}
 	}
@@ -79,7 +80,7 @@ public class OfalenModAnniversaryHandler {
 			connect.setRequestMethod("GET");
 			InputStream inputStream = connect.getInputStream();
 			while (true) {
-				String str = Util.readString(inputStream);
+				String str = OfalenUtil.readString(inputStream);
 				if (str == null)
 					break;
 				if (str.charAt(0) != '+') {
@@ -120,7 +121,7 @@ public class OfalenModAnniversaryHandler {
 			inputStream.close();
 			connect.disconnect();
 		} catch (Exception e) {
-			Util.error("Error on getting presents.", "OfalenModAnniversaryHandler");
+			OfalenLog.error("Error on getting presents.", "OfalenModAnniversaryHandler");
 			e.printStackTrace();
 		}
 	}
@@ -129,7 +130,7 @@ public class OfalenModAnniversaryHandler {
 	private static void loadPresents(InputStream inputStream, int num) {
 		String str;
 		for (int i = 0; i < 54; i++) {
-			str = Util.readString(inputStream);
+			str = OfalenUtil.readString(inputStream);
 			if (str == null || str.charAt(0) == '+') {
 				presents[num] = new ItemStack[54];
 				return;
@@ -146,7 +147,7 @@ public class OfalenModAnniversaryHandler {
 				}
 			} catch (Exception e) {
 				presents[num][i] = null;
-				Util.error("Error on loading presents.", "OfalenModAnniversaryHandler");
+				OfalenLog.error("Error on loading presents.", "OfalenModAnniversaryHandler");
 				e.printStackTrace();
 			}
 		}
@@ -166,7 +167,7 @@ public class OfalenModAnniversaryHandler {
 			}
 			bw.close();
 		} catch (Exception e) {
-			Util.error("Error on saving OfalenModPresentedDate.txt.", "OfalenModAnniversaryHandler");
+			OfalenLog.error("Error on saving OfalenModPresentedDate.txt.", "OfalenModAnniversaryHandler");
 			e.printStackTrace();
 		}
 	}
@@ -180,7 +181,7 @@ public class OfalenModAnniversaryHandler {
 		if (presentedDate.containsKey(name))
 			return;
 		// プレゼントボックスを渡していなかったら渡す。
-		Util.dropItemStackNearEntity(new ItemStack(OfalenModBlockCore.boxPresent), player);
+		OfalenUtil.dropItemStackNearEntity(new ItemStack(OfalenModBlockCore.boxPresent), player);
 		presentedDate.put(name, "0/0/0");
 	}
 
@@ -207,9 +208,9 @@ public class OfalenModAnniversaryHandler {
 				// 二回開けられる記念日で、一回目なら'-'をつける。
 				presentedDate.put(name, today + '-');
 			}
-			return Util.copyItemStacks(presents[0]);
+			return OfalenUtil.copyItemStacks(presents[0]);
 		}
 		// 二回開けられる記念日で、二回目なら別のプレゼントを返す。
-		return Util.copyItemStacks(presents[1]);
+		return OfalenUtil.copyItemStacks(presents[1]);
 	}
 }

@@ -27,7 +27,7 @@ import nahama.ofalenmod.render.RenderItemPistol;
 import nahama.ofalenmod.render.RenderLaser;
 import nahama.ofalenmod.render.RenderTeleportingMarker;
 import nahama.ofalenmod.tileentity.TileEntityTeleportingMarker;
-import nahama.ofalenmod.util.Util;
+import nahama.ofalenmod.util.OfalenLog;
 import net.minecraft.client.renderer.entity.RenderSnowball;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.creativetab.CreativeTabs;
@@ -121,7 +121,7 @@ public class OfalenModCore {
 			try {
 				OfalenModNEILoader.load();
 			} catch (Exception e) {
-				Util.error("Error on loading NEI.", "OfalenModCore.clientInit");
+				OfalenLog.error("Error on loading NEI.", "OfalenModCore");
 				e.printStackTrace();
 			}
 		}
@@ -137,7 +137,7 @@ public class OfalenModCore {
 		OfalenModAnniversaryHandler.init();
 		// 最新バージョンの通知をする。
 		if (OfalenModUpdateCheckHandler.isNewVersionAvailable)
-			Util.info(StatCollector.translateToLocal("info.ofalen.notificationVersion") + OfalenModUpdateCheckHandler.getMessage());
+			OfalenLog.info(StatCollector.translateToLocal("info.ofalen.notificationVersion") + OfalenModUpdateCheckHandler.getMessage());
 	}
 
 	/** サーバー終了時の処理。 */

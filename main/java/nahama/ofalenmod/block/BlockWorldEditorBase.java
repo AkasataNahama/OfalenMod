@@ -8,7 +8,7 @@ import nahama.ofalenmod.tileentity.TileEntityWorldEditorBase;
 import nahama.ofalenmod.util.BlockRangeWithStandard;
 import nahama.ofalenmod.util.OfalenNBTUtil;
 import nahama.ofalenmod.util.OfalenNBTUtil.FilterUtil;
-import nahama.ofalenmod.util.Util;
+import nahama.ofalenmod.util.OfalenUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
@@ -44,7 +44,7 @@ public abstract class BlockWorldEditorBase extends BlockContainer {
 	/** プレイヤーに右クリックされた時の処理。 */
 	@Override
 	public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ) {
-		if (!Util.isKeyDown(OfalenModCore.KEY_OSS.getKeyCode())) {
+		if (!OfalenUtil.isKeyDown(OfalenModCore.KEY_OSS.getKeyCode())) {
 			// OSSキーが押されていなかったらインベントリのGUIを開く。
 			player.openGui(OfalenModCore.instance, 1, world, x, y, z);
 		} else {
@@ -77,7 +77,7 @@ public abstract class BlockWorldEditorBase extends BlockContainer {
 				}
 			}
 		}
-		if (!Util.isKeyDown(OfalenModCore.KEY_OSS.getKeyCode()))
+		if (!OfalenUtil.isKeyDown(OfalenModCore.KEY_OSS.getKeyCode()))
 			return;
 		TileEntity tileEntity = world.getTileEntity(x, y, z);
 		if (tileEntity == null || !(tileEntity instanceof TileEntityWorldEditorBase))
@@ -146,7 +146,7 @@ public abstract class BlockWorldEditorBase extends BlockContainer {
 		for (int i = 0; i < editor.getSizeInventory(); i++) {
 			ItemStack itemStack = editor.getStackInSlotOnClosing(i);
 			if (itemStack != null)
-				Util.dropItemStackNearBlock(itemStack, world, x, y, z);
+				OfalenUtil.dropItemStackNearBlock(itemStack, world, x, y, z);
 		}
 		// このブロック自身をドロップさせる。NBT保存用。
 		Item item = getItemDropped(meta, world.rand, 0);
@@ -158,7 +158,7 @@ public abstract class BlockWorldEditorBase extends BlockContainer {
 		nbtItem.setTag(FilterUtil.ITEM_FILTER, nbtTileEntity.getTag(FilterUtil.ITEM_FILTER));
 		ItemStack itemStack = new ItemStack(item, 1, damageDropped(meta));
 		itemStack.setTagCompound(nbtItem);
-		Util.dropItemStackNearBlock(itemStack, world, x, y, z);
+		OfalenUtil.dropItemStackNearBlock(itemStack, world, x, y, z);
 		// TileEntityの更新を通知する。
 		world.func_147453_f(x, y, z, block);
 		super.breakBlock(world, x, y, z, block, meta);

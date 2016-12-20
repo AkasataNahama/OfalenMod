@@ -1,7 +1,7 @@
 package nahama.ofalenmod.tileentity;
 
 import nahama.ofalenmod.util.OfalenNBTUtil;
-import nahama.ofalenmod.util.Util;
+import nahama.ofalenmod.util.OfalenUtil;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.inventory.IInventory;
@@ -35,8 +35,8 @@ public class TileEntityPlacer extends TileEntityWorldEditorBase implements IInve
 		try {
 			block.onBlockPlacedBy(worldObj, x, y, z, null, itemStack);
 		} catch (NullPointerException e) {
-			Util.error("Failed to place block. (name=" + block.getLocalizedName() + ", id=" + Block.getIdFromBlock(block) + ", meta=" + meta + ")", "TileEntityPlacer");
-			Util.error("This error was anticipated. Probably Placer failed to place the block.", "TileEntityPlacer");
+			OfalenUtil.error("Failed to place block. (name=" + block.getLocalizedName() + ", id=" + Block.getIdFromBlock(block) + ", meta=" + meta + ")", "TileEntityPlacer");
+			OfalenUtil.error("This error was anticipated. Probably Placer failed to place the block.", "TileEntityPlacer");
 			e.printStackTrace();
 			return false;
 		}

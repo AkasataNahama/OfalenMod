@@ -2,7 +2,7 @@ package nahama.ofalenmod.util;
 
 import net.minecraft.world.World;
 
-import static nahama.ofalenmod.util.Util.random;
+import static nahama.ofalenmod.util.OfalenUtil.random;
 
 public class OfalenParticleUtil {
 	public static void spawnParticleWithBlockRange(World world, BlockRange range, int type) {

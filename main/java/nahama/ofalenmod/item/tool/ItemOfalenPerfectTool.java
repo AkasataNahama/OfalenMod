@@ -4,7 +4,7 @@ import cpw.mods.fml.common.eventhandler.Event.Result;
 import nahama.ofalenmod.OfalenModCore;
 import nahama.ofalenmod.util.OfalenNBTUtil;
 import nahama.ofalenmod.util.OfalenNBTUtil.FilterUtil;
-import nahama.ofalenmod.util.Util;
+import nahama.ofalenmod.util.OfalenUtil;
 import net.minecraft.block.Block;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
@@ -58,7 +58,7 @@ public class ItemOfalenPerfectTool extends ItemTool {
 	@Override
 	public ItemStack onItemRightClick(ItemStack itemStack, World world, EntityPlayer player) {
 		byte mode = itemStack.getTagCompound().getByte(OfalenNBTUtil.MODE);
-		if (!Util.isKeyDown(OfalenModCore.KEY_OSS.getKeyCode())) {
+		if (!OfalenUtil.isKeyDown(OfalenModCore.KEY_OSS.getKeyCode())) {
 			// 右クリック時効果がガードで、OSSキーが押されていないなら、ガードを始める。
 			if (mode == 3)
 				player.setItemInUse(itemStack, this.getMaxItemUseDuration(itemStack));
@@ -79,7 +79,7 @@ public class ItemOfalenPerfectTool extends ItemTool {
 			// 次に変更できるまでの間隔を設定する。
 			itemStack.getTagCompound().setByte(OfalenNBTUtil.INTERVAL, (byte) 10);
 			// プレイヤーのチャット欄に通知する。
-			Util.addChatMessage(player, StatCollector.translateToLocal("info.ofalen.toolPerfect.mode.changed").replaceAll("%s", StatCollector.translateToLocal("info.ofalen.toolPerfect.mode." + mode)));
+			OfalenUtil.addChatMessage(player, StatCollector.translateToLocal("info.ofalen.toolPerfect.mode.changed").replaceAll("%s", StatCollector.translateToLocal("info.ofalen.toolPerfect.mode." + mode)));
 		}
 		return itemStack;
 	}
@@ -87,7 +87,7 @@ public class ItemOfalenPerfectTool extends ItemTool {
 	/** アイテムが使われた(右クリックされた)時の処理。 */
 	@Override
 	public boolean onItemUse(ItemStack itemStack, EntityPlayer player, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ) {
-		if (Util.isKeyDown(OfalenModCore.KEY_OSS.getKeyCode()))
+		if (OfalenUtil.isKeyDown(OfalenModCore.KEY_OSS.getKeyCode()))
 			return false;
 		byte mode = itemStack.getTagCompound().getByte(OfalenNBTUtil.MODE);
 		switch (mode) {

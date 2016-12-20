@@ -6,7 +6,7 @@ import nahama.ofalenmod.OfalenModCore;
 import nahama.ofalenmod.item.ItemFloater;
 import nahama.ofalenmod.network.MFloaterMode;
 import nahama.ofalenmod.util.OfalenNBTUtil;
-import nahama.ofalenmod.util.Util;
+import nahama.ofalenmod.util.OfalenUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.entity.Entity;
@@ -101,7 +101,7 @@ public class OfalenFlightHandlerClient {
 			checkPlayer();
 		// プレイヤーが空中にいるならパーティクルを表示する。
 		if (!player.onGround)
-			Minecraft.getMinecraft().theWorld.spawnParticle("reddust", player.posX, player.posY - 1.6D - (Util.random.nextDouble() / 2), player.posZ, 0.4D, 0.8D, 1.0D);
+			Minecraft.getMinecraft().theWorld.spawnParticle("reddust", player.posX, player.posY - 1.6D - (OfalenUtil.random.nextDouble() / 2), player.posZ, 0.4D, 0.8D, 1.0D);
 	}
 
 	/** ジェットモードで浮遊させる。 */

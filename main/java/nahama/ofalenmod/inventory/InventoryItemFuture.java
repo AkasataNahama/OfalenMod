@@ -1,7 +1,7 @@
 package nahama.ofalenmod.inventory;
 
 import nahama.ofalenmod.core.OfalenModItemCore;
-import nahama.ofalenmod.util.Util;
+import nahama.ofalenmod.util.OfalenUtil;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.item.ItemStack;
 
@@ -32,7 +32,7 @@ public class InventoryItemFuture extends InventoryItemBase {
 	@Override
 	public void openInventory() {
 		// アイテムを読み込む。
-		int amount = Util.getRemainingDamage(inventoryPlayer.getCurrentItem());
+		int amount = OfalenUtil.getRemainingDamage(inventoryPlayer.getCurrentItem());
 		itemStacks = new ItemStack[this.getSizeInventory()];
 		for (int i = 0; i < itemStacks.length; i++) {
 			if (amount < 1)

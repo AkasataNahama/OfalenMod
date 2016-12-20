@@ -1,7 +1,7 @@
 package nahama.ofalenmod.core;
 
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
-import nahama.ofalenmod.util.Util;
+import nahama.ofalenmod.util.OfalenLog;
 import net.minecraftforge.common.config.Configuration;
 
 public class OfalenModConfigCore {
@@ -94,7 +94,7 @@ public class OfalenModConfigCore {
 			amountCollectorDamageExp = (short) cfg.getInt("amountCollectorDamageExp", FUTURE, amountCollectorDamageExp, 0, 64 * 9, "Damage amount of Ofalen Collector when collect experience orb.");
 			intervalFloaterDamage = (byte) cfg.getInt("intervalFloaterDamage", FUTURE, intervalFloaterDamage, 0, Byte.MAX_VALUE, "Damage interval of Ofalen Floater.(tick)");
 		} catch (Exception e) {
-			Util.error("Error on loading config.", "OfalenModConfigCore");
+			OfalenLog.error("Error on loading config.", "OfalenModConfigCore");
 		} finally {
 			cfg.save();
 		}

@@ -176,7 +176,7 @@ public class OfalenNBTUtil {
 		public static ArrayList<String> getFilterInformation(ItemStack itemStack) {
 			ArrayList<String> ret = new ArrayList<>();
 			// Shiftが押されていなければフィルターに対応していることを表示。
-			if (!Util.isKeyDown(Minecraft.getMinecraft().gameSettings.keyBindSneak.getKeyCode())) {
+			if (!OfalenUtil.isKeyDown(Minecraft.getMinecraft().gameSettings.keyBindSneak.getKeyCode())) {
 				ret.add(StatCollector.translateToLocal("info.ofalen.filter.toolTip"));
 				return ret;
 			}
