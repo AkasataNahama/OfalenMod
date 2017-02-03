@@ -2,12 +2,8 @@ package nahama.ofalenmod.inventory;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import nahama.ofalenmod.core.OfalenModBlockCore;
-import nahama.ofalenmod.core.OfalenModItemCore;
 import nahama.ofalenmod.core.OfalenModOreDictCore;
-import nahama.ofalenmod.item.ItemOfalen;
 import nahama.ofalenmod.tileentity.TileEntityConvertingMachine;
-import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.ICrafting;
@@ -105,7 +101,7 @@ public class ContainerConvertingMachine extends Container {
 				}
 				slot.onSlotChange(itemStack1, itemStack);
 			} else if (slotNumber > 3) {
-				if (((itemStack1.getItem() instanceof ItemOfalen) && !itemStack1.isItemEqual(new ItemStack(OfalenModItemCore.coreOfalen, 1, 3))) || Block.getBlockFromItem(itemStack1.getItem()) == OfalenModBlockCore.blockOfalen) {
+				if (TileEntityConvertingMachine.isProperItemStack(itemStack1)) {
 					if (!this.mergeItemStack(itemStack1, 3, 4, false)) {
 						if (!this.mergeItemStack(itemStack1, 0, 1, false)) {
 							return null;

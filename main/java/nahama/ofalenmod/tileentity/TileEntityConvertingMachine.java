@@ -42,23 +42,49 @@ public class TileEntityConvertingMachine extends TileEntityGradedMachineBase {
 			if (itemStacks[2].stackSize >= itemStacks[2].getMaxStackSize() || itemStacks[2].stackSize >= this.getInventoryStackLimit())
 				return false;
 		}
-		// 変換前スロットとサンプルのアイテムが同じでメタデータが違い、オファレンなら可。
-		if (itemStacks[0].getItem() == sample.getItem() && itemStacks[0].getItemDamage() != sample.getItemDamage()) {
-			Item item = itemStacks[0].getItem();
-			if ((item instanceof ItemOfalen) || (Block.getBlockFromItem(item) == OfalenModBlockCore.blockOfalen)) {
-				if (item != OfalenModItemCore.coreOfalen || sample.getItemDamage() != 3) {
-					return true;
-				}
-			}
-		}
-		// オファレンブロックへの変換なら、匠式硬質オファレンブロックでも可。
-		if (Block.getBlockFromItem(sample.getItem()) == OfalenModBlockCore.blockOfalen) {
-			if (OfalenModOreDictCore.isMatchedItemStack(OfalenModOreDictCore.listCreeperOfalenBlock, itemStacks[0])) {
-				return true;
-			}
-		}
+		if (isProperPair(sample, itemStacks[0]))
+			return true;
 		this.moveItemStack();
 		return false;
+	}
+
+	public static boolean isProperPair(ItemStack sample, ItemStack converting) {
+		// どちらかが対象外のアイテムならfalse。
+		if (!isProperItemStack(sample) || !isProperItemStack(converting))
+			return false;
+		// sampleがオファレンブロックでconvertingが匠式硬質オファレンならtrue。
+		if (Block.getBlockFromItem(sample.getItem()) == OfalenModBlockCore.blockOfalen && OfalenModOreDictCore.isMatchedItemStack(OfalenModOreDictCore.listCreeperOfalenBlock, converting))
+			return true;
+		// アイテムが一致していないか、メタデータが同じならfalse。
+		if (sample.getItem() != converting.getItem() || sample.getItemDamage() == converting.getItemDamage())
+			return false;
+		// コア以外ならtrue。
+		if (sample.getItem() != OfalenModItemCore.coreOfalen)
+			return true;
+		// コアの時、
+		int damageSample = sample.getItemDamage();
+		int damageConverting = converting.getItemDamage();
+		if (damageSample < 3) {
+			// sampleとconvertingの双方が基本色ならtrue。
+			return damageConverting < 3;
+		} else if (3 < damageSample && damageSample < 7) {
+			// sampleとconvertingの双方が基本融合色ならtrue。
+			return 3 < damageConverting && damageConverting < 7;
+		}
+		// sampleとconvertingのどちらかが白または黒ならfalse。
+		return false;
+	}
+
+	public static boolean isProperItemStack(ItemStack itemStack) {
+		Item item = itemStack.getItem();
+		if (item instanceof ItemOfalen) {
+			if (item == OfalenModItemCore.coreOfalen) {
+				if (itemStack.getItemDamage() == 3 || itemStack.getItemDamage() == 7)
+					return false;
+			}
+			return true;
+		}
+		return Block.getBlockFromItem(item) == OfalenModBlockCore.blockOfalen || OfalenModOreDictCore.isMatchedItemStack(OfalenModOreDictCore.listCreeperOfalenBlock, itemStack);
 	}
 
 	@Override
