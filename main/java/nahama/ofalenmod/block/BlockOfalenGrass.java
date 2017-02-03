@@ -38,8 +38,8 @@ public class BlockOfalenGrass extends Block implements IPlantable, IGrowable {
 		this.disableStats();
 	}
 
-	protected Item getSeed() {
-		return OfalenModItemCore.seedOfalen;
+	protected Item getSeeds() {
+		return OfalenModItemCore.seedsOfalen;
 	}
 
 	protected Item getCrop() {
@@ -69,7 +69,7 @@ public class BlockOfalenGrass extends Block implements IPlantable, IGrowable {
 	@Override
 	public Item getItemDropped(int meta, Random random, int fortune) {
 		// 成長しきっていたら作物（オファレンの欠片）を返す。
-		return meta >= 12 ? this.getCrop() : this.getSeed();
+		return meta >= 12 ? this.getCrop() : this.getSeeds();
 	}
 
 	/** ドロップ数を返す。 */
@@ -99,7 +99,7 @@ public class BlockOfalenGrass extends Block implements IPlantable, IGrowable {
 		if (meta < 12)
 			return ret;
 		// 成長しきっているなら、作物（オファレンの欠片）が既に登録されているので、種を追加して返す。
-		ret.add(new ItemStack(this.getSeed(), 1, meta % 4));
+		ret.add(new ItemStack(this.getSeeds(), 1, meta % 4));
 		return ret;
 	}
 
@@ -140,7 +140,7 @@ public class BlockOfalenGrass extends Block implements IPlantable, IGrowable {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public Item getItem(World world, int x, int y, int z) {
-		return this.getSeed();
+		return this.getSeeds();
 	}
 
 	/** 不透明なブロックかどうか。 */

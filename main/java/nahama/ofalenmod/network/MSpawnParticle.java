@@ -10,7 +10,7 @@ import static nahama.ofalenmod.util.OfalenUtil.random;
 
 public class MSpawnParticle implements IMessage {
 	public byte dimensionId;
-	public double x, y, z;
+	public float x, y, z;
 	public byte type;
 
 	public MSpawnParticle() {
@@ -18,13 +18,13 @@ public class MSpawnParticle implements IMessage {
 
 	public MSpawnParticle(byte dimensionId, double x, double y, double z, byte type) {
 		this.dimensionId = dimensionId;
-		this.x = x;
-		this.y = y;
-		this.z = z;
+		this.x = (float) x;
+		this.y = (float) y;
+		this.z = (float) z;
 		this.type = type;
 	}
 
-	/** dimensionIdはbyteにキャストされます。 */
+	/** dimensionIdはbyteにキャストされる。 */
 	public MSpawnParticle(int dimensionId, double x, double y, double z, byte type) {
 		this((byte) dimensionId, x, y, z, type);
 	}
@@ -32,18 +32,18 @@ public class MSpawnParticle implements IMessage {
 	@Override
 	public void fromBytes(ByteBuf buf) {
 		dimensionId = buf.readByte();
-		x = buf.readDouble();
-		y = buf.readDouble();
-		z = buf.readDouble();
+		x = buf.readFloat();
+		y = buf.readFloat();
+		z = buf.readFloat();
 		type = buf.readByte();
 	}
 
 	@Override
 	public void toBytes(ByteBuf buf) {
 		buf.writeByte(dimensionId);
-		buf.writeDouble(x);
-		buf.writeDouble(y);
-		buf.writeDouble(z);
+		buf.writeFloat(x);
+		buf.writeFloat(y);
+		buf.writeFloat(z);
 		buf.writeByte(type);
 	}
 

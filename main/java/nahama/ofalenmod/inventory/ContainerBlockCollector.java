@@ -16,7 +16,7 @@ public class ContainerBlockCollector extends ContainerWorldEditorBase {
 	protected void addInventory(IInventory inventory) {
 		for (int iy = 0; iy < 6; iy++) {
 			for (int ix = 0; ix < 9; ix++) {
-				this.addSlotToContainer(new SlotNotPuttable(inventory, ix + (iy * 9), 8 + (ix * 18), 18 + (iy * 18)));
+				this.addSlotToContainer(new SlotUnputtable(inventory, ix + (iy * 9), 8 + (ix * 18), 18 + (iy * 18)));
 			}
 		}
 	}

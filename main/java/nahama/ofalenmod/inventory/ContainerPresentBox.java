@@ -21,7 +21,7 @@ public class ContainerPresentBox extends Container {
 		this.tileEntity = tileEntity;
 		for (int iy = 0; iy < 6; iy++) {
 			for (int ix = 0; ix < 9; ix++) {
-				this.addSlotToContainer(new SlotNotPuttable(tileEntity, ix + (iy * 9), 8 + (ix * 18), 18 + (iy * 18)));
+				this.addSlotToContainer(new SlotUnputtable(tileEntity, ix + (iy * 9), 8 + (ix * 18), 18 + (iy * 18)));
 			}
 		}
 		for (int iy = 0; iy < 3; iy++) {

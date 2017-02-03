@@ -4,8 +4,8 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 
-public class SlotNotPuttable extends Slot {
-	public SlotNotPuttable(IInventory iinventory, int index, int x, int y) {
+public class SlotUnputtable extends Slot {
+	public SlotUnputtable(IInventory iinventory, int index, int x, int y) {
 		super(iinventory, index, x, y);
 	}
 

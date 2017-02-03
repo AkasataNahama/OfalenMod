@@ -112,7 +112,7 @@ public class OfalenModItemCore {
 	public static Item filterItem;
 	public static Item installerFilter;
 	// オファレン草
-	public static Item seedOfalen;
+	public static Item seedsOfalen;
 	// 測量杖
 	public static Item caneSurveying;
 	// 経験値の結晶
@@ -305,8 +305,8 @@ public class OfalenModItemCore {
 		installerFilter = new ItemFilterInstaller().setUnlocalizedName("ofalen.installerFilter").setTextureName("ofalenmod:filter_installer");
 		GameRegistry.registerItem(installerFilter, "filter_installer");
 		// オファレン草
-		seedOfalen = new ItemOfalenSeed(OfalenModBlockCore.grassOfalen).setUnlocalizedName("ofalen.seed").setTextureName("ofalenmod:seed");
-		GameRegistry.registerItem(seedOfalen, "seedOfalen");
+		seedsOfalen = new ItemOfalenSeed(OfalenModBlockCore.grassOfalen).setUnlocalizedName("ofalen.seeds").setTextureName("ofalenmod:seeds");
+		GameRegistry.registerItem(seedsOfalen, "seedsOfalen");
 		// 測量杖
 		caneSurveying = new ItemSurveyingCane().setUnlocalizedName("ofalen.caneSurveying").setTextureName("ofalenmod:surveying_cane");
 		GameRegistry.registerItem(caneSurveying, "caneSurveying");

@@ -236,10 +236,10 @@ item.ofalen.filterItem.1.name=アイテムフィルター (block)
 item.ofalen.installerFilter.name=フィルターインストーラー
 
 // オファレン草
-item.ofalen.seed.0.name=赤色オファレン草の種
-item.ofalen.seed.1.name=緑色オファレン草の種
-item.ofalen.seed.2.name=青色オファレン草の種
-item.ofalen.seed.3.name=白色オファレン草の種
+item.ofalen.seeds.0.name=赤色オファレン草の種
+item.ofalen.seeds.1.name=緑色オファレン草の種
+item.ofalen.seeds.2.name=青色オファレン草の種
+item.ofalen.seeds.3.name=白色オファレン草の種
 
 // 測量杖
 item.ofalen.caneSurveying.name=測量杖

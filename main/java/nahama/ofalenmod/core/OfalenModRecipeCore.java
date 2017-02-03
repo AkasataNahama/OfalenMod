@@ -171,7 +171,7 @@ public class OfalenModRecipeCore {
 		addShaped(filterItem, "XYX", "YZY", "XYX", 'X', getParts(2), 'Y', Items.string, 'Z', Blocks.chest);
 		// オファレン草
 		for (int i = 0; i < 4; i++) {
-			addShaped(new ItemStack(seedOfalen, 1, i), "SSS", "SOS", "SSS", 'S', Items.wheat_seeds, 'O', GEM[i]);
+			addShaped(new ItemStack(seedsOfalen, 1, i), "SSS", "SOS", "SSS", 'S', Items.wheat_seeds, 'O', GEM[i]);
 		}
 		// 世界系
 		addShaped(placerOfalen, "XYX", "XZX", "XYX", 'X', getParts(0), 'Y', GEM[4], 'Z', BLOCK[4]);

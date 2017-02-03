@@ -29,7 +29,7 @@ public class ContainerFusingMachine extends Container {
 		this.addSlotToContainer(new Slot(tileEntity, 1, 14, 53));
 		this.addSlotToContainer(new Slot(tileEntity, 2, 56, 53));
 		this.addSlotToContainer(new Slot(tileEntity, 3, 83, 53));
-		this.addSlotToContainer(new SlotNotPuttable(tileEntity, 4, 116, 35));
+		this.addSlotToContainer(new SlotUnputtable(tileEntity, 4, 116, 35));
 		int i;
 		for (i = 0; i < 3; ++i) {
 			for (int j = 0; j < 9; ++j) {

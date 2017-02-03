@@ -236,10 +236,10 @@ item.ofalen.filterItem.1.name=Item Filter (block)
 item.ofalen.installerFilter.name=Filter Installer
 
 // Ofalen Grass
-item.ofalen.seed.0.name=Red Ofalen Grass Seeds
-item.ofalen.seed.1.name=Green Ofalen Grass Seeds
-item.ofalen.seed.2.name=Blue Ofalen Grass Seeds
-item.ofalen.seed.3.name=White Ofalen Grass Seeds
+item.ofalen.seeds.0.name=Red Ofalen Grass Seeds
+item.ofalen.seeds.1.name=Green Ofalen Grass Seeds
+item.ofalen.seeds.2.name=Blue Ofalen Grass Seeds
+item.ofalen.seeds.3.name=White Ofalen Grass Seeds
 
 // 測量杖
 item.ofalen.caneSurveying.name=Cane of Surveying
