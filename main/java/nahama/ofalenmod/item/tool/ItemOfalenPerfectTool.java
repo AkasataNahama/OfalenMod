@@ -97,9 +97,10 @@ public class ItemOfalenPerfectTool extends ItemTool {
 			return true;
 		case 1:
 			// 右クリック時効果が範囲破壊の時。
-			for (int ix = -1; ix < 2; ix++) {
-				for (int iy = -1; iy < 2; iy++) {
-					for (int iz = -1; iz < 2; iz++) {
+			int length = 1;
+			for (int ix = -length; ix <= length; ix++) {
+				for (int iy = -length; iy <= length; iy++) {
+					for (int iz = -length; iz <= length; iz++) {
 						this.breakAndDropBlockByPlayerWithFilter(itemStack, player, world, x + ix, y + iy, z + iz);
 					}
 				}

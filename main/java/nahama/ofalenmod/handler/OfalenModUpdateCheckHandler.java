@@ -2,6 +2,7 @@ package nahama.ofalenmod.handler;
 
 import nahama.ofalenmod.OfalenModCore;
 import nahama.ofalenmod.util.OfalenLog;
+import nahama.ofalenmod.util.OfalenTimer;
 import nahama.ofalenmod.util.OfalenUtil;
 import net.minecraft.util.StatCollector;
 
@@ -21,6 +22,7 @@ public class OfalenModUpdateCheckHandler {
 
 	/** 新しいバージョンがリリースされているか確認する。 */
 	public static void checkUpdate() {
+		OfalenTimer.start("OfalenModUpdateCheckHandler.checkUpdate");
 		try {
 			// ネット上のファイルに接続し、テキストを取得する。
 			HttpURLConnection connect = (HttpURLConnection) new URL(OfalenModCore.meta.updateUrl).openConnection();
@@ -41,6 +43,7 @@ public class OfalenModUpdateCheckHandler {
 			OfalenLog.error("Error on checking update.", "OfalenModUpdateCheckCore");
 			e.printStackTrace();
 		}
+		OfalenTimer.watchAndLog("OfalenModUpdateCheckHandler.checkUpdate");
 	}
 
 	/** 新しいバージョンがあるかどうか。 */

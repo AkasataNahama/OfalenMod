@@ -3,6 +3,7 @@ package nahama.ofalenmod.item;
 import nahama.ofalenmod.OfalenModCore;
 import nahama.ofalenmod.core.OfalenModConfigCore;
 import nahama.ofalenmod.core.OfalenModItemCore;
+import nahama.ofalenmod.core.OfalenModPacketCore;
 import nahama.ofalenmod.handler.OfalenFlightHandlerClient;
 import nahama.ofalenmod.network.MSpawnParticle;
 import nahama.ofalenmod.util.OfalenNBTUtil;
@@ -44,7 +45,7 @@ public class ItemFloater extends ItemFuture {
 		itemStack.setItemDamage(itemStack.getItemDamage() + OfalenModConfigCore.amountFloaterDamage);
 		// サーバー側なら全クライアントにパーティクルを生成するようパケットを送信。
 		if (!world.isRemote)
-			OfalenModCore.WRAPPER.sendToAll(new MSpawnParticle(entity.worldObj.provider.dimensionId, entity.posX, entity.posY - 1.6D, entity.posZ, (byte) 2));
+			OfalenModPacketCore.WRAPPER.sendToAll(new MSpawnParticle(entity.worldObj.provider.dimensionId, entity.posX, entity.posY - 1.6D, entity.posZ, (byte) 2));
 		if (itemStack.getItemDamage() + OfalenModConfigCore.amountFloaterDamage <= itemStack.getMaxDamage()) {
 			// 耐久値が残っているなら間隔をリセットして終了。
 			nbt.setByte(OfalenNBTUtil.INTERVAL, OfalenModConfigCore.intervalFloaterDamage);

@@ -1,7 +1,7 @@
 package nahama.ofalenmod.handler;
 
-import nahama.ofalenmod.OfalenModCore;
 import nahama.ofalenmod.core.OfalenModConfigCore;
+import nahama.ofalenmod.core.OfalenModPacketCore;
 import nahama.ofalenmod.inventory.ContainerItemShield;
 import nahama.ofalenmod.item.ItemShield;
 import nahama.ofalenmod.network.MSpawnParticle;
@@ -84,6 +84,6 @@ public class OfalenShieldHandler {
 			player.addChatMessage(new ChatComponentText(StatCollector.translateToLocal("info.ofalen.shield.brokenShield")));
 		}
 		// パーティクルを表示させるようパケットを送る。。
-		OfalenModCore.WRAPPER.sendToAll(new MSpawnParticle(player.worldObj.provider.dimensionId, player.posX, player.posY, player.posZ, (byte) 0));
+		OfalenModPacketCore.WRAPPER.sendToAll(new MSpawnParticle(player.worldObj.provider.dimensionId, player.posX, player.posY, player.posZ, (byte) 0));
 	}
 }

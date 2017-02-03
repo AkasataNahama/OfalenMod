@@ -1,6 +1,6 @@
 package nahama.ofalenmod.gui;
 
-import nahama.ofalenmod.OfalenModCore;
+import nahama.ofalenmod.core.OfalenModPacketCore;
 import nahama.ofalenmod.inventory.ContainerItemTeleporter;
 import nahama.ofalenmod.network.MTeleporterMeta;
 import nahama.ofalenmod.util.OfalenNBTUtil;
@@ -63,7 +63,7 @@ public class GuiItemTeleporter extends GuiContainer {
 			channel = 999;
 		}
 		currentItem.setItemDamage(channel);
-		OfalenModCore.WRAPPER.sendToServer(new MTeleporterMeta((short) channel));
+		OfalenModPacketCore.WRAPPER.sendToServer(new MTeleporterMeta((short) channel));
 	}
 
 	@Override

@@ -32,6 +32,7 @@ public class OfalenModBlockCore {
 	public static Block markerTeleporting;
 	public static Block boxPresent;
 	public static Block grassOfalen;
+	public static Block setterDetailed;
 
 	/** ブロックを登録する。 */
 	public static void registerBlock() {
@@ -127,5 +128,9 @@ public class OfalenModBlockCore {
 		// オファレン草
 		grassOfalen = new BlockOfalenGrass().setBlockName("ofalen.grass").setBlockTextureName("ofalenmod:grass");
 		GameRegistry.registerBlock(grassOfalen, "grassOfalen");
+		// 詳細設定器
+		setterDetailed = new BlockDetailedSetter().setBlockName("ofalen.setterDetailed").setBlockTextureName("ofalenmod:detailed_setter");
+		GameRegistry.registerBlock(setterDetailed, "setterDetailed");
+		GameRegistry.registerTileEntity(TileEntityDetailedSetter.class, "OfalenMod.DetailedSetter");
 	}
 }

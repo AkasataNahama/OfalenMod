@@ -72,6 +72,7 @@ public class OfalenNBTUtil {
 	public static final String CAN_DELETE_EXP = "CanDeleteExp";
 	// 詳細設定
 	public static final String IS_SET_IN_DETAIL = "IsSetInDetail";
+	public static final String DETAILED_SETTING = "DetailedSetting";
 	// BlockPos, BlockRange
 	public static final String X = "X";
 	public static final String Y = "Y";

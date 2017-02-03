@@ -2,7 +2,7 @@ package nahama.ofalenmod.handler;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import nahama.ofalenmod.OfalenModCore;
+import nahama.ofalenmod.core.OfalenModPacketCore;
 import nahama.ofalenmod.item.ItemFloater;
 import nahama.ofalenmod.network.MFloaterMode;
 import nahama.ofalenmod.util.OfalenNBTUtil;
@@ -50,14 +50,14 @@ public class OfalenFlightHandlerClient {
 		}
 		// モードを設定し、サーバーに通知する。
 		OfalenFlightHandlerClient.mode = mode;
-		OfalenModCore.WRAPPER.sendToServer(new MFloaterMode(OfalenFlightHandlerClient.mode, false));
+		OfalenModPacketCore.WRAPPER.sendToServer(new MFloaterMode(OfalenFlightHandlerClient.mode, false));
 	}
 
 	/** プレイヤーの浮遊を禁止する。 */
 	public static void forbidPlayerToFloat() {
 		// モードを0にし、サーバーに通知する。
 		mode = 0;
-		OfalenModCore.WRAPPER.sendToServer(new MFloaterMode(mode, false));
+		OfalenModPacketCore.WRAPPER.sendToServer(new MFloaterMode(mode, false));
 		// 滞空時移動速度をもとに戻す。
 		player.jumpMovementFactor = 0.02F;
 	}

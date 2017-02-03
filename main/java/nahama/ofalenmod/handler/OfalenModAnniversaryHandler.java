@@ -3,6 +3,7 @@ package nahama.ofalenmod.handler;
 import cpw.mods.fml.common.registry.GameRegistry;
 import nahama.ofalenmod.core.OfalenModBlockCore;
 import nahama.ofalenmod.util.OfalenLog;
+import nahama.ofalenmod.util.OfalenTimer;
 import nahama.ofalenmod.util.OfalenUtil;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -37,6 +38,7 @@ public class OfalenModAnniversaryHandler {
 
 	/** 初期化処理。 */
 	public static void init() {
+		OfalenTimer.start("OfalenModAnniversaryHandler.init");
 		presentedDate.clear();
 		presents = new ItemStack[2][54];
 		// 日付を取得する。
@@ -48,6 +50,7 @@ public class OfalenModAnniversaryHandler {
 		// 		today = "2016/11/21";
 		loadPresentedDates();
 		getPresents();
+		OfalenTimer.watchAndLog("OfalenModAnniversaryHandler.init");
 	}
 
 	/** presentedDateを初期化する。 */

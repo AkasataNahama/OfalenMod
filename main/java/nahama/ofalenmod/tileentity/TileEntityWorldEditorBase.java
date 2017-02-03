@@ -1,8 +1,8 @@
 package nahama.ofalenmod.tileentity;
 
-import nahama.ofalenmod.OfalenModCore;
 import nahama.ofalenmod.block.BlockSurveyor;
 import nahama.ofalenmod.core.OfalenModItemCore;
+import nahama.ofalenmod.core.OfalenModPacketCore;
 import nahama.ofalenmod.network.MSpawnParticleWithRange;
 import nahama.ofalenmod.util.BlockPos;
 import nahama.ofalenmod.util.BlockRange;
@@ -365,7 +365,7 @@ public abstract class TileEntityWorldEditorBase extends TileEntity implements IS
 	}
 
 	protected void survey() {
-		OfalenModCore.WRAPPER.sendToAll(new MSpawnParticleWithRange(this.getColor(), (byte) worldObj.provider.dimensionId, range.copy()));
+		OfalenModPacketCore.WRAPPER.sendToAll(new MSpawnParticleWithRange(this.getColor(), (byte) worldObj.provider.dimensionId, range.copy()));
 	}
 
 	/** 色の番号を返す。4 : 橙, 5 : 翠, 6 : 紫, 7 : 黒。 */

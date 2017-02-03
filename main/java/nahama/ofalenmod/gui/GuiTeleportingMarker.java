@@ -1,6 +1,6 @@
 package nahama.ofalenmod.gui;
 
-import nahama.ofalenmod.OfalenModCore;
+import nahama.ofalenmod.core.OfalenModPacketCore;
 import nahama.ofalenmod.inventory.ContainerTeleportingMarker;
 import nahama.ofalenmod.network.MTeleporterChannel;
 import nahama.ofalenmod.tileentity.TileEntityTeleportingMarker;
@@ -61,7 +61,7 @@ public class GuiTeleportingMarker extends GuiContainer {
 		} else if (channel > 999) {
 			channel = 999;
 		}
-		OfalenModCore.WRAPPER.sendToServer(new MTeleporterChannel(channel, tileEntity.xCoord, tileEntity.yCoord, tileEntity.zCoord));
+		OfalenModPacketCore.WRAPPER.sendToServer(new MTeleporterChannel(channel, tileEntity.xCoord, tileEntity.yCoord, tileEntity.zCoord));
 	}
 
 	@Override

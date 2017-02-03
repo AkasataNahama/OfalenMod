@@ -11,7 +11,6 @@ import cpw.mods.fml.common.Mod.Metadata;
 import cpw.mods.fml.common.ModMetadata;
 import cpw.mods.fml.common.event.*;
 import cpw.mods.fml.common.network.NetworkRegistry;
-import cpw.mods.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -22,12 +21,12 @@ import nahama.ofalenmod.generator.WorldGenOfalenOre;
 import nahama.ofalenmod.handler.*;
 import nahama.ofalenmod.model.ModelLaser;
 import nahama.ofalenmod.nei.OfalenModNEILoader;
-import nahama.ofalenmod.network.*;
 import nahama.ofalenmod.render.RenderItemPistol;
 import nahama.ofalenmod.render.RenderLaser;
 import nahama.ofalenmod.render.RenderTeleportingMarker;
 import nahama.ofalenmod.tileentity.TileEntityTeleportingMarker;
 import nahama.ofalenmod.util.OfalenLog;
+import nahama.ofalenmod.util.OfalenTimer;
 import net.minecraft.client.renderer.entity.RenderSnowball;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.creativetab.CreativeTabs;
@@ -55,14 +54,13 @@ public class OfalenModCore {
 	public static ModMetadata meta;
 	/** 追加するクリエイティブタブ。 */
 	public static final CreativeTabs TAB_OFALEN = new CreativeTabOfalen("ofalen.tabOfalenMod");
-	/** パケット通信用。 */
-	public static final SimpleNetworkWrapper WRAPPER = NetworkRegistry.INSTANCE.newSimpleChannel(OfalenModCore.MODID);
 	/** 詳細設定キー。 */
 	public static final KeyBinding KEY_OSS = new KeyBinding("key.description.ofalen.keyOSS", Keyboard.KEY_F, "key.category.ofalen");
 
 	/** 初期化前処理。 */
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
+		OfalenTimer.start("OfalenModCore.preInit");
 		OfalenModInfoCore.registerInfo(meta);
 		OfalenModConfigCore.loadConfig(event);
 		if (OfalenModConfigCore.isUpdateCheckEnabled)
@@ -72,19 +70,15 @@ public class OfalenModCore {
 		// 機械類のGUIを登録する。
 		NetworkRegistry.INSTANCE.registerGuiHandler(instance, new OfalenModGuiHandler());
 		// パケットを登録する。
-		WRAPPER.registerMessage(MTeleporterChannel.Handler.class, MTeleporterChannel.class, 0, Side.SERVER);
-		WRAPPER.registerMessage(MTeleporterMeta.Handler.class, MTeleporterMeta.class, 1, Side.SERVER);
-		WRAPPER.registerMessage(MFloaterMode.Handler.class, MFloaterMode.class, 2, Side.SERVER);
-		WRAPPER.registerMessage(MSpawnParticle.Handler.class, MSpawnParticle.class, 3, Side.CLIENT);
-		WRAPPER.registerMessage(MFilterInstaller.Handler.class, MFilterInstaller.class, 4, Side.SERVER);
-		WRAPPER.registerMessage(MWorldEditorSetting.Handler.class, MWorldEditorSetting.class, 5, Side.SERVER);
-		WRAPPER.registerMessage(MSpawnParticleWithRange.Handler.class, MSpawnParticleWithRange.class, 6, Side.CLIENT);
+		OfalenModPacketCore.registerPacket();
 		OfalenModAnniversaryHandler.isSinglePlay = FMLCommonHandler.instance().getSide() == Side.CLIENT;
+		OfalenTimer.watchAndLog("OfalenModCore.preInit");
 	}
 
 	/** 初期化処理。 */
 	@EventHandler
 	public void init(FMLInitializationEvent event) {
+		OfalenTimer.start("OfalenModCore.init");
 		// 鉱石の生成を登録する。
 		GameRegistry.registerWorldGenerator(new WorldGenOfalenOre(), 1);
 		OfalenModRecipeCore.registerRecipe();
@@ -94,16 +88,20 @@ public class OfalenModCore {
 		// クライアントの初期化を行う。
 		if (FMLCommonHandler.instance().getSide() == Side.CLIENT)
 			instance.clientInit();
+		OfalenTimer.watchAndLog("OfalenModCore.init");
 	}
 
 	/** 初期化後処理。 */
 	@EventHandler
 	public void postInit(FMLPostInitializationEvent event) {
+		OfalenTimer.start("OfalenModCore.postInit");
+		OfalenTimer.watchAndLog("OfalenModCore.postInit");
 	}
 
 	/** クライアントの初期化処理。 */
 	@SideOnly(Side.CLIENT)
 	private void clientInit() {
+		OfalenTimer.start("OfalenModCore.clientInit");
 		// キーバインディングの登録。
 		ClientRegistry.registerKeyBinding(KEY_OSS);
 		// タイルエンティティとレンダラーの紐づけ。
@@ -125,11 +123,13 @@ public class OfalenModCore {
 				e.printStackTrace();
 			}
 		}
+		OfalenTimer.watchAndLog("OfalenModCore.clientInit");
 	}
 
 	/** サーバー起動時の処理。 */
 	@EventHandler
 	public void serverStarting(FMLServerStartingEvent event) {
+		OfalenTimer.start("OfalenModCore.serverStarting");
 		// 各種ハンドラを初期化する。
 		OfalenShieldHandler.init();
 		OfalenTeleportHandler.init();
@@ -138,6 +138,7 @@ public class OfalenModCore {
 		// 最新バージョンの通知をする。
 		if (OfalenModUpdateCheckHandler.isNewVersionAvailable)
 			OfalenLog.info(StatCollector.translateToLocal("info.ofalen.notificationVersion") + OfalenModUpdateCheckHandler.getMessage());
+		OfalenTimer.watchAndLog("OfalenModCore.serverStarting");
 	}
 
 	/** サーバー終了時の処理。 */

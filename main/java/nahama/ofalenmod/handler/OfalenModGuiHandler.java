@@ -45,6 +45,8 @@ public class OfalenModGuiHandler implements IGuiHandler {
 			return new ContainerTeleportingMarker(player, (TileEntityTeleportingMarker) tileEntity);
 		if (tileEntity instanceof TileEntityPresentBox)
 			return new ContainerPresentBox(player, (TileEntityPresentBox) tileEntity);
+		if (tileEntity instanceof TileEntityDetailedSetter)
+			return new ContainerDetailedSetter(player, (TileEntityDetailedSetter) tileEntity);
 		if (id == 1) {
 			if (tileEntity instanceof TileEntityPlacer)
 				return new ContainerPlacer(player, (TileEntityPlacer) tileEntity);
@@ -93,6 +95,8 @@ public class OfalenModGuiHandler implements IGuiHandler {
 			return new GuiTeleportingMarker(player, (TileEntityTeleportingMarker) tileEntity);
 		if (tileEntity instanceof TileEntityPresentBox)
 			return new GuiPresentBox(player, (TileEntityPresentBox) tileEntity);
+		if (tileEntity instanceof TileEntityDetailedSetter)
+			return new GuiDetailedSetter(player, (TileEntityDetailedSetter) tileEntity);
 		if (id == 1) {
 			if (tileEntity instanceof TileEntityPlacer)
 				return new GuiWorldEditorBase.GuiPlacer(player, (TileEntityPlacer) tileEntity);

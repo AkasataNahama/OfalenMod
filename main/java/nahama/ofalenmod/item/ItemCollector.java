@@ -1,16 +1,23 @@
 package nahama.ofalenmod.item;
 
 import nahama.ofalenmod.OfalenModCore;
+import nahama.ofalenmod.core.OfalenModBlockCore;
 import nahama.ofalenmod.core.OfalenModConfigCore;
+import nahama.ofalenmod.core.OfalenModItemCore;
+import nahama.ofalenmod.handler.OfalenDetailedSettingHandler;
 import nahama.ofalenmod.inventory.ContainerItemCollector;
-import nahama.ofalenmod.util.OfalenNBTUtil;
+import nahama.ofalenmod.util.*;
 import nahama.ofalenmod.util.OfalenNBTUtil.FilterUtil;
-import nahama.ofalenmod.util.OfalenUtil;
+import nahama.ofalenmod.util.OfalenSetting.OfalenSettingByte;
+import nahama.ofalenmod.util.OfalenSetting.OfalenSettingDouble;
+import nahama.ofalenmod.util.OfalenSetting.OfalenSettingList;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.item.EntityXPOrb;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -21,7 +28,7 @@ import net.minecraft.world.World;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ItemCollector extends Item {
+public class ItemCollector extends Item implements IItemOfalenSettable {
 	private IIcon[] icons;
 
 	public ItemCollector() {
@@ -32,6 +39,7 @@ public class ItemCollector extends Item {
 
 	@Override
 	public void onUpdate(ItemStack thisStack, World world, Entity entity, int slot, boolean isHeld) {
+		OfalenTimer.start("ItemCollector.onUpdate");
 		// クライアント側なら終了。
 		if (world.isRemote)
 			return;
@@ -49,11 +57,14 @@ public class ItemCollector extends Item {
 		// 耐久値が残っていなかったら終了。
 		if (OfalenUtil.getRemainingDamage(thisStack) < 1)
 			return;
+		boolean canDamage = true;
 		if (entity instanceof EntityPlayer) {
 			EntityPlayer player = (EntityPlayer) entity;
 			// プレイヤーが持っていて、コレクターのGUIを開いているなら終了。
 			if (player.openContainer != null && player.openContainer instanceof ContainerItemCollector)
 				return;
+			if (player.capabilities.isCreativeMode)
+				canDamage = false;
 		}
 		// 無効時間の残りを取得。
 		byte interval = thisStack.getTagCompound().getByte(OfalenNBTUtil.INTERVAL);
@@ -63,7 +74,8 @@ public class ItemCollector extends Item {
 			return;
 		}
 		// 無効時間をリセット。TODO 詳細設定
-		thisStack.getTagCompound().setByte(OfalenNBTUtil.INTERVAL, (byte) 10);
+		byte intervalMax = (Byte) OfalenDetailedSettingHandler.getCurrentValueFromNBT(OfalenDetailedSettingHandler.getSettingTag(thisStack), "Interval/", this.getSetting().getChildSetting(new ItemStack(Items.quartz)));
+		thisStack.getTagCompound().setByte(OfalenNBTUtil.INTERVAL, intervalMax);
 		// 範囲の設定。TODO 詳細設定
 		int rangeItem = 10;
 		int rangeExp = 10;
@@ -98,7 +110,8 @@ public class ItemCollector extends Item {
 				// スタック数が限界以下ならそのまま移動。
 				if (remaining >= eItemStack.stackSize * OfalenModConfigCore.amountCollectorDamageItem) {
 					entityItem.setPosition(entity.posX, entity.posY, entity.posZ);
-					thisStack.setItemDamage(thisStack.getItemDamage() + (eItemStack.stackSize * OfalenModConfigCore.amountCollectorDamageItem));
+					if (canDamage)
+						thisStack.setItemDamage(thisStack.getItemDamage() + (eItemStack.stackSize * OfalenModConfigCore.amountCollectorDamageItem));
 					continue;
 				}
 				// 耐久値か空きスロットが足りなかったら足りる分だけ移動して終了。
@@ -106,7 +119,8 @@ public class ItemCollector extends Item {
 				itemStack1.stackSize = remaining / OfalenModConfigCore.amountCollectorDamageItem;
 				listWaitingEntity.add(OfalenUtil.getEntityItemNearEntity(itemStack1, entity));
 				eItemStack.stackSize -= remaining / OfalenModConfigCore.amountCollectorDamageItem;
-				thisStack.setItemDamage(thisStack.getItemDamage() + (remaining / OfalenModConfigCore.amountCollectorDamageItem * OfalenModConfigCore.amountCollectorDamageItem));
+				if (canDamage)
+					thisStack.setItemDamage(thisStack.getItemDamage() + (remaining / OfalenModConfigCore.amountCollectorDamageItem * OfalenModConfigCore.amountCollectorDamageItem));
 			} else if (!isExpDisabled && (o instanceof EntityXPOrb)) {
 				// EntityXPOrbにキャスト。
 				EntityXPOrb e = (EntityXPOrb) o;
@@ -120,19 +134,22 @@ public class ItemCollector extends Item {
 					return;
 				if (remaining >= e.xpValue * OfalenModConfigCore.amountCollectorDamageExp) {
 					e.setPosition(entity.posX, entity.posY, entity.posZ);
-					thisStack.setItemDamage(thisStack.getItemDamage() + (e.xpValue * OfalenModConfigCore.amountCollectorDamageExp));
+					if (canDamage)
+						thisStack.setItemDamage(thisStack.getItemDamage() + (e.xpValue * OfalenModConfigCore.amountCollectorDamageExp));
 					continue;
 				}
 				// 耐久値が足りなかったら足りる分だけ移動して終了。
 				listWaitingEntity.add(new EntityXPOrb(world, entity.posX, entity.posY, entity.posZ, remaining / OfalenModConfigCore.amountCollectorDamageExp));
 				e.xpValue -= remaining / OfalenModConfigCore.amountCollectorDamageExp;
-				thisStack.setItemDamage(thisStack.getItemDamage() + (remaining / OfalenModConfigCore.amountCollectorDamageExp * OfalenModConfigCore.amountCollectorDamageExp));
+				if (canDamage)
+					thisStack.setItemDamage(thisStack.getItemDamage() + (remaining / OfalenModConfigCore.amountCollectorDamageExp * OfalenModConfigCore.amountCollectorDamageExp));
 			}
 		}
 		// listWaitingEntityに入っているentityをworldにspawnさせる。ConcurrentModificationException回避。
 		for (Entity e : listWaitingEntity) {
 			world.spawnEntityInWorld(e);
 		}
+		OfalenTimer.watchAndLog("ItemCollector.onUpdate", 0.1);
 	}
 
 	@Override
@@ -196,5 +213,39 @@ public class ItemCollector extends Item {
 	@Override
 	public boolean requiresMultipleRenderPasses() {
 		return true;
+	}
+
+	@Override
+	public OfalenSettingList getSetting() {
+		ArrayList<OfalenSetting> list1;
+		ArrayList<OfalenSetting> list2;
+		ArrayList<OfalenSetting> list3;
+		// コレクター。
+		list1 = new ArrayList<>();
+		// 自動停止機能が有効か。
+		list1.add(new OfalenSetting.OfalenSettingBoolean("AutoStopping", new ItemStack(Blocks.redstone_torch), true));
+		// インターバル。
+		list1.add(new OfalenSettingByte("Interval", new ItemStack(Items.quartz), 10, true));
+		// アイテム。
+		list2 = new ArrayList<>();
+		// 範囲。
+		list3 = new ArrayList<>();
+		list3.add(new OfalenSettingByte("DesignationMode", new ItemStack(Items.stick), 1, 1, 3));
+		list3.add(new OfalenSettingDouble("Length.0", new ItemStack(OfalenModItemCore.gemOfalen, 1, 0), 10.0D));
+		list3.add(new OfalenSettingDouble("Length.1", new ItemStack(OfalenModItemCore.gemOfalen, 1, 1), 10.0D));
+		list3.add(new OfalenSettingDouble("Length.2", new ItemStack(OfalenModItemCore.gemOfalen, 1, 2), 10.0D));
+		list2.add(new OfalenSettingList("Range", new ItemStack(OfalenModBlockCore.surveyorOfalen), list3));
+		list1.add(new OfalenSettingList("Item", new ItemStack(OfalenModItemCore.partsOfalen, 1, 9), list2));
+		// 経験値。
+		list2 = new ArrayList<>();
+		// 範囲。
+		list3 = new ArrayList<>();
+		list3.add(new OfalenSettingByte("DesignationMode", new ItemStack(Items.stick), 1, 1, 3));
+		list3.add(new OfalenSettingDouble("Length.0", new ItemStack(OfalenModItemCore.gemOfalen, 1, 0), 10.0D));
+		list3.add(new OfalenSettingDouble("Length.1", new ItemStack(OfalenModItemCore.gemOfalen, 1, 1), 10.0D));
+		list3.add(new OfalenSettingDouble("Length.2", new ItemStack(OfalenModItemCore.gemOfalen, 1, 2), 10.0D));
+		list2.add(new OfalenSettingList("Range", new ItemStack(OfalenModBlockCore.surveyorOfalen), list3));
+		list1.add(new OfalenSettingList("Exp", new ItemStack(Items.book), list2));
+		return new OfalenSettingList("OfalenCollector", null, list1);
 	}
 }

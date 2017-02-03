@@ -1,6 +1,7 @@
 package nahama.ofalenmod.gui;
 
 import nahama.ofalenmod.OfalenModCore;
+import nahama.ofalenmod.core.OfalenModPacketCore;
 import nahama.ofalenmod.inventory.ContainerItemFilterInstaller;
 import nahama.ofalenmod.network.MFilterInstaller;
 import net.minecraft.client.Minecraft;
@@ -29,7 +30,7 @@ public class GuiItemFilterInstaller extends GuiContainer {
 
 	@Override
 	protected void actionPerformed(GuiButton button) {
-		OfalenModCore.WRAPPER.sendToServer(new MFilterInstaller());
+		OfalenModPacketCore.WRAPPER.sendToServer(new MFilterInstaller());
 	}
 
 	@Override

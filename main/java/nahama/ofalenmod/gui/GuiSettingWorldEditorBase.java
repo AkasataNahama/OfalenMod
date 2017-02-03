@@ -1,6 +1,7 @@
 package nahama.ofalenmod.gui;
 
 import nahama.ofalenmod.OfalenModCore;
+import nahama.ofalenmod.core.OfalenModPacketCore;
 import nahama.ofalenmod.inventory.ContainerSettingWorldEditorBase;
 import nahama.ofalenmod.network.MWorldEditorSetting;
 import nahama.ofalenmod.tileentity.TileEntityWorldEditorBase;
@@ -90,7 +91,7 @@ public class GuiSettingWorldEditorBase extends GuiContainer {
 			if (OfalenUtil.isKeyDown(OfalenModCore.KEY_OSS.getKeyCode()))
 				factor *= 100;
 		}
-		OfalenModCore.WRAPPER.sendToServer(new MWorldEditorSetting(tileEntity, buttonSetting.idSetting, tileEntity.getWithID(buttonSetting.idSetting) + factor));
+		OfalenModPacketCore.WRAPPER.sendToServer(new MWorldEditorSetting(tileEntity, buttonSetting.idSetting, tileEntity.getWithID(buttonSetting.idSetting) + factor));
 	}
 
 	protected static class ButtonWorldEditorSetting extends GuiButton {

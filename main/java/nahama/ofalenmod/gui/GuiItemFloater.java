@@ -1,6 +1,6 @@
 package nahama.ofalenmod.gui;
 
-import nahama.ofalenmod.OfalenModCore;
+import nahama.ofalenmod.core.OfalenModPacketCore;
 import nahama.ofalenmod.handler.OfalenFlightHandlerClient;
 import nahama.ofalenmod.inventory.ContainerItemFloater;
 import nahama.ofalenmod.network.MFloaterMode;
@@ -36,7 +36,7 @@ public class GuiItemFloater extends GuiContainer {
 		byte mode = (byte) Math.abs(button.id + 1);
 		currentItem.getTagCompound().setByte(OfalenNBTUtil.MODE, mode);
 		OfalenFlightHandlerClient.allowPlayerToFloat(mode);
-		OfalenModCore.WRAPPER.sendToServer(new MFloaterMode(mode, true));
+		OfalenModPacketCore.WRAPPER.sendToServer(new MFloaterMode(mode, true));
 	}
 
 	@Override
