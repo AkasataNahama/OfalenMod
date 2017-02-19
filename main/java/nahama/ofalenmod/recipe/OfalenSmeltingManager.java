@@ -81,11 +81,11 @@ public class OfalenSmeltingManager {
 	}
 
 	public static class OfalenSmeltingRecipe {
-		public ItemStack material;
-		public ItemStack result;
-		public boolean canIncrease;
+		public final ItemStack material;
+		public final ItemStack result;
+		public final boolean canIncrease;
 
-		public OfalenSmeltingRecipe(ItemStack material, ItemStack result, boolean canIncrease) {
+		OfalenSmeltingRecipe(ItemStack material, ItemStack result, boolean canIncrease) {
 			this.material = material;
 			this.result = result;
 			this.canIncrease = canIncrease;

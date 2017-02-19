@@ -118,13 +118,13 @@ public class OfalenModItemCore {
 	// 経験値の結晶
 	public static Item crystalExp;
 	// アーマーマテリアル
-	public static final ArmorMaterial OFALEN_ARMOR_G2 = EnumHelper.addArmorMaterial("OFALEN_ARMOR_G2", 66, new int[] { 3, 8, 6, 3 }, 20);
-	public static final ArmorMaterial OFALEN_ARMOR_G3 = EnumHelper.addArmorMaterial("OFALEN_ARMOR_G3", 132, new int[] { 3, 8, 6, 3 }, 40);
-	public static final ArmorMaterial OFALEN_ARMOR_P = EnumHelper.addArmorMaterial("OFALEN_ARMOR_P", 264, new int[] { 3, 8, 6, 3 }, 80);
+	private static final ArmorMaterial OFALEN_ARMOR_G2 = EnumHelper.addArmorMaterial("OFALEN_ARMOR_G2", 66, new int[] { 3, 9, 7, 3 }, 20);
+	private static final ArmorMaterial OFALEN_ARMOR_G3 = EnumHelper.addArmorMaterial("OFALEN_ARMOR_G3", 132, new int[] { 4, 10, 7, 3 }, 40);
+	private static final ArmorMaterial OFALEN_ARMOR_P = EnumHelper.addArmorMaterial("OFALEN_ARMOR_P", 264, new int[] { 4, 10, 7, 4 }, 80);
 	// ツールマテリアル
-	public static final ToolMaterial OFALEN_TOOL_G2 = EnumHelper.addToolMaterial("OFALEN_TOOL_G2", 4, 3123, 16.0F, 6.0F, 20);
-	public static final ToolMaterial OFALEN_TOOL_G3 = EnumHelper.addToolMaterial("OFALEN_TOOL_G3", 4, 6247, 32.0F, 12.0F, 40);
-	public static final ToolMaterial OFALEN_TOOL_P = EnumHelper.addToolMaterial("OFALEN_TOOL_P", 5, 12495, 64.0F, 24.0F, 80);
+	private static final ToolMaterial OFALEN_TOOL_G2 = EnumHelper.addToolMaterial("OFALEN_TOOL_G2", 4, 3123, 16.0F, 6.0F, 20);
+	private static final ToolMaterial OFALEN_TOOL_G3 = EnumHelper.addToolMaterial("OFALEN_TOOL_G3", 4, 6247, 32.0F, 12.0F, 40);
+	private static final ToolMaterial OFALEN_TOOL_P = EnumHelper.addToolMaterial("OFALEN_TOOL_P", 5, 12495, 64.0F, 24.0F, 80);
 
 	/** アイテムを登録する。 */
 	public static void registerItem() {
@@ -224,11 +224,11 @@ public class OfalenModItemCore {
 		ballAttackG3 = new ItemOfalenBall(new PotionEffect[] { new PotionEffect(Potion.damageBoost.id, 2400, 3) }).setUnlocalizedName("ofalen.ball.attack.G3").setTextureName("ofalenmod:attack_ball-3");
 		GameRegistry.registerItem(ballAttackG3, "ballAttackG3");
 		// 回復玉
-		ballRecoveryG1 = new ItemOfalenBall(new PotionEffect[] { new PotionEffect(Potion.heal.id, 1, 0) }).setUnlocalizedName("ofalen.ball.recovery.G1").setTextureName("ofalenmod:recovery_ball-1");
+		ballRecoveryG1 = new ItemOfalenBall(new PotionEffect[] { new PotionEffect(Potion.regeneration.id, 2400, 0) }).setUnlocalizedName("ofalen.ball.recovery.G1").setTextureName("ofalenmod:recovery_ball-1");
 		GameRegistry.registerItem(ballRecoveryG1, "ballRecovery");
-		ballRecoveryG2 = new ItemOfalenBall(new PotionEffect[] { new PotionEffect(Potion.heal.id, 1, 1) }).setUnlocalizedName("ofalen.ball.recovery.G2").setTextureName("ofalenmod:recovery_ball-2");
+		ballRecoveryG2 = new ItemOfalenBall(new PotionEffect[] { new PotionEffect(Potion.regeneration.id, 2400, 1) }).setUnlocalizedName("ofalen.ball.recovery.G2").setTextureName("ofalenmod:recovery_ball-2");
 		GameRegistry.registerItem(ballRecoveryG2, "ballRecoveryG2");
-		ballRecoveryG3 = new ItemOfalenBall(new PotionEffect[] { new PotionEffect(Potion.heal.id, 1, 3) }).setUnlocalizedName("ofalen.ball.recovery.G3").setTextureName("ofalenmod:recovery_ball-3");
+		ballRecoveryG3 = new ItemOfalenBall(new PotionEffect[] { new PotionEffect(Potion.regeneration.id, 2400, 3) }).setUnlocalizedName("ofalen.ball.recovery.G3").setTextureName("ofalenmod:recovery_ball-3");
 		GameRegistry.registerItem(ballRecoveryG3, "ballRecoveryG3");
 		// その他の玉
 		ballExplosion = new ItemExplosionBall().setUnlocalizedName("ofalen.ball.explosion").setTextureName("ofalenmod:explosion_ball");
@@ -237,7 +237,7 @@ public class OfalenModItemCore {
 		GameRegistry.registerItem(ballHungry, "ballHungry");
 		ballFood = new ItemOfalenBall(new PotionEffect[] { new PotionEffect(23, 20, 0) }).setUnlocalizedName("ofalen.ball.food").setTextureName("ofalenmod:food_ball");
 		GameRegistry.registerItem(ballFood, "ballFood");
-		ballPerfect = new ItemPerfectBall(new PotionEffect[] { new PotionEffect(Potion.heal.id, 1, 7), new PotionEffect(Potion.damageBoost.id, 2400, 7), new PotionEffect(Potion.resistance.id, 2400, 7) }).setUnlocalizedName("ofalen.ball.perfect").setTextureName("ofalenmod:empty_ball-3");
+		ballPerfect = new ItemPerfectBall(new PotionEffect[] { new PotionEffect(Potion.regeneration.id, 2400, 7), new PotionEffect(Potion.damageBoost.id, 1200, 7), new PotionEffect(Potion.resistance.id, 1200, 7) }).setUnlocalizedName("ofalen.ball.perfect").setTextureName("ofalenmod:empty_ball-3");
 		GameRegistry.registerItem(ballPerfect, "ballPerfectOfalen");
 		// 道具G1
 		swordOfalenG1 = new ItemSword(ToolMaterial.EMERALD).setCreativeTab(tab).setUnlocalizedName("ofalen.sword.1").setTextureName("ofalenmod:tool-sword-1");
