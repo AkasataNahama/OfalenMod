@@ -16,7 +16,7 @@ public class OfalenTimer {
 		start(name);
 	}
 
-	public static long getTime(String name) {
+	private static long getTime(String name) {
 		return System.nanoTime() - timeMap.get(name);
 	}
 

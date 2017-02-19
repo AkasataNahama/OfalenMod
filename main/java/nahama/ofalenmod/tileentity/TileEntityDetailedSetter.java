@@ -51,22 +51,18 @@ public class TileEntityDetailedSetter extends TileEntity implements IInventory {
 			return 0;
 		OfalenSetting setting = ((IItemOfalenSettable) itemStacks[0].getItem()).getSetting();
 		for (int i = 1; i < itemStacks.length; i++) {
+			// 空のスロットがあったら終了。
 			if (itemStacks[i] == null)
-				return i + 32;
-			if (setting.isValidItem(itemStacks[i])) {
-				if (setting.hasChildSetting()) {
-					setting = setting.getChildSetting(itemStacks[i]);
-					continue;
-				}
+				return i;
+			// 不正なアイテムがあったら終了。
+			if (!setting.isValidItem(itemStacks[i]))
+				return i;
+			// 設定の末端に達したら終了。
+			if (!setting.hasChildSetting())
 				return i + 64;
-			}
-			return i;
+			setting = setting.getChildSetting(itemStacks[i]);
 		}
 		return 0;
-	}
-
-	public boolean isValidState() {
-		return this.getState() > 31;
 	}
 
 	public boolean isApplicableState() {

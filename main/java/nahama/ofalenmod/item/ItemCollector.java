@@ -78,7 +78,7 @@ public class ItemCollector extends Item implements IItemOfalenSettable {
 		thisStack.getTagCompound().setByte(OfalenNBTUtil.INTERVAL, intervalMax);
 		// 範囲の設定。TODO 詳細設定
 		int rangeItem = 10;
-		int rangeExp = 10;
+		int rangeExp = 15;
 		if (thisStack.getTagCompound().getBoolean(OfalenNBTUtil.IS_SET_IN_DETAIL)) {
 			rangeItem = thisStack.getTagCompound().getShort(OfalenNBTUtil.ITEM_RANGE);
 			rangeExp = thisStack.getTagCompound().getShort(OfalenNBTUtil.EXP_RANGE);
@@ -89,8 +89,9 @@ public class ItemCollector extends Item implements IItemOfalenSettable {
 			if (!isItemDisabled && o instanceof EntityItem) {
 				// EntityItemにキャスト。
 				EntityItem entityItem = (EntityItem) o;
+				double distance = entity.getDistanceSqToEntity(entityItem);
 				// 範囲外か、拾えない状態（ドロップされてすぐ）なら次のEntityへ。
-				if (entity.getDistanceToEntity(entityItem) > rangeItem || entityItem.delayBeforeCanPickup > 0)
+				if (distance < 2 || distance > rangeItem * rangeItem || entityItem.delayBeforeCanPickup > 0)
 					continue;
 				ItemStack eItemStack = entityItem.getEntityItem();
 				// アイテムフィルターで許可されていなかったら次のEntityへ。
@@ -124,8 +125,9 @@ public class ItemCollector extends Item implements IItemOfalenSettable {
 			} else if (!isExpDisabled && (o instanceof EntityXPOrb)) {
 				// EntityXPOrbにキャスト。
 				EntityXPOrb e = (EntityXPOrb) o;
+				double distance = entity.getDistanceSqToEntity(e);
 				// 範囲外なら次のEntityへ。
-				if (entity.getDistanceToEntity(e) > rangeExp)
+				if (distance < 16 || distance > rangeExp * rangeExp)
 					continue;
 				// 耐久値の残りを取得。
 				int remaining = OfalenUtil.getRemainingDamage(thisStack);
