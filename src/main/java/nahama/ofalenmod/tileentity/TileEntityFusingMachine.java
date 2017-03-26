@@ -19,7 +19,7 @@ public class TileEntityFusingMachine extends TileEntityGradedMachineBase {
 	/** アップデート時の処理。 */
 	@Override
 	public void updateEntity() {
-		super.updateEntity();
+		//		super.updateEntity();
 		// クライアントは終了。
 		if (worldObj.isRemote)
 			return;
