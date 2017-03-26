@@ -20,7 +20,7 @@ import net.minecraft.tileentity.TileEntityFurnace;
 
 public abstract class TileEntityGradedMachineBase extends TileEntity implements ISidedInventory {
 	/** 機械の中にあるアイテムの配列。 */
-	protected ItemStack[] itemStacks = new ItemStack[3];
+	protected ItemStack[] itemStacks = new ItemStack[this.getSizeInventory()];
 	/** 金床で設定された名前。 */
 	protected String customName;
 	/** 機械のグレード。 */
@@ -39,21 +39,23 @@ public abstract class TileEntityGradedMachineBase extends TileEntity implements 
 		// クライアントは終了。
 		if (worldObj.isRemote)
 			return;
-		boolean isBurning = this.isBurning();
-		// 燃焼中なら時間を減らす。
+		// 燃焼していたかどうか。
+		boolean isBurning = timeBurning > 0;
+		// 燃焼時間を更新する。
 		if (isBurning)
 			timeBurning--;
 		// 燃焼中でなく、材料・燃料のどちらかでも空なら終了する。
-		if (!this.isBurning() && (itemStacks[1] == null || itemStacks[0] == null)) {
+		if (timeBurning <= 0 && !this.hasMaterialOrFuel()) {
 			timeWorking = 0;
+			// 直前まで燃焼していたら更新する。
 			if (isBurning)
 				this.updateIsBurning();
 			return;
 		}
 		// 燃焼中でなく作業可能なら、新たに燃料を消費し、燃焼させる。
-		if (!this.isBurning() && this.canWork()) {
+		if (timeBurning <= 0 && this.canWork()) {
 			timeMaxBurning = timeBurning = this.getItemBurnTime(itemStacks[1]);
-			if (this.isBurning()) {
+			if (timeBurning > 0) {
 				if (itemStacks[1] != null) {
 					--itemStacks[1].stackSize;
 					if (itemStacks[1].stackSize == 0) {
@@ -63,8 +65,9 @@ public abstract class TileEntityGradedMachineBase extends TileEntity implements 
 			}
 		}
 		// 燃焼中で作業可能なら、作業する。
-		if (this.isBurning() && this.canWork()) {
+		if (timeBurning > 0 && this.canWork()) {
 			++timeWorking;
+			// 作業時間が一定に達したら、作業を実行する。
 			if (timeWorking >= this.getMaxWorkingTimeWithGrade()) {
 				timeWorking = 0;
 				this.work();
@@ -73,37 +76,46 @@ public abstract class TileEntityGradedMachineBase extends TileEntity implements 
 			// 燃焼中でないか作業不可能ならば作業時間をリセットする。
 			timeWorking = 0;
 		}
-		// 燃焼しているかが変わっていたら、更新する。
-		if (isBurning != this.isBurning()) {
+		// 燃焼判定が変わっていたら、更新する。
+		if (isBurning != timeBurning > 0) {
 			this.updateIsBurning();
 		}
+	}
+
+	protected boolean hasMaterialOrFuel() {
+		return itemStacks[0] != null && itemStacks[1] != null;
 	}
 
 	/** 作業可能かどうか。 */
 	protected abstract boolean canWork();
 
 	/** アイテムの燃焼時間を返す。 */
-	public short getItemBurnTime(ItemStack itemStack) {
+	private short getItemBurnTime(ItemStack itemStack) {
+		// nullなら0。
 		if (itemStack == null)
 			return 0;
+		// 匠魔石ならConfigで設定された時間。
 		if (OfalenModOreDictCore.isMatchedItemStack(OfalenModOreDictCore.listTDiamond, itemStack))
 			return (short) (this.getTimeWithGrade(OfalenModConfigCore.timeTDiamondBurning));
+		// かまど燃料としての燃焼時間をConfigで設定された値で割る。
 		short time = (short) (this.getTimeWithGrade(TileEntityFurnace.getItemBurnTime(itemStack)) / OfalenModConfigCore.factorFurnaceFuelBurningTime);
+		// partsでないなら終了。
 		if (itemStack.getItem() != OfalenModItemCore.partsOfalen)
 			return time;
 		int meta = itemStack.getItemDamage();
+		// 白色オファレン燃料ならConfigで設定された時間。
 		if (meta == 3)
 			return (short) (this.getTimeWithGrade(OfalenModConfigCore.timeWhiteFuelBurning));
 		return time;
 	}
 
 	/** 作業時間などにGradeを反映させる。 */
-	protected int getTimeWithGrade(int time) {
+	private int getTimeWithGrade(int time) {
 		return time / OfalenUtil.power(2, grade);
 	}
 
 	/** 作業にかかる時間を返す。 */
-	protected int getMaxWorkingTimeWithGrade() {
+	private int getMaxWorkingTimeWithGrade() {
 		return this.getTimeWithGrade(this.getMaxWorkingTimeBase());
 	}
 
@@ -114,7 +126,7 @@ public abstract class TileEntityGradedMachineBase extends TileEntity implements 
 	protected abstract void work();
 
 	/** 燃焼しているかでメタデータを更新する。 */
-	protected void updateIsBurning() {
+	private void updateIsBurning() {
 		int direction = this.getBlockMetadata();
 		if (timeBurning > 0) {
 			direction = direction % 8 + 8;
@@ -181,6 +193,37 @@ public abstract class TileEntityGradedMachineBase extends TileEntity implements 
 		itemStacks[2].stackSize = limit;
 	}
 
+	/** アイテムが燃料として使えるかどうか。 */
+	public boolean isItemFuel(ItemStack itemStack) {
+		return this.getItemBurnTime(itemStack) > 0;
+	}
+
+	/** 作業の完了率を0~scaleで返す。Gui表示用。 */
+	@SideOnly(Side.CLIENT)
+	public int getWorkProgressScaled(int scale) {
+		return timeWorking * scale / this.getMaxWorkingTimeWithGrade();
+	}
+
+	/** 燃料の残り燃焼時間の割合を0~scaleで返す。Gui表示用。 */
+	@SideOnly(Side.CLIENT)
+	public int getBurnTimeRemainingScaled(int scale) {
+		if (timeMaxBurning == 0)
+			timeMaxBurning = 200;
+		return timeBurning * scale / timeMaxBurning;
+	}
+
+	public void setCustomName(String customName) {
+		this.customName = customName;
+	}
+
+	/**
+	 * 燃焼中かどうか。
+	 * @return timeBurning > 0
+	 */
+	public boolean isBurning() {
+		return timeBurning > 0;
+	}
+
 	/** NBTに機械の情報を記録する。 */
 	@Override
 	public void writeToNBT(NBTTagCompound nbt) {
@@ -210,7 +253,7 @@ public abstract class TileEntityGradedMachineBase extends TileEntity implements 
 		timeWorking = nbt.getShort(OfalenNBTUtil.WORKING_TIME);
 		timeBurning = nbt.getShort(OfalenNBTUtil.BURNING_TIME);
 		NBTTagList nbttaglist = nbt.getTagList(OfalenNBTUtil.ITEMS, 10);
-		itemStacks = new ItemStack[3];
+		itemStacks = new ItemStack[this.getSizeInventory()];
 		for (int i = 0; i < nbttaglist.tagCount(); i++) {
 			NBTTagCompound nbt1 = nbttaglist.getCompoundTagAt(i);
 			byte b0 = nbt1.getByte(OfalenNBTUtil.SLOT);
@@ -221,37 +264,6 @@ public abstract class TileEntityGradedMachineBase extends TileEntity implements 
 		timeMaxBurning = this.getItemBurnTime(itemStacks[1]);
 		if (nbt.hasKey(OfalenNBTUtil.CUSTOM_NAME, 8))
 			customName = nbt.getString(OfalenNBTUtil.CUSTOM_NAME);
-	}
-
-	/** アイテムが燃料として使えるかどうか。 */
-	public boolean isItemFuel(ItemStack itemStack) {
-		return this.getItemBurnTime(itemStack) > 0;
-	}
-
-	/** 作業の完了率を0~scaleで返す。Gui表示用。 */
-	@SideOnly(Side.CLIENT)
-	public int getWorkProgressScaled(int scale) {
-		return timeWorking * scale / this.getMaxWorkingTimeWithGrade();
-	}
-
-	/** 燃料の残り燃焼時間の割合を0~scaleで返す。Gui表示用。 */
-	@SideOnly(Side.CLIENT)
-	public int getBurnTimeRemainingScaled(int scale) {
-		if (timeMaxBurning == 0)
-			timeMaxBurning = 200;
-		return timeBurning * scale / timeMaxBurning;
-	}
-
-	/**
-	 * 燃焼中かどうか。
-	 * @return timeBurning > 0
-	 */
-	public boolean isBurning() {
-		return timeBurning > 0;
-	}
-
-	public void setCustomName(String customName) {
-		this.customName = customName;
 	}
 
 	/** インベントリのスロット数を返す。 */
