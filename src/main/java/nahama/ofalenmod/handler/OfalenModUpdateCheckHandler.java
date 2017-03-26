@@ -4,13 +4,14 @@ import nahama.ofalenmod.OfalenModCore;
 import nahama.ofalenmod.util.OfalenLog;
 import nahama.ofalenmod.util.OfalenTimer;
 import nahama.ofalenmod.util.OfalenUtil;
+import nahama.ofalenmod.util.VersionUtil;
+import nahama.ofalenmod.util.VersionUtil.VersionString;
 import net.minecraft.util.StatCollector;
 
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.regex.Pattern;
 
 public class OfalenModUpdateCheckHandler {
 	/** 新しいバージョンがリリースされているか。 */
@@ -48,37 +49,12 @@ public class OfalenModUpdateCheckHandler {
 
 	/** 新しいバージョンがあるかどうか。 */
 	private static boolean compareVersion(String str) {
-		String[] array0 = str.split(":");
-		// MODIDが違うなら終了。
-		if (!array0[0].equals(OfalenModCore.MODID))
+		VersionString latest = new VersionString(str);
+		if (!VersionUtil.compareVersion(OfalenModCore.VERSION_STRING, latest))
 			return false;
-		String version = array0[1];
-		int index = version.indexOf(']');
-		// Minecraftのバージョンが違うなら終了。
-		if (!OfalenModCore.MCVERSION.equals(version.substring(1, index)))
-			return false;
-		String versionOfalenMod = version.substring(index + 1);
-		String[] latest = versionOfalenMod.split(Pattern.quote("."));
-		String[] using = OfalenModCore.MODVERSION.split(Pattern.quote("."));
-		for (int i = 0; i < latest.length && i < using.length; i++) {
-			try {
-				int iLatest = Integer.parseInt(latest[i]);
-				int iUsing = Integer.parseInt(using[i]);
-				// 使用中のバージョンの方が新しいなら終了。
-				if (iLatest < iUsing)
-					return false;
-				// この桁の数が同じなら次の桁へ。
-				if (iLatest == iUsing)
-					continue;
-				isNewVersionAvailable = true;
-				versionLatest = version;
-				return true;
-			} catch (NumberFormatException e) {
-				OfalenLog.error("Error on comparing version.", "OfalenModUpdateCheckCore");
-			}
-		}
-		// 使用中のバージョンより桁数が多いならtrue。
-		return latest.length > using.length;
+		isNewVersionAvailable = true;
+		versionLatest = latest.getVersion();
+		return true;
 	}
 
 	public static String getMessage() {

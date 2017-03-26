@@ -87,16 +87,13 @@ public abstract class TileEntityGradedMachineBase extends TileEntity implements 
 		if (itemStack == null)
 			return 0;
 		if (OfalenModOreDictCore.isMatchedItemStack(OfalenModOreDictCore.listTDiamond, itemStack))
-			return (short) (this.getTimeWithGrade(OfalenModConfigCore.timeStoneFuelBurning));
+			return (short) (this.getTimeWithGrade(OfalenModConfigCore.timeTDiamondBurning));
 		short time = (short) (this.getTimeWithGrade(TileEntityFurnace.getItemBurnTime(itemStack)) / OfalenModConfigCore.factorFurnaceFuelBurningTime);
 		if (itemStack.getItem() != OfalenModItemCore.partsOfalen)
 			return time;
 		int meta = itemStack.getItemDamage();
-		if (meta == 3) {
-			return (short) (this.getTimeWithGrade(OfalenModConfigCore.timeStoneFuelBurning));
-		} else if (meta == 4) {
-			return (short) (this.getTimeWithGrade(OfalenModConfigCore.timeOfalenFuelBurning));
-		}
+		if (meta == 3)
+			return (short) (this.getTimeWithGrade(OfalenModConfigCore.timeWhiteFuelBurning));
 		return time;
 	}
 
@@ -231,19 +228,24 @@ public abstract class TileEntityGradedMachineBase extends TileEntity implements 
 		return this.getItemBurnTime(itemStack) > 0;
 	}
 
+	/** 作業の完了率を0~scaleで返す。Gui表示用。 */
 	@SideOnly(Side.CLIENT)
-	public int getWorkProgressScaled(int par1) {
-		return timeWorking * par1 / this.getMaxWorkingTimeWithGrade();
+	public int getWorkProgressScaled(int scale) {
+		return timeWorking * scale / this.getMaxWorkingTimeWithGrade();
 	}
 
+	/** 燃料の残り燃焼時間の割合を0~scaleで返す。Gui表示用。 */
 	@SideOnly(Side.CLIENT)
-	public int getBurnTimeRemainingScaled(int par1) {
+	public int getBurnTimeRemainingScaled(int scale) {
 		if (timeMaxBurning == 0)
 			timeMaxBurning = 200;
-		return timeBurning * par1 / timeMaxBurning;
+		return timeBurning * scale / timeMaxBurning;
 	}
 
-	/** 燃焼中かどうか。 */
+	/**
+	 * 燃焼中かどうか。
+	 * @return timeBurning > 0
+	 */
 	public boolean isBurning() {
 		return timeBurning > 0;
 	}

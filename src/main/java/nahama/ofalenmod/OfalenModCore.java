@@ -27,6 +27,7 @@ import nahama.ofalenmod.render.RenderTeleportingMarker;
 import nahama.ofalenmod.tileentity.TileEntityTeleportingMarker;
 import nahama.ofalenmod.util.OfalenLog;
 import nahama.ofalenmod.util.OfalenTimer;
+import nahama.ofalenmod.util.VersionUtil;
 import net.minecraft.client.renderer.entity.RenderSnowball;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.creativetab.CreativeTabs;
@@ -44,6 +45,7 @@ public class OfalenModCore {
 	public static final String MCVERSION = "1.7.10";
 	public static final String MODVERSION = "2.0.0";
 	public static final String VERSION = "[" + MCVERSION + "]" + MODVERSION;
+	public static final VersionUtil.VersionString VERSION_STRING = new VersionUtil.VersionString(OfalenModCore.MODID, OfalenModCore.VERSION);
 	// TODO リリース時に変更
 	public static final boolean IS_DEBUGGING = true;
 	/** coreクラスのインスタンス。 */

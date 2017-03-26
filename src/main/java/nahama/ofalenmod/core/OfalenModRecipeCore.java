@@ -58,11 +58,11 @@ public class OfalenModRecipeCore {
 		// Grade 3の部品
 		addShaped(getParts(1), "DWD", "WIW", "DID", 'W', GEM[3], 'D', GEM_DIAMOND, 'I', INGOT_IRON);
 		// 製錬機
-		addShaped(machineSmelting, "XYX", "XZX", "XYX", 'X', getParts(0), 'Y', GEM[0], 'Z', BLOCK[0]);
+		addShaped(machineSmelting, "XYX", "XZX", "XYX", 'X', getParts(0), 'Y', GEM[0], 'Z', Blocks.furnace);
 		// 変換機
-		addShaped(machineConverting, "XYX", "XZX", "XYX", 'X', getParts(0), 'Y', GEM[1], 'Z', BLOCK[1]);
+		addShaped(machineConverting, "XYX", "XZX", "XYX", 'X', getParts(0), 'Y', GEM[1], 'Z', Blocks.enchanting_table);
 		// 修繕機
-		addShaped(machineRepairing, "XYX", "XZX", "XYX", 'X', getParts(0), 'Y', GEM[2], 'Z', BLOCK[2]);
+		addShaped(machineRepairing, "XYX", "XZX", "XYX", 'X', getParts(0), 'Y', GEM[2], 'Z', Blocks.anvil);
 		// 融合機
 		addShaped(machineFusing, "XRX", "XGX", "XBX", 'X', getParts(0), 'R', CORE[0], 'G', CORE[1], 'B', CORE[2]);
 		// 処理装置
@@ -82,8 +82,8 @@ public class OfalenModRecipeCore {
 		addShaped(getParts(2), recipeArray, 'X', STONE);
 		addShaped(new ItemStack(Blocks.cobblestone, 8), "X", 'X', getParts(2));
 		// オファレン燃料
-		addShaped(new ItemStack(partsOfalen, 8, 3), "OLO", "LQL", "OLO", 'L', getParts(2), 'O', GEM[3], 'Q', GEM_QUARTZ);
-		addShaped(new ItemStack(partsOfalen, 8, 4), "OLO", "LQL", "OLO", 'L', getParts(2), 'O', GEM[7], 'Q', GEM_QUARTZ);
+		addShaped(new ItemStack(partsOfalen, 32, 3), "OLO", "LQL", "OLO", 'L', getParts(2), 'O', GEM[3], 'Q', GEM_QUARTZ);
+		addShaped(new ItemStack(partsOfalen, 32, 4), "OLO", "LQL", "OLO", 'L', getParts(2), 'O', GEM[7], 'Q', GEM_QUARTZ);
 		// 防具
 		addShaped(helmetOfalenG1, "RRR", "R R", 'R', GEM[0]);
 		addShaped(chestplateOfalenG1, "R R", "RRR", "RRR", 'R', GEM[0]);
@@ -154,17 +154,17 @@ public class OfalenModRecipeCore {
 			}
 		}
 		// シールド関連
-		addShaped(new ItemStack(partsOfalen, OfalenModConfigCore.amountShieldIngotRecipe, 6), "OMO", "MGM", "OMO", 'G', INGOT_GOLD, 'O', GEM[0], 'M', INGOT_IRON);
+		addShaped(new ItemStack(partsOfalen, OfalenModConfigCore.amountShieldIngotRecipe, 6), "GOG", "OMO", "GOG", 'G', NUGGET_GOLD, 'O', FRAG[0], 'M', INGOT_IRON);
 		addShaped(new ItemStack(shieldOfalen, 1, shieldOfalen.getMaxDamage()), "IOI", "OEO", "IOI", 'I', INGOT_GOLD, 'O', CORE[0], 'E', getParts(6));
 		// テレポーター関連
-		addShaped(new ItemStack(partsOfalen, OfalenModConfigCore.amountTeleportPearlRecipe, 7), "OMO", "MGM", "OMO", 'G', INGOT_GOLD, 'O', GEM[1], 'M', Items.ender_pearl);
+		addShaped(new ItemStack(partsOfalen, OfalenModConfigCore.amountTeleportPearlRecipe, 7), "GOG", "OMO", "GOG", 'G', NUGGET_GOLD, 'O', FRAG[1], 'M', Items.ender_pearl);
 		addShaped(teleporterOfalen, "IOI", "OEO", "IOI", 'I', INGOT_GOLD, 'O', CORE[1], 'E', getParts(7));
 		addShaped(markerTeleporting, "GTG", "OCO", "GTG", 'G', INGOT_GOLD, 'T', getParts(7), 'O', GEM[1], 'C', CORE[1]);
 		// フローター関連
-		addShaped(new ItemStack(partsOfalen, OfalenModConfigCore.amountFloatDustRecipe, 8), "OMO", "MGM", "OMO", 'G', INGOT_GOLD, 'O', GEM[2], 'M', DUST_GLOWSTONE);
+		addShaped(new ItemStack(partsOfalen, OfalenModConfigCore.amountFloatDustRecipe, 8), "GOG", "OMO", "GOG", 'G', NUGGET_GOLD, 'O', FRAG[2], 'M', DUST_GLOWSTONE);
 		addShaped(new ItemStack(floaterOfalen, 1, floaterOfalen.getMaxDamage()), "IOI", "OEO", "IOI", 'I', INGOT_GOLD, 'O', CORE[2], 'E', getParts(8));
 		// コレクター関連
-		addShaped(new ItemStack(partsOfalen, OfalenModConfigCore.amountCollectingLampRecipe, 9), "OMO", "MGM", "OMO", 'G', INGOT_GOLD, 'O', GEM[7], 'M', getParts(2));
+		addShaped(new ItemStack(partsOfalen, OfalenModConfigCore.amountCollectingLampRecipe, 9), "GOG", "OMO", "GOG", 'G', NUGGET_GOLD, 'O', FRAG[7], 'M', getParts(2));
 		addShaped(new ItemStack(collectorOfalen, 1, collectorOfalen.getMaxDamage()), "IOI", "OEO", "IOI", 'I', INGOT_GOLD, 'O', CORE[7], 'E', getParts(9));
 		// フィルター関連
 		addShaped(installerFilter, "XYX", "YZY", "XYX", 'X', getParts(2), 'Y', Items.string, 'Z', Blocks.hopper);
@@ -183,6 +183,12 @@ public class OfalenModRecipeCore {
 		addShaped(moverOfalen, "X", 'X', new ItemStack(moverOfalen));
 		addShaped(breakerOfalen, "X", 'X', new ItemStack(breakerOfalen));
 		addShaped(blockCollectorOfalen, "X", 'X', new ItemStack(blockCollectorOfalen));
+		// 測量器
+		addShaped(surveyorOfalen, "DRD", "OWP", "GVB", 'R', GEM[0], 'G', GEM[1], 'B', GEM[2], 'W', BLOCK[3], 'O', GEM[4], 'V', GEM[5], 'P', GEM[6], 'D', GEM[7]);
+		// 測量杖
+		addShaped(caneSurveying, "  B", " S ", "S  ", 'S', Items.stick, 'B', surveyorOfalen);
+		// 詳細設定器
+		addShaped(setterDetailed, "XYX", "XZX", "XYX", 'X', getParts(0), 'Y', GEM[7], 'Z', Blocks.crafting_table);
 	}
 
 	/** @return new ItemStack({@link OfalenModItemCore#partsOfalen}, 1, meta) */
