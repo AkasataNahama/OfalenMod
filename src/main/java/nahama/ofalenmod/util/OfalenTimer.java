@@ -3,7 +3,7 @@ package nahama.ofalenmod.util;
 import java.util.HashMap;
 
 public class OfalenTimer {
-	private static HashMap<String, Long> timeMap = new HashMap<>();
+	private static HashMap<String, Long> timeMap = new HashMap<String, Long>();
 
 	public static void start(String name) {
 		timeMap.remove(name);

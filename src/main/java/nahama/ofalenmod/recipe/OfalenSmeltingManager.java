@@ -17,7 +17,7 @@ public class OfalenSmeltingManager {
 
 	static {
 		instance = new OfalenSmeltingManager();
-		instance.recipes = new ArrayList<>();
+		instance.recipes = new ArrayList<OfalenSmeltingRecipe>();
 		instance.addDefaultRecipes();
 	}
 

@@ -22,7 +22,7 @@ public class OfalenModAnniversaryHandler {
 	 * マルチプレイの場合は、プレイヤー名と最後にプレゼントを渡した日付のマップ。
 	 * シングルプレイの場合は、ワールド名と最後にプレゼントを渡した日付のマップ。
 	 */
-	private static HashMap<String, String> presentedDate = new HashMap<>();
+	private static HashMap<String, String> presentedDate = new HashMap<String, String>();
 	/** サーバー起動時の日付。 */
 	private static String today;
 	/** todayを含んだ記念日イベントの期間。 */

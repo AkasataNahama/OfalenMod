@@ -83,7 +83,7 @@ public class ItemCollector extends Item implements IItemOfalenSettable {
 			rangeItem = thisStack.getTagCompound().getShort(OfalenNBTUtil.ITEM_RANGE);
 			rangeExp = thisStack.getTagCompound().getShort(OfalenNBTUtil.EXP_RANGE);
 		}
-		ArrayList<Entity> listWaitingEntity = new ArrayList<>();
+		ArrayList<Entity> listWaitingEntity = new ArrayList<Entity>();
 		// EntityItemとEntityXPOrbがあれば移動する。
 		for (Object o : world.loadedEntityList) {
 			if (!isItemDisabled && o instanceof EntityItem) {
@@ -223,15 +223,15 @@ public class ItemCollector extends Item implements IItemOfalenSettable {
 		ArrayList<OfalenSetting> list2;
 		ArrayList<OfalenSetting> list3;
 		// コレクター。
-		list1 = new ArrayList<>();
+		list1 = new ArrayList<OfalenSetting>();
 		// 自動停止機能が有効か。
 		list1.add(new OfalenSetting.OfalenSettingBoolean("AutoStopping", new ItemStack(Blocks.redstone_torch), true));
 		// インターバル。
 		list1.add(new OfalenSettingByte("Interval", new ItemStack(Items.quartz), 10, true));
 		// アイテム。
-		list2 = new ArrayList<>();
+		list2 = new ArrayList<OfalenSetting>();
 		// 範囲。
-		list3 = new ArrayList<>();
+		list3 = new ArrayList<OfalenSetting>();
 		list3.add(new OfalenSettingByte("DesignationMode", new ItemStack(Items.stick), 1, 1, 3));
 		list3.add(new OfalenSettingDouble("Length.0", new ItemStack(OfalenModItemCore.gemOfalen, 1, 0), 10.0D));
 		list3.add(new OfalenSettingDouble("Length.1", new ItemStack(OfalenModItemCore.gemOfalen, 1, 1), 10.0D));
@@ -239,9 +239,9 @@ public class ItemCollector extends Item implements IItemOfalenSettable {
 		list2.add(new OfalenSettingList("Range", new ItemStack(OfalenModBlockCore.surveyorOfalen), list3));
 		list1.add(new OfalenSettingList("Item", new ItemStack(OfalenModItemCore.partsOfalen, 1, 9), list2));
 		// 経験値。
-		list2 = new ArrayList<>();
+		list2 = new ArrayList<OfalenSetting>();
 		// 範囲。
-		list3 = new ArrayList<>();
+		list3 = new ArrayList<OfalenSetting>();
 		list3.add(new OfalenSettingByte("DesignationMode", new ItemStack(Items.stick), 1, 1, 3));
 		list3.add(new OfalenSettingDouble("Length.0", new ItemStack(OfalenModItemCore.gemOfalen, 1, 0), 10.0D));
 		list3.add(new OfalenSettingDouble("Length.1", new ItemStack(OfalenModItemCore.gemOfalen, 1, 1), 10.0D));

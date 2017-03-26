@@ -16,7 +16,7 @@ import java.util.ArrayList;
 
 public class OfalenShieldHandler {
 	/** シールドが有効になっているプレイヤーの名前のリスト。 */
-	private static ArrayList<String> playersProtected = new ArrayList<>();
+	private static ArrayList<String> playersProtected = new ArrayList<String>();
 
 	/** 初期化処理。 */
 	public static void init() {

@@ -84,19 +84,18 @@ public class ItemLaserPistol extends Item {
 				// クライアントの処理なら装填時間を設定する。
 				if (world.isRemote)
 					duration = 10;
-				switch (color) {
-				case "Red":
+				if (color.equals("Red")) {
 					for (int i = -2; i < 3; i++) {
 						world.spawnEntityInWorld(new EntityLaserRed(world, player, i));
 					}
 					return itemStack;
-				case "Green":
+				} else if (color.equals("Green")) {
 					world.spawnEntityInWorld(new EntityLaserGreen(world, player));
 					return itemStack;
-				case "Blue":
+				} else if (color.equals("Blue")) {
 					world.spawnEntityInWorld(new EntityLaserBlue(world, player));
 					return itemStack;
-				case "White":
+				} else if (color.equals("White")) {
 					for (int i = -2; i < 3; i++) {
 						world.spawnEntityInWorld(new EntityWhiteLaser(world, player, i));
 					}

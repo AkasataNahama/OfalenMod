@@ -18,7 +18,7 @@ public class OfalenModUpdateCheckHandler {
 	/** 最新版のバージョン番号。 */
 	public static String versionLatest = "";
 	/** 告知済みのプレイヤーの名前。 */
-	public static ArrayList<String> namesNotified = new ArrayList<>();
+	public static ArrayList<String> namesNotified = new ArrayList<String>();
 
 	/** 新しいバージョンがリリースされているか確認する。 */
 	public static void checkUpdate() {

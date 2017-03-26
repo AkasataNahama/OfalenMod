@@ -4,7 +4,7 @@ import java.util.HashMap;
 
 public class OfalenTeleportHandler {
 	/** テレポートマーカーのチャンネルと座標のマップ。 */
-	private static HashMap<Short, MarkerPos> listMarker = new HashMap<>();
+	private static HashMap<Short, MarkerPos> listMarker = new HashMap<Short, MarkerPos>();
 
 	/** 初期化処理。 */
 	public static void init() {

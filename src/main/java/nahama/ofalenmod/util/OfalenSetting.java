@@ -70,7 +70,7 @@ public abstract class OfalenSetting {
 
 		@Override
 		public ArrayList<ItemStack> getSelectableItems() {
-			ArrayList<ItemStack> list = new ArrayList<>();
+			ArrayList<ItemStack> list = new ArrayList<ItemStack>();
 			list.add(new ItemStack(Blocks.stone));
 			list.add(new ItemStack(Blocks.cobblestone));
 			list.add(new ItemStack(Blocks.dirt));
@@ -215,7 +215,7 @@ public abstract class OfalenSetting {
 
 		@Override
 		public ArrayList<ItemStack> getSelectableItems() {
-			ArrayList<ItemStack> list = new ArrayList<>();
+			ArrayList<ItemStack> list = new ArrayList<ItemStack>();
 			for (OfalenSetting setting : (ArrayList<OfalenSetting>) object) {
 				list.add(setting.getSettingItem());
 			}

@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 public class MagazineRecipe implements IRecipe {
 	private ItemStack output = null;
-	private ArrayList<ItemStack> input = new ArrayList<>();
+	private ArrayList<ItemStack> input = new ArrayList<ItemStack>();
 
 	public MagazineRecipe(ItemStack result, ItemStack magazine, ItemStack crystal, int amount) {
 		output = result.copy();
@@ -39,7 +39,7 @@ public class MagazineRecipe implements IRecipe {
 	@SuppressWarnings("unchecked")
 	@Override
 	public boolean matches(InventoryCrafting inv, World world) {
-		ArrayList<ItemStack> required = new ArrayList<>(input);
+		ArrayList<ItemStack> required = new ArrayList<ItemStack>(input);
 		for (int x = 0; x < inv.getSizeInventory(); x++) {
 			ItemStack slot = inv.getStackInSlot(x);
 			if (slot == null)

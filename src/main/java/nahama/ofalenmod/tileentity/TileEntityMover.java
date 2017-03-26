@@ -15,7 +15,7 @@ import java.util.Map;
 public class TileEntityMover extends TileEntityWorldEditorBase {
 	/** TileEntityを動かせるかどうか。 */
 	public boolean canMoveTileEntity;
-	protected HashMap<BlockPos, BlockData> listMovingBlock = new HashMap<>();
+	protected HashMap<BlockPos, BlockData> listMovingBlock = new HashMap<BlockPos, BlockData>();
 
 	@Override
 	protected boolean canWork() {

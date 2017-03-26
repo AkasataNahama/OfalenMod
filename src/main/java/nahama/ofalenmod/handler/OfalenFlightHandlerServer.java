@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 public class OfalenFlightHandlerServer {
 	/** フローターを有効にしているプレイヤーの名前のリスト。 */
-	private static ArrayList<String> playersFloating = new ArrayList<>();
+	private static ArrayList<String> playersFloating = new ArrayList<String>();
 
 	/** 初期化処理。 */
 	public static void init() {
