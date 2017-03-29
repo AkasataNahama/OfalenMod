@@ -34,14 +34,14 @@ public class OfalenModRecipeCore {
 		// 石の塊レシピのConfig設定を反映。
 		String[] recipeArray = new String[] { "XXX", "XXX", "XXX" };
 		String recipeType = "X X";
-		switch (OfalenModConfigCore.blankLumpRecipe % 3) {
+		switch (OfalenModConfigCore.positionStoneLumpRecipeBlank % 3) {
 		case 0:
 			recipeType = " XX";
 			break;
 		case 2:
 			recipeType = "XX ";
 		}
-		recipeArray[OfalenModConfigCore.blankLumpRecipe / 3] = recipeType;
+		recipeArray[OfalenModConfigCore.positionStoneLumpRecipeBlank / 3] = recipeType;
 		// ブロック・欠片関連
 		for (int i = 0; i < 8; i++) {
 			addShaped(new ItemStack(blockOfalen, 1, i), "XXX", "XXX", "XXX", 'X', GEM[i]);
@@ -154,17 +154,17 @@ public class OfalenModRecipeCore {
 			}
 		}
 		// シールド関連
-		addShaped(new ItemStack(partsOfalen, OfalenModConfigCore.amountShieldIngotRecipe, 6), "GOG", "OMO", "GOG", 'G', NUGGET_GOLD, 'O', FRAG[0], 'M', INGOT_IRON);
+		addShaped(new ItemStack(partsOfalen, OfalenModConfigCore.amountShieldIngotCrafting, 6), "GOG", "OMO", "GOG", 'G', NUGGET_GOLD, 'O', FRAG[0], 'M', INGOT_IRON);
 		addShaped(new ItemStack(shieldOfalen, 1, shieldOfalen.getMaxDamage()), "IOI", "OEO", "IOI", 'I', INGOT_GOLD, 'O', CORE[0], 'E', getParts(6));
 		// テレポーター関連
-		addShaped(new ItemStack(partsOfalen, OfalenModConfigCore.amountTeleportPearlRecipe, 7), "GOG", "OMO", "GOG", 'G', NUGGET_GOLD, 'O', FRAG[1], 'M', Items.ender_pearl);
+		addShaped(new ItemStack(partsOfalen, OfalenModConfigCore.amountTeleportPearlCrafting, 7), "GOG", "OMO", "GOG", 'G', NUGGET_GOLD, 'O', FRAG[1], 'M', Items.ender_pearl);
 		addShaped(teleporterOfalen, "IOI", "OEO", "IOI", 'I', INGOT_GOLD, 'O', CORE[1], 'E', getParts(7));
 		addShaped(markerTeleporting, "GTG", "OCO", "GTG", 'G', INGOT_GOLD, 'T', getParts(7), 'O', GEM[1], 'C', CORE[1]);
 		// フローター関連
-		addShaped(new ItemStack(partsOfalen, OfalenModConfigCore.amountFloatDustRecipe, 8), "GOG", "OMO", "GOG", 'G', NUGGET_GOLD, 'O', FRAG[2], 'M', DUST_GLOWSTONE);
+		addShaped(new ItemStack(partsOfalen, OfalenModConfigCore.amountFloatDustCrafting, 8), "GOG", "OMO", "GOG", 'G', NUGGET_GOLD, 'O', FRAG[2], 'M', DUST_GLOWSTONE);
 		addShaped(new ItemStack(floaterOfalen, 1, floaterOfalen.getMaxDamage()), "IOI", "OEO", "IOI", 'I', INGOT_GOLD, 'O', CORE[2], 'E', getParts(8));
 		// コレクター関連
-		addShaped(new ItemStack(partsOfalen, OfalenModConfigCore.amountCollectingLampRecipe, 9), "GOG", "OMO", "GOG", 'G', NUGGET_GOLD, 'O', FRAG[7], 'M', getParts(2));
+		addShaped(new ItemStack(partsOfalen, OfalenModConfigCore.amountCollectingLampCrafting, 9), "GOG", "OMO", "GOG", 'G', NUGGET_GOLD, 'O', FRAG[7], 'M', getParts(2));
 		addShaped(new ItemStack(collectorOfalen, 1, collectorOfalen.getMaxDamage()), "IOI", "OEO", "IOI", 'I', INGOT_GOLD, 'O', CORE[7], 'E', getParts(9));
 		// フィルター関連
 		addShaped(installerFilter, "XYX", "YZY", "XYX", 'X', getParts(2), 'Y', Items.string, 'Z', Blocks.hopper);

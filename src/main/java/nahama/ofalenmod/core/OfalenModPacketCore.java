@@ -10,7 +10,7 @@ import nahama.ofalenmod.network.*;
 
 public class OfalenModPacketCore {
 	/** パケット通信用。 */
-	public static final SimpleNetworkWrapper WRAPPER = NetworkRegistry.INSTANCE.newSimpleChannel(OfalenModCore.MODID);
+	public static final SimpleNetworkWrapper WRAPPER = NetworkRegistry.INSTANCE.newSimpleChannel(OfalenModCore.MOD_ID);
 	private static byte discriminator;
 
 	public static void registerPacket() {

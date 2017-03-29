@@ -35,7 +35,7 @@ public class WorldGenOfalenOre implements IWorldGenerator {
 
 	private void generateLoad(World world, Random random, int x, int z) {
 		int i = random.nextInt(10000);
-		if (i < OfalenModConfigCore.probabilityLodeGeneration) {
+		if (i < OfalenModConfigCore.probLodeGeneration) {
 			int genX = x + random.nextInt(16);
 			int genY = 1 + random.nextInt(15);
 			int genZ = z + random.nextInt(16);

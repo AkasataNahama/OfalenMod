@@ -89,7 +89,7 @@ public class OfalenModEventHandler {
 
 	@SubscribeEvent
 	public void onConfigChanged(ConfigChangedEvent.OnConfigChangedEvent event) {
-		if (event.modID.equals(OfalenModCore.MODID))
+		if (event.modID.equals(OfalenModCore.MOD_ID))
 			OfalenModConfigCore.syncConfig();
 	}
 }

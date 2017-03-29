@@ -7,8 +7,8 @@ import net.minecraft.util.StatCollector;
 public class OfalenModInfoCore {
 	/** modの情報を登録する。 */
 	public static void registerInfo(ModMetadata meta) {
-		meta.modId = OfalenModCore.MODID;
-		meta.name = OfalenModCore.MODNAME;
+		meta.modId = OfalenModCore.MOD_ID;
+		meta.name = StatCollector.translateToLocal(OfalenModCore.UNLOCALIZED_MOD_NAME);
 		meta.description = StatCollector.translateToLocal("info.ofalen.metaMod.description");
 		meta.version = OfalenModCore.VERSION;
 		meta.url = "http://www63.atwiki.jp/akasatanahama/pages/15.html";

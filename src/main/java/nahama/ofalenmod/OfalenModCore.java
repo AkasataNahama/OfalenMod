@@ -37,22 +37,23 @@ import net.minecraftforge.common.MinecraftForge;
 import org.lwjgl.input.Keyboard;
 
 /** @author Akasata Nahama */
-@Mod(modid = OfalenModCore.MODID, name = OfalenModCore.MODNAME, version = OfalenModCore.VERSION, guiFactory = "nahama.ofalenmod.gui.OfalenModGuiFactory")
+@Mod(modid = OfalenModCore.MOD_ID, name = OfalenModCore.MOD_NAME, version = OfalenModCore.VERSION, guiFactory = "nahama.ofalenmod.gui.OfalenModGuiFactory")
 public class OfalenModCore {
 	// MODの基本情報
-	public static final String MODID = "OfalenMod";
-	public static final String MODNAME = "Ofalen Mod";
-	public static final String MCVERSION = "1.7.10";
-	public static final String MODVERSION = "2.0.0";
-	public static final String VERSION = "[" + MCVERSION + "]" + MODVERSION;
-	public static final VersionUtil.VersionString VERSION_STRING = new VersionUtil.VersionString(OfalenModCore.MODID, OfalenModCore.VERSION);
+	public static final String MOD_ID = "OfalenMod";
+	public static final String MOD_NAME = "Ofalen Mod";
+	public static final String UNLOCALIZED_MOD_NAME = "mod.ofalen.name";
+	public static final String MINECRAFT_VERSION = "1.7.10";
+	public static final String MOD_VERSION = "2.0.0";
+	public static final String VERSION = "[" + MINECRAFT_VERSION + "]" + MOD_VERSION;
+	public static final VersionUtil.VersionString VERSION_STRING = new VersionUtil.VersionString(OfalenModCore.MOD_ID, OfalenModCore.VERSION);
 	// TODO リリース時に変更
 	public static final boolean IS_DEBUGGING = true;
 	/** coreクラスのインスタンス。 */
-	@Instance(MODID)
+	@Instance(MOD_ID)
 	public static OfalenModCore instance;
 	/** modの情報を登録。 */
-	@Metadata(MODID)
+	@Metadata(MOD_ID)
 	public static ModMetadata meta;
 	/** 追加するクリエイティブタブ。 */
 	public static final CreativeTabs TAB_OFALEN = new CreativeTabOfalen("ofalen.tabOfalenMod");

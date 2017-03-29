@@ -5,7 +5,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public class OfalenLog {
-	private static Logger logger = LogManager.getLogger(OfalenModCore.MODID);
+	private static Logger logger = LogManager.getLogger(OfalenModCore.MOD_ID);
 
 	public static void info(String msg) {
 		logger.info(msg);

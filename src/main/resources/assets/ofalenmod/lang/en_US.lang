@@ -1,3 +1,106 @@
+// ModName
+mod.ofalen.name=Ofalen Mod
+// Config
+// General
+config.ofalen.category.general=General
+config.ofalen.category.general.tooltip=All settings of Ofalen Mod.
+config.ofalen.prop.isUpdateCheckEnabled=Enable Update Check
+config.ofalen.prop.isUpdateCheckEnabled.tooltip=Set this to true to enable update check of Ofalen Mod.
+// Recipe
+config.ofalen.category.recipe=Recipe
+config.ofalen.category.recipe.tooltip=The settings of crafting recipe and Ofalen Smelting recipe.
+config.ofalen.prop.amountShieldIngotCrafting=Shield Ingot Crafting Amount
+config.ofalen.prop.amountShieldIngotCrafting.tooltip=Crafting amount of Ofalen Shield Ingot when using normal recipe.
+config.ofalen.prop.amountTeleportPearlCrafting=Teleport Pearl Crafting Amount
+config.ofalen.prop.amountTeleportPearlCrafting.tooltip=Crafting amount of Ofalen Teleport Pearl when using normal recipe.
+config.ofalen.prop.amountFloatDustCrafting=Float Dust Crafting Amount
+config.ofalen.prop.amountFloatDustCrafting.tooltip=Crafting amount of Ofalen Float Dust when using normal recipe.
+config.ofalen.prop.amountCollectingLampCrafting=Collecting Lamp Crafting Amount
+config.ofalen.prop.amountCollectingLampCrafting.tooltip=Crafting amount of Ofalen Collecting Dust when using normal recipe.
+config.ofalen.prop.baseOfalenSmeltingAmount=Ofalen Smelting Amount Base
+config.ofalen.prop.baseOfalenSmeltingAmount.tooltip=Smelting amount of Ofalen from Ofalen Ore using Ofalen Smelting Machine. When don't use Ofalen Machine Processor.
+config.ofalen.prop.positionStoneLumpRecipeBlank=Lump of Stone Recipe Blank Position
+config.ofalen.prop.positionStoneLumpRecipeBlank.tooltip=The number is position of space on recipe of Lump of Stone. [0 1 2] / [3 4 5] / [6 7 8]
+// Ore
+config.ofalen.category.ore=Ore
+config.ofalen.category.ore.tooltip=The settings of Ofalen Ore and generator.
+config.ofalen.prop.amountDrop=Drop Amount
+config.ofalen.prop.amountDrop.tooltip=Drop amount of Ofalen Fragment when Ofalen Ore is mined.
+// Ore.Generate
+config.ofalen.category.generate=Generate
+config.ofalen.category.generate.tooltip=The settings of generating Ofalen Ore.
+config.ofalen.prop.isGeneratorEnabled=Enable Generator
+config.ofalen.prop.isGeneratorEnabled.tooltip=Set this to true to generate Ofalen Ore into newly generated chunk.
+config.ofalen.prop.frequencyGeneration=Generation Frequency
+config.ofalen.prop.frequencyGeneration.tooltip=The number of Ofalen Ore generation of each color for each chunk.
+config.ofalen.prop.limitGeneration=Generation Limit
+config.ofalen.prop.limitGeneration.tooltip=Maximum size of Ofalen Ore per generation.
+config.ofalen.prop.probLodeGeneration=Load Generation Probability
+config.ofalen.prop.probLodeGeneration.tooltip=Generation probability of Huge Ofalen Ore Lode. Calculation of probability is performed on each chunk. (x/10000)
+// Ball
+config.ofalen.category.ball=Ball
+config.ofalen.category.ball.tooltip=The settings of Ofalen Ball.
+// Ball.ExplosionBall
+config.ofalen.category.ballExplosion=Explosion Ball
+config.ofalen.category.ballExplosion.tooltip=The settings of Ofalen Explosion Ball.
+config.ofalen.prop.sizeExplosion=Explosion Size
+config.ofalen.prop.sizeExplosion.tooltip=Explosion size of Explosion Ball.
+// Machine
+config.ofalen.category.machine=Machine
+config.ofalen.category.machine.tooltip=The settings of Smelting Machine, Converting Machine, Repairing Machine and Fusing Machine.
+config.ofalen.prop.divisorBurningTime=Burning Time Divisor
+config.ofalen.prop.divisorBurningTime.tooltip=Divisor of burning time when using furnace fuel for machines.
+config.ofalen.prop.timeTDiamondBurning=Creeper Magic Stone Burning Time
+config.ofalen.prop.timeTDiamondBurning.tooltip=Burning time of Creeper Magic Stone by Takumi Craft. (tick)
+config.ofalen.prop.timeWhiteFuelBurning=White Fuel Burning Time
+config.ofalen.prop.timeWhiteFuelBurning.tooltip=Burning time of White Ofalen Fuel. (tick)
+// Machine.Smelting
+config.ofalen.category.smelting=Smelting Machine
+config.ofalen.category.smelting.tooltip=The settings of Ofalen Smelting Machine.
+config.ofalen.prop.timeSmelting=Smelting Time
+config.ofalen.prop.timeSmelting.tooltip=The time Ofalen Smelting Machine requires for every smelting. (tick)
+// Machine.Converting
+config.ofalen.category.converting=Converting Machine
+config.ofalen.category.converting.tooltip=The settings of Ofalen Converting Machine.
+config.ofalen.prop.timeConverting=Converting Time
+config.ofalen.prop.timeConverting.tooltip=The time Ofalen Converting Machine requires for every converting. (tick)
+// Machine.Repairing
+config.ofalen.category.repairing=Repairing Machine
+config.ofalen.category.repairing.tooltip=The settings of Ofalen Repairing Machine.
+config.ofalen.prop.timeRepairing=Repairing Time
+config.ofalen.prop.timeRepairing.tooltip=The time Ofalen Repairing Machine requires for every repairing. Per 1 durability. (tick)
+// Machine.Fusing
+config.ofalen.category.fusing=Fusing Machine
+config.ofalen.category.fusing.tooltip=The settings of Ofalen Fusing Machine.
+config.ofalen.prop.timeFusing=Fusing Time
+config.ofalen.prop.timeFusing.tooltip=The time Ofalen Fusing Machine requires for every fusing. (tick)
+// Future
+config.ofalen.category.future=Future
+config.ofalen.category.future.tooltip=The settings of Shield, Teleporter, Floater and Collector.
+// Future.Shield
+config.ofalen.category.shield=Shield
+config.ofalen.category.shield.tooltip=The settings of Ofalen Shield.
+config.ofalen.prop.amountShieldDamage=Shield Damage Amount
+config.ofalen.prop.amountShieldDamage.tooltip=Damage amount of Ofalen Shield when the player is protected. Per 1 damage of player.
+// Future.Teleporter
+config.ofalen.category.teleporter=Teleporter
+config.ofalen.category.teleporter.tooltip=The settings of Ofalen Teleporter.
+config.ofalen.prop.amountTeleporterDamage=Teleporter Damage Amount
+config.ofalen.prop.amountTeleporterDamage.tooltip=Damage amount of Ofalen Teleporter when the player teleport.
+// Future.Floater
+config.ofalen.category.floater=Floater
+config.ofalen.category.floater.tooltip=The settings of Ofalen Floater.
+config.ofalen.prop.amountFloaterDamage=Floater Damage Amount
+config.ofalen.prop.amountFloaterDamage.tooltip=Damage amount of Ofalen Floater when the player float.
+config.ofalen.prop.intervalFloaterDamage=Floater Damage Interval
+config.ofalen.prop.intervalFloaterDamage.tooltip=Damage interval of Ofalen Floater. (tick)
+// Futuer.Collector
+config.ofalen.category.collector=Collector
+config.ofalen.category.collector.tooltip=The settings of Ofalen Collector.
+config.ofalen.prop.amountCollectorDamageItem=Collector Damage Amount (Item)
+config.ofalen.prop.amountCollectorDamageItem.tooltip=Damage amount of Ofalen Collector when item is collected. Per 1 item.
+config.ofalen.prop.amountCollectorDamageExp=Collector Damage Amount (Exp)
+config.ofalen.prop.amountCollectorDamageExp.tooltip=Damage amount of Ofalen Collector when experience orb is collected. Per 1 exp.
 
 // Key Binding
 key.category.ofalen=Ofalen Mod

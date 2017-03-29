@@ -98,7 +98,7 @@ public abstract class TileEntityGradedMachineBase extends TileEntity implements 
 		if (OfalenModOreDictCore.isMatchedItemStack(OfalenModOreDictCore.listTDiamond, itemStack))
 			return (short) (this.getTimeWithGrade(OfalenModConfigCore.timeTDiamondBurning));
 		// かまど燃料としての燃焼時間をConfigで設定された値で割る。
-		short time = (short) (this.getTimeWithGrade(TileEntityFurnace.getItemBurnTime(itemStack)) / OfalenModConfigCore.factorFurnaceFuelBurningTime);
+		short time = (short) (this.getTimeWithGrade(TileEntityFurnace.getItemBurnTime(itemStack)) / OfalenModConfigCore.divisorBurningTime);
 		// partsでないなら終了。
 		if (itemStack.getItem() != OfalenModItemCore.partsOfalen)
 			return time;

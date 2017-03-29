@@ -6,6 +6,7 @@ import nahama.ofalenmod.OfalenModCore;
 import nahama.ofalenmod.core.OfalenModConfigCore;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.util.StatCollector;
 import net.minecraftforge.common.config.ConfigElement;
 
 import java.util.Set;
@@ -32,7 +33,7 @@ public class OfalenModGuiFactory implements IModGuiFactory {
 
 	public static class OfalenModConfigGui extends GuiConfig {
 		public OfalenModConfigGui(GuiScreen parent) {
-			super(parent, new ConfigElement(OfalenModConfigCore.cfg.getCategory(OfalenModConfigCore.GENERAL)).getChildElements(), OfalenModCore.MODID, false, false, OfalenModCore.MODNAME);
+			super(parent, new ConfigElement(OfalenModConfigCore.cfg.getCategory(OfalenModConfigCore.GENERAL)).getChildElements(), OfalenModCore.MOD_ID, false, false, StatCollector.translateToLocal(OfalenModCore.UNLOCALIZED_MOD_NAME));
 		}
 	}
 }
