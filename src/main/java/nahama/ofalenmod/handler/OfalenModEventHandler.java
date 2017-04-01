@@ -2,6 +2,7 @@ package nahama.ofalenmod.handler;
 
 import cpw.mods.fml.client.event.ConfigChangedEvent;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import cpw.mods.fml.common.gameevent.InputEvent;
 import nahama.ofalenmod.OfalenModCore;
 import nahama.ofalenmod.core.OfalenModConfigCore;
 import net.minecraft.client.Minecraft;
@@ -91,5 +92,11 @@ public class OfalenModEventHandler {
 	public void onConfigChanged(ConfigChangedEvent.OnConfigChangedEvent event) {
 		if (event.modID.equals(OfalenModCore.MOD_ID))
 			OfalenModConfigCore.syncConfig();
+	}
+
+	/** クライアントのキー入力更新時の処理。 */
+	@SubscribeEvent
+	public void onKeyInput(InputEvent.KeyInputEvent event) {
+		OfalenKeyHandler.update();
 	}
 }

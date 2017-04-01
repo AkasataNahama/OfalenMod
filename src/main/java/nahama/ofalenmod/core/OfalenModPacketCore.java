@@ -23,10 +23,11 @@ public class OfalenModPacketCore {
 		registerMessage(MWorldEditorSetting.class, MWorldEditorSetting.Handler.class, Side.SERVER);
 		registerMessage(MSpawnParticleWithRange.class, MSpawnParticleWithRange.Handler.class, Side.CLIENT);
 		registerMessage(MApplyDetailedSetter.class, MApplyDetailedSetter.Handler.class, Side.SERVER);
+		registerMessage(MSettingKeyChange.class, MSettingKeyChange.Handler.class, Side.SERVER);
 	}
 
-	private static <REQ extends IMessage, REPLY extends IMessage> void registerMessage(Class<REQ> requestMessageType, Class<? extends IMessageHandler<REQ, REPLY>> messageHandler, Side side) {
-		WRAPPER.registerMessage(messageHandler, requestMessageType, discriminator, side);
+	private static <REQ extends IMessage, REPLY extends IMessage> void registerMessage(Class<REQ> requestMessageType, Class<? extends IMessageHandler<REQ, REPLY>> messageHandler, Side sideHandler) {
+		WRAPPER.registerMessage(messageHandler, requestMessageType, discriminator, sideHandler);
 		discriminator++;
 	}
 }

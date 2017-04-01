@@ -2,6 +2,7 @@ package nahama.ofalenmod.item.tool;
 
 import cpw.mods.fml.common.eventhandler.Event.Result;
 import nahama.ofalenmod.OfalenModCore;
+import nahama.ofalenmod.handler.OfalenKeyHandler;
 import nahama.ofalenmod.util.OfalenNBTUtil;
 import nahama.ofalenmod.util.OfalenNBTUtil.FilterUtil;
 import nahama.ofalenmod.util.OfalenUtil;
@@ -58,7 +59,7 @@ public class ItemOfalenPerfectTool extends ItemTool {
 	@Override
 	public ItemStack onItemRightClick(ItemStack itemStack, World world, EntityPlayer player) {
 		byte mode = itemStack.getTagCompound().getByte(OfalenNBTUtil.MODE);
-		if (!OfalenUtil.isKeyDown(OfalenModCore.KEY_OSS.getKeyCode())) {
+		if (!OfalenKeyHandler.isSettingKeyPressed()) {
 			// 右クリック時効果がガードで、OSSキーが押されていないなら、ガードを始める。
 			if (mode == 3)
 				player.setItemInUse(itemStack, this.getMaxItemUseDuration(itemStack));
@@ -84,10 +85,10 @@ public class ItemOfalenPerfectTool extends ItemTool {
 		return itemStack;
 	}
 
-	/** アイテムが使われた(右クリックされた)時の処理。 */
+	/** アイテムが使われた(ブロックに右クリックされた)時の処理。 */
 	@Override
 	public boolean onItemUse(ItemStack itemStack, EntityPlayer player, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ) {
-		if (OfalenUtil.isKeyDown(OfalenModCore.KEY_OSS.getKeyCode()))
+		if (OfalenKeyHandler.isSettingKeyPressed())
 			return false;
 		byte mode = itemStack.getTagCompound().getByte(OfalenNBTUtil.MODE);
 		switch (mode) {

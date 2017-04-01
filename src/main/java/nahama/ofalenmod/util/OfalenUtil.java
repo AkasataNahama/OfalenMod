@@ -1,13 +1,14 @@
 package nahama.ofalenmod.util;
 
+import cpw.mods.fml.common.FMLCommonHandler;
+import cpw.mods.fml.relauncher.Side;
+import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.world.World;
-import org.lwjgl.input.Keyboard;
-import org.lwjgl.input.Mouse;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -16,11 +17,17 @@ import java.util.Random;
 public class OfalenUtil {
 	public static Random random = new Random();
 
-	public static boolean isKeyDown(int key) {
-		if (key > 0)
-			return Keyboard.isKeyDown(key);
-		else
-			return Mouse.isButtonDown(100 + key);
+	public static boolean isKeyPressed(KeyBinding key) {
+		// クライアント側なら、取得して返す。
+		if (OfalenUtil.isClient())
+			return key.getIsKeyPressed();
+		//			if (key > 0) {
+		//				return Keyboard.isKeyDown(key);
+		//			} else {
+		//				return Mouse.isButtonDown(100 + key);
+		//			}
+		OfalenLog.error("OfalenUtil.isKeyPressed is called on server side.", "OfalenUtil");
+		return false;
 	}
 
 	public static int getRemainingDamage(ItemStack itemStack) {
@@ -128,5 +135,10 @@ public class OfalenUtil {
 
 	public static void addChatMessage(EntityPlayer player, String message) {
 		player.addChatMessage(new ChatComponentText(message));
+	}
+
+	/** FMLCommonHandlerを利用したサイドの判定。Minecraft起動時に確定。 */
+	public static boolean isClient() {
+		return FMLCommonHandler.instance().getSide() == Side.CLIENT;
 	}
 }

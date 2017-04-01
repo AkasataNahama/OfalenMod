@@ -27,14 +27,13 @@ import nahama.ofalenmod.render.RenderTeleportingMarker;
 import nahama.ofalenmod.tileentity.TileEntityTeleportingMarker;
 import nahama.ofalenmod.util.OfalenLog;
 import nahama.ofalenmod.util.OfalenTimer;
+import nahama.ofalenmod.util.OfalenUtil;
 import nahama.ofalenmod.util.VersionUtil;
 import net.minecraft.client.renderer.entity.RenderSnowball;
-import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.util.StatCollector;
 import net.minecraftforge.client.MinecraftForgeClient;
 import net.minecraftforge.common.MinecraftForge;
-import org.lwjgl.input.Keyboard;
 
 /** @author Akasata Nahama */
 @Mod(modid = OfalenModCore.MOD_ID, name = OfalenModCore.MOD_NAME, version = OfalenModCore.VERSION, guiFactory = "nahama.ofalenmod.gui.OfalenModGuiFactory")
@@ -57,8 +56,6 @@ public class OfalenModCore {
 	public static ModMetadata meta;
 	/** 追加するクリエイティブタブ。 */
 	public static final CreativeTabs TAB_OFALEN = new CreativeTabOfalen("ofalen.tabOfalenMod");
-	/** 詳細設定キー。 */
-	public static final KeyBinding KEY_OSS = new KeyBinding("key.description.ofalen.keyOSS", Keyboard.KEY_F, "key.category.ofalen");
 
 	/** 初期化前処理。 */
 	@EventHandler
@@ -74,7 +71,6 @@ public class OfalenModCore {
 		NetworkRegistry.INSTANCE.registerGuiHandler(instance, new OfalenModGuiHandler());
 		// パケットを登録する。
 		OfalenModPacketCore.registerPacket();
-		OfalenModAnniversaryHandler.isSinglePlay = FMLCommonHandler.instance().getSide() == Side.CLIENT;
 		OfalenTimer.watchAndLog("OfalenModCore.preInit");
 	}
 
@@ -88,8 +84,8 @@ public class OfalenModCore {
 		// EventHandlerを登録する。
 		MinecraftForge.EVENT_BUS.register(new OfalenModEventHandler());
 		FMLCommonHandler.instance().bus().register(new OfalenModEventHandler());
-		// クライアントの初期化を行う。
-		if (FMLCommonHandler.instance().getSide() == Side.CLIENT)
+		// クライアント側の初期化を行う。
+		if (OfalenUtil.isClient())
 			instance.clientInit();
 		OfalenTimer.watchAndLog("OfalenModCore.init");
 	}
@@ -105,8 +101,8 @@ public class OfalenModCore {
 	@SideOnly(Side.CLIENT)
 	private void clientInit() {
 		OfalenTimer.start("OfalenModCore.clientInit");
-		// キーバインディングの登録。
-		ClientRegistry.registerKeyBinding(KEY_OSS);
+		// キーハンドラーの初期化。
+		OfalenKeyHandler.init();
 		// タイルエンティティとレンダラーの紐づけ。
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityTeleportingMarker.class, new RenderTeleportingMarker());
 		// エンティティとレンダラーの紐付け。

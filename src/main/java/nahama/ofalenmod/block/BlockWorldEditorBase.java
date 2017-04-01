@@ -4,6 +4,7 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import nahama.ofalenmod.OfalenModCore;
 import nahama.ofalenmod.core.OfalenModItemCore;
+import nahama.ofalenmod.handler.OfalenKeyHandler;
 import nahama.ofalenmod.tileentity.TileEntityWorldEditorBase;
 import nahama.ofalenmod.util.BlockRangeWithStandard;
 import nahama.ofalenmod.util.OfalenNBTUtil;
@@ -44,7 +45,7 @@ public abstract class BlockWorldEditorBase extends BlockContainer {
 	/** プレイヤーに右クリックされた時の処理。 */
 	@Override
 	public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ) {
-		if (!OfalenUtil.isKeyDown(OfalenModCore.KEY_OSS.getKeyCode())) {
+		if (!OfalenKeyHandler.isSettingKeyPressed()) {
 			// OSSキーが押されていなかったらインベントリのGUIを開く。
 			player.openGui(OfalenModCore.instance, 1, world, x, y, z);
 		} else {
@@ -77,7 +78,7 @@ public abstract class BlockWorldEditorBase extends BlockContainer {
 				}
 			}
 		}
-		if (!OfalenUtil.isKeyDown(OfalenModCore.KEY_OSS.getKeyCode()))
+		if (!OfalenKeyHandler.isSettingKeyPressed())
 			return;
 		TileEntity tileEntity = world.getTileEntity(x, y, z);
 		if (tileEntity == null || !(tileEntity instanceof TileEntityWorldEditorBase))

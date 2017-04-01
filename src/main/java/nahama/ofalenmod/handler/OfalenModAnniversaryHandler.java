@@ -29,8 +29,6 @@ public class OfalenModAnniversaryHandler {
 	private static String[] dates;
 	/** プレゼントの配列。 */
 	private static ItemStack[][] presents;
-	/** シングルプレイかどうか。 */
-	public static boolean isSinglePlay;
 	/** テクスチャが特別かどうか。 */
 	public static boolean isTextureSpecial;
 	/** 二回開けられる記念日かどうか。 */
@@ -178,7 +176,7 @@ public class OfalenModAnniversaryHandler {
 	/** プレイヤーにプレゼントボックスを渡していたかどうかを確認し、渡していなければプレゼントボックスをドロップする。 */
 	public static void checkPlayer(EntityPlayer player) {
 		String name = player.getCommandSenderName();
-		if (isSinglePlay)
+		if (OfalenUtil.isClient())
 			name = player.worldObj.getSaveHandler().getWorldDirectoryName();
 		// リストに載っているなら終了。
 		if (presentedDate.containsKey(name))
@@ -191,7 +189,7 @@ public class OfalenModAnniversaryHandler {
 	/** プレゼントの配列をコピーして返す。 */
 	public static ItemStack[] getPresents(EntityPlayer player) {
 		String name = player.getCommandSenderName();
-		if (isSinglePlay)
+		if (OfalenUtil.isClient())
 			name = player.worldObj.getSaveHandler().getWorldDirectoryName();
 		if (!presentedDate.containsKey(name) || dates == null)
 			return null;

@@ -103,8 +103,8 @@ config.ofalen.prop.amountCollectorDamageExp=Collector Damage Amount (Exp)
 config.ofalen.prop.amountCollectorDamageExp.tooltip=Damage amount of Ofalen Collector when experience orb is collected. Per 1 exp.
 
 // Key Binding
-key.category.ofalen=Ofalen Mod
-key.description.ofalen.keyOSS=Special Setting Key
+key.ofalen.category=Ofalen Mod
+key.ofalen.description.keySetting=Setting Key
 
 // Creative Tab
 itemGroup.ofalen.tabOfalenMod=Ofalen Mod

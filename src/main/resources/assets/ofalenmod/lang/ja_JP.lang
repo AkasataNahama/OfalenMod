@@ -103,8 +103,8 @@ config.ofalen.prop.amountCollectorDamageExp=コレクターのダメージ量（
 config.ofalen.prop.amountCollectorDamageExp.tooltip=経験値オーブを収集した時のコレクターのダメージ量。1経験値あたり。
 
 // キーバインディング
-key.category.ofalen=オファレンMOD
-key.description.ofalen.keyOSS=特殊設定キー
+key.ofalen.category=オファレンMOD
+key.ofalen.description.keySetting=設定キー
 
 // クリエイティブタブ
 itemGroup.ofalen.tabOfalenMod=オファレンMOD

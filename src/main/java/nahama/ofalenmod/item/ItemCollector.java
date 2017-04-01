@@ -5,6 +5,7 @@ import nahama.ofalenmod.core.OfalenModBlockCore;
 import nahama.ofalenmod.core.OfalenModConfigCore;
 import nahama.ofalenmod.core.OfalenModItemCore;
 import nahama.ofalenmod.handler.OfalenDetailedSettingHandler;
+import nahama.ofalenmod.handler.OfalenKeyHandler;
 import nahama.ofalenmod.inventory.ContainerItemCollector;
 import nahama.ofalenmod.util.*;
 import nahama.ofalenmod.util.OfalenNBTUtil.FilterUtil;
@@ -156,7 +157,7 @@ public class ItemCollector extends Item implements IItemOfalenSettable {
 
 	@Override
 	public ItemStack onItemRightClick(ItemStack itemStack, World world, EntityPlayer player) {
-		if (!OfalenUtil.isKeyDown(OfalenModCore.KEY_OSS.getKeyCode())) {
+		if (!OfalenKeyHandler.isSettingKeyPressed()) {
 			player.openGui(OfalenModCore.instance, 7, world, (int) player.posX, (int) player.posY, (int) player.posZ);
 			return itemStack;
 		}
