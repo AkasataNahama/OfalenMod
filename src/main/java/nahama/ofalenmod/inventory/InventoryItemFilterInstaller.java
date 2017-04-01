@@ -10,16 +10,20 @@ public class InventoryItemFilterInstaller extends InventoryItemBase {
 	}
 
 	public void installFilter() {
+		// 適用対象スロットか見本スロットが空、もしくは適用後スロットが空でないなら終了。
 		if (itemStacks[0] == null || itemStacks[1] == null || itemStacks[2] != null)
 			return;
+		// 適用対象が無効なら終了。
 		if (!FilterUtil.isAvailableFilterTag(itemStacks[0]))
 			return;
 		itemStacks[2] = itemStacks[0].copy();
 		itemStacks[0] = null;
 		if (!FilterUtil.isAvailableFilterTag(itemStacks[1])) {
+			// 見本が無効なら適用対象を初期化する。
 			FilterUtil.initFilterTag(itemStacks[2]);
 			return;
 		}
+		// 見本のフィルターを適用対象にコピーする。
 		FilterUtil.copyFilterTag(FilterUtil.getFilterTag(itemStacks[2]), FilterUtil.getFilterTag(itemStacks[1]));
 	}
 

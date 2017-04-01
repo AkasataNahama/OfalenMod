@@ -10,7 +10,7 @@ import net.minecraft.client.settings.KeyBinding;
 import org.lwjgl.input.Keyboard;
 
 public class OfalenKeyHandler {
-	/** 設定キー。 */
+	/** 設定キーのキーバインディング。 */
 	private static KeyBinding keySetting;
 	/** 設定キーが押されているか。 */
 	private static boolean isSettingKeyPressed;
@@ -23,19 +23,25 @@ public class OfalenKeyHandler {
 		ClientRegistry.registerKeyBinding(OfalenKeyHandler.keySetting);
 	}
 
+	/** キーの状態を更新する。 */
 	@SideOnly(Side.CLIENT)
 	public static void update() {
+		// 設定キーの状態を更新する。
 		boolean lastIsPressed = isSettingKeyPressed;
 		isSettingKeyPressed = OfalenUtil.isKeyPressed(keySetting);
+		// 状態が変わったらメッセージを送信。
 		if (lastIsPressed != isSettingKeyPressed)
 			OfalenModPacketCore.WRAPPER.sendToServer(new MSettingKeyChange(isSettingKeyPressed));
 	}
 
+	/** 設定キーが押されているか。 */
 	public static boolean isSettingKeyPressed() {
 		return isSettingKeyPressed;
 	}
 
+	/** 設定キーの状態を設定する。 */
 	public static void setSettingKeyPressed(boolean isSettingKeyPressed) {
+		// サーバー側でのみ、反映する。
 		if (!OfalenUtil.isClient())
 			OfalenKeyHandler.isSettingKeyPressed = isSettingKeyPressed;
 	}

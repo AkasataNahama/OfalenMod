@@ -5,16 +5,15 @@ import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
 import cpw.mods.fml.common.network.simpleimpl.MessageContext;
 import io.netty.buffer.ByteBuf;
 import nahama.ofalenmod.handler.OfalenKeyHandler;
-import nahama.ofalenmod.util.OfalenLog;
 
 public class MSettingKeyChange implements IMessage {
+	/** 設定キーが押されているか。 */
 	public boolean isPressed;
 
 	public MSettingKeyChange() {
 	}
 
 	public MSettingKeyChange(boolean isPressed) {
-		OfalenLog.debuggingInfo("Constructor called.", "MSettingKeyChange");
 		this.isPressed = isPressed;
 	}
 
@@ -31,7 +30,7 @@ public class MSettingKeyChange implements IMessage {
 	public static class Handler implements IMessageHandler<MSettingKeyChange, IMessage> {
 		@Override
 		public IMessage onMessage(MSettingKeyChange message, MessageContext ctx) {
-			OfalenLog.debuggingInfo("onMessage", "MSettingKeyChange");
+			// 設定キーの状態を更新する。
 			OfalenKeyHandler.setSettingKeyPressed(message.isPressed);
 			return null;
 		}

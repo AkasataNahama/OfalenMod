@@ -17,6 +17,7 @@ import java.util.Random;
 public class OfalenUtil {
 	public static Random random = new Random();
 
+	/** キーバインディングに登録されたキーが押されているか。 */
 	public static boolean isKeyPressed(KeyBinding key) {
 		// クライアント側なら、取得して返す。
 		if (OfalenUtil.isClient())
@@ -26,14 +27,17 @@ public class OfalenUtil {
 		//			} else {
 		//				return Mouse.isButtonDown(100 + key);
 		//			}
+		// サーバー側で呼ばれてはいけない。
 		OfalenLog.error("OfalenUtil.isKeyPressed is called on server side.", "OfalenUtil");
 		return false;
 	}
 
+	/** 残りの耐久値を返す。 */
 	public static int getRemainingDamage(ItemStack itemStack) {
 		return itemStack.getMaxDamage() - itemStack.getItemDamage();
 	}
 
+	/** sampleStackがstacksにあといくつ入るか返す。 */
 	public static int getRemainingItemAmountInInventory(ItemStack[] stacks, ItemStack sampleStack, int limitStack) {
 		int ret = 0;
 		int limit = Math.min(sampleStack.getMaxStackSize(), limitStack);
@@ -51,19 +55,23 @@ public class OfalenUtil {
 		return ret;
 	}
 
+	/** stack0とstack1がスタックできるかどうか。 */
 	public static boolean canStack(ItemStack stack0, ItemStack stack1) {
 		// 同じアイテムで、メタデータで区別するなら一致していて、NBTが一致しているなら、スタック可能。
 		return stack0.getItem() == stack1.getItem() && (!stack0.getHasSubtypes() || stack0.getItemDamage() == stack1.getItemDamage()) && ItemStack.areItemStackTagsEqual(stack0, stack1);
 	}
 
+	/** entityの座標にあるitemStackを持ったEntityItemを生成して返す。 */
 	public static EntityItem getEntityItemNearEntity(ItemStack itemStack, Entity entity) {
 		return new EntityItem(entity.worldObj, entity.posX, entity.posY, entity.posZ, itemStack);
 	}
 
+	/** entityの座標にあるitemStackを持ったEntityItemを生成してワールドにスポーンさせる。 */
 	public static void dropItemStackNearEntity(ItemStack itemStack, Entity entity) {
 		entity.worldObj.spawnEntityInWorld(getEntityItemNearEntity(itemStack, entity));
 	}
 
+	/** 指定されたブロック座標の周囲にitemStackを持ったEntityItemをばらまく。 */
 	public static void dropItemStackNearBlock(ItemStack itemStack, World world, int x, int y, int z) {
 		itemStack = itemStack.copy();
 		float fx = random.nextFloat() * 0.6F + 0.1F;
@@ -84,6 +92,7 @@ public class OfalenUtil {
 		}
 	}
 
+	/** 中身のItemStackをコピーした新しい配列を返す。 */
 	public static ItemStack[] copyItemStacks(ItemStack[] itemStacks) {
 		ItemStack[] ret = new ItemStack[itemStacks.length];
 		for (int i = 0; i < itemStacks.length; i++) {
@@ -115,13 +124,14 @@ public class OfalenUtil {
 		}
 	}
 
+	/** 3桁の文字列に変換して返す。 */
 	public static String getTripleFiguresNum(int i) {
 		i %= 1000;
-		String ret = String.valueOf(i);
+		StringBuilder ret = new StringBuilder(String.valueOf(i));
 		while (ret.length() < 3) {
-			ret = '0' + ret;
+			ret.insert(0, '0');
 		}
-		return ret;
+		return ret.toString();
 	}
 
 	/** (base)の(index)乗を返す。0未満のindexには未対応。 */

@@ -79,7 +79,7 @@ public class ItemOfalenPerfectTool extends ItemTool {
 			itemStack.getTagCompound().setByte(OfalenNBTUtil.MODE, mode);
 			// 次に変更できるまでの間隔を設定する。
 			itemStack.getTagCompound().setByte(OfalenNBTUtil.INTERVAL, (byte) 10);
-			// プレイヤーのチャット欄に通知する。
+			// プレイヤーのチャット欄に通知する。TODO 文字列置換方式変更
 			OfalenUtil.addChatMessage(player, StatCollector.translateToLocal("info.ofalen.toolPerfect.mode.changed").replaceAll("%s", StatCollector.translateToLocal("info.ofalen.toolPerfect.mode." + mode)));
 		}
 		return itemStack;
