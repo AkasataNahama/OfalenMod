@@ -13,15 +13,7 @@ import net.minecraft.util.StatCollector;
 import java.awt.*;
 
 public class OfalenSmeltingRecipeHandler extends TemplateRecipeHandler {
-	private static OfalenSmeltingManager manager;
-
-	static {
-		manager = OfalenSmeltingManager.getInstance();
-	}
-
-	public PositionedStack getResult() {
-		return null;
-	}
+	public static OfalenSmeltingRecipeHandler instance = new OfalenSmeltingRecipeHandler();
 
 	@Override
 	public Class<? extends GuiContainer> getGuiClass() {
@@ -44,9 +36,9 @@ public class OfalenSmeltingRecipeHandler extends TemplateRecipeHandler {
 			super.loadCraftingRecipes(outputId, results);
 			return;
 		}
-		if (!manager.isValid())
+		if (!OfalenSmeltingManager.getInstance().isValid())
 			return;
-		for (OfalenSmeltingRecipe recipe : manager.recipes) {
+		for (OfalenSmeltingRecipe recipe : OfalenSmeltingManager.getInstance().recipes) {
 			ItemStack in = recipe.material;
 			ItemStack out = recipe.result;
 			arecipes.add(new CachedOfalenSmeltingRecipe(in, out));
@@ -55,9 +47,9 @@ public class OfalenSmeltingRecipeHandler extends TemplateRecipeHandler {
 
 	@Override
 	public void loadCraftingRecipes(ItemStack result) {
-		if (!manager.isValid())
+		if (!OfalenSmeltingManager.getInstance().isValid())
 			return;
-		for (OfalenSmeltingRecipe recipe : manager.recipes) {
+		for (OfalenSmeltingRecipe recipe : OfalenSmeltingManager.getInstance().recipes) {
 			ItemStack in = recipe.material;
 			ItemStack out = recipe.result;
 			if (NEIServerUtils.areStacksSameType(out, result))
@@ -67,9 +59,9 @@ public class OfalenSmeltingRecipeHandler extends TemplateRecipeHandler {
 
 	@Override
 	public void loadUsageRecipes(ItemStack ingredient) {
-		if (!manager.isValid())
+		if (!OfalenSmeltingManager.getInstance().isValid())
 			return;
-		for (OfalenSmeltingRecipe recipe : manager.recipes) {
+		for (OfalenSmeltingRecipe recipe : OfalenSmeltingManager.getInstance().recipes) {
 			ItemStack in = recipe.material;
 			ItemStack out = recipe.result;
 			if (ingredient.isItemEqual(in))

@@ -3,7 +3,6 @@ package nahama.ofalenmod;
 import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.common.FMLCommonHandler;
-import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
@@ -20,7 +19,6 @@ import nahama.ofalenmod.entity.*;
 import nahama.ofalenmod.generator.WorldGenOfalenOre;
 import nahama.ofalenmod.handler.*;
 import nahama.ofalenmod.model.ModelLaser;
-import nahama.ofalenmod.nei.OfalenModNEILoader;
 import nahama.ofalenmod.render.RenderItemPistol;
 import nahama.ofalenmod.render.RenderLaser;
 import nahama.ofalenmod.render.RenderTeleportingMarker;
@@ -113,15 +111,6 @@ public class OfalenModCore {
 		RenderingRegistry.registerEntityRenderingHandler(EntityWhiteLaser.class, new RenderLaser(new ModelLaser(), "white"));
 		// アイテムとモデルの紐付け。
 		MinecraftForgeClient.registerItemRenderer(OfalenModItemCore.pistolLaser, new RenderItemPistol());
-		// NEIへのレシピ表示の登録。
-		if (Loader.isModLoaded("NotEnoughItems")) {
-			try {
-				OfalenModNEILoader.load();
-			} catch (Exception e) {
-				OfalenLog.error("Error on loading NEI.", "OfalenModCore");
-				e.printStackTrace();
-			}
-		}
 		OfalenTimer.watchAndLog("OfalenModCore.clientInit");
 	}
 
