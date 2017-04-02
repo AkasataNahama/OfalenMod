@@ -164,7 +164,8 @@ public class OfalenModItemCore {
 		OreDictionary.registerOre("coreOfalenViridian", new ItemStack(coreOfalen, 1, 5));
 		OreDictionary.registerOre("coreOfalenPurple", new ItemStack(coreOfalen, 1, 6));
 		OreDictionary.registerOre("coreOfalenDark", new ItemStack(coreOfalen, 1, 7));
-		OreDictionary.registerOre("coreOfalen", new ItemStack(coreOfalen, 1, OreDictionary.WILDCARD_VALUE));
+		// オファレンコアは色により価値が違う。
+		//		OreDictionary.registerOre("coreOfalen", new ItemStack(coreOfalen, 1, OreDictionary.WILDCARD_VALUE));
 		// 中間素材
 		partsOfalen = new ItemParts((byte) 10).setUnlocalizedName("ofalen.parts").setTextureName("ofalenmod:parts");
 		GameRegistry.registerItem(partsOfalen, "partsOfalen");
