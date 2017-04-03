@@ -14,6 +14,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map.Entry;
 
 public class OfalenModAnniversaryHandler {
@@ -32,27 +33,27 @@ public class OfalenModAnniversaryHandler {
 	/** テクスチャが特別かどうか。 */
 	public static boolean isTextureSpecial;
 	/** 二回開けられる記念日かどうか。 */
-	public static boolean isTwice;
+	private static boolean isTwice;
 
 	/** 初期化処理。 */
 	public static void init() {
 		OfalenTimer.start("OfalenModAnniversaryHandler.init");
-		presentedDate.clear();
 		presents = new ItemStack[2][54];
 		// 日付を取得する。
 		Calendar cal = Calendar.getInstance();
-		int year = cal.get(cal.YEAR);
-		int month = cal.get(cal.MONTH);
-		int date = cal.get(cal.DATE);
-		today = year + "/" + (month + 1) + "/" + date;
-		// 		today = "2016/11/21";
+		String now = cal.get(Calendar.YEAR) + "/" + (cal.get(Calendar.MONTH) + 1) + "/" + cal.get(Calendar.DATE);
+		// 		now = "2016/11/21";
 		loadPresentedDates();
-		getPresents();
+		if (today == null || !today.equals(now)) {
+			getPresents();
+			today = now;
+		}
 		OfalenTimer.watchAndLog("OfalenModAnniversaryHandler.init");
 	}
 
 	/** presentedDateを初期化する。 */
 	private static void loadPresentedDates() {
+		presentedDate.clear();
 		try {
 			// ConfigフォルダのOfalenModPresentedDate.txtを読み込む。
 			File file = new File(new File(".\\").getParentFile(), "config\\OfalenModPresentedDate.txt");
@@ -79,16 +80,16 @@ public class OfalenModAnniversaryHandler {
 			// ネット上のファイルに接続し、テキストを取得する。
 			HttpURLConnection connect = (HttpURLConnection) new URL(URL_ANNIVERSARY_LIST).openConnection();
 			connect.setRequestMethod("GET");
+			// メモ：HttpURLConnection.getInputStream()に時間がかかる。
 			InputStream inputStream = connect.getInputStream();
-			while (true) {
-				String str = OfalenUtil.readString(inputStream);
+			List<String> list = OfalenUtil.readAll(inputStream);
+			inputStream.close();
+			connect.disconnect();
+			for (String str : list) {
 				if (str == null)
 					break;
 				if (str.charAt(0) != '+') {
 					// 日付指定の行でないなら初期化して次へ。
-					dates = null;
-					isTwice = false;
-					isTextureSpecial = false;
 					continue;
 				}
 				str = str.substring(1);
@@ -96,11 +97,15 @@ public class OfalenModAnniversaryHandler {
 					// "+"が二つ並んでいたら二重プレゼントを有効に。
 					isTwice = true;
 					str = str.substring(1);
+				} else {
+					isTwice = false;
 				}
 				if (str.charAt(0) == '-') {
 					// 次に"-"があったら特殊テクスチャを有効に。
 					isTextureSpecial = true;
 					str = str.substring(1);
+				} else {
+					isTextureSpecial = false;
 				}
 				dates = str.split(",");
 				for (String date1 : dates) {
@@ -110,8 +115,6 @@ public class OfalenModAnniversaryHandler {
 						// 二重プレゼントがあるならもう一度。
 						if (isTwice)
 							loadPresents(inputStream, 1);
-						inputStream.close();
-						connect.disconnect();
 						return;
 					}
 				}
@@ -119,8 +122,6 @@ public class OfalenModAnniversaryHandler {
 			dates = null;
 			isTwice = false;
 			isTextureSpecial = false;
-			inputStream.close();
-			connect.disconnect();
 		} catch (Exception e) {
 			OfalenLog.error("Error on getting presents.", "OfalenModAnniversaryHandler");
 			e.printStackTrace();
@@ -131,7 +132,7 @@ public class OfalenModAnniversaryHandler {
 	private static void loadPresents(InputStream inputStream, int num) {
 		String str;
 		for (int i = 0; i < 54; i++) {
-			str = OfalenUtil.readString(inputStream);
+			str = OfalenUtil.readLine(inputStream);
 			if (str == null || str.charAt(0) == '+') {
 				presents[num] = new ItemStack[54];
 				return;
@@ -159,7 +160,10 @@ public class OfalenModAnniversaryHandler {
 		try {
 			File file = new File(new File(".\\").getParentFile(), "config\\OfalenModPresentedDate.txt");
 			if (!file.exists() || !file.isFile() || !file.canWrite()) {
-				file.createNewFile();
+				if (!file.createNewFile()) {
+					OfalenLog.error("Failed to create new file : OfalenModPresentedDate.txt", "OfalenModAnniversaryHandler");
+					return;
+				}
 			}
 			BufferedWriter bw = new BufferedWriter(new FileWriter(file));
 			for (Entry<String, String> entry : presentedDate.entrySet()) {
