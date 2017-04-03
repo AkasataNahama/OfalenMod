@@ -12,8 +12,6 @@ import net.minecraft.world.World;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 
 public class OfalenUtil {
@@ -105,7 +103,7 @@ public class OfalenUtil {
 	}
 
 	/** 一行を読み込み、Stringとして返す。 */
-	public static String readLine(InputStream inputStream) {
+	public static String readString(InputStream inputStream) {
 		try {
 			byte bytes[] = new byte[2048];
 			int reading = inputStream.read();
@@ -124,19 +122,6 @@ public class OfalenUtil {
 			OfalenLog.error("Error on reading string.", "OfalenUtil");
 			return null;
 		}
-	}
-
-	public static List<String> readAll(InputStream inputStream) {
-		OfalenTimer.start("OfalenUtil.readAll");
-		List<String> ret = new ArrayList<String>();
-		while (true) {
-			String string = readLine(inputStream);
-			if (string == null)
-				break;
-			ret.add(string);
-		}
-		OfalenTimer.watchAndLog("OfalenUtil.readAll");
-		return ret;
 	}
 
 	/** 3桁の文字列に変換して返す。 */

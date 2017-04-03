@@ -17,7 +17,7 @@ public class OfalenModUpdateCheckHandler {
 	/** 新しいバージョンがリリースされているか。 */
 	public static boolean isNewVersionAvailable;
 	/** 最新版のバージョン番号。 */
-	private static String versionLatest = "";
+	public static String versionLatest = "";
 	/** 告知済みのプレイヤーの名前。 */
 	public static ArrayList<String> namesNotified = new ArrayList<String>();
 
@@ -31,7 +31,7 @@ public class OfalenModUpdateCheckHandler {
 			InputStream inputStream = connect.getInputStream();
 			// 一行ずつ読み込み、比較していく。
 			while (true) {
-				String str = OfalenUtil.readLine(inputStream);
+				String str = OfalenUtil.readString(inputStream);
 				if (str == null)
 					break;
 				if (compareVersion(str))
