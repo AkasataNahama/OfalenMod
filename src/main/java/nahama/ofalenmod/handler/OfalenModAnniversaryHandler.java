@@ -32,22 +32,24 @@ public class OfalenModAnniversaryHandler {
 	/** テクスチャが特別かどうか。 */
 	public static boolean isTextureSpecial;
 	/** 二回開けられる記念日かどうか。 */
-	public static boolean isTwice;
+	private static boolean isTwice;
 
 	/** 初期化処理。 */
 	public static void init() {
 		OfalenTimer.start("OfalenModAnniversaryHandler.init");
 		presentedDate.clear();
-		presents = new ItemStack[2][54];
 		// 日付を取得する。
 		Calendar cal = Calendar.getInstance();
-		int year = cal.get(cal.YEAR);
-		int month = cal.get(cal.MONTH);
-		int date = cal.get(cal.DATE);
-		today = year + "/" + (month + 1) + "/" + date;
-		// 		today = "2016/11/21";
+		int year = cal.get(Calendar.YEAR);
+		int month = cal.get(Calendar.MONTH);
+		int date = cal.get(Calendar.DATE);
+		String now = year + "/" + (month + 1) + "/" + date;
+		//		now = "2017/3/3";
 		loadPresentedDates();
-		getPresents();
+		if (today == null || !today.equals(now)) {
+			today = now;
+			getPresents();
+		}
 		OfalenTimer.watchAndLog("OfalenModAnniversaryHandler.init");
 	}
 
@@ -79,6 +81,7 @@ public class OfalenModAnniversaryHandler {
 			// ネット上のファイルに接続し、テキストを取得する。
 			HttpURLConnection connect = (HttpURLConnection) new URL(URL_ANNIVERSARY_LIST).openConnection();
 			connect.setRequestMethod("GET");
+			// メモ：HttpURLConnection.getInputStream()に時間がかかる。
 			InputStream inputStream = connect.getInputStream();
 			while (true) {
 				String str = OfalenUtil.readString(inputStream);
@@ -129,6 +132,7 @@ public class OfalenModAnniversaryHandler {
 
 	/** プレゼントのデータを読み込み、presentsを設定する。 */
 	private static void loadPresents(InputStream inputStream, int num) {
+		presents = new ItemStack[2][54];
 		String str;
 		for (int i = 0; i < 54; i++) {
 			str = OfalenUtil.readString(inputStream);
@@ -159,7 +163,10 @@ public class OfalenModAnniversaryHandler {
 		try {
 			File file = new File(new File(".\\").getParentFile(), "config\\OfalenModPresentedDate.txt");
 			if (!file.exists() || !file.isFile() || !file.canWrite()) {
-				file.createNewFile();
+				if (!file.createNewFile()) {
+					OfalenLog.error("Failed to create new file : OfalenModPresentedDate.txt", "OfalenModAnniversaryHandler");
+					return;
+				}
 			}
 			BufferedWriter bw = new BufferedWriter(new FileWriter(file));
 			for (Entry<String, String> entry : presentedDate.entrySet()) {
