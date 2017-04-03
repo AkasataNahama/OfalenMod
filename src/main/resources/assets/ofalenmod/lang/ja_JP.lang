@@ -270,28 +270,28 @@ item.ofalen.armor.P.2.name=オファレンの万能レギンス
 item.ofalen.armor.P.3.name=オファレンの万能ブーツ
 
 // 玉
-item.ofalen.ball.empty.0.name=空の玉 Grade 1
-item.ofalen.ball.empty.1.name=空の玉 Grade 2
-item.ofalen.ball.empty.2.name=空の玉 Grade 3
+item.ofalen.ball.empty.0.name=オファレンの空の玉 Grade 1
+item.ofalen.ball.empty.1.name=オファレンの空の玉 Grade 2
+item.ofalen.ball.empty.2.name=オファレンの空の玉 Grade 3
 
-item.ofalen.ball.defense.G1.name=防御玉 Grade 1
-item.ofalen.ball.defense.G2.name=防御玉 Grade 2
-item.ofalen.ball.defense.G3.name=防御玉 Grade 3
+item.ofalen.ball.defense.G1.name=オファレンの防御玉 Grade 1
+item.ofalen.ball.defense.G2.name=オファレンの防御玉 Grade 2
+item.ofalen.ball.defense.G3.name=オファレンの防御玉 Grade 3
 
-item.ofalen.ball.attack.G1.name=攻撃玉 Grade 1
-item.ofalen.ball.attack.G2.name=攻撃玉 Grade 2
-item.ofalen.ball.attack.G3.name=攻撃玉 Grade 3
+item.ofalen.ball.attack.G1.name=オファレンの攻撃玉 Grade 1
+item.ofalen.ball.attack.G2.name=オファレンの攻撃玉 Grade 2
+item.ofalen.ball.attack.G3.name=オファレンの攻撃玉 Grade 3
 
-item.ofalen.ball.recovery.G1.name=回復玉 Grade 1
-item.ofalen.ball.recovery.G2.name=回復玉 Grade 2
-item.ofalen.ball.recovery.G3.name=回復玉 Grade 3
+item.ofalen.ball.recovery.G1.name=オファレンの回復玉 Grade 1
+item.ofalen.ball.recovery.G2.name=オファレンの回復玉 Grade 2
+item.ofalen.ball.recovery.G3.name=オファレンの回復玉 Grade 3
 
-item.ofalen.ball.explosion.0.name=爆発玉 Grade 1
-item.ofalen.ball.explosion.1.name=爆発玉 Grade 2
-item.ofalen.ball.explosion.2.name=爆発玉 Grade 3
+item.ofalen.ball.explosion.0.name=オファレンの爆発玉 Grade 1
+item.ofalen.ball.explosion.1.name=オファレンの爆発玉 Grade 2
+item.ofalen.ball.explosion.2.name=オファレンの爆発玉 Grade 3
 
-item.ofalen.ball.hungry.name=空腹玉
-item.ofalen.ball.food.name=満腹玉
+item.ofalen.ball.hungry.name=オファレンの空腹玉
+item.ofalen.ball.food.name=オファレンの満腹玉
 item.ofalen.ball.perfect.name=オファレンの万能玉
 
 // 道具
@@ -335,7 +335,7 @@ item.ofalen.collector.name=オファレンコレクター
 
 // フィルター
 item.ofalen.filterItem.0.name=アイテムフィルター
-item.ofalen.filterItem.1.name=アイテムフィルター (block)
+item.ofalen.filterItem.1.name=アイテムフィルター（ブロック）
 item.ofalen.installerFilter.name=フィルターインストーラー
 
 // オファレン草

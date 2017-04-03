@@ -270,28 +270,28 @@ item.ofalen.armor.P.2.name=Ofalen Perfect Leggings
 item.ofalen.armor.P.3.name=Ofalen Perfect Boots
 
 // Ball
-item.ofalen.ball.empty.0.name=Empty Ball Grade 1
-item.ofalen.ball.empty.1.name=Empty Ball Grade 2
-item.ofalen.ball.empty.2.name=Empty Ball Grade 3
+item.ofalen.ball.empty.0.name=Ofalen Empty Ball Grade 1
+item.ofalen.ball.empty.1.name=Ofalen Empty Ball Grade 2
+item.ofalen.ball.empty.2.name=Ofalen Empty Ball Grade 3
 
-item.ofalen.ball.defense.G1.name=Defense Ball Grade 1
-item.ofalen.ball.defense.G2.name=Defense Ball Grade 2
-item.ofalen.ball.defense.G3.name=Defense Ball Grade 3
+item.ofalen.ball.defense.G1.name=Ofalen Defense Ball Grade 1
+item.ofalen.ball.defense.G2.name=Ofalen Defense Ball Grade 2
+item.ofalen.ball.defense.G3.name=Ofalen Defense Ball Grade 3
 
-item.ofalen.ball.attack.G1.name=Attack Ball Grade 1
-item.ofalen.ball.attack.G2.name=Attack Ball Grade 2
-item.ofalen.ball.attack.G3.name=Attack Ball Grade 3
+item.ofalen.ball.attack.G1.name=Ofalen Attack Ball Grade 1
+item.ofalen.ball.attack.G2.name=Ofalen Attack Ball Grade 2
+item.ofalen.ball.attack.G3.name=Ofalen Attack Ball Grade 3
 
-item.ofalen.ball.recovery.G1.name=Recovery Ball Grade 1
-item.ofalen.ball.recovery.G2.name=Recovery Ball Grade 2
-item.ofalen.ball.recovery.G3.name=Recovery Ball Grade 3
+item.ofalen.ball.recovery.G1.name=Ofalen Recovery Ball Grade 1
+item.ofalen.ball.recovery.G2.name=Ofalen Recovery Ball Grade 2
+item.ofalen.ball.recovery.G3.name=Ofalen Recovery Ball Grade 3
 
-item.ofalen.ball.explosion.0.name=Explosion Ball Grade 1
-item.ofalen.ball.explosion.1.name=Explosion Ball Grade 2
-item.ofalen.ball.explosion.2.name=Explosion Ball Grade 3
+item.ofalen.ball.explosion.0.name=Ofalen Explosion Ball Grade 1
+item.ofalen.ball.explosion.1.name=Ofalen Explosion Ball Grade 2
+item.ofalen.ball.explosion.2.name=Ofalen Explosion Ball Grade 3
 
-item.ofalen.ball.hungry.name=Hungry Ball
-item.ofalen.ball.food.name=Food Ball
+item.ofalen.ball.hungry.name=Ofalen Hungry Ball
+item.ofalen.ball.food.name=Ofalen Food Ball
 item.ofalen.ball.perfect.name=Ofalen Perfect Ball
 
 // Tool
