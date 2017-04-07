@@ -24,7 +24,9 @@ public class ItemExpCrystal extends Item {
 			EntityXPOrb entity = new EntityXPOrb(world, player.posX, player.posY, player.posZ, amount);
 			world.spawnEntityInWorld(entity);
 		}
-		itemStack.stackSize -= amount;
+		if (!player.capabilities.isCreativeMode) {
+			itemStack.stackSize -= amount;
+		}
 		return itemStack;
 	}
 }
