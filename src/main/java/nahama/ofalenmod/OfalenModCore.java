@@ -92,6 +92,7 @@ public class OfalenModCore {
 	@EventHandler
 	public void postInit(FMLPostInitializationEvent event) {
 		OfalenTimer.start("OfalenModCore.postInit");
+		OfalenModOreDictCore.init();
 		OfalenTimer.watchAndLog("OfalenModCore.postInit");
 	}
 

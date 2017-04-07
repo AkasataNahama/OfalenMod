@@ -1,5 +1,6 @@
 package nahama.ofalenmod.core;
 
+import nahama.ofalenmod.recipe.OfalenSmeltingManager;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
 
@@ -7,9 +8,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class OfalenModOreDictCore {
-	public static ArrayList<ItemStack> listCreeperOfalenBlock = OreDictionary.getOres("CreeperOfalenBlock");
-	public static ArrayList<ItemStack> listTDiamond = OreDictionary.getOres("TDiamond");
-	public static ArrayList<ItemStack> listGunPowderOre = OreDictionary.getOres("oreGunPowder");
+	public static ArrayList<ItemStack> listCreeperOfalenBlock;
+	public static ArrayList<ItemStack> listTDiamond;
+	public static ArrayList<ItemStack> listGunPowderOre;
+
+	public static void init() {
+		listCreeperOfalenBlock = OreDictionary.getOres("CreeperOfalenBlock");
+		listTDiamond = OreDictionary.getOres("TDiamond");
+		listGunPowderOre = OreDictionary.getOres("oreGunPowder");
+		OfalenSmeltingManager.getInstance().addDefaultOreDictRecipes();
+	}
 
 	public static boolean isMatchedItemStack(List<ItemStack> inputs, ItemStack... targets) {
 		if (inputs == null || inputs.isEmpty())

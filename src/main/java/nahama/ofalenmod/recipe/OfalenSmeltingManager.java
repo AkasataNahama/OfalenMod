@@ -42,6 +42,9 @@ public class OfalenSmeltingManager {
 		this.addRecipe(new ItemStack(Blocks.iron_ore), new ItemStack(Items.iron_ingot), true);
 		this.addRecipe(new ItemStack(Blocks.gold_ore), new ItemStack(Items.gold_ingot), true);
 		this.addRecipe(new ItemStack(Blocks.quartz_ore), new ItemStack(Items.quartz), true);
+	}
+
+	public void addDefaultOreDictRecipes() {
 		for (int i = 0; i < OfalenModOreDictCore.listGunPowderOre.size(); i++) {
 			this.addRecipe(OfalenModOreDictCore.getItem(OfalenModOreDictCore.listGunPowderOre, i), new ItemStack(Items.gunpowder), true);
 		}

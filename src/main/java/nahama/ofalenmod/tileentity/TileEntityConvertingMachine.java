@@ -91,7 +91,7 @@ public class TileEntityConvertingMachine extends TileEntityGradedMachineBase {
 	public void work() {
 		// 完成品スロットに変換結果を代入/追加する。
 		if (itemStacks[2] == null) {
-			itemStacks[2] = new ItemStack(itemStacks[0].getItem(), 1, sample.getItemDamage());
+			itemStacks[2] = new ItemStack(sample.getItem(), 1, sample.getItemDamage());
 		} else if (itemStacks[2].isItemEqual(sample)) {
 			itemStacks[2].stackSize++;
 		}
