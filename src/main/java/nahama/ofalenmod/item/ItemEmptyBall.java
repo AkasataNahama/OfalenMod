@@ -25,7 +25,7 @@ public class ItemEmptyBall extends Item {
 	public void registerIcons(IIconRegister iicon) {
 		icons = new IIcon[3];
 		for (int i = 0; i < 3; i++) {
-			icons[i] = iicon.registerIcon(this.getIconString() + "-" + (i + 1));
+			icons[i] = iicon.registerIcon(this.getIconString() + "-" + (i + 1) + "-1");
 		}
 	}
 
