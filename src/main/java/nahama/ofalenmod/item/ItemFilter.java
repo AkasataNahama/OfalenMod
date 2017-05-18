@@ -69,7 +69,8 @@ public class ItemFilter extends Item {
 	/** 説明欄の内容を追加する。 */
 	@Override
 	public void addInformation(ItemStack itemStack, EntityPlayer player, List list, boolean flag) {
-		OfalenUtil.add(list, FilterUtil.getFilterInformation(itemStack));
+		List<String> stringList = OfalenUtil.getAs(list);
+		stringList.addAll(FilterUtil.getFilterInformation(itemStack));
 	}
 
 	/** クリエイティブタブにアイテムを登録する処理。 */

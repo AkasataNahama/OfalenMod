@@ -154,8 +154,18 @@ public class OfalenUtil {
 	}
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
-	public static <T> List<T> add(List list, T e) {
-		list.add(e);
+	public static void add(List list, Object object) {
+		try {
+			list.add(object);
+		} catch (ClassCastException e) {
+			OfalenLog.error("Error on class casting.", "OfalenUtil");
+			e.printStackTrace();
+			throw e;
+		}
+	}
+
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	public static <T> List<T> getAs(List list) {
 		return (List<T>) list;
 	}
 }
