@@ -1,7 +1,5 @@
 package nahama.ofalenmod.render;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import nahama.ofalenmod.entity.EntityLaserBase;
 import nahama.ofalenmod.model.ModelLaser;
 import net.minecraft.client.model.ModelBase;
@@ -11,7 +9,6 @@ import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
-@SideOnly(Side.CLIENT)
 public class RenderLaser extends Render {
 	private final ResourceLocation bulletTextures;
 	protected ModelBase modelBullet;

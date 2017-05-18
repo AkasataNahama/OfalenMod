@@ -11,8 +11,6 @@ import cpw.mods.fml.common.ModMetadata;
 import cpw.mods.fml.common.event.*;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import nahama.ofalenmod.core.*;
 import nahama.ofalenmod.creativetab.CreativeTabOfalen;
 import nahama.ofalenmod.entity.*;
@@ -46,14 +44,14 @@ public class OfalenModCore {
 	public static final VersionUtil.VersionString VERSION_STRING = new VersionUtil.VersionString(OfalenModCore.MOD_ID, OfalenModCore.VERSION);
 	// TODO リリース時に変更
 	public static final boolean IS_DEBUGGING = true;
+	/** 追加するクリエイティブタブ。 */
+	public static final CreativeTabs TAB_OFALEN = new CreativeTabOfalen("ofalen.tabOfalenMod");
 	/** coreクラスのインスタンス。 */
 	@Instance(MOD_ID)
 	public static OfalenModCore instance;
 	/** modの情報を登録。 */
 	@Metadata(MOD_ID)
 	public static ModMetadata meta;
-	/** 追加するクリエイティブタブ。 */
-	public static final CreativeTabs TAB_OFALEN = new CreativeTabOfalen("ofalen.tabOfalenMod");
 
 	/** 初期化前処理。 */
 	@EventHandler
@@ -97,7 +95,6 @@ public class OfalenModCore {
 	}
 
 	/** クライアントの初期化処理。 */
-	@SideOnly(Side.CLIENT)
 	private void clientInit() {
 		OfalenTimer.start("OfalenModCore.clientInit");
 		// キーハンドラーの初期化。

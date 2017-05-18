@@ -8,6 +8,7 @@ import nahama.ofalenmod.tileentity.TileEntityDetailedSetter;
 import nahama.ofalenmod.util.IItemOfalenSettable;
 import nahama.ofalenmod.util.OfalenSetting;
 import nahama.ofalenmod.util.OfalenTimer;
+import nahama.ofalenmod.util.OfalenUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.inventory.GuiContainer;
@@ -18,8 +19,8 @@ import net.minecraft.util.StatCollector;
 import org.lwjgl.opengl.GL11;
 
 public class GuiDetailedSetter extends GuiContainer {
-	private TileEntityDetailedSetter tileEntity;
 	private static final ResourceLocation GUITEXTURE = new ResourceLocation("ofalenmod:textures/gui/container/detailed_setter.png");
+	private TileEntityDetailedSetter tileEntity;
 
 	public GuiDetailedSetter(EntityPlayer player, TileEntityDetailedSetter tileEntity) {
 		super(new ContainerDetailedSetter(player, tileEntity));
@@ -30,8 +31,8 @@ public class GuiDetailedSetter extends GuiContainer {
 	@Override
 	protected void drawGuiContainerForegroundLayer(int par1, int par2) {
 		OfalenTimer.start("GuiDetailedSetter.drawGuiContainerForegroundLayer");
-		String s = StatCollector.translateToLocal(tileEntity.getInventoryName());
-		fontRendererObj.drawString(s, xSize / 2 - fontRendererObj.getStringWidth(s) / 2, 6, 0x404040);
+		StringBuilder s = new StringBuilder(StatCollector.translateToLocal(tileEntity.getInventoryName()));
+		fontRendererObj.drawString(s.toString(), xSize / 2 - fontRendererObj.getStringWidth(s.toString()) / 2, 6, 0x404040);
 		fontRendererObj.drawString(StatCollector.translateToLocal("container.inventory"), 8, ySize - 96 + 2, 0x404040);
 		// 右側に情報を表示する。
 		ItemStack itemStack = tileEntity.getStackInSlot(0);
@@ -42,15 +43,15 @@ public class GuiDetailedSetter extends GuiContainer {
 		OfalenSetting setting = ((IItemOfalenSettable) itemStack.getItem()).getSetting();
 		fontRendererObj.drawString(setting.getLocalizedSettingName(), 29, 21 + (i * 18), 0x404040);
 		// 設定のパス。
-		s = "";
+		s = new StringBuilder();
 		for (i = 1; i < tileEntity.getFirstInvalidSlot(); i++) {
 			setting = setting.getChildSetting(tileEntity.getStackInSlot(i));
 			fontRendererObj.drawString(setting.getLocalizedSettingName(), 29, 21 + (i * 18), 0x404040);
-			s += setting.getSettingName() + "/";
+			s.append(setting.getSettingName()).append("/");
 		}
 		if (tileEntity.isApplicableState()) {
 			// 適用可能な状態なら、現在の値と適用後の値を表示。
-			Object currentValue = OfalenDetailedSettingHandler.getCurrentValueFromNBT(OfalenDetailedSettingHandler.getSettingTag(itemStack), s, setting);
+			Object currentValue = OfalenDetailedSettingHandler.getCurrentValueFromNBT(OfalenDetailedSettingHandler.getSettingTag(itemStack), s.toString(), setting);
 			fontRendererObj.drawString(currentValue.toString() + " -> " + setting.getSettingValue(currentValue, tileEntity.getStackInSlot(i)), 29, 21 + (i * 18), 0x404040);
 		} else {
 			// 指定が完全でないなら、候補アイテムを表示。
@@ -87,7 +88,7 @@ public class GuiDetailedSetter extends GuiContainer {
 	@Override
 	public void initGui() {
 		super.initGui();
-		buttonList.add(new ButtonApplying(-1, guiLeft + 162, guiTop + 6));
+		OfalenUtil.add(buttonList, new ButtonApplying(-1, guiLeft + 162, guiTop + 6));
 	}
 
 	@Override

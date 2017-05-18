@@ -197,7 +197,7 @@ public class ItemOfalenPerfectTool extends ItemTool {
 	public void addInformation(ItemStack itemStack, EntityPlayer player, List list, boolean flag) {
 		if (!itemStack.hasTagCompound())
 			return;
-		list.add(StatCollector.translateToLocal("info.ofalen.toolPerfect.mode") + " : " + StatCollector.translateToLocal("info.ofalen.toolPerfect.mode." + itemStack.getTagCompound().getByte(OfalenNBTUtil.MODE)));
-		list.addAll(FilterUtil.getFilterInformation(itemStack));
+		List<String> stringList = OfalenUtil.add(list, StatCollector.translateToLocal("info.ofalen.toolPerfect.mode") + " : " + StatCollector.translateToLocal("info.ofalen.toolPerfect.mode." + itemStack.getTagCompound().getByte(OfalenNBTUtil.MODE)));
+		stringList.addAll(FilterUtil.getFilterInformation(itemStack));
 	}
 }

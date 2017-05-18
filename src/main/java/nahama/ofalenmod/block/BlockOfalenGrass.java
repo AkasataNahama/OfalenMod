@@ -1,7 +1,5 @@
 package nahama.ofalenmod.block;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import nahama.ofalenmod.core.OfalenModItemCore;
 import net.minecraft.block.Block;
 import net.minecraft.block.IGrowable;
@@ -138,7 +136,6 @@ public class BlockOfalenGrass extends Block implements IPlantable, IGrowable {
 
 	/** 第三ボタンが押された時の対応アイテムを返す。 */
 	@Override
-	@SideOnly(Side.CLIENT)
 	public Item getItem(World world, int x, int y, int z) {
 		return this.getSeeds();
 	}
@@ -164,14 +161,12 @@ public class BlockOfalenGrass extends Block implements IPlantable, IGrowable {
 
 	/** アイコンを返す。 */
 	@Override
-	@SideOnly(Side.CLIENT)
 	public IIcon getIcon(int side, int meta) {
 		return icons[meta % 16];
 	}
 
 	/** アイコンを登録する。 */
 	@Override
-	@SideOnly(Side.CLIENT)
 	public void registerBlockIcons(IIconRegister register) {
 		icons = new IIcon[16];
 		for (int i = 0; i < icons.length; ++i) {

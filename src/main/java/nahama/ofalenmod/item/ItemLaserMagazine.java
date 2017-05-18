@@ -1,9 +1,8 @@
 package nahama.ofalenmod.item;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import nahama.ofalenmod.OfalenModCore;
 import nahama.ofalenmod.util.OfalenNBTUtil;
+import nahama.ofalenmod.util.OfalenUtil;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -26,14 +25,13 @@ public class ItemLaserMagazine extends Item {
 
 	/** クリエイティブタブにアイテムを登録する処理。 */
 	@Override
-	@SideOnly(Side.CLIENT)
 	public void getSubItems(Item item, CreativeTabs creativeTab, List list) {
 		// 修繕機での修繕を不可にしたアイテムを登録する。
 		ItemStack itemStack = new ItemStack(this, 1, 0);
 		NBTTagCompound nbt = new NBTTagCompound();
 		nbt.setBoolean(OfalenNBTUtil.IS_IRREPARABLE, true);
 		itemStack.setTagCompound(nbt);
-		list.add(itemStack);
+		OfalenUtil.add(list, itemStack);
 	}
 
 	/** クラフト時の処理。 */
@@ -57,7 +55,7 @@ public class ItemLaserMagazine extends Item {
 	/** 説明欄の内容を追加する。 */
 	@Override
 	public void addInformation(ItemStack itemStack, EntityPlayer player, List list, boolean flag) {
-		list.add(StatCollector.translateToLocal("info.ofalen.crystal") + " : " + (32 - (itemStack.getItemDamage() / 32)));
+		OfalenUtil.add(list, StatCollector.translateToLocal("info.ofalen.crystal") + " : " + (32 - (itemStack.getItemDamage() / 32)));
 	}
 
 	/** アイテムスタックの最大スタック数を返す。 */

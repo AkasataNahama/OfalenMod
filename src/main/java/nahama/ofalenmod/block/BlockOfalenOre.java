@@ -1,7 +1,5 @@
 package nahama.ofalenmod.block;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import nahama.ofalenmod.OfalenModCore;
 import nahama.ofalenmod.core.OfalenModConfigCore;
 import nahama.ofalenmod.core.OfalenModItemCore;
@@ -68,10 +66,9 @@ public class BlockOfalenOre extends Block {
 
 	/** クリエイティブタブにブロックを登録する処理。 */
 	@Override
-	@SideOnly(Side.CLIENT)
 	public void getSubBlocks(Item item, CreativeTabs creativeTab, List list) {
 		for (int i = 0; i < 4; i++) {
-			list.add(new ItemStack(item, 1, i));
+			OfalenUtil.add(list, new ItemStack(item, 1, i));
 		}
 	}
 
@@ -83,7 +80,6 @@ public class BlockOfalenOre extends Block {
 
 	/** ブロックのテクスチャを登録する処理。 */
 	@Override
-	@SideOnly(Side.CLIENT)
 	public void registerBlockIcons(IIconRegister iicon) {
 		icons = new IIcon[4];
 		for (int i = 0; i < 4; i++) {
@@ -93,7 +89,6 @@ public class BlockOfalenOre extends Block {
 
 	/** ブロックのテクスチャを返す。 */
 	@Override
-	@SideOnly(Side.CLIENT)
 	public IIcon getIcon(int side, int meta) {
 		return icons[meta % 4];
 	}

@@ -1,10 +1,9 @@
 package nahama.ofalenmod.item;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import nahama.ofalenmod.OfalenModCore;
 import nahama.ofalenmod.core.OfalenModItemCore;
 import nahama.ofalenmod.entity.EntityExplosionBall;
+import nahama.ofalenmod.util.OfalenUtil;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
@@ -40,7 +39,6 @@ public class ItemExplosionBall extends Item {
 	}
 
 	@Override
-	@SideOnly(Side.CLIENT)
 	public void registerIcons(IIconRegister iicon) {
 		icons = new IIcon[3];
 		for (int i = 0; i < 3; i++) {
@@ -49,16 +47,14 @@ public class ItemExplosionBall extends Item {
 	}
 
 	@Override
-	@SideOnly(Side.CLIENT)
 	public IIcon getIconFromDamage(int meta) {
 		return icons[meta];
 	}
 
 	@Override
-	@SideOnly(Side.CLIENT)
 	public void getSubItems(Item item, CreativeTabs creativeTab, List list) {
 		for (int i = 0; i < 3; i++) {
-			list.add(new ItemStack(this, 1, i));
+			OfalenUtil.add(list, new ItemStack(this, 1, i));
 		}
 	}
 

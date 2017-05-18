@@ -1,11 +1,10 @@
 package nahama.ofalenmod.item;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import nahama.ofalenmod.OfalenModCore;
 import nahama.ofalenmod.handler.OfalenKeyHandler;
 import nahama.ofalenmod.util.OfalenNBTUtil;
 import nahama.ofalenmod.util.OfalenNBTUtil.FilterUtil;
+import nahama.ofalenmod.util.OfalenUtil;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
@@ -69,9 +68,8 @@ public class ItemFilter extends Item {
 
 	/** 説明欄の内容を追加する。 */
 	@Override
-	@SideOnly(Side.CLIENT)
 	public void addInformation(ItemStack itemStack, EntityPlayer player, List list, boolean flag) {
-		list.addAll(FilterUtil.getFilterInformation(itemStack));
+		OfalenUtil.add(list, FilterUtil.getFilterInformation(itemStack));
 	}
 
 	/** クリエイティブタブにアイテムを登録する処理。 */
@@ -79,12 +77,11 @@ public class ItemFilter extends Item {
 	public void getSubItems(Item item, CreativeTabs tabs, List list) {
 		ItemStack itemStack = new ItemStack(item);
 		FilterUtil.initFilterTag(itemStack);
-		list.add(itemStack);
+		OfalenUtil.add(list, itemStack);
 	}
 
 	/** アイテムのテクスチャを登録する処理。 */
 	@Override
-	@SideOnly(Side.CLIENT)
 	public void registerIcons(IIconRegister register) {
 		icons = new IIcon[4];
 		for (int i = 0; i < 4; i++) {

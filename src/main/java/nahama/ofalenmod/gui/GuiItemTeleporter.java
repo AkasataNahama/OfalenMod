@@ -15,8 +15,8 @@ import net.minecraft.util.StatCollector;
 import org.lwjgl.opengl.GL11;
 
 public class GuiItemTeleporter extends GuiContainer {
-	private ItemStack currentItem;
 	private static final ResourceLocation GUITEXTURE = new ResourceLocation("ofalenmod:textures/gui/container/teleporter.png");
+	private ItemStack currentItem;
 
 	public GuiItemTeleporter(EntityPlayer player) {
 		super(new ContainerItemTeleporter(player));
@@ -26,12 +26,12 @@ public class GuiItemTeleporter extends GuiContainer {
 	@Override
 	public void initGui() {
 		super.initGui();
-		buttonList.add(new GuiTeleportingMarker.Button(-1, guiLeft + 62, guiTop + 17, true));
-		buttonList.add(new GuiTeleportingMarker.Button(-2, guiLeft + 80, guiTop + 17, true));
-		buttonList.add(new GuiTeleportingMarker.Button(-3, guiLeft + 98, guiTop + 17, true));
-		buttonList.add(new GuiTeleportingMarker.Button(-4, guiLeft + 62, guiTop + 54, false));
-		buttonList.add(new GuiTeleportingMarker.Button(-5, guiLeft + 80, guiTop + 54, false));
-		buttonList.add(new GuiTeleportingMarker.Button(-6, guiLeft + 98, guiTop + 54, false));
+		OfalenUtil.add(buttonList, new GuiItemTeleporter.Button(-1, guiLeft + 62, guiTop + 17, true));
+		OfalenUtil.add(buttonList, new GuiItemTeleporter.Button(-2, guiLeft + 80, guiTop + 17, true));
+		OfalenUtil.add(buttonList, new GuiItemTeleporter.Button(-3, guiLeft + 98, guiTop + 17, true));
+		OfalenUtil.add(buttonList, new GuiItemTeleporter.Button(-4, guiLeft + 62, guiTop + 54, false));
+		OfalenUtil.add(buttonList, new GuiItemTeleporter.Button(-5, guiLeft + 80, guiTop + 54, false));
+		OfalenUtil.add(buttonList, new GuiItemTeleporter.Button(-6, guiLeft + 98, guiTop + 54, false));
 	}
 
 	@Override
@@ -90,7 +90,7 @@ public class GuiItemTeleporter extends GuiContainer {
 		}
 	}
 
-	public static class Button extends GuiButton {
+	private static class Button extends GuiButton {
 		private boolean isPlus;
 
 		public Button(int id, int x, int y, boolean isPlus) {

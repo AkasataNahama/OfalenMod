@@ -1,7 +1,5 @@
 package nahama.ofalenmod.inventory;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import nahama.ofalenmod.handler.OfalenTeleportHandler;
 import nahama.ofalenmod.item.ItemTeleporter;
 import nahama.ofalenmod.util.OfalenNBTUtil;
@@ -61,7 +59,6 @@ public class ContainerItemTeleporter extends Container {
 	}
 
 	@Override
-	@SideOnly(Side.CLIENT)
 	public void updateProgressBar(int par1, int par2) {
 		if (par1 == 0) {
 			Minecraft.getMinecraft().thePlayer.getHeldItem().getTagCompound().setBoolean(OfalenNBTUtil.IS_VALID, (par2 == 0));

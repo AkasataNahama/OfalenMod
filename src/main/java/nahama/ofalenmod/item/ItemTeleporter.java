@@ -8,6 +8,7 @@ import nahama.ofalenmod.handler.OfalenTeleportHandler;
 import nahama.ofalenmod.network.MSpawnParticle;
 import nahama.ofalenmod.util.OfalenLog;
 import nahama.ofalenmod.util.OfalenNBTUtil;
+import nahama.ofalenmod.util.OfalenUtil;
 import nahama.ofalenmod.world.TeleporterOfalen;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
@@ -26,13 +27,17 @@ public class ItemTeleporter extends ItemFuture {
 		this.setMaxDamage(0);
 	}
 
+	public static boolean isItemMaterial(ItemStack material) {
+		return material != null && material.isItemEqual(new ItemStack(OfalenModItemCore.partsOfalen, 1, 7));
+	}
+
 	@Override
 	public void getSubItems(Item item, CreativeTabs creativeTab, List list) {
 		ItemStack itemStack = new ItemStack(item);
 		NBTTagCompound nbt = new NBTTagCompound();
 		nbt.setByte(OfalenNBTUtil.MATERIAL, (byte) 64);
 		itemStack.setTagCompound(nbt);
-		list.add(itemStack);
+		OfalenUtil.add(list, itemStack);
 	}
 
 	@Override
@@ -95,9 +100,5 @@ public class ItemTeleporter extends ItemFuture {
 		itemStack.getTagCompound().setByte(OfalenNBTUtil.INTERVAL, (byte) 10);
 		OfalenModPacketCore.WRAPPER.sendToAll(new MSpawnParticle(toId, pos.getX() + 0.5, pos.getY() + 1.5, pos.getZ() + 0.5, (byte) 1));
 		return itemStack;
-	}
-
-	public static boolean isItemMaterial(ItemStack material) {
-		return material != null && material.isItemEqual(new ItemStack(OfalenModItemCore.partsOfalen, 1, 7));
 	}
 }

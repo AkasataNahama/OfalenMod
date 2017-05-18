@@ -1,7 +1,5 @@
 package nahama.ofalenmod.handler;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import nahama.ofalenmod.core.OfalenModPacketCore;
 import nahama.ofalenmod.item.ItemFloater;
 import nahama.ofalenmod.network.MFloaterMode;
@@ -13,7 +11,6 @@ import net.minecraft.entity.Entity;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 
-@SideOnly(Side.CLIENT)
 public class OfalenFlightHandlerClient {
 	/** フローターのモード。 */
 	private static byte mode;

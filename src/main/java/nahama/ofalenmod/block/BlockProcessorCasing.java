@@ -1,8 +1,7 @@
 package nahama.ofalenmod.block;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import nahama.ofalenmod.OfalenModCore;
+import nahama.ofalenmod.util.OfalenUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -27,11 +26,10 @@ public class BlockProcessorCasing extends Block {
 
 	/** クリエイティブタブにブロックを登録する処理。 */
 	@Override
-	@SideOnly(Side.CLIENT)
 	public void getSubBlocks(Item item, CreativeTabs creativeTab, List list) {
 		for (int i = 0; i < 7; i++) {
 			if (i != 3)
-				list.add(new ItemStack(item, 1, i));
+				OfalenUtil.add(list, new ItemStack(item, 1, i));
 		}
 	}
 
@@ -47,7 +45,6 @@ public class BlockProcessorCasing extends Block {
 
 	/** ブロックのテクスチャを登録する処理。 */
 	@Override
-	@SideOnly(Side.CLIENT)
 	public void registerBlockIcons(IIconRegister iicon) {
 		icons = new IIcon[7];
 		for (int i = 0; i < 7; i++) {
@@ -58,7 +55,6 @@ public class BlockProcessorCasing extends Block {
 
 	/** ブロックのテクスチャを返す。 */
 	@Override
-	@SideOnly(Side.CLIENT)
 	public IIcon getIcon(int side, int meta) {
 		return icons[meta];
 	}

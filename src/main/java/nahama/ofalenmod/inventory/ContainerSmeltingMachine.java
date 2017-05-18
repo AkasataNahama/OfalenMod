@@ -1,7 +1,5 @@
 package nahama.ofalenmod.inventory;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import nahama.ofalenmod.recipe.OfalenSmeltingManager;
 import nahama.ofalenmod.tileentity.TileEntitySmeltingMachine;
 import net.minecraft.entity.player.EntityPlayer;
@@ -61,7 +59,6 @@ public class ContainerSmeltingMachine extends Container {
 	}
 
 	@Override
-	@SideOnly(Side.CLIENT)
 	public void updateProgressBar(int par1, int par2) {
 		if (par1 == 0) {
 			tileEntity.timeWorking = (short) par2;

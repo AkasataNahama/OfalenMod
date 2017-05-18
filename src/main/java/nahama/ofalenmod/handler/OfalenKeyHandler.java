@@ -1,8 +1,6 @@
 package nahama.ofalenmod.handler;
 
 import cpw.mods.fml.client.registry.ClientRegistry;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import nahama.ofalenmod.core.OfalenModPacketCore;
 import nahama.ofalenmod.network.MSettingKeyChange;
 import nahama.ofalenmod.util.OfalenUtil;
@@ -16,7 +14,6 @@ public class OfalenKeyHandler {
 	private static boolean isSettingKeyPressed;
 
 	/** 初期化する。 */
-	@SideOnly(Side.CLIENT)
 	public static void init() {
 		// キーバインディングを登録する。
 		keySetting = new KeyBinding("key.ofalen.description.keySetting", Keyboard.KEY_F, "key.ofalen.category");
@@ -24,7 +21,6 @@ public class OfalenKeyHandler {
 	}
 
 	/** キーの状態を更新する。 */
-	@SideOnly(Side.CLIENT)
 	public static void update() {
 		// 設定キーの状態を更新する。
 		boolean lastIsPressed = isSettingKeyPressed;

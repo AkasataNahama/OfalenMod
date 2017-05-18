@@ -1,7 +1,5 @@
 package nahama.ofalenmod.creativetab;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import nahama.ofalenmod.core.OfalenModItemCore;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
@@ -18,7 +16,6 @@ public class CreativeTabOfalen extends CreativeTabs {
 
 	/** クリエイティブタブのアイコンを返す。 */
 	@Override
-	@SideOnly(Side.CLIENT)
 	public ItemStack getIconItemStack() {
 		short current = (short) (System.currentTimeMillis() / 1000 % 10000);
 		if (current != lastSecond) {
@@ -35,7 +32,6 @@ public class CreativeTabOfalen extends CreativeTabs {
 	}
 
 	@Override
-	@SideOnly(Side.CLIENT)
 	public Item getTabIconItem() {
 		return null;
 	}

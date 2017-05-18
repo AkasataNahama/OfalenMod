@@ -36,7 +36,6 @@ public class MagazineRecipe implements IRecipe {
 	}
 
 	/** クラフティングインベントリがレシピに適合しているか。 */
-	@SuppressWarnings("unchecked")
 	@Override
 	public boolean matches(InventoryCrafting inv, World world) {
 		ArrayList<ItemStack> required = new ArrayList<ItemStack>(input);

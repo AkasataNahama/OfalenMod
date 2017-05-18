@@ -1,7 +1,5 @@
 package nahama.ofalenmod.tileentity;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import nahama.ofalenmod.block.BlockProcessor;
 import nahama.ofalenmod.core.OfalenModConfigCore;
 import nahama.ofalenmod.core.OfalenModItemCore;
@@ -19,18 +17,18 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityFurnace;
 
 public abstract class TileEntityGradedMachineBase extends TileEntity implements ISidedInventory {
-	/** 機械の中にあるアイテムの配列。 */
-	protected ItemStack[] itemStacks = new ItemStack[this.getSizeInventory()];
-	/** 金床で設定された名前。 */
-	protected String customName;
-	/** 機械のグレード。 */
-	protected byte grade;
 	/** 作業した時間。 */
 	public short timeWorking;
 	/** 燃焼が終わるまでの時間。 */
 	public short timeBurning;
 	/** 燃焼中アイテムの燃焼時間。 */
 	public short timeMaxBurning;
+	/** 機械の中にあるアイテムの配列。 */
+	protected ItemStack[] itemStacks = new ItemStack[this.getSizeInventory()];
+	/** 金床で設定された名前。 */
+	protected String customName;
+	/** 機械のグレード。 */
+	protected byte grade;
 
 	/** アップデート時の処理。 */
 	@Override
@@ -199,13 +197,11 @@ public abstract class TileEntityGradedMachineBase extends TileEntity implements 
 	}
 
 	/** 作業の完了率を0~scaleで返す。Gui表示用。 */
-	@SideOnly(Side.CLIENT)
 	public int getWorkProgressScaled(int scale) {
 		return timeWorking * scale / this.getMaxWorkingTimeWithGrade();
 	}
 
 	/** 燃料の残り燃焼時間の割合を0~scaleで返す。Gui表示用。 */
-	@SideOnly(Side.CLIENT)
 	public int getBurnTimeRemainingScaled(int scale) {
 		if (timeMaxBurning == 0)
 			timeMaxBurning = 200;

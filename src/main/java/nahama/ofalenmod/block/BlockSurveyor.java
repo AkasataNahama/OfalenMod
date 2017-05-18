@@ -1,7 +1,5 @@
 package nahama.ofalenmod.block;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import nahama.ofalenmod.OfalenModCore;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -22,7 +20,6 @@ public class BlockSurveyor extends Block {
 
 	/** ブロックのテクスチャを登録する処理。 */
 	@Override
-	@SideOnly(Side.CLIENT)
 	public void registerBlockIcons(IIconRegister register) {
 		icons = new IIcon[6];
 		for (int i = 0; i < 6; i++) {
@@ -32,7 +29,6 @@ public class BlockSurveyor extends Block {
 
 	/** ブロックのテクスチャを返す。 */
 	@Override
-	@SideOnly(Side.CLIENT)
 	public IIcon getIcon(int side, int meta) {
 		switch (side) {
 		// 0, DOWN, Y-, 翠

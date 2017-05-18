@@ -1,7 +1,5 @@
 package nahama.ofalenmod.block;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import nahama.ofalenmod.OfalenModCore;
 import nahama.ofalenmod.handler.OfalenModAnniversaryHandler;
 import nahama.ofalenmod.tileentity.TileEntityPresentBox;
@@ -84,7 +82,6 @@ public class BlockPresentBox extends Block implements ITileEntityProvider {
 
 	/** ブロックのアイコンを登録する処理。 */
 	@Override
-	@SideOnly(Side.CLIENT)
 	public void registerBlockIcons(IIconRegister register) {
 		icons = new IIcon[3];
 		String s = "";
@@ -97,7 +94,6 @@ public class BlockPresentBox extends Block implements ITileEntityProvider {
 
 	/** ブロックのアイコンを返す。 */
 	@Override
-	@SideOnly(Side.CLIENT)
 	public IIcon getIcon(int side, int meta) {
 		int i = 2;
 		if (side == 0)

@@ -33,7 +33,7 @@ public class OfalenModGuiFactory implements IModGuiFactory {
 
 	public static class OfalenModConfigGui extends GuiConfig {
 		public OfalenModConfigGui(GuiScreen parent) {
-			super(parent, new ConfigElement(OfalenModConfigCore.cfg.getCategory(OfalenModConfigCore.GENERAL)).getChildElements(), OfalenModCore.MOD_ID, false, false, StatCollector.translateToLocal(OfalenModCore.UNLOCALIZED_MOD_NAME));
+			super(parent, (new ConfigElement<Object>(OfalenModConfigCore.cfg.getCategory(OfalenModConfigCore.GENERAL))).getChildElements(), OfalenModCore.MOD_ID, false, false, StatCollector.translateToLocal(OfalenModCore.UNLOCALIZED_MOD_NAME));
 		}
 	}
 }

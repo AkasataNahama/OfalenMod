@@ -29,17 +29,17 @@ public class GuiSettingWorldEditorBase extends GuiContainer {
 		this.drawSettingValues();
 	}
 
-	protected void drawSettingValue(String s, int y) {
+	private void drawSettingValue(String s, int y) {
 		fontRendererObj.drawString(s, 146 - fontRendererObj.getStringWidth(s), y, 0x404040);
 	}
 
-	protected void drawSettingEntryNames() {
+	private void drawSettingEntryNames() {
 		for (int i = 0; i < tileEntity.getAmountSettingID(); i++) {
 			fontRendererObj.drawString(StatCollector.translateToLocal(tileEntity.getSettingNameWithID(i)), 8, 16 + (i * 10), 0x404040);
 		}
 	}
 
-	protected void drawSettingValues() {
+	private void drawSettingValues() {
 		for (int i = 0; i < tileEntity.getAmountSettingID(); i++) {
 			if (tileEntity.getSettingTypeWithID(i) == 0) {
 				this.drawSettingValue(StatCollector.translateToLocal(tileEntity.getSettingNameWithID(i) + "." + tileEntity.getWithID(i)), 16 + (i * 10));
@@ -73,8 +73,8 @@ public class GuiSettingWorldEditorBase extends GuiContainer {
 		}
 	}
 
-	protected void addButtonSetting(int x, int y, int idSetting, int type) {
-		buttonList.add(new ButtonWorldEditorSetting(buttonList.size(), guiLeft + x, guiTop + y, idSetting, type));
+	private void addButtonSetting(int x, int y, int idSetting, int type) {
+		OfalenUtil.add(buttonList, new ButtonWorldEditorSetting(buttonList.size(), guiLeft + x, guiTop + y, idSetting, type));
 	}
 
 	@Override

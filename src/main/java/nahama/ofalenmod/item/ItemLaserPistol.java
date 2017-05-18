@@ -1,7 +1,5 @@
 package nahama.ofalenmod.item;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import nahama.ofalenmod.OfalenModCore;
 import nahama.ofalenmod.core.OfalenModItemCore;
 import nahama.ofalenmod.entity.EntityLaserBlue;
@@ -37,14 +35,13 @@ public class ItemLaserPistol extends Item {
 
 	/** クリエイティブタブにアイテムを登録する処理。 */
 	@Override
-	@SideOnly(Side.CLIENT)
 	public void getSubItems(Item item, CreativeTabs creativeTab, List list) {
 		// リロード前で、修繕機での修繕を不可にしたアイテムを登録する。
 		ItemStack itemStack = new ItemStack(this, 1, this.getMaxDamage());
 		NBTTagCompound nbt = new NBTTagCompound();
 		nbt.setBoolean(OfalenNBTUtil.IS_IRREPARABLE, true);
 		itemStack.setTagCompound(nbt);
-		list.add(itemStack);
+		OfalenUtil.add(list, itemStack);
 	}
 
 	/** 更新時の処理。 */
@@ -190,7 +187,7 @@ public class ItemLaserPistol extends Item {
 		String color = nbt.getString(OfalenNBTUtil.LASER_COLOR);
 		if (color.length() < 1)
 			return;
-		list.add(StatCollector.translateToLocal("info.ofalen.color:" + color.toLowerCase()) + " " + StatCollector.translateToLocal("info.ofalen.crystal") + " : " + (32 - (itemStack.getItemDamage() / 32)));
+		OfalenUtil.add(list, StatCollector.translateToLocal("info.ofalen.color:" + color.toLowerCase()) + " " + StatCollector.translateToLocal("info.ofalen.crystal") + " : " + (32 - (itemStack.getItemDamage() / 32)));
 	}
 
 	/** ダメージを受けられるかどうか。 */

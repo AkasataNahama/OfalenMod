@@ -1,31 +1,28 @@
 package nahama.ofalenmod.gui;
 
-import nahama.ofalenmod.OfalenModCore;
 import nahama.ofalenmod.core.OfalenModPacketCore;
 import nahama.ofalenmod.inventory.ContainerItemFilterInstaller;
 import nahama.ofalenmod.network.MFilterInstaller;
+import nahama.ofalenmod.util.OfalenUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.StatCollector;
 import org.lwjgl.opengl.GL11;
 
 public class GuiItemFilterInstaller extends GuiContainer {
-	private ItemStack currentItem;
 	private static final ResourceLocation GUITEXTURE = new ResourceLocation("ofalenmod:textures/gui/container/filter_installer.png");
 
 	public GuiItemFilterInstaller(EntityPlayer player) {
 		super(new ContainerItemFilterInstaller(player));
-		currentItem = player.getHeldItem();
 	}
 
 	@Override
 	public void initGui() {
 		super.initGui();
-		buttonList.add(new Button(-1, guiLeft + 120, guiTop + 16));
+		OfalenUtil.add(buttonList, new Button(-1, guiLeft + 120, guiTop + 16));
 	}
 
 	@Override

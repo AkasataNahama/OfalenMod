@@ -5,6 +5,7 @@ import nahama.ofalenmod.handler.OfalenFlightHandlerClient;
 import nahama.ofalenmod.inventory.ContainerItemFloater;
 import nahama.ofalenmod.network.MFloaterMode;
 import nahama.ofalenmod.util.OfalenNBTUtil;
+import nahama.ofalenmod.util.OfalenUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.inventory.GuiContainer;
@@ -15,8 +16,8 @@ import net.minecraft.util.StatCollector;
 import org.lwjgl.opengl.GL11;
 
 public class GuiItemFloater extends GuiContainer {
-	private ItemStack currentItem;
 	private static final ResourceLocation GUITEXTURE = new ResourceLocation("ofalenmod:textures/gui/container/floater.png");
+	private ItemStack currentItem;
 
 	public GuiItemFloater(EntityPlayer player) {
 		super(new ContainerItemFloater(player));
@@ -27,7 +28,7 @@ public class GuiItemFloater extends GuiContainer {
 	public void initGui() {
 		super.initGui();
 		for (int i = 0; i < 6; i++) {
-			buttonList.add(new GuiItemFloater.Button(-1 - i, guiLeft + 100 + (12 * i), guiTop + 25, i));
+			OfalenUtil.add(buttonList, new GuiItemFloater.Button(-1 - i, guiLeft + 100 + (12 * i), guiTop + 25, i));
 		}
 	}
 

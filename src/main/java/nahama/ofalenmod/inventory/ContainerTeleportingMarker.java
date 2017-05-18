@@ -1,7 +1,5 @@
 package nahama.ofalenmod.inventory;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import nahama.ofalenmod.tileentity.TileEntityTeleportingMarker;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
@@ -51,7 +49,6 @@ public class ContainerTeleportingMarker extends Container {
 	}
 
 	@Override
-	@SideOnly(Side.CLIENT)
 	public void updateProgressBar(int par1, int par2) {
 		if (par1 == 0) {
 			tileEntity.isValid = (par2 == 0);

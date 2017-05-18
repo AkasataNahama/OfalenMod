@@ -1,8 +1,7 @@
 package nahama.ofalenmod.item;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import nahama.ofalenmod.OfalenModCore;
+import nahama.ofalenmod.util.OfalenUtil;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
@@ -19,8 +18,8 @@ import net.minecraftforge.common.util.ForgeDirection;
 import java.util.List;
 
 public class ItemOfalenSeed extends Item implements IPlantable {
-	private Block plant;
 	protected IIcon[] icons;
+	private Block plant;
 
 	public ItemOfalenSeed(Block plant) {
 		this.setCreativeTab(OfalenModCore.TAB_OFALEN);
@@ -60,7 +59,6 @@ public class ItemOfalenSeed extends Item implements IPlantable {
 
 	/** アイテムのテクスチャを登録する処理。 */
 	@Override
-	@SideOnly(Side.CLIENT)
 	public void registerIcons(IIconRegister register) {
 		icons = new IIcon[4];
 		for (int i = 0; i < 4; i++) {
@@ -70,17 +68,15 @@ public class ItemOfalenSeed extends Item implements IPlantable {
 
 	/** アイテムのテクスチャを返す。 */
 	@Override
-	@SideOnly(Side.CLIENT)
 	public IIcon getIconFromDamage(int meta) {
 		return icons[meta % 4];
 	}
 
 	/** アイテムをクリエイティブタブに登録する処理。 */
 	@Override
-	@SideOnly(Side.CLIENT)
 	public void getSubItems(Item item, CreativeTabs creativeTab, List list) {
 		for (int i = 0; i < 4; i++) {
-			list.add(new ItemStack(this, 1, i));
+			OfalenUtil.add(list, new ItemStack(this, 1, i));
 		}
 	}
 

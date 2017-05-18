@@ -182,9 +182,9 @@ public class ItemCollector extends Item implements IItemOfalenSettable {
 	public void addInformation(ItemStack itemStack, EntityPlayer player, List list, boolean flag) {
 		if (!itemStack.hasTagCompound())
 			return;
-		list.add(StatCollector.translateToLocal("info.ofalen.collector.item") + " : " + (itemStack.getTagCompound().getBoolean(OfalenNBTUtil.IS_ITEM_DISABLED) ? "Off" : "On"));
-		list.add(StatCollector.translateToLocal("info.ofalen.collector.exp") + " : " + (itemStack.getTagCompound().getBoolean(OfalenNBTUtil.IS_EXP_DISABLED) ? "Off" : "On"));
-		list.addAll(FilterUtil.getFilterInformation(itemStack));
+		List<String> stringList = OfalenUtil.add(list, StatCollector.translateToLocal("info.ofalen.collector.item") + " : " + (itemStack.getTagCompound().getBoolean(OfalenNBTUtil.IS_ITEM_DISABLED) ? "Off" : "On"));
+		stringList.add(StatCollector.translateToLocal("info.ofalen.collector.exp") + " : " + (itemStack.getTagCompound().getBoolean(OfalenNBTUtil.IS_EXP_DISABLED) ? "Off" : "On"));
+		stringList.addAll(FilterUtil.getFilterInformation(itemStack));
 	}
 
 	@Override

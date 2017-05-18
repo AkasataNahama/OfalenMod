@@ -1,7 +1,5 @@
 package nahama.ofalenmod.inventory;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import nahama.ofalenmod.tileentity.TileEntityFusingMachine;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
@@ -10,10 +8,6 @@ import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 
 public class ContainerFusingMachine extends Container {
-	private TileEntityFusingMachine tileEntity;
-	private short lastFusingTime;
-	private short lastBurningTime;
-	private short lastItemBurningTime;
 	/** 変換機のインベントリの第一スロットの番号。 */
 	private static final byte INDEX_0 = 0;
 	/** プレイヤーのインベントリの第一スロットの番号。 */
@@ -22,6 +16,10 @@ public class ContainerFusingMachine extends Container {
 	private static final byte INDEX_2 = INDEX_1 + 27;
 	/** このコンテナの全体のスロット数。 */
 	private static final byte INDEX_3 = INDEX_2 + 9;
+	private TileEntityFusingMachine tileEntity;
+	private short lastFusingTime;
+	private short lastBurningTime;
+	private short lastItemBurningTime;
 
 	public ContainerFusingMachine(EntityPlayer player, TileEntityFusingMachine tileEntity) {
 		this.tileEntity = tileEntity;
@@ -70,7 +68,6 @@ public class ContainerFusingMachine extends Container {
 	}
 
 	@Override
-	@SideOnly(Side.CLIENT)
 	public void updateProgressBar(int par1, int par2) {
 		if (par1 == 0) {
 			tileEntity.timeWorking = (short) par2;

@@ -1,7 +1,5 @@
 package nahama.ofalenmod.block;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import nahama.ofalenmod.OfalenModCore;
 import nahama.ofalenmod.tileentity.TileEntityGradedMachineBase;
 import net.minecraft.block.Block;
@@ -103,7 +101,6 @@ public abstract class BlockMachineBase extends BlockContainer {
 
 	/** ブロックのテクスチャを登録する処理。 */
 	@Override
-	@SideOnly(Side.CLIENT)
 	public void registerBlockIcons(IIconRegister register) {
 		icons = new IIcon[4];
 		for (int i = 0; i < 4; i++) {
@@ -113,7 +110,6 @@ public abstract class BlockMachineBase extends BlockContainer {
 
 	/** ブロックのテクスチャを返す。 */
 	@Override
-	@SideOnly(Side.CLIENT)
 	public IIcon getIcon(int side, int meta) {
 		if (meta < 8) {
 			return side == meta ? icons[2] : icons[0];

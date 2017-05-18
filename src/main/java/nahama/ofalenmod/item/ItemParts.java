@@ -1,8 +1,7 @@
 package nahama.ofalenmod.item;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import nahama.ofalenmod.OfalenModCore;
+import nahama.ofalenmod.util.OfalenUtil;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
@@ -12,8 +11,8 @@ import net.minecraft.util.IIcon;
 import java.util.List;
 
 public class ItemParts extends Item {
-	protected IIcon[] icons;
 	private final byte type;
+	protected IIcon[] icons;
 
 	public ItemParts(byte type) {
 		this.type = type;
@@ -24,7 +23,6 @@ public class ItemParts extends Item {
 
 	/** アイテムのテクスチャを登録する処理。 */
 	@Override
-	@SideOnly(Side.CLIENT)
 	public void registerIcons(IIconRegister register) {
 		icons = new IIcon[type];
 		for (int i = 0; i < type; i++) {
@@ -34,17 +32,15 @@ public class ItemParts extends Item {
 
 	/** アイテムのテクスチャを返す。 */
 	@Override
-	@SideOnly(Side.CLIENT)
 	public IIcon getIconFromDamage(int meta) {
 		return icons[meta];
 	}
 
 	/** アイテムをクリエイティブタブに登録する処理。 */
 	@Override
-	@SideOnly(Side.CLIENT)
 	public void getSubItems(Item item, CreativeTabs creativeTab, List list) {
 		for (int i = 0; i < type; i++) {
-			list.add(new ItemStack(this, 1, i));
+			OfalenUtil.add(list, new ItemStack(this, 1, i));
 		}
 	}
 

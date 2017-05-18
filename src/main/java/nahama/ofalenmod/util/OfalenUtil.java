@@ -12,6 +12,7 @@ import net.minecraft.world.World;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
 import java.util.Random;
 
 public class OfalenUtil {
@@ -150,5 +151,11 @@ public class OfalenUtil {
 	/** FMLCommonHandlerを利用したサイドの判定。Minecraft起動時に確定。 */
 	public static boolean isClient() {
 		return FMLCommonHandler.instance().getSide() == Side.CLIENT;
+	}
+
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	public static <T> List<T> add(List list, T e) {
+		list.add(e);
+		return (List<T>) list;
 	}
 }

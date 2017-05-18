@@ -1,7 +1,5 @@
 package nahama.ofalenmod.entity;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import nahama.ofalenmod.util.OfalenNBTUtil;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
@@ -18,12 +16,12 @@ import net.minecraft.world.World;
 import java.util.List;
 
 public abstract class EntityLaserBase extends Entity {
+	public int throwableShake;
 	protected int xTile = -1;
 	protected int yTile = -1;
 	protected int zTile = -1;
 	protected Block inBlock;
 	protected boolean isInGround;
-	public int throwableShake;
 	protected EntityLivingBase thrower;
 	protected String throwerName;
 	protected int ticksInGround;
@@ -31,18 +29,6 @@ public abstract class EntityLaserBase extends Entity {
 	protected double startX;
 	protected double startY;
 	protected double startZ;
-
-	@Override
-	protected void entityInit() {
-	}
-
-	@Override
-	@SideOnly(Side.CLIENT)
-	public boolean isInRangeToRenderDist(double range) {
-		double d1 = boundingBox.getAverageEdgeLength() * 4.0D;
-		d1 *= 64.0D;
-		return range < d1 * d1;
-	}
 
 	protected EntityLaserBase(World world) {
 		super(world);
@@ -67,6 +53,17 @@ public abstract class EntityLaserBase extends Entity {
 		motionZ = MathHelper.cos(rotationYaw / 180.0F * (float) Math.PI) * MathHelper.cos(rotationPitch / 180.0F * (float) Math.PI);
 		motionY = (-MathHelper.sin(rotationPitch / 180.0F * (float) Math.PI));
 		this.setThrowableHeading(motionX, motionY, motionZ, this.getSpeed(), 1.0F);
+	}
+
+	@Override
+	protected void entityInit() {
+	}
+
+	@Override
+	public boolean isInRangeToRenderDist(double range) {
+		double d1 = boundingBox.getAverageEdgeLength() * 4.0D;
+		d1 *= 64.0D;
+		return range < d1 * d1;
 	}
 
 	protected float getSpeed() {
@@ -99,7 +96,6 @@ public abstract class EntityLaserBase extends Entity {
 
 	/** 速度の処理。 */
 	@Override
-	@SideOnly(Side.CLIENT)
 	public void setVelocity(double x, double y, double z) {
 		motionX = x;
 		motionY = y;
@@ -245,7 +241,6 @@ public abstract class EntityLaserBase extends Entity {
 	}
 
 	@Override
-	@SideOnly(Side.CLIENT)
 	public float getShadowSize() {
 		return 0.0F;
 	}
