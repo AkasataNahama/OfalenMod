@@ -286,6 +286,22 @@ item.ofalen.ball.recovery.G1.name=Ofalen Recovery Ball Grade 1
 item.ofalen.ball.recovery.G2.name=Ofalen Recovery Ball Grade 2
 item.ofalen.ball.recovery.G3.name=Ofalen Recovery Ball Grade 3
 
+item.ofalen.ball.fireproof.G1.name=Ofalen Fireproof Ball Grade 1
+item.ofalen.ball.fireproof.G2.name=Ofalen Fireproof Ball Grade 2
+item.ofalen.ball.fireproof.G3.name=Ofalen Fireproof Ball Grade 3
+
+item.ofalen.ball.mining.G1.name=Ofalen Mining Ball Grade 1
+item.ofalen.ball.mining.G2.name=Ofalen Mining Ball Grade 2
+item.ofalen.ball.mining.G3.name=Ofalen Mining Ball Grade 3
+
+item.ofalen.ball.nightVision.G1.name=Ofalen Night-Vision Ball Grade 1
+item.ofalen.ball.nightVision.G2.name=Ofalen Night-Vision Ball Grade 2
+item.ofalen.ball.nightVision.G3.name=Ofalen Night-Vision Ball Grade 3
+
+item.ofalen.ball.transparent.G1.name=Ofalen Transparent Ball Grade 1
+item.ofalen.ball.transparent.G2.name=Ofalen Transparent Ball Grade 2
+item.ofalen.ball.transparent.G3.name=Ofalen Transparent Ball Grade 3
+
 item.ofalen.ball.explosion.0.name=Ofalen Explosion Ball Grade 1
 item.ofalen.ball.explosion.1.name=Ofalen Explosion Ball Grade 2
 item.ofalen.ball.explosion.2.name=Ofalen Explosion Ball Grade 3

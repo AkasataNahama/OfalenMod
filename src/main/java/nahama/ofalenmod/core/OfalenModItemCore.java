@@ -17,6 +17,14 @@ import net.minecraftforge.common.util.EnumHelper;
 import net.minecraftforge.oredict.OreDictionary;
 
 public class OfalenModItemCore {
+	// アーマーマテリアル
+	private static final ArmorMaterial OFALEN_ARMOR_G2 = EnumHelper.addArmorMaterial("OFALEN_ARMOR_G2", 66, new int[] { 3, 9, 7, 3 }, 20);
+	private static final ArmorMaterial OFALEN_ARMOR_G3 = EnumHelper.addArmorMaterial("OFALEN_ARMOR_G3", 132, new int[] { 4, 10, 7, 3 }, 40);
+	private static final ArmorMaterial OFALEN_ARMOR_P = EnumHelper.addArmorMaterial("OFALEN_ARMOR_P", 264, new int[] { 4, 10, 7, 4 }, 80);
+	// ツールマテリアル
+	private static final ToolMaterial OFALEN_TOOL_G2 = EnumHelper.addToolMaterial("OFALEN_TOOL_G2", 4, 3123, 16.0F, 6.0F, 20);
+	private static final ToolMaterial OFALEN_TOOL_G3 = EnumHelper.addToolMaterial("OFALEN_TOOL_G3", 4, 6247, 32.0F, 12.0F, 40);
+	private static final ToolMaterial OFALEN_TOOL_P = EnumHelper.addToolMaterial("OFALEN_TOOL_P", 5, 12495, 64.0F, 24.0F, 80);
 	// 基本アイテム
 	public static Item gemOfalen;
 	public static Item fragmentOfalen;
@@ -70,6 +78,22 @@ public class OfalenModItemCore {
 	public static Item ballRecoveryG1;
 	public static Item ballRecoveryG2;
 	public static Item ballRecoveryG3;
+	// 耐火玉
+	public static Item ballFireproofG1;
+	public static Item ballFireproofG2;
+	public static Item ballFireproofG3;
+	// 採掘玉
+	public static Item ballMiningG1;
+	public static Item ballMiningG2;
+	public static Item ballMiningG3;
+	// 暗視玉
+	public static Item ballNightVisionG1;
+	public static Item ballNightVisionG2;
+	public static Item ballNightVisionG3;
+	// 透明玉
+	public static Item ballTransparentG1;
+	public static Item ballTransparentG2;
+	public static Item ballTransparentG3;
 	// その他の玉
 	public static Item ballExplosion;
 	public static Item ballHungry;
@@ -117,14 +141,6 @@ public class OfalenModItemCore {
 	public static Item caneSurveying;
 	// 経験値の結晶
 	public static Item crystalExp;
-	// アーマーマテリアル
-	private static final ArmorMaterial OFALEN_ARMOR_G2 = EnumHelper.addArmorMaterial("OFALEN_ARMOR_G2", 66, new int[] { 3, 9, 7, 3 }, 20);
-	private static final ArmorMaterial OFALEN_ARMOR_G3 = EnumHelper.addArmorMaterial("OFALEN_ARMOR_G3", 132, new int[] { 4, 10, 7, 3 }, 40);
-	private static final ArmorMaterial OFALEN_ARMOR_P = EnumHelper.addArmorMaterial("OFALEN_ARMOR_P", 264, new int[] { 4, 10, 7, 4 }, 80);
-	// ツールマテリアル
-	private static final ToolMaterial OFALEN_TOOL_G2 = EnumHelper.addToolMaterial("OFALEN_TOOL_G2", 4, 3123, 16.0F, 6.0F, 20);
-	private static final ToolMaterial OFALEN_TOOL_G3 = EnumHelper.addToolMaterial("OFALEN_TOOL_G3", 4, 6247, 32.0F, 12.0F, 40);
-	private static final ToolMaterial OFALEN_TOOL_P = EnumHelper.addToolMaterial("OFALEN_TOOL_P", 5, 12495, 64.0F, 24.0F, 80);
 
 	/** アイテムを登録する。 */
 	public static void registerItem() {
@@ -231,6 +247,46 @@ public class OfalenModItemCore {
 		GameRegistry.registerItem(ballRecoveryG2, "ballRecoveryG2");
 		ballRecoveryG3 = new ItemOfalenBall(new PotionEffect[] { new PotionEffect(Potion.regeneration.id, 2400, 3) }).setUnlocalizedName("ofalen.ball.recovery.G3").setTextureName("ofalenmod:ball-3-3");
 		GameRegistry.registerItem(ballRecoveryG3, "ballRecoveryG3");
+		// 耐火玉
+		ballFireproofG1 = new ItemOfalenBall(new PotionEffect(Potion.fireResistance.getId(), 2400, 0));
+		ballFireproofG1.setUnlocalizedName("ofalen.ball.fireproof.G1").setTextureName("ofalenmod:ball-1-4");
+		GameRegistry.registerItem(ballFireproofG1, "ballFireProofG1");
+		ballFireproofG2 = new ItemOfalenBall(new PotionEffect(Potion.fireResistance.getId(), 2400, 1));
+		ballFireproofG2.setUnlocalizedName("ofalen.ball.fireproof.G2").setTextureName("ofalenmod:ball-2-4");
+		GameRegistry.registerItem(ballFireproofG2, "ballFireproofG2");
+		ballFireproofG3 = new ItemOfalenBall(new PotionEffect(Potion.fireResistance.getId(), 2400, 3));
+		ballFireproofG3.setUnlocalizedName("ofalen.ball.fireproof.G3").setTextureName("ofalenmod:ball-3-4");
+		GameRegistry.registerItem(ballFireproofG3, "ballFireproofG3");
+		// 採掘玉
+		ballMiningG1 = new ItemOfalenBall(new PotionEffect(Potion.digSpeed.getId(), 2400, 0));
+		ballMiningG1.setUnlocalizedName("ofalen.ball.mining.G1").setTextureName("ofalenmod:ball-1-5");
+		GameRegistry.registerItem(ballMiningG1, "ballMiningG1");
+		ballMiningG2 = new ItemOfalenBall(new PotionEffect(Potion.digSpeed.getId(), 2400, 1));
+		ballMiningG2.setUnlocalizedName("ofalen.ball.mining.G2").setTextureName("ofalenmod:ball-2-5");
+		GameRegistry.registerItem(ballMiningG2, "ballMiningG2");
+		ballMiningG3 = new ItemOfalenBall(new PotionEffect(Potion.digSpeed.getId(), 2400, 3));
+		ballMiningG3.setUnlocalizedName("ofalen.ball.mining.G3").setTextureName("ofalenmod:ball-3-5");
+		GameRegistry.registerItem(ballMiningG3, "ballMiningG3");
+		// 暗視玉
+		ballNightVisionG1 = new ItemOfalenBall(new PotionEffect(Potion.nightVision.getId(), 2400, 0));
+		ballNightVisionG1.setUnlocalizedName("ofalen.ball.nightVision.G1").setTextureName("ofalenmod:ball-1-6");
+		GameRegistry.registerItem(ballNightVisionG1, "ballNightVisionG1");
+		ballNightVisionG2 = new ItemOfalenBall(new PotionEffect(Potion.nightVision.getId(), 2400, 1));
+		ballNightVisionG2.setUnlocalizedName("ofalen.ball.nightVision.G2").setTextureName("ofalenmod:ball-2-6");
+		GameRegistry.registerItem(ballNightVisionG2, "ballNightVisionG2");
+		ballNightVisionG3 = new ItemOfalenBall(new PotionEffect(Potion.nightVision.getId(), 2400, 3));
+		ballNightVisionG3.setUnlocalizedName("ofalen.ball.nightVision.G3").setTextureName("ofalenmod:ball-3-6");
+		GameRegistry.registerItem(ballNightVisionG3, "ballNightVisionG3");
+		// 透明玉
+		ballTransparentG1 = new ItemOfalenBall(new PotionEffect(Potion.invisibility.getId(), 2400, 0));
+		ballTransparentG1.setUnlocalizedName("ofalen.ball.transparent.G1").setTextureName("ofalenmod:ball-1-7");
+		GameRegistry.registerItem(ballTransparentG1, "ballTransparentG1");
+		ballTransparentG2 = new ItemOfalenBall(new PotionEffect(Potion.invisibility.getId(), 2400, 1));
+		ballTransparentG2.setUnlocalizedName("ofalen.ball.transparent.G2").setTextureName("ofalenmod:ball-2-7");
+		GameRegistry.registerItem(ballTransparentG2, "ballTransparentG2");
+		ballTransparentG3 = new ItemOfalenBall(new PotionEffect(Potion.invisibility.getId(), 2400, 3));
+		ballTransparentG3.setUnlocalizedName("ofalen.ball.transparent.G3").setTextureName("ofalenmod:ball-3-7");
+		GameRegistry.registerItem(ballTransparentG3, "ballTransparentG3");
 		// その他の玉
 		ballExplosion = new ItemExplosionBall().setUnlocalizedName("ofalen.ball.explosion").setTextureName("ofalenmod:explosion_ball");
 		GameRegistry.registerItem(ballExplosion, "ballExplosion");

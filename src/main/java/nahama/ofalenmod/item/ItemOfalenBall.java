@@ -12,7 +12,7 @@ public class ItemOfalenBall extends ItemFood {
 	/** 付与するポーション効果の配列。 */
 	private final PotionEffect[] effects;
 
-	public ItemOfalenBall(PotionEffect[] effects) {
+	public ItemOfalenBall(PotionEffect... effects) {
 		super(0, 0.0F, false);
 		this.effects = effects;
 		this.setCreativeTab(OfalenModCore.TAB_OFALEN);

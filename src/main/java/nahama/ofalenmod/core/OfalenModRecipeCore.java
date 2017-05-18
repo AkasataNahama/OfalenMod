@@ -108,6 +108,10 @@ public class OfalenModRecipeCore {
 		addGradedBallRecipe(GEM[0], ballDefenseG1, ballDefenseG2, ballDefenseG3);
 		addGradedBallRecipe(GEM[2], ballAttackG1, ballAttackG2, ballAttackG3);
 		addGradedBallRecipe(GEM[3], ballRecoveryG1, ballRecoveryG2, ballRecoveryG3);
+		addGradedBallRecipe(GEM[4], ballFireproofG1, ballFireproofG2, ballFireproofG3);
+		addGradedBallRecipe(GEM[5], ballMiningG1, ballMiningG2, ballMiningG3);
+		addGradedBallRecipe(GEM[6], ballNightVisionG1, ballNightVisionG2, ballNightVisionG3);
+		addGradedBallRecipe(GEM[7], ballTransparentG1, ballTransparentG2, ballTransparentG3);
 		for (int i = 0; i < 3; i++) {
 			addBallRecipe(new ItemStack(ballExplosion, 1, i), Items.gunpowder, i);
 		}

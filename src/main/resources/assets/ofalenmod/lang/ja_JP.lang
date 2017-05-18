@@ -286,6 +286,22 @@ item.ofalen.ball.recovery.G1.name=オファレンの回復玉 Grade 1
 item.ofalen.ball.recovery.G2.name=オファレンの回復玉 Grade 2
 item.ofalen.ball.recovery.G3.name=オファレンの回復玉 Grade 3
 
+item.ofalen.ball.fireproof.G1.name=オファレンの耐火玉 Grade 1
+item.ofalen.ball.fireproof.G2.name=オファレンの耐火玉 Grade 2
+item.ofalen.ball.fireproof.G3.name=オファレンの耐火玉 Grade 3
+
+item.ofalen.ball.mining.G1.name=オファレンの採掘玉 Grade 1
+item.ofalen.ball.mining.G2.name=オファレンの採掘玉 Grade 2
+item.ofalen.ball.mining.G3.name=オファレンの採掘玉 Grade 3
+
+item.ofalen.ball.nightVision.G1.name=オファレンの暗視玉 Grade 1
+item.ofalen.ball.nightVision.G2.name=オファレンの暗視玉 Grade 2
+item.ofalen.ball.nightVision.G3.name=オファレンの暗視玉 Grade 3
+
+item.ofalen.ball.transparent.G1.name=オファレンの透明玉 Grade 1
+item.ofalen.ball.transparent.G2.name=オファレンの透明玉 Grade 2
+item.ofalen.ball.transparent.G3.name=オファレンの透明玉 Grade 3
+
 item.ofalen.ball.explosion.0.name=オファレンの爆発玉 Grade 1
 item.ofalen.ball.explosion.1.name=オファレンの爆発玉 Grade 2
 item.ofalen.ball.explosion.2.name=オファレンの爆発玉 Grade 3
