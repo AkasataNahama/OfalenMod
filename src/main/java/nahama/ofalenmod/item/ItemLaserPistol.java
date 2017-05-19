@@ -21,9 +21,6 @@ import net.minecraft.world.World;
 import java.util.List;
 
 public class ItemLaserPistol extends Item {
-	/** 次のレーザーが撃てるようになるまでのカウント。 */
-	private int duration = 0;
-
 	public ItemLaserPistol() {
 		this.setCreativeTab(OfalenModCore.TAB_OFALEN);
 		this.setMaxStackSize(1);
@@ -51,12 +48,15 @@ public class ItemLaserPistol extends Item {
 		// 時間を減少させる。
 		if (itemStack.getItem() != this)
 			return;
-		if (world.isRemote && duration > 0)
-			duration--;
 		if (!itemStack.hasTagCompound())
 			itemStack.setTagCompound(new NBTTagCompound());
+		// 修繕機での耐久値回復を無効にする。
 		if (!itemStack.getTagCompound().getBoolean(OfalenNBTUtil.IS_IRREPARABLE))
 			itemStack.getTagCompound().setBoolean(OfalenNBTUtil.IS_IRREPARABLE, true);
+		// 無効時間があれば減らす。
+		byte interval = itemStack.getTagCompound().getByte(OfalenNBTUtil.INTERVAL);
+		if (interval > 0)
+			itemStack.getTagCompound().setByte(OfalenNBTUtil.INTERVAL, --interval);
 	}
 
 	/** 右クリック時の処理。 */
@@ -67,20 +67,17 @@ public class ItemLaserPistol extends Item {
 			// プレイヤーがマガジンを所持しているならリロード動作に移る。
 			if (this.hasMagazinePlayer(player, itemStack))
 				player.setItemInUse(itemStack, this.getMaxItemUseDuration(itemStack));
-			// クライアントの処理なら装填時間を設定する。
-			if (world.isRemote)
-				duration = 10;
-		} else if (!world.isRemote || duration <= 0) {
+		} else if (itemStack.getTagCompound().getByte(OfalenNBTUtil.INTERVAL) < 1) {
 			// 次のレーザーを発射できるならば、
-			if (itemStack.hasTagCompound() && itemStack.getTagCompound().getString(OfalenNBTUtil.LASER_COLOR).length() > 0) {
+			if (itemStack.getTagCompound().getString(OfalenNBTUtil.LASER_COLOR).length() > 0) {
 				// LaserColorのNBTTagを持っているならば、
 				String color = itemStack.getTagCompound().getString(OfalenNBTUtil.LASER_COLOR);
-				// クリエイティブモードでないならダメージを与える。
-				if (!player.capabilities.isCreativeMode)
+				// サーバー側で、クリエイティブモードでないならダメージを与える。
+				if (!world.isRemote && !player.capabilities.isCreativeMode)
 					itemStack.setItemDamage(itemStack.getItemDamage() + 32);
-				// クライアントの処理なら装填時間を設定する。
-				if (world.isRemote)
-					duration = 10;
+				// 連続発射を防止するため、インターバルを設定する。
+				itemStack.getTagCompound().setByte(OfalenNBTUtil.INTERVAL, (byte) 10);
+				// 色に応じてレーザーのEntityをスポーンさせる。レーザーは描画のため両側で必要。
 				if (color.equals("Red")) {
 					for (int i = -2; i < 3; i++) {
 						world.spawnEntityInWorld(new EntityLaserRed(world, player, i));
@@ -99,7 +96,9 @@ public class ItemLaserPistol extends Item {
 					return itemStack;
 				}
 			}
-			itemStack.setItemDamage(itemStack.getMaxDamage());
+			// 色がタグに設定されていないか、不正なら耐久値を0にする。
+			if (!world.isRemote)
+				itemStack.setItemDamage(itemStack.getMaxDamage());
 		}
 		return itemStack;
 	}
@@ -117,7 +116,7 @@ public class ItemLaserPistol extends Item {
 			}
 		}
 		// もしマガジンを持っていなくても、ピストル側にLaserColorが設定されていれば、trueを返す。
-		return itemStack.hasTagCompound() && itemStack.getTagCompound().getString(OfalenNBTUtil.LASER_COLOR).length() > 0;
+		return itemStack.getTagCompound().getString(OfalenNBTUtil.LASER_COLOR).length() > 0;
 	}
 
 	/** リロードにかかる時間を返す。 */
@@ -137,20 +136,15 @@ public class ItemLaserPistol extends Item {
 	@Override
 	public ItemStack onEaten(ItemStack itemStack, World world, EntityPlayer player) {
 		// リロード完了時の処理を行う。
-		// NBTを作成する。
-		NBTTagCompound nbt = new NBTTagCompound();
-		// すでに引数のItemStackがNBTTagを保持しているなら、
-		if (itemStack.hasTagCompound()) {
-			// nbtに代入する。
-			nbt = itemStack.getTagCompound();
-			// LaserColorに何かの文字が登録されていたら、
-			if (nbt.getString(OfalenNBTUtil.LASER_COLOR).length() > 0 && !world.isRemote) {
-				// マガジンをドロップさせ、
-				OfalenUtil.dropItemStackNearEntity(new ItemStack(OfalenModItemCore.partsOfalen, 1, 5), player);
-				// LaserColorをリセットする。
-				nbt.setString(OfalenNBTUtil.LASER_COLOR, "");
-			}
+		NBTTagCompound nbt = itemStack.getTagCompound();
+		// LaserColorに何かの文字が登録されていたら、
+		if (nbt.getString(OfalenNBTUtil.LASER_COLOR).length() > 0) {
+			// マガジンをドロップさせ、
+			OfalenUtil.dropItemStackNearEntity(new ItemStack(OfalenModItemCore.partsOfalen, 1, 5), player);
+			// LaserColorをリセットする。
+			nbt.setString(OfalenNBTUtil.LASER_COLOR, "");
 		}
+		nbt.setByte(OfalenNBTUtil.INTERVAL, (byte) 10);
 		// プレイヤーが所持しているマガジンの色をNBTに保存する。
 		ItemStack[] inventory = player.inventory.mainInventory;
 		for (int i = 0; i < inventory.length; i++) {
@@ -171,7 +165,8 @@ public class ItemLaserPistol extends Item {
 				if (inventory[i].stackSize < 1)
 					inventory[i] = null;
 				// ダメージ値を全回復させる。
-				itemStack.setItemDamage(0);
+				if (!world.isRemote)
+					itemStack.setItemDamage(0);
 				return itemStack;
 			}
 		}
