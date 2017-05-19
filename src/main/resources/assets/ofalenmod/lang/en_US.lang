@@ -115,7 +115,7 @@ info.ofalen.notificationVersion=Ofalen Mod : New version is available!
 info.ofalen.using=Using
 info.ofalen.latest=Latest
 // Smelting Machine
-info.ofalen.recipeSmelting=Ofalen Smelting Machine
+info.ofalen.recipeSmelting=Ofalen Smelting
 // Perfect Tool
 info.ofalen.toolPerfect.mode=Right Click Effect
 info.ofalen.toolPerfect.mode.changed=Right Click Effect is changed to %s
