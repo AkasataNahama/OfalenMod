@@ -64,12 +64,15 @@ public class OfalenUtil {
 
 	/** entityの座標にあるitemStackを持ったEntityItemを生成して返す。 */
 	public static EntityItem getEntityItemNearEntity(ItemStack itemStack, Entity entity) {
+		if (entity.worldObj.isRemote)
+			OfalenLog.debuggingInfo("EntityItem mustn't be spawned on the client side.", "OfalenUtil");
 		return new EntityItem(entity.worldObj, entity.posX, entity.posY, entity.posZ, itemStack);
 	}
 
 	/** entityの座標にあるitemStackを持ったEntityItemを生成してワールドにスポーンさせる。 */
 	public static void dropItemStackNearEntity(ItemStack itemStack, Entity entity) {
-		entity.worldObj.spawnEntityInWorld(getEntityItemNearEntity(itemStack, entity));
+		if (!entity.worldObj.isRemote)
+			entity.worldObj.spawnEntityInWorld(getEntityItemNearEntity(itemStack, entity));
 	}
 
 	/** 指定されたブロック座標の周囲にitemStackを持ったEntityItemをばらまく。 */
