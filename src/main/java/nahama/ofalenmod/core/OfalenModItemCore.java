@@ -25,6 +25,7 @@ public class OfalenModItemCore {
 	private static final ToolMaterial OFALEN_TOOL_G2 = EnumHelper.addToolMaterial("OFALEN_TOOL_G2", 4, 3123, 16.0F, 6.0F, 20);
 	private static final ToolMaterial OFALEN_TOOL_G3 = EnumHelper.addToolMaterial("OFALEN_TOOL_G3", 4, 6247, 32.0F, 12.0F, 40);
 	private static final ToolMaterial OFALEN_TOOL_P = EnumHelper.addToolMaterial("OFALEN_TOOL_P", 5, 12495, 64.0F, 24.0F, 80);
+	private static final ToolMaterial OFALEN_CREATIVE_SWORD = EnumHelper.addToolMaterial("OFALEN_CREATIVE_SWORD", 0, 0, 0, 0, 0);
 	// 基本アイテム
 	public static Item gemOfalen;
 	public static Item fragmentOfalen;
@@ -344,7 +345,7 @@ public class OfalenModItemCore {
 		// その他の道具
 		toolOfalenP = new ItemOfalenPerfectTool(OFALEN_TOOL_P).setUnlocalizedName("ofalen.tool.P").setTextureName("ofalenmod:tool-perfect");
 		GameRegistry.registerItem(toolOfalenP, "toolPerfectOfalen");
-		swordCreative = new ItemCreativeSword().setUnlocalizedName("ofalen.sword.creative").setTextureName("ofalenmod:creative_sword");
+		swordCreative = new ItemCreativeSword(OFALEN_CREATIVE_SWORD).setUnlocalizedName("ofalen.sword.creative").setTextureName("ofalenmod:creative_sword");
 		GameRegistry.registerItem(swordCreative, "swordSp");
 		// レーザー関連
 		pistolLaser = new ItemLaserPistol().setUnlocalizedName("ofalen.pistolLaser").setTextureName("ofalenmod:laser_pistol");
