@@ -9,7 +9,7 @@ public class NEIOfalenModConfig implements IConfigureNEI {
 	@Override
 	public void loadConfig() {
 		// NEI<something>Configという名前でIConfigureNEIを実装しておくと自動で呼ばれる。
-		// NEIにオファレン精錬機のレシピを登録する。
+		// NEIにオファレン製錬機のレシピを登録する。
 		API.registerRecipeHandler(OfalenSmeltingRecipeHandler.instance);
 		API.registerUsageHandler(OfalenSmeltingRecipeHandler.instance);
 		API.registerGuiOverlay(GuiSmeltingMachine.class, OfalenSmeltingRecipeHandler.instance.getOverlayIdentifier(), 5, 10);
