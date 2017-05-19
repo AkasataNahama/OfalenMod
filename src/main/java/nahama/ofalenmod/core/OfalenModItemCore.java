@@ -288,7 +288,7 @@ public class OfalenModItemCore {
 		ballTransparentG3.setUnlocalizedName("ofalen.ball.transparent.G3").setTextureName("ofalenmod:ball-3-7");
 		GameRegistry.registerItem(ballTransparentG3, "ballTransparentG3");
 		// その他の玉
-		ballExplosion = new ItemExplosionBall().setUnlocalizedName("ofalen.ball.explosion").setTextureName("ofalenmod:explosion_ball");
+		ballExplosion = new ItemExplosionBall().setUnlocalizedName("ofalen.ball.explosion").setTextureName("ofalenmod:ball-explosion");
 		GameRegistry.registerItem(ballExplosion, "ballExplosion");
 		ballHungry = new ItemOfalenBall(new PotionEffect[] { new PotionEffect(Potion.hunger.id, 40, 1599) }).setUnlocalizedName("ofalen.ball.hungry").setTextureName("ofalenmod:hungry_ball");
 		GameRegistry.registerItem(ballHungry, "ballHungry");
