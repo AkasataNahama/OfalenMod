@@ -45,7 +45,7 @@ public abstract class BlockMachineBase extends BlockContainer {
 	public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase entity, ItemStack itemStack) {
 		// 設置したEntityの向きによってメタデータを設定する。
 		int meta = 0;
-		switch (MathHelper.floor_double(entity.rotationYaw * 4.0F / 360.0F + 0.5D) % 4) {
+		switch (MathHelper.floor_double((double) (entity.rotationYaw * 4.0F / 360.0F) + 0.5D) & 3) {
 		case 0:
 			meta = 2;
 			break;
