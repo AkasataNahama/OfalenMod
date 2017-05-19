@@ -16,7 +16,7 @@ public class EntityLaserRed extends EntityLaserBase {
 		/*
 		 * posX -= (double)(MathHelper.cos(rotationYaw / 180.0F * (float)Math.PI) * 0.16F);
 		 * posZ -= (double)(MathHelper.sin(rotationYaw / 180.0F * (float)Math.PI) * 0.16F);
-		。 */
+		 */
 		posY -= 0.10000000149011612D;
 		this.setPosition(posX, posY, posZ);
 		startX = posX;
@@ -26,7 +26,7 @@ public class EntityLaserRed extends EntityLaserBase {
 		motionX = -MathHelper.sin(rotationYaw / 180.0F * (float) Math.PI) * MathHelper.cos(rotationPitch / 180.0F * (float) Math.PI);
 		motionZ = MathHelper.cos(rotationYaw / 180.0F * (float) Math.PI) * MathHelper.cos(rotationPitch / 180.0F * (float) Math.PI);
 		motionY = (-MathHelper.sin(rotationPitch / 180.0F * (float) Math.PI));
-		this.setThrowableHeading(motionX, motionY, motionZ, this.getSpeed(), 1.0F);
+		this.setThrowableHeading(motionX, motionY, motionZ, this.getSpeed());
 	}
 
 	@Override

@@ -37,7 +37,7 @@ public class ItemOfalenBall extends ItemFood {
 	/*
 	 * EntityLivingBase.addPotionEffect(PotionEffect)では、効果時間を上書きしているらしい(?)ので、
 	 * 新たにPotionEffectのオブジェクトを生成して引数として渡している。
-	。 */
+	 */
 	@Override
 	public ItemStack onEaten(ItemStack itemStack, World world, EntityPlayer player) {
 		// クリエイティブモード以外ならスタックサイズを減らす。
@@ -57,8 +57,8 @@ public class ItemOfalenBall extends ItemFood {
 					player.addPotionEffect(effect);
 				}
 			}
+			world.playSoundAtEntity(player, "random.burp", 0.5F, world.rand.nextFloat() * 0.1F + 0.9F);
 		}
-		world.playSoundAtEntity(player, "random.burp", 0.5F, world.rand.nextFloat() * 0.1F + 0.9F);
 		return itemStack;
 	}
 }

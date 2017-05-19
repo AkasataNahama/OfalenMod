@@ -31,7 +31,8 @@ public class ItemExplosionBall extends Item {
 			--itemStack.stackSize;
 		}
 		// 音を出す
-		world.playSoundAtEntity(player, "random.bow", 0.5F, 0.4F / (itemRand.nextFloat() * 0.4F + 0.8F));
+		if (!world.isRemote)
+			world.playSoundAtEntity(player, "random.bow", 0.5F, 0.4F / (itemRand.nextFloat() * 0.4F + 0.8F));
 		// Entityを生成する
 		if (itemStack.getItem() == OfalenModItemCore.ballExplosion)
 			world.spawnEntityInWorld(new EntityExplosionBall(world, player, this.getDamage(itemStack)));

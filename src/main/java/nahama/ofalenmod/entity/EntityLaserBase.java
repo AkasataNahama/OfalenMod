@@ -16,19 +16,19 @@ import net.minecraft.world.World;
 import java.util.List;
 
 public abstract class EntityLaserBase extends Entity {
-	public int throwableShake;
-	protected int xTile = -1;
-	protected int yTile = -1;
-	protected int zTile = -1;
-	protected Block inBlock;
-	protected boolean isInGround;
 	protected EntityLivingBase thrower;
-	protected String throwerName;
-	protected int ticksInGround;
-	protected int ticksInAir;
 	protected double startX;
 	protected double startY;
 	protected double startZ;
+	private int throwableShake;
+	private int xTile = -1;
+	private int yTile = -1;
+	private int zTile = -1;
+	private Block inBlock;
+	private boolean isInGround;
+	private String throwerName;
+	private int ticksInGround;
+	private int ticksInAir;
 
 	protected EntityLaserBase(World world) {
 		super(world);
@@ -42,7 +42,7 @@ public abstract class EntityLaserBase extends Entity {
 		/*
 		 * posX -= (double)(MathHelper.cos(rotationYaw / 180.0F * (float)Math.PI) * 0.16F);
 		 * posZ -= (double)(MathHelper.sin(rotationYaw / 180.0F * (float)Math.PI) * 0.16F);
-		。 */
+		 */
 		posY -= 0.10000000149011612D;
 		this.setPosition(posX, posY, posZ);
 		startX = posX;
@@ -52,7 +52,7 @@ public abstract class EntityLaserBase extends Entity {
 		motionX = -MathHelper.sin(rotationYaw / 180.0F * (float) Math.PI) * MathHelper.cos(rotationPitch / 180.0F * (float) Math.PI);
 		motionZ = MathHelper.cos(rotationYaw / 180.0F * (float) Math.PI) * MathHelper.cos(rotationPitch / 180.0F * (float) Math.PI);
 		motionY = (-MathHelper.sin(rotationPitch / 180.0F * (float) Math.PI));
-		this.setThrowableHeading(motionX, motionY, motionZ, this.getSpeed(), 1.0F);
+		this.setThrowableHeading(motionX, motionY, motionZ, this.getSpeed());
 	}
 
 	@Override
@@ -71,7 +71,7 @@ public abstract class EntityLaserBase extends Entity {
 	}
 
 	/** IProjectileのオーバーライド。ディスペンサーなどで利用される(?)。 */
-	public void setThrowableHeading(double x, double y, double z, float speed, float par5) {
+	public void setThrowableHeading(double x, double y, double z, float speed) {
 		float f2 = MathHelper.sqrt_double(x * x + y * y + z * z);
 		x /= f2;
 		y /= f2;
@@ -81,7 +81,7 @@ public abstract class EntityLaserBase extends Entity {
 		 * x += rand.nextGaussian() * 0.007499999832361937D * (double)par5;
 		 * y += rand.nextGaussian() * 0.007499999832361937D * (double)par5;
 		 * z += rand.nextGaussian() * 0.007499999832361937D * (double)par5;
-		。 */
+		 */
 		x *= speed;
 		y *= speed;
 		z *= speed;

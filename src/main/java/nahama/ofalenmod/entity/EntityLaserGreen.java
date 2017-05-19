@@ -24,7 +24,8 @@ public class EntityLaserGreen extends EntityLaserBase {
 		} else if (block == Blocks.tallgrass) {
 			return;
 		}
-		worldObj.createExplosion(this.getThrower(), posX, posY, posZ, 3, false);
+		if (!worldObj.isRemote)
+			worldObj.createExplosion(this.getThrower(), posX, posY, posZ, 3, false);
 		this.setDead();
 	}
 }
