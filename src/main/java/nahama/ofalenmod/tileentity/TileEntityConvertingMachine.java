@@ -13,7 +13,48 @@ import net.minecraft.nbt.NBTTagCompound;
 
 public class TileEntityConvertingMachine extends TileEntityGradedMachineBase {
 	/** 変換色指定用スロット。(No.3) */
-	protected ItemStack sample;
+	private ItemStack sample;
+
+	private static boolean isProperPair(ItemStack sample, ItemStack converting) {
+		if (!isProperItemStack(sample) || !isProperItemStack(converting)) {
+			// sampleがオファレンブロックでconvertingが匠式硬質オファレンならtrue。
+			if (Block.getBlockFromItem(sample.getItem()) == OfalenModBlockCore.blockOfalen && OfalenModOreDictCore.isMatchedItemStack(OfalenModOreDictCore.listCreeperOfalenBlock, converting))
+				return true;
+			// どちらかが対象外のアイテムならfalse。
+			return false;
+		}
+		// アイテムが一致していないか、メタデータが同じならfalse。
+		if (sample.getItem() != converting.getItem() || sample.getItemDamage() == converting.getItemDamage())
+			return false;
+		// コア以外ならtrue。
+		if (sample.getItem() != OfalenModItemCore.coreOfalen)
+			return true;
+		// コアの時、
+		int damageSample = sample.getItemDamage();
+		int damageConverting = converting.getItemDamage();
+		if (damageSample < 3) {
+			// sampleとconvertingの双方が基本色ならtrue。
+			return damageConverting < 3;
+		} else if (3 < damageSample && damageSample < 7) {
+			// sampleとconvertingの双方が基本融合色ならtrue。
+			return 3 < damageConverting && damageConverting < 7;
+		}
+		// sampleとconvertingのどちらかが白または黒ならfalse。
+		return false;
+	}
+
+	/** 変換可能なアイテムか。匠式硬質オファレンはfalse。 */
+	public static boolean isProperItemStack(ItemStack itemStack) {
+		Item item = itemStack.getItem();
+		if (item instanceof ItemOfalen) {
+			if (item == OfalenModItemCore.coreOfalen) {
+				if (itemStack.getItemDamage() == 3 || itemStack.getItemDamage() == 7)
+					return false;
+			}
+			return true;
+		}
+		return Block.getBlockFromItem(item) == OfalenModBlockCore.blockOfalen;
+	}
 
 	/** インベントリ名を返す。 */
 	@Override
@@ -46,45 +87,6 @@ public class TileEntityConvertingMachine extends TileEntityGradedMachineBase {
 			return true;
 		this.moveItemStack();
 		return false;
-	}
-
-	public static boolean isProperPair(ItemStack sample, ItemStack converting) {
-		// どちらかが対象外のアイテムならfalse。
-		if (!isProperItemStack(sample) || !isProperItemStack(converting))
-			return false;
-		// sampleがオファレンブロックでconvertingが匠式硬質オファレンならtrue。
-		if (Block.getBlockFromItem(sample.getItem()) == OfalenModBlockCore.blockOfalen && OfalenModOreDictCore.isMatchedItemStack(OfalenModOreDictCore.listCreeperOfalenBlock, converting))
-			return true;
-		// アイテムが一致していないか、メタデータが同じならfalse。
-		if (sample.getItem() != converting.getItem() || sample.getItemDamage() == converting.getItemDamage())
-			return false;
-		// コア以外ならtrue。
-		if (sample.getItem() != OfalenModItemCore.coreOfalen)
-			return true;
-		// コアの時、
-		int damageSample = sample.getItemDamage();
-		int damageConverting = converting.getItemDamage();
-		if (damageSample < 3) {
-			// sampleとconvertingの双方が基本色ならtrue。
-			return damageConverting < 3;
-		} else if (3 < damageSample && damageSample < 7) {
-			// sampleとconvertingの双方が基本融合色ならtrue。
-			return 3 < damageConverting && damageConverting < 7;
-		}
-		// sampleとconvertingのどちらかが白または黒ならfalse。
-		return false;
-	}
-
-	public static boolean isProperItemStack(ItemStack itemStack) {
-		Item item = itemStack.getItem();
-		if (item instanceof ItemOfalen) {
-			if (item == OfalenModItemCore.coreOfalen) {
-				if (itemStack.getItemDamage() == 3 || itemStack.getItemDamage() == 7)
-					return false;
-			}
-			return true;
-		}
-		return Block.getBlockFromItem(item) == OfalenModBlockCore.blockOfalen || OfalenModOreDictCore.isMatchedItemStack(OfalenModOreDictCore.listCreeperOfalenBlock, itemStack);
 	}
 
 	@Override
