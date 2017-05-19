@@ -302,12 +302,15 @@ item.ofalen.ball.transparent.G1.name=Ofalen Transparent Ball Grade 1
 item.ofalen.ball.transparent.G2.name=Ofalen Transparent Ball Grade 2
 item.ofalen.ball.transparent.G3.name=Ofalen Transparent Ball Grade 3
 
+item.ofalen.ball.food.G1.name=Ofalen Food Ball Grade 1
+item.ofalen.ball.food.G2.name=Ofalen Food Ball Grade 2
+item.ofalen.ball.food.G3.name=Ofalen Food Ball Grade 3
+
 item.ofalen.ball.explosion.0.name=Ofalen Explosion Ball Grade 1
 item.ofalen.ball.explosion.1.name=Ofalen Explosion Ball Grade 2
 item.ofalen.ball.explosion.2.name=Ofalen Explosion Ball Grade 3
 
 item.ofalen.ball.hungry.name=Ofalen Hungry Ball
-item.ofalen.ball.food.name=Ofalen Food Ball
 item.ofalen.ball.perfect.name=Ofalen Perfect Ball
 
 // Tool

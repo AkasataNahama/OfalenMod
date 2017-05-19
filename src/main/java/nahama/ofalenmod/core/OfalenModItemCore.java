@@ -94,10 +94,13 @@ public class OfalenModItemCore {
 	public static Item ballTransparentG1;
 	public static Item ballTransparentG2;
 	public static Item ballTransparentG3;
+	// 満腹玉
+	public static Item ballFoodG1;
+	public static Item ballFoodG2;
+	public static Item ballFoodG3;
 	// その他の玉
 	public static Item ballExplosion;
 	public static Item ballHungry;
-	public static Item ballFood;
 	public static Item ballPerfect;
 	// 道具G1
 	public static Item swordOfalenG1;
@@ -287,13 +290,22 @@ public class OfalenModItemCore {
 		ballTransparentG3 = new ItemOfalenBall(new PotionEffect(Potion.invisibility.getId(), 2400, 3));
 		ballTransparentG3.setUnlocalizedName("ofalen.ball.transparent.G3").setTextureName("ofalenmod:ball-3-7");
 		GameRegistry.registerItem(ballTransparentG3, "ballTransparentG3");
+		// 満腹玉
+		// ポーションID:23はSaturation（満腹度回復）
+		ballFoodG1 = new ItemOfalenBall(new PotionEffect(23, 5, 0));
+		ballFoodG1.setUnlocalizedName("ofalen.ball.food.G1").setTextureName("ofalenmod:ball-food-1");
+		GameRegistry.registerItem(ballFoodG1, "ballFood");
+		ballFoodG2 = new ItemOfalenBall(new PotionEffect(23, 10, 0));
+		ballFoodG2.setUnlocalizedName("ofalen.ball.food.G2").setTextureName("ofalenmod:ball-food-2");
+		GameRegistry.registerItem(ballFoodG2, "ballFoodG2");
+		ballFoodG3 = new ItemOfalenBall(new PotionEffect(23, 20, 0));
+		ballFoodG3.setUnlocalizedName("ofalen.ball.food.G3").setTextureName("ofalenmod:ball-food-3");
+		GameRegistry.registerItem(ballFoodG3, "ballFoodG3");
 		// その他の玉
 		ballExplosion = new ItemExplosionBall().setUnlocalizedName("ofalen.ball.explosion").setTextureName("ofalenmod:ball-explosion");
 		GameRegistry.registerItem(ballExplosion, "ballExplosion");
 		ballHungry = new ItemOfalenBall(new PotionEffect[] { new PotionEffect(Potion.hunger.id, 40, 1599) }).setUnlocalizedName("ofalen.ball.hungry").setTextureName("ofalenmod:hungry_ball");
 		GameRegistry.registerItem(ballHungry, "ballHungry");
-		ballFood = new ItemOfalenBall(new PotionEffect[] { new PotionEffect(23, 20, 0) }).setUnlocalizedName("ofalen.ball.food").setTextureName("ofalenmod:food_ball");
-		GameRegistry.registerItem(ballFood, "ballFood");
 		ballPerfect = new ItemPerfectBall(new PotionEffect[] { new PotionEffect(Potion.regeneration.id, 2400, 7), new PotionEffect(Potion.damageBoost.id, 2400, 7), new PotionEffect(Potion.resistance.id, 2400, 7) }).setUnlocalizedName("ofalen.ball.perfect").setTextureName("ofalenmod:ball-3-1");
 		GameRegistry.registerItem(ballPerfect, "ballPerfectOfalen");
 		// 道具G1

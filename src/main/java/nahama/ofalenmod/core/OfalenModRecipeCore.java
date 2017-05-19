@@ -112,11 +112,11 @@ public class OfalenModRecipeCore {
 		addGradedBallRecipe(GEM[5], ballMiningG1, ballMiningG2, ballMiningG3);
 		addGradedBallRecipe(GEM[6], ballNightVisionG1, ballNightVisionG2, ballNightVisionG3);
 		addGradedBallRecipe(GEM[7], ballTransparentG1, ballTransparentG2, ballTransparentG3);
+		addGradedBallRecipe(INGOT_GOLD, ballFoodG1, ballFoodG2, ballFoodG3);
 		for (int i = 0; i < 3; i++) {
 			addBallRecipe(new ItemStack(ballExplosion, 1, i), Items.gunpowder, i);
 		}
 		addSingleBallRecipe(ballHungry, Items.rotten_flesh);
-		addSingleBallRecipe(ballFood, INGOT_GOLD);
 		addShaped(ballPerfect, "XWX", "R B", "YGY", 'X', CORE[1], 'Y', CORE[3], 'W', ballRecoveryG3, 'R', ballDefenseG3, 'G', new ItemStack(ballEmpty, 1, 2), 'B', ballAttackG3);
 		// 道具
 		addShaped(swordOfalenG1, "X", "X", "Y", 'X', GEM[2], 'Y', new ItemStack(partsOfalen3D, 1, 0));

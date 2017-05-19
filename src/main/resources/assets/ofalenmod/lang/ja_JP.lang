@@ -302,12 +302,15 @@ item.ofalen.ball.transparent.G1.name=オファレンの透明玉 Grade 1
 item.ofalen.ball.transparent.G2.name=オファレンの透明玉 Grade 2
 item.ofalen.ball.transparent.G3.name=オファレンの透明玉 Grade 3
 
+item.ofalen.ball.food.G1.name=オファレンの満腹玉 Grade 1
+item.ofalen.ball.food.G2.name=オファレンの満腹玉 Grade 2
+item.ofalen.ball.food.G3.name=オファレンの満腹玉 Grade 3
+
 item.ofalen.ball.explosion.0.name=オファレンの爆発玉 Grade 1
 item.ofalen.ball.explosion.1.name=オファレンの爆発玉 Grade 2
 item.ofalen.ball.explosion.2.name=オファレンの爆発玉 Grade 3
 
 item.ofalen.ball.hungry.name=オファレンの空腹玉
-item.ofalen.ball.food.name=オファレンの満腹玉
 item.ofalen.ball.perfect.name=オファレンの万能玉
 
 // 道具
