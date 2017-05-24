@@ -77,6 +77,11 @@ public class ItemLaserPistol extends Item {
 					itemStack.setItemDamage(itemStack.getItemDamage() + 32);
 				// 連続発射を防止するため、インターバルを設定する。
 				itemStack.getTagCompound().setByte(OfalenNBTUtil.INTERVAL, (byte) 10);
+				// 発射音を鳴らす。
+				if (!world.isRemote) {
+					//					world.playSoundAtEntity(player, "mob.irongolem.hit", 2.0F, 100000000000000000.0F);
+					world.playSoundAtEntity(player, "ofalenmod:laser", 0.5F, 0.8F - 0.05F + world.rand.nextFloat() * 0.1F);
+				}
 				// 色に応じてレーザーのEntityをスポーンさせる。レーザーは描画のため両側で必要。
 				if (color.equals("Red")) {
 					for (int i = -2; i < 3; i++) {
@@ -135,6 +140,9 @@ public class ItemLaserPistol extends Item {
 	/** アイテムを使った時の処理。 */
 	@Override
 	public ItemStack onEaten(ItemStack itemStack, World world, EntityPlayer player) {
+		if (!world.isRemote) {
+			world.playSoundAtEntity(player, "tile.piston.in", 2.0F, 10000000.0F);
+		}
 		// リロード完了時の処理を行う。
 		NBTTagCompound nbt = itemStack.getTagCompound();
 		// LaserColorに何かの文字が登録されていたら、
