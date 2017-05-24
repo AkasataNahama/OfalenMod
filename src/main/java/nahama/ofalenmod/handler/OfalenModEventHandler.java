@@ -5,7 +5,9 @@ import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.InputEvent;
 import nahama.ofalenmod.OfalenModCore;
 import nahama.ofalenmod.core.OfalenModConfigCore;
+import nahama.ofalenmod.entity.EntityLaserBase;
 import net.minecraft.client.Minecraft;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.DamageSource;
@@ -14,6 +16,9 @@ import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.event.entity.living.LivingFallEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
+import net.minecraftforge.event.world.ExplosionEvent;
+
+import java.util.Iterator;
 
 public class OfalenModEventHandler {
 	/** Entityがワールドに追加された時の処理。 */
@@ -98,5 +103,19 @@ public class OfalenModEventHandler {
 	@SubscribeEvent
 	public void onKeyInput(InputEvent.KeyInputEvent event) {
 		OfalenKeyHandler.update();
+	}
+
+	/** 爆発時の処理。 */
+	@SubscribeEvent
+	public void onExplosionDetonate(ExplosionEvent.Detonate event) {
+		// 爆発に当たったEntityのリストを取得する。
+		Iterator<Entity> itr = event.getAffectedEntities().iterator();
+		while (itr.hasNext()) {
+			Entity e = itr.next();
+			if (e instanceof EntityLaserBase) {
+				// レーザーだったら除外する。（白レーザーが爆発の影響を受けずに進めるように。）
+				itr.remove();
+			}
+		}
 	}
 }

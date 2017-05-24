@@ -3,14 +3,19 @@ package nahama.ofalenmod.entity;
 import net.minecraft.block.Block;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class EntityWhiteLaser extends EntityLaserBase {
+	/** 残りの貫通力。 */
 	private byte power = 5;
+	/** ダメージを与えたEntityのリスト。 */
+	private List<Integer> listDamagedEntity = new ArrayList<Integer>();
 
 	public EntityWhiteLaser(World world, EntityLivingBase entity, int dif) {
 		super(world);
@@ -33,22 +38,25 @@ public class EntityWhiteLaser extends EntityLaserBase {
 		this.setThrowableHeading(motionX, motionY, motionZ, this.getSpeed());
 	}
 
+	/** 衝突時の処理。 */
 	@Override
 	protected void onImpact(MovingObjectPosition position) {
-		if (position.entityHit != null && position.entityHit != this.getThrower()) {
+		// 射出者以外のEntityで、まだダメージを与えていないものに当たったら、
+		if (position.entityHit != null && position.entityHit != this.getThrower() && !listDamagedEntity.contains(position.entityHit.getEntityId())) {
+			// 減衰させ、ダメージを与える。
 			power--;
 			position.entityHit.attackEntityFrom(DamageSource.causePlayerDamage((EntityPlayer) this.getThrower()), 30.0F);
+			listDamagedEntity.add(position.entityHit.getEntityId());
+		} else {
+			Block block = worldObj.getBlock(position.blockX, position.blockY, position.blockZ);
+			if (!block.isOpaqueCube() || !block.isNormalCube() || !block.renderAsNormalBlock())
+				return;
 		}
-		Block block = worldObj.getBlock(position.blockX, position.blockY, position.blockZ);
-		if (!block.isOpaqueCube() || !block.isNormalCube() || !block.renderAsNormalBlock()) {
-			return;
-		} else if (block == Blocks.tallgrass) {
-			return;
-		}
+		// サーバー側なら、爆発させる。
 		if (!worldObj.isRemote)
 			worldObj.createExplosion(this.getThrower(), posX, posY, posZ, 3, false);
-		if (power <= 0) {
+		// 一定回数以上Entityに当たっていたら消す。
+		if (power < 1)
 			this.setDead();
-		}
 	}
 }
