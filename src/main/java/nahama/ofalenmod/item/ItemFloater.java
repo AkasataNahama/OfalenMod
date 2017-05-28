@@ -7,15 +7,14 @@ import nahama.ofalenmod.core.OfalenModPacketCore;
 import nahama.ofalenmod.handler.OfalenFlightHandlerClient;
 import nahama.ofalenmod.network.MSpawnParticle;
 import nahama.ofalenmod.util.OfalenNBTUtil;
+import nahama.ofalenmod.util.OfalenUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.IIcon;
-import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 
 public class ItemFloater extends ItemFuture {
@@ -24,6 +23,12 @@ public class ItemFloater extends ItemFuture {
 
 	public ItemFloater() {
 		this.setMaxDamage(64 * 9);
+	}
+
+	/** 材料として使用できるかの判定。 */
+	public static boolean isItemMaterial(ItemStack material) {
+		// フロートパウダーのみ使用可能。
+		return material != null && material.isItemEqual(new ItemStack(OfalenModItemCore.partsOfalen, 1, 8));
 	}
 
 	@Override
@@ -56,7 +61,7 @@ public class ItemFloater extends ItemFuture {
 		if (world.isRemote && entity == Minecraft.getMinecraft().thePlayer)
 			OfalenFlightHandlerClient.forbidPlayerToFloat();
 		if (!world.isRemote)
-			((EntityPlayer) entity).addChatMessage(new ChatComponentText(StatCollector.translateToLocal("info.ofalen.floater.lackingMaterial")));
+			OfalenUtil.addChatTranslationMessage((EntityPlayer) entity, "info.ofalen.future.lackingMaterial", new ItemStack(OfalenModItemCore.floaterOfalen).getDisplayName(), new ItemStack(OfalenModItemCore.partsOfalen, 1, 8).getDisplayName());
 	}
 
 	/** 右クリック時の処理。 */
@@ -75,7 +80,7 @@ public class ItemFloater extends ItemFuture {
 		if (itemStack.getItemDamage() >= itemStack.getMaxDamage()) {
 			// 材料がないならチャットに出力して終了。
 			if (!world.isRemote)
-				player.addChatMessage(new ChatComponentText(StatCollector.translateToLocal("info.ofalen.floater.lackingMaterial")));
+				OfalenUtil.addChatTranslationMessage(player, "info.ofalen.future.lackingMaterial", new ItemStack(OfalenModItemCore.floaterOfalen).getDisplayName(), new ItemStack(OfalenModItemCore.partsOfalen, 1, 8).getDisplayName());
 			if (mode != 0) {
 				itemStack.getTagCompound().setByte(OfalenNBTUtil.MODE, (byte) 0);
 				if (world.isRemote)
@@ -91,15 +96,9 @@ public class ItemFloater extends ItemFuture {
 		if (world.isRemote) {
 			OfalenFlightHandlerClient.allowPlayerToFloat(mode);
 		} else {
-			player.addChatMessage(new ChatComponentText(StatCollector.translateToLocal("info.ofalen.floater.modeChanged:" + mode)));
+			OfalenUtil.addChatTranslationMessage(player, "info.ofalen.floater.modeChanged", mode);
 		}
 		return itemStack;
-	}
-
-	/** 材料として使用できるかの判定。 */
-	public static boolean isItemMaterial(ItemStack material) {
-		// フロートパウダーのみ使用可能。
-		return material != null && material.isItemEqual(new ItemStack(OfalenModItemCore.partsOfalen, 1, 8));
 	}
 
 	/** 道具などのように、耐久値を減らせるかどうか。 */

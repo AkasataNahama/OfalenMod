@@ -16,8 +16,6 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.ChatComponentText;
-import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 
 import java.util.List;
@@ -56,14 +54,14 @@ public class ItemTeleporter extends ItemFuture {
 			return itemStack;
 		// 材料がないならチャットに出力して終了。
 		if (itemStack.getTagCompound().getByte(OfalenNBTUtil.MATERIAL) < OfalenModConfigCore.amountTeleporterDamage) {
-			player.addChatMessage(new ChatComponentText(StatCollector.translateToLocal("info.ofalen.teleporter.lackingMaterial")));
+			OfalenUtil.addChatTranslationMessage(player, "info.ofalen.future.lackingMaterial", new ItemStack(OfalenModItemCore.teleporterOfalen).getDisplayName(), new ItemStack(OfalenModItemCore.partsOfalen, 1, 7).getDisplayName());
 			return itemStack;
 		}
 		ItemStack material = new ItemStack(OfalenModItemCore.partsOfalen, itemStack.getTagCompound().getByte(OfalenNBTUtil.MATERIAL), 7);
 		short channel = (short) itemStack.getItemDamage();
 		// チャンネルが無効ならチャットに出力して終了。
 		if (channel < 1 || !OfalenTeleportHandler.isChannelValid(channel)) {
-			player.addChatMessage(new ChatComponentText(StatCollector.translateToLocal("info.ofalen.teleporter.channelInvalid")));
+			OfalenUtil.addChatTranslationMessage(player, "info.ofalen.teleporter.channelInvalid");
 			return itemStack;
 		}
 		OfalenTeleportHandler.MarkerPos pos = OfalenTeleportHandler.getCoord(channel);

@@ -6,12 +6,12 @@ import cpw.mods.fml.common.gameevent.InputEvent;
 import nahama.ofalenmod.OfalenModCore;
 import nahama.ofalenmod.core.OfalenModConfigCore;
 import nahama.ofalenmod.entity.EntityLaserBase;
+import nahama.ofalenmod.util.OfalenUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.StatCollector;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.event.entity.living.LivingFallEvent;
@@ -36,7 +36,7 @@ public class OfalenModEventHandler {
 			OfalenModAnniversaryHandler.checkPlayer(player);
 			if (OfalenModUpdateCheckHandler.isNewVersionAvailable && !OfalenModUpdateCheckHandler.namesNotified.contains(player.getCommandSenderName())) {
 				// 最新バージョンの通知をする。
-				player.addChatMessage(new ChatComponentText(StatCollector.translateToLocal("info.ofalen.notificationVersion")));
+				OfalenUtil.addChatTranslationMessage(player, "info.ofalen.notificationVersion");
 				player.addChatMessage(new ChatComponentText(OfalenModUpdateCheckHandler.getMessage()));
 				OfalenModUpdateCheckHandler.namesNotified.add(player.getCommandSenderName());
 			}

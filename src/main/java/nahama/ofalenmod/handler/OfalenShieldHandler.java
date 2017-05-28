@@ -6,11 +6,10 @@ import nahama.ofalenmod.inventory.ContainerItemShield;
 import nahama.ofalenmod.item.ItemShield;
 import nahama.ofalenmod.network.MSpawnParticle;
 import nahama.ofalenmod.util.OfalenNBTUtil;
+import nahama.ofalenmod.util.OfalenUtil;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.ChatComponentText;
-import net.minecraft.util.StatCollector;
 
 import java.util.ArrayList;
 
@@ -81,7 +80,7 @@ public class OfalenShieldHandler {
 		if (!flag) {
 			// 有効になっているシールドがなければプレイヤーの保護をやめる。
 			unprotectPlayer(player);
-			player.addChatMessage(new ChatComponentText(StatCollector.translateToLocal("info.ofalen.shield.brokenShield")));
+			OfalenUtil.addChatTranslationMessage(player, "info.ofalen.shield.brokenShield");
 		}
 		// パーティクルを表示させるようパケットを送る。。
 		OfalenModPacketCore.WRAPPER.sendToAll(new MSpawnParticle(player.worldObj.provider.dimensionId, player.posX, player.posY, player.posZ, (byte) 0));

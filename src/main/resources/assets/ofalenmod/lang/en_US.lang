@@ -142,16 +142,10 @@ info.ofalen.color:green=Green
 info.ofalen.color:blue=Blue
 info.ofalen.color:white=White
 // Future
-info.ofalen.shield.lackingMaterial=Ofalen Shield : Shield Ingot is lacking!
-info.ofalen.shield.brokenShield=Ofalen Shield : Shield expired!
-info.ofalen.teleporter.lackingMaterial=Ofalen Teleporter : Teleport Pearl is lacking!
-info.ofalen.teleporter.channelInvalid=Ofalen Teleporter : This channel is Invalid!
-info.ofalen.floater.lackingMaterial=Ofalen Floater : Float Dust is lacking!
-info.ofalen.floater.modeChanged:1=Ofalen Floater : Flight Mode is changed to 1!
-info.ofalen.floater.modeChanged:2=Ofalen Floater : Flight Mode is changed to 2!
-info.ofalen.floater.modeChanged:3=Ofalen Floater : Flight Mode is changed to 3!
-info.ofalen.floater.modeChanged:4=Ofalen Floater : Flight Mode is changed to 4!
-info.ofalen.floater.modeChanged:5=Ofalen Floater : Flight Mode is changed to 5!
+info.ofalen.future.lackingMaterial=%s: %s is lacking!
+info.ofalen.shield.brokenShield=Ofalen Shield: Shield expired!
+info.ofalen.teleporter.channelInvalid=Ofalen Teleporter: This channel is Invalid!
+info.ofalen.floater.modeChanged=Ofalen Floater: Flight Mode is changed to %s!
 info.ofalen.collector.item=Item
 info.ofalen.collector.exp=Exp
 // Filter

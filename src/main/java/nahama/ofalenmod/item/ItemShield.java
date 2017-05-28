@@ -5,12 +5,11 @@ import nahama.ofalenmod.core.OfalenModConfigCore;
 import nahama.ofalenmod.core.OfalenModItemCore;
 import nahama.ofalenmod.handler.OfalenShieldHandler;
 import nahama.ofalenmod.util.OfalenNBTUtil;
+import nahama.ofalenmod.util.OfalenUtil;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.IIcon;
-import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 
 public class ItemShield extends ItemFuture {
@@ -18,6 +17,10 @@ public class ItemShield extends ItemFuture {
 
 	public ItemShield() {
 		this.setMaxDamage(64 * 9 * 3);
+	}
+
+	public static boolean isItemMaterial(ItemStack material) {
+		return material != null && material.isItemEqual(new ItemStack(OfalenModItemCore.partsOfalen, 1, 6));
 	}
 
 	@Override
@@ -43,7 +46,7 @@ public class ItemShield extends ItemFuture {
 		}
 		if (itemStack.getItemDamage() + OfalenModConfigCore.amountShieldDamage > itemStack.getMaxDamage()) {
 			// 材料がないならチャットに出力して終了。
-			player.addChatMessage(new ChatComponentText(StatCollector.translateToLocal("info.ofalen.shield.lackingMaterial")));
+			OfalenUtil.addChatTranslationMessage(player, "info.ofalen.future.lackingMaterial", new ItemStack(OfalenModItemCore.shieldOfalen).getDisplayName(), new ItemStack(OfalenModItemCore.partsOfalen, 1, 6).getDisplayName());
 			return itemStack;
 		}
 		OfalenShieldHandler.protectPlayer(player);
@@ -51,10 +54,6 @@ public class ItemShield extends ItemFuture {
 		itemStack.getTagCompound().setBoolean(OfalenNBTUtil.IS_VALID, true);
 		itemStack.getTagCompound().setByte(OfalenNBTUtil.INTERVAL, (byte) 10);
 		return itemStack;
-	}
-
-	public static boolean isItemMaterial(ItemStack material) {
-		return material != null && material.isItemEqual(new ItemStack(OfalenModItemCore.partsOfalen, 1, 6));
 	}
 
 	@Override

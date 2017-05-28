@@ -7,7 +7,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.ChatComponentText;
+import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.world.World;
 
 import java.io.IOException;
@@ -143,8 +143,8 @@ public class OfalenUtil {
 		return ret;
 	}
 
-	public static void addChatMessage(EntityPlayer player, String message) {
-		player.addChatMessage(new ChatComponentText(message));
+	public static void addChatTranslationMessage(EntityPlayer player, String message, Object... objects) {
+		player.addChatMessage(new ChatComponentTranslation(message, objects));
 	}
 
 	/** FMLCommonHandlerを利用したサイドの判定。Minecraft起動時に確定。 */

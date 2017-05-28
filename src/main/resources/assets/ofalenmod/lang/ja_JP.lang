@@ -142,16 +142,10 @@ info.ofalen.color:green=緑
 info.ofalen.color:blue=青
 info.ofalen.color:white=白
 // 未来系
-info.ofalen.shield.lackingMaterial=オファレンシールド : シールドインゴットが不足しています!
+info.ofalen.future.lackingMaterial=%s : %sが不足しています!
 info.ofalen.shield.brokenShield=オファレンシールド : シールドが無効になりました!
-info.ofalen.teleporter.lackingMaterial=オファレンテレポーター : テレポートパールが不足しています!
 info.ofalen.teleporter.channelInvalid=オファレンテレポーター : このチャンネルは無効です!
-info.ofalen.floater.lackingMaterial=オファレンフローター : フロートダストが不足しています!
-info.ofalen.floater.modeChanged:1=オファレンフローター : モードを1にチェンジしました!
-info.ofalen.floater.modeChanged:2=オファレンフローター : モードを2にチェンジしました!
-info.ofalen.floater.modeChanged:3=オファレンフローター : モードを3にチェンジしました!
-info.ofalen.floater.modeChanged:4=オファレンフローター : モードを4にチェンジしました!
-info.ofalen.floater.modeChanged:5=オファレンフローター : モードを5にチェンジしました!
+info.ofalen.floater.modeChanged=オファレンフローター : モードを%sにチェンジしました!
 info.ofalen.collector.item=アイテム
 info.ofalen.collector.exp=経験値
 // フィルター
