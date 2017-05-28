@@ -5,6 +5,26 @@ import nahama.ofalenmod.OfalenModCore;
 import net.minecraftforge.common.config.Configuration;
 
 public class OfalenModConfigCore {
+	// カテゴリー名
+	public static final String GENERAL = "General";
+	private static final String CATEGORY_SEPARATOR = ".";
+	private static final String RECIPE = GENERAL + CATEGORY_SEPARATOR + "Recipe";
+	private static final String ORE = GENERAL + CATEGORY_SEPARATOR + "Ore";
+	private static final String GENERATE = ORE + CATEGORY_SEPARATOR + "Generate";
+	private static final String TOOL = GENERAL + CATEGORY_SEPARATOR + "Tool";
+	private static final String PERFECT_TOOL = TOOL + CATEGORY_SEPARATOR + "Tool";
+	private static final String BALL = GENERAL + CATEGORY_SEPARATOR + "Ball";
+	private static final String EXPLOSION_BALL = BALL + CATEGORY_SEPARATOR + "ExplosionBall";
+	private static final String MACHINE = GENERAL + CATEGORY_SEPARATOR + "Machine";
+	private static final String SMELTING = MACHINE + CATEGORY_SEPARATOR + "Smelting";
+	private static final String CONVERTING = MACHINE + CATEGORY_SEPARATOR + "Converting";
+	private static final String REPAIRING = MACHINE + CATEGORY_SEPARATOR + "Repairing";
+	private static final String FUSING = MACHINE + CATEGORY_SEPARATOR + "Fusing";
+	private static final String FUTURE = GENERAL + CATEGORY_SEPARATOR + "Future";
+	private static final String SHIELD = FUTURE + CATEGORY_SEPARATOR + "Shield";
+	private static final String TELEPORTER = FUTURE + CATEGORY_SEPARATOR + "Teleporter";
+	private static final String FLOATER = FUTURE + CATEGORY_SEPARATOR + "Floater";
+	private static final String COLLECTOR = FUTURE + CATEGORY_SEPARATOR + "Collector";
 	public static Configuration cfg;
 	// General
 	public static boolean isUpdateCheckEnabled = true;
@@ -22,6 +42,8 @@ public class OfalenModConfigCore {
 	public static byte frequencyGeneration = 3;
 	public static byte limitGeneration = 8;
 	public static short probLodeGeneration = 10;
+	// Tool.PerfectTool
+	public static byte rangeMax = 7;
 	// Ball.ExplosionBall
 	public static byte sizeExplosion = 2;
 	// Machine
@@ -46,24 +68,6 @@ public class OfalenModConfigCore {
 	// Future.Collector
 	public static short amountCollectorDamageItem = 1;
 	public static short amountCollectorDamageExp = 1;
-	// カテゴリー名
-	private static final String SEPARATOR = ".";
-	public static final String GENERAL = "General";
-	private static final String RECIPE = GENERAL + SEPARATOR + "Recipe";
-	private static final String ORE = GENERAL + SEPARATOR + "Ore";
-	private static final String GENERATE = ORE + SEPARATOR + "Generate";
-	private static final String BALL = GENERAL + SEPARATOR + "Ball";
-	private static final String EXPLOSION_BALL = BALL + SEPARATOR + "ExplosionBall";
-	private static final String MACHINE = GENERAL + SEPARATOR + "Machine";
-	private static final String SMELTING = MACHINE + SEPARATOR + "Smelting";
-	private static final String CONVERTING = MACHINE + SEPARATOR + "Converting";
-	private static final String REPAIRING = MACHINE + SEPARATOR + "Repairing";
-	private static final String FUSING = MACHINE + SEPARATOR + "Fusing";
-	private static final String FUTURE = GENERAL + SEPARATOR + "Future";
-	private static final String SHIELD = FUTURE + SEPARATOR + "Shield";
-	private static final String TELEPORTER = FUTURE + SEPARATOR + "Teleporter";
-	private static final String FLOATER = FUTURE + SEPARATOR + "Floater";
-	private static final String COLLECTOR = FUTURE + SEPARATOR + "Collector";
 
 	/** Configを読み込む。 */
 	public static void loadConfig(FMLPreInitializationEvent event) {
@@ -102,6 +106,11 @@ public class OfalenModConfigCore {
 		frequencyGeneration = (byte) cfg.getInt("frequencyGeneration", GENERATE, frequencyGeneration, 1, Byte.MAX_VALUE, "The number of Ofalen Ore generation of each color for each chunk." + separator, keyProp + "frequencyGeneration");
 		limitGeneration = (byte) cfg.getInt("limitGeneration", GENERATE, limitGeneration, 1, Byte.MAX_VALUE, "Maximum size of Ofalen Ore per generation." + separator, keyProp + "limitGeneration");
 		probLodeGeneration = (short) cfg.getInt("probLodeGeneration", GENERATE, probLodeGeneration, 1, 10000, "Generation probability of Huge Ofalen Ore Lode." + separator + "Calculation of probability is performed on each chunk." + separator + " (x/10000)" + separator, keyProp + "probLodeGeneration");
+		// Tool
+		cfg.setCategoryLanguageKey(TOOL, keyCategory + "tool");
+		// Tool.PerfectTool
+		cfg.setCategoryLanguageKey(PERFECT_TOOL, keyCategory + "toolPerfect");
+		rangeMax = (byte) cfg.getInt("rangeMax", PERFECT_TOOL, rangeMax, 0, Byte.MAX_VALUE, "Maximum range of Range Breaking Mode of Ofalen Perfect Tool.", keyProp + "rangeMax");
 		// Ball
 		cfg.setCategoryLanguageKey(BALL, keyCategory + "ball");
 		// Ball.ExplosionBall

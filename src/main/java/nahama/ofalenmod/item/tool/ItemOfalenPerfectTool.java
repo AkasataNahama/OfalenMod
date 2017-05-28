@@ -2,6 +2,7 @@ package nahama.ofalenmod.item.tool;
 
 import cpw.mods.fml.common.eventhandler.Event.Result;
 import nahama.ofalenmod.OfalenModCore;
+import nahama.ofalenmod.core.OfalenModConfigCore;
 import nahama.ofalenmod.handler.OfalenKeyHandler;
 import nahama.ofalenmod.util.BlockRange;
 import nahama.ofalenmod.util.OfalenNBTUtil;
@@ -81,12 +82,11 @@ public class ItemOfalenPerfectTool extends ItemTool {
 				} else {
 					addition = Math.max(addition - 1, Byte.MIN_VALUE);
 				}
-				if (!player.worldObj.isRemote) {
-					itemStack.getTagCompound().setByte(OfalenNBTUtil.RANGE_LENGTH_ADDITION, (byte) addition);
-					// 次に変更できるまでの間隔を設定する。
-					itemStack.getTagCompound().setByte(OfalenNBTUtil.INTERVAL, (byte) 10);
-				} else {
-					int length = Math.max(1 + addition, 0);
+				itemStack.getTagCompound().setByte(OfalenNBTUtil.RANGE_LENGTH_ADDITION, (byte) addition);
+				// 次に変更できるまでの間隔を設定する。
+				itemStack.getTagCompound().setByte(OfalenNBTUtil.INTERVAL, (byte) 10);
+				if (world.isRemote) {
+					int length = this.getLength(itemStack);
 					int x = Minecraft.getMinecraft().objectMouseOver.blockX;
 					int y = Minecraft.getMinecraft().objectMouseOver.blockY;
 					int z = Minecraft.getMinecraft().objectMouseOver.blockZ;
@@ -129,8 +129,7 @@ public class ItemOfalenPerfectTool extends ItemTool {
 			return true;
 		case 1:
 			// 右クリック時効果が範囲破壊の時。
-			int length = 1 + itemStack.getTagCompound().getByte(OfalenNBTUtil.RANGE_LENGTH_ADDITION);
-			length = Math.max(length, 0);
+			int length = this.getLength(itemStack);
 			for (int ix = -length; ix <= length; ix++) {
 				for (int iy = -length; iy <= length; iy++) {
 					for (int iz = -length; iz <= length; iz++) {
@@ -206,6 +205,17 @@ public class ItemOfalenPerfectTool extends ItemTool {
 		}
 	}
 
+	private int getRawLength(ItemStack itemStack) {
+		return 1 + itemStack.getTagCompound().getByte(OfalenNBTUtil.RANGE_LENGTH_ADDITION);
+	}
+
+	private int getLength(ItemStack itemStack) {
+		int length = this.getRawLength(itemStack);
+		length = Math.max(length, 0);
+		length = Math.min(length, OfalenModConfigCore.rangeMax);
+		return length;
+	}
+
 	/** Entityを叩いた時の処理。 */
 	@Override
 	public boolean hitEntity(ItemStack itemStack, EntityLivingBase target, EntityLivingBase player) {
@@ -229,8 +239,12 @@ public class ItemOfalenPerfectTool extends ItemTool {
 	public void addInformation(ItemStack itemStack, EntityPlayer player, List list, boolean flag) {
 		if (!itemStack.hasTagCompound())
 			return;
+		int mode = itemStack.getTagCompound().getByte(OfalenNBTUtil.MODE);
 		List<String> stringList = OfalenUtil.getAs(list);
-		stringList.add(StatCollector.translateToLocal("info.ofalen.toolPerfect.mode") + " : " + StatCollector.translateToLocal("info.ofalen.toolPerfect.mode." + itemStack.getTagCompound().getByte(OfalenNBTUtil.MODE)));
+		stringList.add(StatCollector.translateToLocal("info.ofalen.toolPerfect.mode") + " : " + StatCollector.translateToLocal("info.ofalen.toolPerfect.mode." + mode));
+		if (mode == 1) {
+			stringList.add(StatCollector.translateToLocal("info.ofalen.toolPerfect.mode.1.range") + " : " + this.getLength(itemStack) + " (" + this.getRawLength(itemStack) + ")");
+		}
 		stringList.addAll(FilterUtil.getFilterInformation(itemStack));
 	}
 }

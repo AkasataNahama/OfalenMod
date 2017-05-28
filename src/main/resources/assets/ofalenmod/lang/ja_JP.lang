@@ -37,6 +37,14 @@ config.ofalen.prop.limitGeneration=生成限界
 config.ofalen.prop.limitGeneration.tooltip=オファレン鉱石の生成一回あたりの最大個数。
 config.ofalen.prop.probLodeGeneration=鉱脈生成確率
 config.ofalen.prop.probLodeGeneration.tooltip=オファレンの巨大鉱脈の生成確率。確率計算はチャンク毎に行われる。(x/10000)
+// 道具
+config.ofalen.category.tool=道具
+config.ofalen.category.tool.tooltip=オファレンの道具に関する設定。
+// 道具.万能ツール
+config.ofalen.category.toolPerfect=万能ツール
+config.ofalen.category.toolPerfect.tooltip=オファレンの万能ツールに関する設定。
+config.ofalen.prop.rangeMax=最大範囲
+config.ofalen.prop.rangeMax.tooltip=オファレンの万能ツールの範囲破壊モードの最大範囲。
 // 玉
 config.ofalen.category.ball=玉
 config.ofalen.category.ball.tooltip=オファレンの玉に関する設定。
@@ -121,6 +129,7 @@ info.ofalen.toolPerfect.mode=右クリック効果
 info.ofalen.toolPerfect.mode.changed=右クリック効果が「%s」に変更されました。
 info.ofalen.toolPerfect.mode.0=単一破壊
 info.ofalen.toolPerfect.mode.1=範囲破壊
+info.ofalen.toolPerfect.mode.1.range=    範囲
 info.ofalen.toolPerfect.mode.2=クワ
 info.ofalen.toolPerfect.mode.3=防御
 // レーザー

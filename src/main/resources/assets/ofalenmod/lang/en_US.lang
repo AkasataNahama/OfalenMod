@@ -37,6 +37,14 @@ config.ofalen.prop.limitGeneration=Generation Limit
 config.ofalen.prop.limitGeneration.tooltip=Maximum size of Ofalen Ore per generation.
 config.ofalen.prop.probLodeGeneration=Load Generation Probability
 config.ofalen.prop.probLodeGeneration.tooltip=Generation probability of Huge Ofalen Ore Lode. Calculation of probability is performed on each chunk. (x/10000)
+// Tool
+config.ofalen.category.tool=Tool
+config.ofalen.category.tool.tooltip=The settings of Ofalen Tool.
+// Tool.PerfectTool
+config.ofalen.category.toolPerfect=Perfect Tool
+config.ofalen.category.toolPerfect.tooltip=The settings of Ofalen Perfect Tool.
+config.ofalen.prop.rangeMax=Max Range
+config.ofalen.prop.rangeMax.tooltip=Maximum range of Range Breaking Mode of Ofalen Perfect Tool.
 // Ball
 config.ofalen.category.ball=Ball
 config.ofalen.category.ball.tooltip=The settings of Ofalen Ball.
@@ -121,6 +129,7 @@ info.ofalen.toolPerfect.mode=Right Click Effect
 info.ofalen.toolPerfect.mode.changed=Right Click Effect is changed to %s
 info.ofalen.toolPerfect.mode.0=Single Breaking
 info.ofalen.toolPerfect.mode.1=Range Breaking
+info.ofalen.toolPerfect.mode.1.range=    Range
 info.ofalen.toolPerfect.mode.2=Hoe
 info.ofalen.toolPerfect.mode.3=Sword Guard
 // Laser
