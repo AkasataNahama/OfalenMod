@@ -8,6 +8,7 @@ public class OfalenModConfigCore {
 	// カテゴリー名
 	public static final String GENERAL = "General";
 	private static final String CATEGORY_SEPARATOR = ".";
+	private static final String SYSTEM = GENERAL + CATEGORY_SEPARATOR + "System";
 	private static final String RECIPE = GENERAL + CATEGORY_SEPARATOR + "Recipe";
 	private static final String ORE = GENERAL + CATEGORY_SEPARATOR + "Ore";
 	private static final String GENERATE = ORE + CATEGORY_SEPARATOR + "Generate";
@@ -85,8 +86,10 @@ public class OfalenModConfigCore {
 		String keyProp = "config.ofalen.prop.";
 		// General
 		cfg.setCategoryLanguageKey(GENERAL, keyCategory + "general");
-		cfg.setCategoryRequiresMcRestart(GENERAL, true);
-		isUpdateCheckEnabled = cfg.getBoolean("enableUpdateCheck", GENERAL, isUpdateCheckEnabled, "Set this to true to enable update check of Ofalen Mod." + restart, keyProp + "isUpdateCheckEnabled");
+		// System
+		cfg.setCategoryLanguageKey(SYSTEM, keyCategory + "system");
+		cfg.setCategoryRequiresMcRestart(SYSTEM, true);
+		isUpdateCheckEnabled = cfg.getBoolean("enableUpdateCheck", SYSTEM, isUpdateCheckEnabled, "Set this to true to enable update check of Ofalen Mod." + restart, keyProp + "isUpdateCheckEnabled");
 		// Recipe
 		cfg.setCategoryLanguageKey(RECIPE, keyCategory + "recipe");
 		cfg.setCategoryRequiresMcRestart(RECIPE, true);
@@ -110,7 +113,7 @@ public class OfalenModConfigCore {
 		cfg.setCategoryLanguageKey(TOOL, keyCategory + "tool");
 		// Tool.PerfectTool
 		cfg.setCategoryLanguageKey(PERFECT_TOOL, keyCategory + "toolPerfect");
-		rangeMax = (byte) cfg.getInt("rangeMax", PERFECT_TOOL, rangeMax, 0, Byte.MAX_VALUE, "Maximum range of Range Breaking Mode of Ofalen Perfect Tool.", keyProp + "rangeMax");
+		rangeMax = (byte) cfg.getInt("rangeMax", PERFECT_TOOL, rangeMax, 0, Byte.MAX_VALUE, "Maximum range of Range Breaking Mode of Ofalen Perfect Tool." + separator, keyProp + "rangeMax");
 		// Ball
 		cfg.setCategoryLanguageKey(BALL, keyCategory + "ball");
 		// Ball.ExplosionBall

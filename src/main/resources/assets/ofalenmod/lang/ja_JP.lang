@@ -4,6 +4,9 @@ mod.ofalen.name=オファレンMOD
 // 全般
 config.ofalen.category.general=全般
 config.ofalen.category.general.tooltip=オファレンMODのすべての設定。
+// システム
+config.ofalen.category.system=システム
+config.ofalen.category.system.tooltip=MODのシステムに関する設定。
 config.ofalen.prop.isUpdateCheckEnabled=アップデートチェックの有効化
 config.ofalen.prop.isUpdateCheckEnabled.tooltip=trueなら新しいバージョンがリリースされているか確認し、通知します。
 // レシピ

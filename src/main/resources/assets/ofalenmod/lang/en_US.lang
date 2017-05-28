@@ -4,6 +4,9 @@ mod.ofalen.name=Ofalen Mod
 // General
 config.ofalen.category.general=General
 config.ofalen.category.general.tooltip=All settings of Ofalen Mod.
+// System
+config.ofalen.category.system=System
+config.ofalen.category.system.tooltip=The settings of mod system.
 config.ofalen.prop.isUpdateCheckEnabled=Enable Update Check
 config.ofalen.prop.isUpdateCheckEnabled.tooltip=Set this to true to enable update check of Ofalen Mod.
 // Recipe
