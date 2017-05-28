@@ -8,14 +8,37 @@ import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
 import cpw.mods.fml.common.Mod.Metadata;
 import cpw.mods.fml.common.ModMetadata;
-import cpw.mods.fml.common.event.*;
+import cpw.mods.fml.common.event.FMLInitializationEvent;
+import cpw.mods.fml.common.event.FMLPostInitializationEvent;
+import cpw.mods.fml.common.event.FMLPreInitializationEvent;
+import cpw.mods.fml.common.event.FMLServerStartingEvent;
+import cpw.mods.fml.common.event.FMLServerStoppingEvent;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
-import nahama.ofalenmod.core.*;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+import nahama.ofalenmod.core.OfalenModBlockCore;
+import nahama.ofalenmod.core.OfalenModConfigCore;
+import nahama.ofalenmod.core.OfalenModInfoCore;
+import nahama.ofalenmod.core.OfalenModItemCore;
+import nahama.ofalenmod.core.OfalenModOreDictCore;
+import nahama.ofalenmod.core.OfalenModPacketCore;
+import nahama.ofalenmod.core.OfalenModRecipeCore;
 import nahama.ofalenmod.creativetab.CreativeTabOfalen;
-import nahama.ofalenmod.entity.*;
+import nahama.ofalenmod.entity.EntityExplosionBall;
+import nahama.ofalenmod.entity.EntityLaserBlue;
+import nahama.ofalenmod.entity.EntityLaserGreen;
+import nahama.ofalenmod.entity.EntityLaserRed;
+import nahama.ofalenmod.entity.EntityWhiteLaser;
 import nahama.ofalenmod.generator.WorldGenOfalenOre;
-import nahama.ofalenmod.handler.*;
+import nahama.ofalenmod.handler.OfalenFlightHandlerServer;
+import nahama.ofalenmod.handler.OfalenKeyHandler;
+import nahama.ofalenmod.handler.OfalenModAnniversaryHandler;
+import nahama.ofalenmod.handler.OfalenModEventHandler;
+import nahama.ofalenmod.handler.OfalenModGuiHandler;
+import nahama.ofalenmod.handler.OfalenModUpdateCheckHandler;
+import nahama.ofalenmod.handler.OfalenShieldHandler;
+import nahama.ofalenmod.handler.OfalenTeleportHandler;
 import nahama.ofalenmod.model.ModelLaser;
 import nahama.ofalenmod.render.RenderItemPistol;
 import nahama.ofalenmod.render.RenderLaser;
@@ -95,6 +118,7 @@ public class OfalenModCore {
 	}
 
 	/** クライアントの初期化処理。 */
+	@SideOnly(Side.CLIENT)
 	private void clientInit() {
 		OfalenTimer.start("OfalenModCore.clientInit");
 		// キーハンドラーの初期化。
@@ -121,6 +145,7 @@ public class OfalenModCore {
 		OfalenTeleportHandler.init();
 		OfalenFlightHandlerServer.init();
 		OfalenModAnniversaryHandler.init();
+		OfalenKeyHandler.onServerStarting();
 		// 最新バージョンの通知をする。
 		if (OfalenModUpdateCheckHandler.isNewVersionAvailable)
 			OfalenLog.info(StatCollector.translateToLocal("info.ofalen.notificationVersion") + OfalenModUpdateCheckHandler.getMessage());

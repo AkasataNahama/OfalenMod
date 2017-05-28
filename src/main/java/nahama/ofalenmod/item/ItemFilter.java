@@ -35,7 +35,7 @@ public class ItemFilter extends Item {
 
 	@Override
 	public ItemStack onItemRightClick(ItemStack itemStack, World world, EntityPlayer player) {
-		if (!OfalenKeyHandler.isSettingKeyPressed()) {
+		if (!OfalenKeyHandler.isSettingKeyPressed(player)) {
 			if (itemStack.getItemDamage() < 1)
 				player.openGui(OfalenModCore.instance, 5, world, (int) player.posX, (int) player.posY, (int) player.posZ);
 			return itemStack;

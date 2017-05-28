@@ -21,16 +21,12 @@ public class OfalenUtil {
 	/** キーバインディングに登録されたキーが押されているか。 */
 	public static boolean isKeyPressed(KeyBinding key) {
 		// クライアント側なら、取得して返す。
-		if (OfalenUtil.isClient())
-			return key.getIsKeyPressed();
+		return key.getIsKeyPressed();
 		//			if (key > 0) {
 		//				return Keyboard.isKeyDown(key);
 		//			} else {
 		//				return Mouse.isButtonDown(100 + key);
 		//			}
-		// サーバー側で呼ばれてはいけない。
-		OfalenLog.error("OfalenUtil.isKeyPressed is called on server side.", "OfalenUtil");
-		return false;
 	}
 
 	/** 残りの耐久値を返す。 */

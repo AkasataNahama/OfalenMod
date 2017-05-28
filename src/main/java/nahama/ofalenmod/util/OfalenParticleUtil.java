@@ -84,6 +84,7 @@ public class OfalenParticleUtil {
 			color[0] = 0.127D;
 			color[1] = 0.578D;
 			color[2] = 1.0D;
+			break;
 		case 4:
 			color[0] = 1.0D;
 			color[1] = 0.578D;

@@ -7,11 +7,15 @@ import nahama.ofalenmod.core.OfalenModItemCore;
 import nahama.ofalenmod.handler.OfalenDetailedSettingHandler;
 import nahama.ofalenmod.handler.OfalenKeyHandler;
 import nahama.ofalenmod.inventory.ContainerItemCollector;
-import nahama.ofalenmod.util.*;
+import nahama.ofalenmod.util.IItemOfalenSettable;
+import nahama.ofalenmod.util.OfalenNBTUtil;
 import nahama.ofalenmod.util.OfalenNBTUtil.FilterUtil;
+import nahama.ofalenmod.util.OfalenSetting;
 import nahama.ofalenmod.util.OfalenSetting.OfalenSettingByte;
 import nahama.ofalenmod.util.OfalenSetting.OfalenSettingDouble;
 import nahama.ofalenmod.util.OfalenSetting.OfalenSettingList;
+import nahama.ofalenmod.util.OfalenTimer;
+import nahama.ofalenmod.util.OfalenUtil;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
@@ -157,7 +161,7 @@ public class ItemCollector extends Item implements IItemOfalenSettable {
 
 	@Override
 	public ItemStack onItemRightClick(ItemStack itemStack, World world, EntityPlayer player) {
-		if (!OfalenKeyHandler.isSettingKeyPressed()) {
+		if (!OfalenKeyHandler.isSettingKeyPressed(player)) {
 			player.openGui(OfalenModCore.instance, 7, world, (int) player.posX, (int) player.posY, (int) player.posZ);
 			return itemStack;
 		}

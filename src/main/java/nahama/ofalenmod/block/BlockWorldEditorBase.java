@@ -43,7 +43,7 @@ public abstract class BlockWorldEditorBase extends BlockContainer {
 	/** プレイヤーに右クリックされた時の処理。 */
 	@Override
 	public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ) {
-		if (!OfalenKeyHandler.isSettingKeyPressed()) {
+		if (!OfalenKeyHandler.isSettingKeyPressed(player)) {
 			// OSSキーが押されていなかったらインベントリのGUIを開く。
 			player.openGui(OfalenModCore.instance, 1, world, x, y, z);
 		} else {
@@ -76,7 +76,7 @@ public abstract class BlockWorldEditorBase extends BlockContainer {
 				}
 			}
 		}
-		if (!OfalenKeyHandler.isSettingKeyPressed())
+		if (!OfalenKeyHandler.isSettingKeyPressed(player))
 			return;
 		TileEntity tileEntity = world.getTileEntity(x, y, z);
 		if (tileEntity == null || !(tileEntity instanceof TileEntityWorldEditorBase))

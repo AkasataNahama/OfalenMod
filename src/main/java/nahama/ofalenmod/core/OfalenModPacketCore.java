@@ -6,7 +6,15 @@ import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
 import cpw.mods.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import cpw.mods.fml.relauncher.Side;
 import nahama.ofalenmod.OfalenModCore;
-import nahama.ofalenmod.network.*;
+import nahama.ofalenmod.network.MApplyDetailedSetter;
+import nahama.ofalenmod.network.MFilterInstaller;
+import nahama.ofalenmod.network.MFloaterMode;
+import nahama.ofalenmod.network.MKeyStateChange;
+import nahama.ofalenmod.network.MSpawnParticle;
+import nahama.ofalenmod.network.MSpawnParticleWithRange;
+import nahama.ofalenmod.network.MTeleporterChannel;
+import nahama.ofalenmod.network.MTeleporterMeta;
+import nahama.ofalenmod.network.MWorldEditorSetting;
 
 public class OfalenModPacketCore {
 	/** パケット通信用。 */
@@ -23,7 +31,7 @@ public class OfalenModPacketCore {
 		registerMessage(MWorldEditorSetting.class, MWorldEditorSetting.Handler.class, Side.SERVER);
 		registerMessage(MSpawnParticleWithRange.class, MSpawnParticleWithRange.Handler.class, Side.CLIENT);
 		registerMessage(MApplyDetailedSetter.class, MApplyDetailedSetter.Handler.class, Side.SERVER);
-		registerMessage(MSettingKeyChange.class, MSettingKeyChange.Handler.class, Side.SERVER);
+		registerMessage(MKeyStateChange.class, MKeyStateChange.Handler.class, Side.SERVER);
 	}
 
 	private static <REQ extends IMessage, REPLY extends IMessage> void registerMessage(Class<REQ> requestMessageType, Class<? extends IMessageHandler<REQ, REPLY>> messageHandler, Side sideHandler) {

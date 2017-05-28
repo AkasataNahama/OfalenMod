@@ -3,10 +3,13 @@ package nahama.ofalenmod.item.tool;
 import cpw.mods.fml.common.eventhandler.Event.Result;
 import nahama.ofalenmod.OfalenModCore;
 import nahama.ofalenmod.handler.OfalenKeyHandler;
+import nahama.ofalenmod.util.BlockRange;
 import nahama.ofalenmod.util.OfalenNBTUtil;
 import nahama.ofalenmod.util.OfalenNBTUtil.FilterUtil;
+import nahama.ofalenmod.util.OfalenParticleUtil;
 import nahama.ofalenmod.util.OfalenUtil;
 import net.minecraft.block.Block;
+import net.minecraft.client.Minecraft;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -59,14 +62,42 @@ public class ItemOfalenPerfectTool extends ItemTool {
 	@Override
 	public ItemStack onItemRightClick(ItemStack itemStack, World world, EntityPlayer player) {
 		byte mode = itemStack.getTagCompound().getByte(OfalenNBTUtil.MODE);
-		if (!OfalenKeyHandler.isSettingKeyPressed()) {
-			// 右クリック時効果がガードで、OSSキーが押されていないなら、ガードを始める。
+		if (!OfalenKeyHandler.isSettingKeyPressed(player)) {
+			// 右クリック時効果がガードで、設定キーが押されていないなら、ガードを始める。
 			if (mode == 3)
 				player.setItemInUse(itemStack, this.getMaxItemUseDuration(itemStack));
+			// 設定キーが押されていなければ終了。
+			return itemStack;
+		}
+		// インターバルが残っていたら終了。
+		if (itemStack.getTagCompound().getByte(OfalenNBTUtil.INTERVAL) > 0)
+			return itemStack;
+		if (OfalenKeyHandler.isSprintKeyPressed(player)) {
+			// スプリントキーが押されていたら、モード設定の変更を行う。
+			if (mode == 1) {
+				int addition = itemStack.getTagCompound().getByte(OfalenNBTUtil.RANGE_LENGTH_ADDITION);
+				if (!player.isSneaking()) {
+					addition = Math.min(addition + 1, Byte.MAX_VALUE);
+				} else {
+					addition = Math.max(addition - 1, Byte.MIN_VALUE);
+				}
+				if (!player.worldObj.isRemote) {
+					itemStack.getTagCompound().setByte(OfalenNBTUtil.RANGE_LENGTH_ADDITION, (byte) addition);
+					// 次に変更できるまでの間隔を設定する。
+					itemStack.getTagCompound().setByte(OfalenNBTUtil.INTERVAL, (byte) 10);
+				} else {
+					int length = Math.max(1 + addition, 0);
+					int x = Minecraft.getMinecraft().objectMouseOver.blockX;
+					int y = Minecraft.getMinecraft().objectMouseOver.blockY;
+					int z = Minecraft.getMinecraft().objectMouseOver.blockZ;
+					BlockRange range = new BlockRange(x - length, y - length, z - length, x + length, y + length, z + length);
+					OfalenParticleUtil.spawnParticleWithBlockRange(player.worldObj, range, 2);
+				}
+			}
 		} else {
-			if (world.isRemote || itemStack.getTagCompound().getByte(OfalenNBTUtil.INTERVAL) > 0)
+			if (world.isRemote)
 				return itemStack;
-			// OSSキーが押されていたら、modeを変更する。
+			// 設定キーが押されていたら、modeを変更する。
 			if (!player.isSneaking()) {
 				mode++;
 			} else {
@@ -88,7 +119,7 @@ public class ItemOfalenPerfectTool extends ItemTool {
 	/** アイテムが使われた(ブロックに右クリックされた)時の処理。 */
 	@Override
 	public boolean onItemUse(ItemStack itemStack, EntityPlayer player, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ) {
-		if (OfalenKeyHandler.isSettingKeyPressed())
+		if (OfalenKeyHandler.isSettingKeyPressed(player))
 			return false;
 		byte mode = itemStack.getTagCompound().getByte(OfalenNBTUtil.MODE);
 		switch (mode) {
@@ -98,7 +129,8 @@ public class ItemOfalenPerfectTool extends ItemTool {
 			return true;
 		case 1:
 			// 右クリック時効果が範囲破壊の時。
-			int length = 1;
+			int length = 1 + itemStack.getTagCompound().getByte(OfalenNBTUtil.RANGE_LENGTH_ADDITION);
+			length = Math.max(length, 0);
 			for (int ix = -length; ix <= length; ix++) {
 				for (int iy = -length; iy <= length; iy++) {
 					for (int iz = -length; iz <= length; iz++) {
@@ -142,20 +174,21 @@ public class ItemOfalenPerfectTool extends ItemTool {
 		return false;
 	}
 
-	/** ブロックを破壊し、ドロップさせる。 */
-	private boolean breakAndDropBlockByPlayerWithFilter(ItemStack itemStack, EntityPlayer player, World world, int x, int y, int z) {
+	/** フィルターで指定されたブロックを破壊し、ドロップさせる。 */
+	private void breakAndDropBlockByPlayerWithFilter(ItemStack itemStack, EntityPlayer player, World world, int x, int y, int z) {
 		Block block = world.getBlock(x, y, z);
 		int meta = world.getBlockMetadata(x, y, z);
 		// 破壊不可（岩盤）なら終了。
 		if (block.getBlockHardness(world, x, y, z) < 0.0F)
-			return false;
+			return;
+		// フィルターに引っかかったら不可。
 		if (!FilterUtil.canItemFilterThrough(FilterUtil.getFilterTag(itemStack), new ItemStack(block, 1, meta)))
-			return false;
+			return;
 		// ブロックを壊した時、道具の耐久値を減らす処理。
 		itemStack.func_150999_a(world, block, x, y, z, player);
 		// クライアント側なら終了。
 		if (world.isRemote)
-			return true;
+			return;
 		// ブロックが破壊された時の音を鳴らす。
 		world.playAuxSFX(2001, x, y, z, Block.getIdFromBlock(block) + (meta << 12));
 		// ブロックが回収される時の処理をする。
@@ -171,7 +204,6 @@ public class ItemOfalenPerfectTool extends ItemTool {
 			if (!EnchantmentHelper.getSilkTouchModifier(player))
 				block.dropXpOnBlockBreak(world, x, y, z, block.getExpDrop(world, meta, EnchantmentHelper.getFortuneModifier(player)));
 		}
-		return true;
 	}
 
 	/** Entityを叩いた時の処理。 */

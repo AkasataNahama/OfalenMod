@@ -2,7 +2,10 @@ package nahama.ofalenmod.item;
 
 import nahama.ofalenmod.OfalenModCore;
 import nahama.ofalenmod.handler.OfalenKeyHandler;
-import nahama.ofalenmod.util.*;
+import nahama.ofalenmod.util.BlockPos;
+import nahama.ofalenmod.util.BlockRangeWithStandard;
+import nahama.ofalenmod.util.OfalenNBTUtil;
+import nahama.ofalenmod.util.OfalenParticleUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -42,7 +45,7 @@ public class ItemSurveyingCane extends Item {
 		if (range == null) {
 			range = new BlockRangeWithStandard(x, y, z, x, y, z);
 		} else {
-			if (!OfalenKeyHandler.isSettingKeyPressed()) {
+			if (!OfalenKeyHandler.isSettingKeyPressed(player)) {
 				range.posA = new BlockPos(x, y, z);
 			} else {
 				range.posB = new BlockPos(x, y, z);

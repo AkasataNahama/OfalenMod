@@ -24,6 +24,8 @@ public class OfalenNBTUtil {
 	public static final String SAMPLE = "Sample";
 	// 修繕機
 	public static final String IS_IRREPARABLE = "IsIrreparableOfalen";
+	// 万能ツール
+	public static final String RANGE_LENGTH_ADDITION = "RangeLengthAddition";
 	// レーザー
 	public static final String LASER_COLOR = "LaserColor";
 	public static final String TILE_X = "TileX";
