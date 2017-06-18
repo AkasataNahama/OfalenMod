@@ -23,7 +23,7 @@ config.ofalen.prop.amountCollectingLumpCrafting.tooltip=通常のレシピを使
 config.ofalen.prop.baseOfalenSmeltingAmount=オファレン製錬量の基準値
 config.ofalen.prop.baseOfalenSmeltingAmount.tooltip=オファレン製錬機を使った時の、オファレン鉱石からオファレンへの製錬数。オファレン処理装置不使用時。
 config.ofalen.prop.positionStoneLumpRecipeBlank=石の塊レシピの空白箇所
-config.ofalen.prop.positionStoneLumpRecipeBlank.tooltip=数字は石の塊のレシピの空白箇所。[0 1 2] / [3 4 5] / [6 7 8]
+config.ofalen.prop.positionStoneLumpRecipeBlank.tooltip=石の塊のレシピの空白箇所。[0 1 2] / [3 4 5] / [6 7 8]
 // 鉱石
 config.ofalen.category.ore=鉱石
 config.ofalen.category.ore.tooltip=オファレン鉱石とその生成に関する設定。

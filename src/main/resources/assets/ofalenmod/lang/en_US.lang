@@ -23,7 +23,7 @@ config.ofalen.prop.amountCollectingLumpCrafting.tooltip=Crafting amount of "Lump
 config.ofalen.prop.baseOfalenSmeltingAmount=Ofalen Smelting Amount Base
 config.ofalen.prop.baseOfalenSmeltingAmount.tooltip=Smelting amount of Ofalen from Ofalen Ore using Ofalen Smelting Machine. When don't use Ofalen Machine Processor.
 config.ofalen.prop.positionStoneLumpRecipeBlank=Lump of Stone Recipe Blank Position
-config.ofalen.prop.positionStoneLumpRecipeBlank.tooltip=The number is position of space on recipe of Lump of Stone. [0 1 2] / [3 4 5] / [6 7 8]
+config.ofalen.prop.positionStoneLumpRecipeBlank.tooltip=Position of space on recipe of "Lump of Stone". [0 1 2] / [3 4 5] / [6 7 8]
 // Ore
 config.ofalen.category.ore=Ore
 config.ofalen.category.ore.tooltip=The settings of Ofalen Ore and generator.

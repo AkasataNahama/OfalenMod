@@ -99,7 +99,7 @@ public class OfalenModConfigCore {
 		amountCollectingLumpCrafting = (byte) cfg.getInt("amountCollectingLumpCrafting", RECIPE, amountCollectingLumpCrafting, 1, 64, "Crafting amount of \"Lump of Ofalen Collecting\" when using normal recipe." + restart, keyProp + "amountCollectingLumpCrafting");
 		baseOfalenSmeltingAmount = (byte) cfg.getInt("baseOfalenSmeltingAmount", RECIPE, baseOfalenSmeltingAmount, 1, 16, "Smelting amount of Ofalen from Ofalen Ore using Ofalen Smelting Machine." + separator + "When don't use Ofalen Machine Processor." + restart, keyProp + "baseOfalenSmeltingAmount");
 		String diagram = separator + " -------" + separator + " |0 1 2|" + separator + " |3 4 5|" + separator + " |6 7 8|" + separator + " -------";
-		positionStoneLumpRecipeBlank = (byte) cfg.getInt("positionStoneLumpRecipeBlank", RECIPE, positionStoneLumpRecipeBlank, 0, 8, "The number is position of space on recipe of Lump of Stone." + diagram + restart, keyProp + "positionStoneLumpRecipeBlank");
+		positionStoneLumpRecipeBlank = (byte) cfg.getInt("positionStoneLumpRecipeBlank", RECIPE, positionStoneLumpRecipeBlank, 0, 8, "The number is position of space on recipe of \"Lump of Stone\"." + diagram + restart, keyProp + "positionStoneLumpRecipeBlank");
 		// Ore
 		cfg.setCategoryLanguageKey(ORE, keyCategory + "ore");
 		amountDrop = (byte) cfg.getInt("amountDrop", ORE, amountDrop, 1, Byte.MAX_VALUE, "Drop amount of Ofalen Fragment when Ofalen Ore is mined." + separator, keyProp + "amountDrop");
