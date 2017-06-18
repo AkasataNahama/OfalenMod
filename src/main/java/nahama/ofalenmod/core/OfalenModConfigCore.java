@@ -30,10 +30,10 @@ public class OfalenModConfigCore {
 	// General
 	public static boolean isUpdateCheckEnabled = true;
 	// Recipe
-	public static byte amountShieldIngotCrafting = 4;
-	public static byte amountTeleportPearlCrafting = 4;
-	public static byte amountFloatDustCrafting = 4;
-	public static byte amountCollectingLampCrafting = 64;
+	public static byte amountShieldingIngotCrafting = 4;
+	public static byte amountTeleportingPearlCrafting = 4;
+	public static byte amountFloatingDustCrafting = 4;
+	public static byte amountCollectingLumpCrafting = 64;
 	public static byte baseOfalenSmeltingAmount = 1;
 	public static byte positionStoneLumpRecipeBlank = 7;
 	// Ore
@@ -93,10 +93,10 @@ public class OfalenModConfigCore {
 		// Recipe
 		cfg.setCategoryLanguageKey(RECIPE, keyCategory + "recipe");
 		cfg.setCategoryRequiresMcRestart(RECIPE, true);
-		amountShieldIngotCrafting = (byte) cfg.getInt("amountShieldIngotCrafting", RECIPE, amountShieldIngotCrafting, 1, 64, "Crafting amount of Ofalen Shield Ingot when using normal recipe." + restart, keyProp + "amountShieldIngotCrafting");
-		amountTeleportPearlCrafting = (byte) cfg.getInt("amountTeleportPearlCrafting", RECIPE, amountTeleportPearlCrafting, 1, 64, "Crafting amount of Ofalen Teleport Pearl when using normal recipe." + restart, keyProp + "amountTeleportPearlCrafting");
-		amountFloatDustCrafting = (byte) cfg.getInt("amountFloatDustCrafting", RECIPE, amountFloatDustCrafting, 1, 64, "Crafting amount of Ofalen Float Dust when using normal recipe." + restart, keyProp + "amountFloatDustCrafting");
-		amountCollectingLampCrafting = (byte) cfg.getInt("amountCollectingLampCrafting", RECIPE, amountCollectingLampCrafting, 1, 64, "Crafting amount of Ofalen Collecting Dust when using normal recipe." + restart, keyProp + "amountCollectingLampCrafting");
+		amountShieldingIngotCrafting = (byte) cfg.getInt("amountShieldingIngotCrafting", RECIPE, amountShieldingIngotCrafting, 1, 64, "Crafting amount of \"Ingot of Ofalen Shielding\" when using normal recipe." + restart, keyProp + "amountShieldingIngotCrafting");
+		amountTeleportingPearlCrafting = (byte) cfg.getInt("amountTeleportingPearlCrafting", RECIPE, amountTeleportingPearlCrafting, 1, 64, "Crafting amount of \"Pearl of Ofalen Teleporting\" when using normal recipe." + restart, keyProp + "amountTeleportingPearlCrafting");
+		amountFloatingDustCrafting = (byte) cfg.getInt("amountFloatingDustCrafting", RECIPE, amountFloatingDustCrafting, 1, 64, "Crafting amount of \"Dust of Ofalen Floating\" when using normal recipe." + restart, keyProp + "amountFloatingDustCrafting");
+		amountCollectingLumpCrafting = (byte) cfg.getInt("amountCollectingLumpCrafting", RECIPE, amountCollectingLumpCrafting, 1, 64, "Crafting amount of \"Lump of Ofalen Collecting\" when using normal recipe." + restart, keyProp + "amountCollectingLumpCrafting");
 		baseOfalenSmeltingAmount = (byte) cfg.getInt("baseOfalenSmeltingAmount", RECIPE, baseOfalenSmeltingAmount, 1, 16, "Smelting amount of Ofalen from Ofalen Ore using Ofalen Smelting Machine." + separator + "When don't use Ofalen Machine Processor." + restart, keyProp + "baseOfalenSmeltingAmount");
 		String diagram = separator + " -------" + separator + " |0 1 2|" + separator + " |3 4 5|" + separator + " |6 7 8|" + separator + " -------";
 		positionStoneLumpRecipeBlank = (byte) cfg.getInt("positionStoneLumpRecipeBlank", RECIPE, positionStoneLumpRecipeBlank, 0, 8, "The number is position of space on recipe of Lump of Stone." + diagram + restart, keyProp + "positionStoneLumpRecipeBlank");
