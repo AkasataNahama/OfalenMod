@@ -81,7 +81,7 @@ public class OfalenModCore {
 	public void preInit(FMLPreInitializationEvent event) {
 		OfalenTimer.start("OfalenModCore.preInit");
 		OfalenModInfoCore.registerInfo(meta);
-		OfalenModConfigCore.loadConfig(event);
+		OfalenModConfigCore.loadConfig(event.getSuggestedConfigurationFile());
 		if (OfalenModConfigCore.isUpdateCheckEnabled)
 			OfalenModUpdateCheckHandler.checkUpdate();
 		OfalenModBlockCore.registerBlock();

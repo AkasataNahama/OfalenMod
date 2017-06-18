@@ -1,8 +1,9 @@
 package nahama.ofalenmod.core;
 
-import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import nahama.ofalenmod.OfalenModCore;
 import net.minecraftforge.common.config.Configuration;
+
+import java.io.File;
 
 public class OfalenModConfigCore {
 	// カテゴリー名
@@ -70,8 +71,8 @@ public class OfalenModConfigCore {
 	public static short amountCollectorDamageExp = 1;
 
 	/** Configを読み込む。 */
-	public static void loadConfig(FMLPreInitializationEvent event) {
-		cfg = new Configuration(event.getSuggestedConfigurationFile(), OfalenModCore.VERSION, true);
+	public static void loadConfig(File fileConfig) {
+		cfg = new Configuration(fileConfig, OfalenModCore.VERSION, true);
 		// TODO [1.7.10]2.0.0へのアップデート時、Configリセットを勧告する？
 		//		if (VersionUtil.compareVersion(new VersionUtil.VersionString(OfalenModCore.MOD_ID, cfg.getLoadedConfigVersion()), OfalenModCore.VERSION_STRING))
 		syncConfig();
