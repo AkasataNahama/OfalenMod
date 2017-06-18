@@ -10,18 +10,15 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.StatCollector;
 import org.lwjgl.opengl.GL11;
 
 public class GuiItemFloater extends GuiContainer {
 	private static final ResourceLocation GUITEXTURE = new ResourceLocation("ofalenmod:textures/gui/container/floater.png");
-	private ItemStack currentItem;
 
 	public GuiItemFloater(EntityPlayer player) {
 		super(new ContainerItemFloater(player));
-		currentItem = player.getHeldItem();
 	}
 
 	@Override
@@ -35,7 +32,7 @@ public class GuiItemFloater extends GuiContainer {
 	@Override
 	protected void actionPerformed(GuiButton button) {
 		byte mode = (byte) Math.abs(button.id + 1);
-		currentItem.getTagCompound().setByte(OfalenNBTUtil.MODE, mode);
+		Minecraft.getMinecraft().thePlayer.getHeldItem().getTagCompound().setByte(OfalenNBTUtil.MODE, mode);
 		OfalenFlightHandlerClient.allowPlayerToFloat(mode);
 		OfalenModPacketCore.WRAPPER.sendToServer(new MFloaterMode(mode, true));
 	}
