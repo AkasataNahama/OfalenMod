@@ -108,9 +108,9 @@ config.ofalen.prop.intervalFloaterDamage.tooltip=オファレンフローター�
 // Futuer.Collector
 config.ofalen.category.collector=コレクター
 config.ofalen.category.collector.tooltip=オファレンコレクターに関する設定。
-config.ofalen.prop.amountCollectorDamageItem=コレクターのダメージ量（アイテム）
+config.ofalen.prop.amountCollectorDamageItem=コレクターのダメージ量(アイテム)
 config.ofalen.prop.amountCollectorDamageItem.tooltip=アイテムを収集した時のコレクターのダメージ量。アイテム1個あたり。
-config.ofalen.prop.amountCollectorDamageExp=コレクターのダメージ量（経験値）
+config.ofalen.prop.amountCollectorDamageExp=コレクターのダメージ量(経験値)
 config.ofalen.prop.amountCollectorDamageExp.tooltip=経験値オーブを収集した時のコレクターのダメージ量。1経験値あたり。
 
 // キーバインディング
