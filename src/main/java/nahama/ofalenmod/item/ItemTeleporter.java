@@ -16,6 +16,7 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 
 import java.util.List;
@@ -98,5 +99,16 @@ public class ItemTeleporter extends ItemFuture {
 		itemStack.getTagCompound().setByte(OfalenNBTUtil.INTERVAL, (byte) 10);
 		OfalenModPacketCore.WRAPPER.sendToAll(new MSpawnParticle(toId, pos.getX() + 0.5, pos.getY() + 1.5, pos.getZ() + 0.5, (byte) 1));
 		return itemStack;
+	}
+
+	@Override
+	public void addInformation(ItemStack itemStack, EntityPlayer player, List list, boolean isAdvanced) {
+		List<String> stringList = OfalenUtil.getAs(list);
+		int amount = 0;
+		if (itemStack.hasTagCompound()) {
+			amount = itemStack.getTagCompound().getByte(OfalenNBTUtil.MATERIAL);
+		}
+		stringList.add(amount + " / 64");
+		stringList.add(StatCollector.translateToLocal("info.ofalen.teleporter.channel") + " " + itemStack.getItemDamage());
 	}
 }

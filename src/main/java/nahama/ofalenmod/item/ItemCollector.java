@@ -183,12 +183,13 @@ public class ItemCollector extends Item implements IItemOfalenSettable {
 
 	/** 説明欄の内容を追加する。 */
 	@Override
-	public void addInformation(ItemStack itemStack, EntityPlayer player, List list, boolean flag) {
-		if (!itemStack.hasTagCompound())
-			return;
+	public void addInformation(ItemStack itemStack, EntityPlayer player, List list, boolean isAdvanced) {
 		List<String> stringList = OfalenUtil.getAs(list);
-		stringList.add(StatCollector.translateToLocal("info.ofalen.collector.item") + " : " + (itemStack.getTagCompound().getBoolean(OfalenNBTUtil.IS_ITEM_DISABLED) ? "Off" : "On"));
-		stringList.add(StatCollector.translateToLocal("info.ofalen.collector.exp") + " : " + (itemStack.getTagCompound().getBoolean(OfalenNBTUtil.IS_EXP_DISABLED) ? "Off" : "On"));
+		stringList.add((itemStack.getMaxDamage() - itemStack.getItemDamage()) + " / " + itemStack.getMaxDamage());
+		if (itemStack.hasTagCompound()) {
+			stringList.add(StatCollector.translateToLocal("info.ofalen.collector.item") + " " + StatCollector.translateToLocal("info.ofalen.future.isValid." + !itemStack.getTagCompound().getBoolean(OfalenNBTUtil.IS_ITEM_DISABLED)));
+			stringList.add(StatCollector.translateToLocal("info.ofalen.collector.exp") + " " + StatCollector.translateToLocal("info.ofalen.future.isValid." + !itemStack.getTagCompound().getBoolean(OfalenNBTUtil.IS_EXP_DISABLED)));
+		}
 		stringList.addAll(FilterUtil.getFilterInformation(itemStack));
 	}
 

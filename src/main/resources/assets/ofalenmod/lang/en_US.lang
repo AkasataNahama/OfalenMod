@@ -143,11 +143,15 @@ info.ofalen.color:blue=Blue
 info.ofalen.color:white=White
 // Future
 info.ofalen.future.lackingMaterial=%s: %s is lacking!
+info.ofalen.future.isValid.false=Disabled
+info.ofalen.future.isValid.true=Enabled
 info.ofalen.shield.brokenShield=Ofalen Shield: Shield expired!
+info.ofalen.teleporter.channel=Channel:
 info.ofalen.teleporter.channelInvalid=Ofalen Teleporter: This channel is Invalid!
+info.ofalen.floater.mode=Mode:
 info.ofalen.floater.modeChanged=Ofalen Floater: Flight Mode is changed to %s!
-info.ofalen.collector.item=Item
-info.ofalen.collector.exp=Exp
+info.ofalen.collector.item=Item:
+info.ofalen.collector.exp=Exp:
 // Filter
 info.ofalen.filter.toolTip=Press Shift
 info.ofalen.filter.item.installed=Item Filter

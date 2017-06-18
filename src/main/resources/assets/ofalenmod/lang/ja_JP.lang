@@ -143,11 +143,15 @@ info.ofalen.color:blue=青
 info.ofalen.color:white=白
 // 未来系
 info.ofalen.future.lackingMaterial=%s : %sが不足しています!
+info.ofalen.future.isValid.false=無効
+info.ofalen.future.isValid.true=有効
 info.ofalen.shield.brokenShield=オファレンシールド : シールドが無効になりました!
+info.ofalen.teleporter.channel=チャンネル :
 info.ofalen.teleporter.channelInvalid=オファレンテレポーター : このチャンネルは無効です!
+info.ofalen.floater.mode=モード :
 info.ofalen.floater.modeChanged=オファレンフローター : モードを%sにチェンジしました!
-info.ofalen.collector.item=アイテム
-info.ofalen.collector.exp=経験値
+info.ofalen.collector.item=アイテム :
+info.ofalen.collector.exp=経験値 :
 // フィルター
 info.ofalen.filter.toolTip=フィルター情報 : 「Shift」
 info.ofalen.filter.item.installed=アイテムフィルター

@@ -10,7 +10,10 @@ import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
+import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
+
+import java.util.List;
 
 public class ItemShield extends ItemFuture {
 	private IIcon invalid;
@@ -82,5 +85,14 @@ public class ItemShield extends ItemFuture {
 	@Override
 	public boolean requiresMultipleRenderPasses() {
 		return true;
+	}
+
+	@Override
+	public void addInformation(ItemStack itemStack, EntityPlayer player, List list, boolean isAdvanced) {
+		List<String> stringList = OfalenUtil.getAs(list);
+		stringList.add((itemStack.getMaxDamage() - itemStack.getItemDamage()) + " / " + itemStack.getMaxDamage());
+		if (itemStack.hasTagCompound()) {
+			stringList.add(StatCollector.translateToLocal("info.ofalen.future.isValid." + itemStack.getTagCompound().getBoolean(OfalenNBTUtil.IS_VALID)));
+		}
 	}
 }

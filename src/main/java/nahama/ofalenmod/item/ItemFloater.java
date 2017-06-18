@@ -15,7 +15,10 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.IIcon;
+import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
+
+import java.util.List;
 
 public class ItemFloater extends ItemFuture {
 	/** 無効時のアイコン。 */
@@ -132,5 +135,14 @@ public class ItemFloater extends ItemFuture {
 	@Override
 	public boolean requiresMultipleRenderPasses() {
 		return true;
+	}
+
+	@Override
+	public void addInformation(ItemStack itemStack, EntityPlayer player, List list, boolean isAdvanced) {
+		List<String> stringList = OfalenUtil.getAs(list);
+		stringList.add((itemStack.getMaxDamage() - itemStack.getItemDamage()) + " / " + itemStack.getMaxDamage());
+		if (itemStack.hasTagCompound()) {
+			stringList.add(StatCollector.translateToLocal("info.ofalen.floater.mode") + " " + itemStack.getTagCompound().getByte(OfalenNBTUtil.MODE));
+		}
 	}
 }
