@@ -23,36 +23,28 @@ public class OfalenFlightHandlerClient {
 
 	/** プレイヤーがフローターを有効にしているか確認する。 */
 	public static void checkPlayer() {
-		mode = 0;
+		byte newMode = 0;
 		IInventory inventory = Minecraft.getMinecraft().thePlayer.inventory;
 		for (int i = 0; i < inventory.getSizeInventory(); i++) {
 			ItemStack itemStack = inventory.getStackInSlot(i);
 			if (itemStack == null || !(itemStack.getItem() instanceof ItemFloater) || !itemStack.hasTagCompound())
 				continue;
-			mode = itemStack.getTagCompound().getByte(OfalenNBTUtil.MODE);
+			newMode = itemStack.getTagCompound().getByte(OfalenNBTUtil.MODE);
 		}
-		allowPlayerToFloat(mode);
+		setMode(newMode);
 	}
 
 	/** フローターのモードを更新する。 */
-	public static void allowPlayerToFloat(byte mode) {
-		if (mode < 0) {
-			// 無効にされたら、飛行を禁止する。
-			forbidPlayerToFloat();
-			return;
+	private static void setMode(byte newMode) {
+		if (newMode < 1) {
+			// 滞空時移動速度をもとに戻す。
+			Minecraft.getMinecraft().thePlayer.jumpMovementFactor = 0.02F;
 		}
-		// モードを設定し、サーバーに通知する。
-		OfalenFlightHandlerClient.mode = mode;
-		OfalenModPacketCore.WRAPPER.sendToServer(new MFloaterMode(OfalenFlightHandlerClient.mode, false));
-	}
-
-	/** プレイヤーの浮遊を禁止する。 */
-	public static void forbidPlayerToFloat() {
-		// モードを0にし、サーバーに通知する。
-		mode = 0;
-		OfalenModPacketCore.WRAPPER.sendToServer(new MFloaterMode(mode, false));
-		// 滞空時移動速度をもとに戻す。
-		Minecraft.getMinecraft().thePlayer.jumpMovementFactor = 0.02F;
+		if (mode != newMode) {
+			// モードを設定し、サーバーに通知する。
+			mode = newMode;
+			OfalenModPacketCore.WRAPPER.sendToServer(new MFloaterMode(OfalenFlightHandlerClient.mode, false));
+		}
 	}
 
 	/** 浮遊が許可されているかどうか。 */

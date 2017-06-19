@@ -33,7 +33,7 @@ public class GuiItemFloater extends GuiContainer {
 	protected void actionPerformed(GuiButton button) {
 		byte mode = (byte) Math.abs(button.id + 1);
 		Minecraft.getMinecraft().thePlayer.getHeldItem().getTagCompound().setByte(OfalenNBTUtil.MODE, mode);
-		OfalenFlightHandlerClient.allowPlayerToFloat(mode);
+		OfalenFlightHandlerClient.checkPlayer();
 		OfalenModPacketCore.WRAPPER.sendToServer(new MFloaterMode(mode, true));
 	}
 

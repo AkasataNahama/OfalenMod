@@ -62,7 +62,7 @@ public class ItemFloater extends ItemFuture {
 		// 耐久値が尽きたなら、無効にし、ログに出力する。
 		nbt.setByte(OfalenNBTUtil.MODE, (byte) 0);
 		if (world.isRemote && entity == Minecraft.getMinecraft().thePlayer)
-			OfalenFlightHandlerClient.forbidPlayerToFloat();
+			OfalenFlightHandlerClient.checkPlayer();
 		if (!world.isRemote)
 			OfalenUtil.addChatTranslationMessage((EntityPlayer) entity, "info.ofalen.future.lackingMaterial", new ItemStack(OfalenModItemCore.floaterOfalen).getDisplayName(), new ItemStack(OfalenModItemCore.partsOfalen, 1, 8).getDisplayName());
 	}
@@ -87,7 +87,7 @@ public class ItemFloater extends ItemFuture {
 			if (mode != 0) {
 				itemStack.getTagCompound().setByte(OfalenNBTUtil.MODE, (byte) 0);
 				if (world.isRemote)
-					OfalenFlightHandlerClient.allowPlayerToFloat((byte) 0);
+					OfalenFlightHandlerClient.checkPlayer();
 			}
 			return itemStack;
 		}
@@ -97,7 +97,7 @@ public class ItemFloater extends ItemFuture {
 			mode = 1;
 		itemStack.getTagCompound().setByte(OfalenNBTUtil.MODE, mode);
 		if (world.isRemote) {
-			OfalenFlightHandlerClient.allowPlayerToFloat(mode);
+			OfalenFlightHandlerClient.checkPlayer();
 		} else {
 			OfalenUtil.addChatTranslationMessage(player, "info.ofalen.floater.modeChanged", mode);
 		}
