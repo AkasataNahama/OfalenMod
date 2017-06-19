@@ -7,7 +7,6 @@ import nahama.ofalenmod.OfalenModCore;
 import nahama.ofalenmod.core.OfalenModConfigCore;
 import nahama.ofalenmod.entity.EntityLaserBase;
 import nahama.ofalenmod.util.OfalenUtil;
-import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ChatComponentText;
@@ -42,7 +41,7 @@ public class OfalenModEventHandler {
 			}
 		} else {
 			// クライアント側
-			if (player == Minecraft.getMinecraft().thePlayer) {
+			if (OfalenFlightHandlerClient.isPlayer(player)) {
 				OfalenFlightHandlerClient.init();
 			}
 		}

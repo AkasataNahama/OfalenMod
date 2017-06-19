@@ -15,19 +15,16 @@ public class OfalenFlightHandlerClient {
 	/** フローターのモード。 */
 	private static byte mode;
 	private static byte time;
-	private static EntityPlayerSP player;
 
 	/** 初期化処理。 */
 	public static void init() {
-		// プレイヤーのインスタンスを代入する。
-		player = Minecraft.getMinecraft().thePlayer;
 		mode = -1;
 	}
 
 	/** プレイヤーがフローターを有効にしているか確認する。 */
 	public static void checkPlayer() {
 		mode = 0;
-		IInventory inventory = player.inventory;
+		IInventory inventory = Minecraft.getMinecraft().thePlayer.inventory;
 		for (int i = 0; i < inventory.getSizeInventory(); i++) {
 			ItemStack itemStack = inventory.getStackInSlot(i);
 			if (itemStack == null || !(itemStack.getItem() instanceof ItemFloater) || !itemStack.hasTagCompound())
@@ -56,7 +53,7 @@ public class OfalenFlightHandlerClient {
 		mode = 0;
 		OfalenModPacketCore.WRAPPER.sendToServer(new MFloaterMode(mode, false));
 		// 滞空時移動速度をもとに戻す。
-		player.jumpMovementFactor = 0.02F;
+		Minecraft.getMinecraft().thePlayer.jumpMovementFactor = 0.02F;
 	}
 
 	/** 浮遊が許可されているかどうか。 */
@@ -69,28 +66,29 @@ public class OfalenFlightHandlerClient {
 
 	/** Entityがプレイヤーかどうか。 */
 	public static boolean isPlayer(Entity entity) {
-		return player.getCommandSenderName().equals(entity.getCommandSenderName());
+		return Minecraft.getMinecraft().thePlayer == entity;
 	}
 
 	/** プレイヤーを浮遊させる。 */
 	public static void floatPlayer() {
+		EntityPlayerSP player = Minecraft.getMinecraft().thePlayer;
 		switch (mode) {
 		case 0:
 			return;
 		case 1:
-			jetFlight();
+			jetFlight(player);
 			break;
 		case 2:
-			glideFlight();
+			glideFlight(player);
 			break;
 		case 3:
-			jumpFlight();
+			jumpFlight(player);
 			break;
 		case 4:
-			quietFlight();
+			quietFlight(player);
 			break;
 		case 5:
-			horizontalFlight();
+			horizontalFlight(player);
 			break;
 		}
 		time++;
@@ -102,7 +100,7 @@ public class OfalenFlightHandlerClient {
 	}
 
 	/** ジェットモードで浮遊させる。 */
-	private static void jetFlight() {
+	private static void jetFlight(EntityPlayerSP player) {
 		// 滞空時移動速度を上書き。
 		player.jumpMovementFactor = 0.04F;
 		// 入力情報を更新。
@@ -116,7 +114,7 @@ public class OfalenFlightHandlerClient {
 	}
 
 	/** グライドモードで浮遊させる。 */
-	private static void glideFlight() {
+	private static void glideFlight(EntityPlayerSP player) {
 		// 滞空時移動速度を上書き。
 		player.jumpMovementFactor = 0.08F;
 		if (player.motionY < -0.1D) {
@@ -125,7 +123,7 @@ public class OfalenFlightHandlerClient {
 	}
 
 	/** ジャンプモードで浮遊させる。 */
-	private static void jumpFlight() {
+	private static void jumpFlight(EntityPlayerSP player) {
 		// 滞空時移動速度を上書き。
 		player.jumpMovementFactor = 0.04F;
 		// ジャンプキーに入力があったかどうかを保持。
@@ -139,7 +137,7 @@ public class OfalenFlightHandlerClient {
 	}
 
 	/** クアイエットモードで浮遊させる。 */
-	private static void quietFlight() {
+	private static void quietFlight(EntityPlayerSP player) {
 		// 滞空時移動速度を上書き。
 		player.jumpMovementFactor = 0.08F;
 		// 入力情報を更新。
@@ -157,7 +155,7 @@ public class OfalenFlightHandlerClient {
 	}
 
 	/** ホリゾンタルモードで浮遊させる。 */
-	private static void horizontalFlight() {
+	private static void horizontalFlight(EntityPlayerSP player) {
 		// 滞空時移動速度を上書き。
 		player.jumpMovementFactor = 0.02F;
 		// 上下移動をキャンセル。
