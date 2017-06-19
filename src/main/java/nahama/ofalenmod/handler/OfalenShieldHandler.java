@@ -32,8 +32,11 @@ public class OfalenShieldHandler {
 				itemStack.getTagCompound().setBoolean(OfalenNBTUtil.IS_VALID, false);
 				continue;
 			}
-			itemStack.setItemDamage(itemStack.getItemDamage() + OfalenModConfigCore.amountShieldDamage);
 			flag = true;
+			// クリエイティブなら材料を消費しない。
+			if (player.capabilities.isCreativeMode)
+				break;
+			itemStack.setItemDamage(itemStack.getItemDamage() + OfalenModConfigCore.amountShieldDamage);
 			if (itemStack.getItemDamage() + OfalenModConfigCore.amountShieldDamage > itemStack.getMaxDamage()) {
 				// ダメージが最大になったら、無効にする。
 				itemStack.getTagCompound().setBoolean(OfalenNBTUtil.IS_VALID, false);
