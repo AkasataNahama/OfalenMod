@@ -14,7 +14,7 @@ import net.minecraft.item.ItemStack;
 public class OfalenFlightHandlerClient {
 	/** フローターのモード。 */
 	private static byte mode;
-	private static byte time;
+	private static byte interval;
 
 	/** 初期化処理。 */
 	public static void init() {
@@ -32,7 +32,6 @@ public class OfalenFlightHandlerClient {
 			mode = itemStack.getTagCompound().getByte(OfalenNBTUtil.MODE);
 		}
 		allowPlayerToFloat(mode);
-		time = 0;
 	}
 
 	/** フローターのモードを更新する。 */
@@ -71,6 +70,11 @@ public class OfalenFlightHandlerClient {
 
 	/** プレイヤーを浮遊させる。 */
 	public static void floatPlayer() {
+		interval--;
+		if (interval < 1) {
+			checkPlayer();
+			interval = 20;
+		}
 		EntityPlayerSP player = Minecraft.getMinecraft().thePlayer;
 		switch (mode) {
 		case 0:
@@ -91,9 +95,6 @@ public class OfalenFlightHandlerClient {
 			horizontalFlight(player);
 			break;
 		}
-		time++;
-		if (time > 20)
-			checkPlayer();
 		// プレイヤーが空中にいるならパーティクルを表示する。
 		if (!player.onGround)
 			Minecraft.getMinecraft().theWorld.spawnParticle("reddust", player.posX, player.posY - 1.6D - (OfalenUtil.random.nextDouble() / 2), player.posZ, 0.4D, 0.8D, 1.0D);
