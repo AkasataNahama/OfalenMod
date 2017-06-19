@@ -30,6 +30,9 @@ public class OfalenFlightHandlerClient {
 			if (itemStack == null || !(itemStack.getItem() instanceof ItemFloater) || !itemStack.hasTagCompound())
 				continue;
 			newMode = itemStack.getTagCompound().getByte(OfalenNBTUtil.MODE);
+			// 有効なフローターを見つけたら調査を終了する。
+			if (newMode > 0)
+				break;
 		}
 		setMode(newMode);
 	}
