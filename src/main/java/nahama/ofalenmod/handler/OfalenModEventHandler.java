@@ -10,7 +10,6 @@ import nahama.ofalenmod.util.OfalenUtil;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ChatComponentText;
-import net.minecraft.util.DamageSource;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.event.entity.living.LivingFallEvent;
@@ -45,10 +44,8 @@ public class OfalenModEventHandler {
 	public void onLivingHurt(LivingHurtEvent event) {
 		if (event.entityLiving.worldObj.isRemote || event.isCanceled() || !event.isCancelable() || !(event.entityLiving instanceof EntityPlayer))
 			return;
-		if (event.source == DamageSource.outOfWorld)
-			return;
-		// サーバー側で、キャンセル可能で、プレイヤーが奈落ダメージ以外のダメージを受けた時。
-		// シールドが有効なプレイヤーならダメージを無効化。
+		// サーバー側で、キャンセル可能で、プレイヤーの時。
+		// シールドが有効ならダメージを無効化。
 		if (OfalenShieldHandler.onProtect((EntityPlayer) event.entityLiving))
 			event.setCanceled(true);
 	}
