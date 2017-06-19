@@ -29,8 +29,6 @@ public class OfalenModEventHandler {
 		// プレイヤーの時。
 		if (!event.world.isRemote) {
 			// サーバー側
-			// シールドの調査。
-			OfalenShieldHandler.checkPlayer(player);
 			// プレゼントの調査。
 			OfalenModAnniversaryHandler.checkPlayer(player);
 			if (OfalenModUpdateCheckHandler.isNewVersionAvailable && !OfalenModUpdateCheckHandler.namesNotified.contains(player.getCommandSenderName())) {
@@ -51,11 +49,8 @@ public class OfalenModEventHandler {
 			return;
 		// サーバー側で、キャンセル可能で、プレイヤーが奈落ダメージ以外のダメージを受けた時。
 		// シールドが有効なプレイヤーならダメージを無効化。
-		EntityPlayer player = (EntityPlayer) event.entityLiving;
-		if (!OfalenShieldHandler.isProtecting(player))
-			return;
-		event.setCanceled(true);
-		OfalenShieldHandler.onProtect(player);
+		if (OfalenShieldHandler.onProtect((EntityPlayer) event.entityLiving))
+			event.setCanceled(true);
 	}
 
 	/** EntityLivingBaseのアップデート時の処理。 */

@@ -11,47 +11,9 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 
-import java.util.ArrayList;
-
 public class OfalenShieldHandler {
-	/** シールドが有効になっているプレイヤーの名前のリスト。 */
-	private static ArrayList<String> playersProtected = new ArrayList<String>();
-
-	/** 初期化処理。 */
-	public static void init() {
-		// リストをリセットする。
-		playersProtected.clear();
-	}
-
-	/** プレイヤーがシールドを有効にしているか確認する。 */
-	public static void checkPlayer(EntityPlayer player) {
-		IInventory inventory = player.inventory;
-		for (int i = 0; i < inventory.getSizeInventory(); i++) {
-			ItemStack itemStack = inventory.getStackInSlot(i);
-			if (itemStack == null || !(itemStack.getItem() instanceof ItemShield) || !itemStack.hasTagCompound())
-				continue;
-			if (itemStack.getTagCompound().getBoolean(OfalenNBTUtil.IS_VALID))
-				protectPlayer(player);
-		}
-	}
-
-	/** プレイヤーをリストに登録する。 */
-	public static void protectPlayer(EntityPlayer player) {
-		playersProtected.add(player.getCommandSenderName());
-	}
-
-	/** プレイヤーをリストから削除する。 */
-	public static void unprotectPlayer(EntityPlayer player) {
-		playersProtected.remove(player.getCommandSenderName());
-	}
-
-	/** プレイヤーがリストに登録されているかどうか。 */
-	public static boolean isProtecting(EntityPlayer player) {
-		return playersProtected.contains(player.getCommandSenderName());
-	}
-
 	/** ダメージを無効にした時の処理。 */
-	public static void onProtect(EntityPlayer player) {
+	public static boolean onProtect(EntityPlayer player) {
 		// シールドのGUIを開いていたら、閉じさせる。
 		if (player.openContainer != null && player.openContainer instanceof ContainerItemShield) {
 			player.closeScreen();
@@ -66,6 +28,7 @@ public class OfalenShieldHandler {
 			if (!itemStack.getTagCompound().getBoolean(OfalenNBTUtil.IS_VALID))
 				continue;
 			if (itemStack.getItemDamage() + OfalenModConfigCore.amountShieldDamage > itemStack.getMaxDamage()) {
+				// 材料が足りなかったら無効にする。
 				itemStack.getTagCompound().setBoolean(OfalenNBTUtil.IS_VALID, false);
 				continue;
 			}
@@ -74,15 +37,14 @@ public class OfalenShieldHandler {
 			if (itemStack.getItemDamage() + OfalenModConfigCore.amountShieldDamage > itemStack.getMaxDamage()) {
 				// ダメージが最大になったら、無効にする。
 				itemStack.getTagCompound().setBoolean(OfalenNBTUtil.IS_VALID, false);
+				OfalenUtil.addChatTranslationMessage(player, "info.ofalen.shield.brokenShield");
 			}
 			break;
 		}
-		if (!flag) {
-			// 有効になっているシールドがなければプレイヤーの保護をやめる。
-			unprotectPlayer(player);
-			OfalenUtil.addChatTranslationMessage(player, "info.ofalen.shield.brokenShield");
+		if (flag) {
+			// パーティクルを表示させるようパケットを送る。
+			OfalenModPacketCore.WRAPPER.sendToAll(new MSpawnParticle(player.worldObj.provider.dimensionId, player.posX, player.posY, player.posZ, (byte) 0));
 		}
-		// パーティクルを表示させるようパケットを送る。。
-		OfalenModPacketCore.WRAPPER.sendToAll(new MSpawnParticle(player.worldObj.provider.dimensionId, player.posX, player.posY, player.posZ, (byte) 0));
+		return flag;
 	}
 }

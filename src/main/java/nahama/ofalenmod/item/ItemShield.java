@@ -3,7 +3,6 @@ package nahama.ofalenmod.item;
 import nahama.ofalenmod.OfalenModCore;
 import nahama.ofalenmod.core.OfalenModConfigCore;
 import nahama.ofalenmod.core.OfalenModItemCore;
-import nahama.ofalenmod.handler.OfalenShieldHandler;
 import nahama.ofalenmod.util.OfalenNBTUtil;
 import nahama.ofalenmod.util.OfalenUtil;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -40,11 +39,10 @@ public class ItemShield extends ItemFuture {
 		// クライアントか、時間がたっていないなら終了。
 		if (world.isRemote || itemStack.getTagCompound().getByte(OfalenNBTUtil.INTERVAL) > 0)
 			return itemStack;
+		itemStack.getTagCompound().setByte(OfalenNBTUtil.INTERVAL, (byte) 10);
 		if (itemStack.getTagCompound().getBoolean(OfalenNBTUtil.IS_VALID)) {
-			OfalenShieldHandler.unprotectPlayer(player);
+			// シールドが有効だったら無効にして終了。
 			itemStack.getTagCompound().setBoolean(OfalenNBTUtil.IS_VALID, false);
-			itemStack.getTagCompound().setByte(OfalenNBTUtil.INTERVAL, (byte) 10);
-			itemStack.setItemDamage(itemStack.getItemDamage() - OfalenModConfigCore.amountShieldDamage);
 			return itemStack;
 		}
 		if (itemStack.getItemDamage() + OfalenModConfigCore.amountShieldDamage > itemStack.getMaxDamage()) {
@@ -52,10 +50,8 @@ public class ItemShield extends ItemFuture {
 			OfalenUtil.addChatTranslationMessage(player, "info.ofalen.future.lackingMaterial", new ItemStack(OfalenModItemCore.shieldOfalen).getDisplayName(), new ItemStack(OfalenModItemCore.partsOfalen, 1, 6).getDisplayName());
 			return itemStack;
 		}
-		OfalenShieldHandler.protectPlayer(player);
-		itemStack.setItemDamage(itemStack.getItemDamage() + OfalenModConfigCore.amountShieldDamage);
+		// シールドを有効にして終了。
 		itemStack.getTagCompound().setBoolean(OfalenNBTUtil.IS_VALID, true);
-		itemStack.getTagCompound().setByte(OfalenNBTUtil.INTERVAL, (byte) 10);
 		return itemStack;
 	}
 

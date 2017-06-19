@@ -37,7 +37,6 @@ import nahama.ofalenmod.handler.OfalenModAnniversaryHandler;
 import nahama.ofalenmod.handler.OfalenModEventHandler;
 import nahama.ofalenmod.handler.OfalenModGuiHandler;
 import nahama.ofalenmod.handler.OfalenModUpdateCheckHandler;
-import nahama.ofalenmod.handler.OfalenShieldHandler;
 import nahama.ofalenmod.handler.OfalenTeleportHandler;
 import nahama.ofalenmod.model.ModelLaser;
 import nahama.ofalenmod.render.RenderItemPistol;
@@ -141,7 +140,6 @@ public class OfalenModCore {
 	public void serverStarting(FMLServerStartingEvent event) {
 		OfalenTimer.start("OfalenModCore.serverStarting");
 		// 各種ハンドラを初期化する。
-		OfalenShieldHandler.init();
 		OfalenTeleportHandler.init();
 		OfalenFlightHandlerServer.init();
 		OfalenModAnniversaryHandler.init();
