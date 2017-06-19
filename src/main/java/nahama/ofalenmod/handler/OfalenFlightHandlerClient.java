@@ -37,8 +37,6 @@ public class OfalenFlightHandlerClient {
 		if (mode != newMode) {
 			// モードを設定する。
 			mode = newMode;
-			// 空中移動係数を上書きする。
-			Minecraft.getMinecraft().thePlayer.jumpMovementFactor = getFactor(mode);
 			// サーバーに通知する。
 			OfalenModPacketCore.WRAPPER.sendToServer(new MFloaterMode(mode, false));
 		}
@@ -78,6 +76,8 @@ public class OfalenFlightHandlerClient {
 			checkPlayer();
 			interval = 20;
 		}
+		// 空中移動係数を上書きする。
+		Minecraft.getMinecraft().thePlayer.jumpMovementFactor = getFactor(mode);
 		EntityPlayerSP player = Minecraft.getMinecraft().thePlayer;
 		switch (mode) {
 		case 0:
