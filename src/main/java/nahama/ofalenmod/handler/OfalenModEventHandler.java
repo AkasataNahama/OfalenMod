@@ -42,7 +42,7 @@ public class OfalenModEventHandler {
 	/** EntityLivingBaseがダメージを受けた時の処理。 */
 	@SubscribeEvent
 	public void onLivingHurt(LivingHurtEvent event) {
-		if (event.entityLiving.worldObj.isRemote || event.isCanceled() || !event.isCancelable() || !(event.entityLiving instanceof EntityPlayer))
+		if (event.isCanceled() || !event.isCancelable() || !(event.entityLiving instanceof EntityPlayer))
 			return;
 		// サーバー側で、キャンセル可能で、プレイヤーの時。
 		// シールドが有効ならダメージを無効化。
