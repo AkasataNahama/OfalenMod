@@ -41,6 +41,9 @@ public class ItemFloater extends ItemFuture {
 		if (!(entity instanceof EntityPlayer))
 			return;
 		NBTTagCompound nbt = itemStack.getTagCompound();
+		if (world.isRemote && nbt.getByte(OfalenNBTUtil.MODE) > 0 && OfalenFlightHandlerClient.isPlayer(entity) && !OfalenFlightHandlerClient.canFloat()) {
+			OfalenFlightHandlerClient.checkPlayer();
+		}
 		if (entity.onGround) {
 			// 持ち主が地上にいるなら間隔をリセットして終了。
 			nbt.setByte(OfalenNBTUtil.INTERVAL, OfalenModConfigCore.intervalFloaterDamage);

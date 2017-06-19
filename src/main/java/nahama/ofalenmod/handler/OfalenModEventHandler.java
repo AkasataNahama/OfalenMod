@@ -39,11 +39,6 @@ public class OfalenModEventHandler {
 				player.addChatMessage(new ChatComponentText(OfalenModUpdateCheckHandler.getMessage()));
 				OfalenModUpdateCheckHandler.namesNotified.add(player.getCommandSenderName());
 			}
-		} else {
-			// クライアント側
-			if (OfalenFlightHandlerClient.isPlayer(player)) {
-				OfalenFlightHandlerClient.init();
-			}
 		}
 	}
 

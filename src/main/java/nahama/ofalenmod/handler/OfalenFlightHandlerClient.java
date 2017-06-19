@@ -16,11 +16,6 @@ public class OfalenFlightHandlerClient {
 	private static byte mode;
 	private static byte interval;
 
-	/** 初期化処理。 */
-	public static void init() {
-		mode = -1;
-	}
-
 	/** プレイヤーがフローターを有効にしているか確認する。 */
 	public static void checkPlayer() {
 		byte newMode = 0;
@@ -51,9 +46,6 @@ public class OfalenFlightHandlerClient {
 
 	/** 浮遊が許可されているかどうか。 */
 	public static boolean canFloat() {
-		// 初期化直後ならプレイヤーを調査する。
-		if (mode == -1)
-			checkPlayer();
 		return mode > 0;
 	}
 
