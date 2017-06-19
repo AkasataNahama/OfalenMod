@@ -52,21 +52,21 @@ public class OfalenFlightHandlerClient {
 		return Minecraft.getMinecraft().thePlayer == entity;
 	}
 
-	/** 空中移動係数を返す。 */
+	/** 空中移動速度の係数を返す。 */
 	private static float getFactor(byte mode) {
 		switch (mode) {
 		case 1:
-			return 0.04F;
+			return 2;
 		case 2:
-			return 0.08F;
+			return 4;
 		case 3:
-			return 0.04F;
+			return 2;
 		case 4:
-			return 0.08F;
+			return 4;
 		case 5:
-			return 0.02F;
+			return 1;
 		}
-		return 0.02F;
+		return 1;
 	}
 
 	/** プレイヤーを浮遊させる。 */
@@ -76,8 +76,8 @@ public class OfalenFlightHandlerClient {
 			checkPlayer();
 			interval = 20;
 		}
-		// 空中移動係数を上書きする。
-		Minecraft.getMinecraft().thePlayer.jumpMovementFactor = getFactor(mode);
+		// 空中移動係数を変更する。
+		Minecraft.getMinecraft().thePlayer.jumpMovementFactor *= getFactor(mode);
 		EntityPlayerSP player = Minecraft.getMinecraft().thePlayer;
 		switch (mode) {
 		case 0:
