@@ -37,8 +37,8 @@ public class ItemFloater extends ItemFuture {
 	@Override
 	public void onUpdate(ItemStack itemStack, World world, Entity entity, int slot, boolean flag) {
 		super.onUpdate(itemStack, world, entity, slot, flag);
-		// 持ち主がプレイヤー以外か、クリエイティブなら終了。
-		if (!(entity instanceof EntityPlayer) || ((EntityPlayer) entity).capabilities.isCreativeMode)
+		// 持ち主がプレイヤー以外なら終了。
+		if (!(entity instanceof EntityPlayer))
 			return;
 		NBTTagCompound nbt = itemStack.getTagCompound();
 		if (entity.onGround) {
@@ -50,7 +50,8 @@ public class ItemFloater extends ItemFuture {
 		if (nbt.getByte(OfalenNBTUtil.MODE) < 1 || nbt.getByte(OfalenNBTUtil.INTERVAL) > 0)
 			return;
 		// 耐久値を減らす。
-		itemStack.setItemDamage(itemStack.getItemDamage() + OfalenModConfigCore.amountFloaterDamage);
+		if (!((EntityPlayer) entity).capabilities.isCreativeMode)
+			itemStack.setItemDamage(itemStack.getItemDamage() + OfalenModConfigCore.amountFloaterDamage);
 		// サーバー側なら全クライアントにパーティクルを生成するようパケットを送信。
 		if (!world.isRemote)
 			OfalenModPacketCore.WRAPPER.sendToAll(new MSpawnParticle(entity.worldObj.provider.dimensionId, entity.posX, entity.posY - 1.6D, entity.posZ, (byte) 2));
