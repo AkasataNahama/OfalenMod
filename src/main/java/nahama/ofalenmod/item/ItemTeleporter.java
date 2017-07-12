@@ -15,7 +15,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 
@@ -33,9 +32,8 @@ public class ItemTeleporter extends ItemFuture {
 	@Override
 	public void getSubItems(Item item, CreativeTabs creativeTab, List list) {
 		ItemStack itemStack = new ItemStack(item);
-		NBTTagCompound nbt = new NBTTagCompound();
-		nbt.setByte(OfalenNBTUtil.MATERIAL, (byte) 64);
-		itemStack.setTagCompound(nbt);
+		// TODO 標準量を使用
+		this.setMaterialAmount(itemStack, 64);
 		OfalenUtil.add(list, itemStack);
 	}
 
@@ -53,12 +51,12 @@ public class ItemTeleporter extends ItemFuture {
 		// クライアントか、時間がたっていないなら終了。
 		if (world.isRemote || itemStack.getTagCompound().getByte(OfalenNBTUtil.INTERVAL) > 0)
 			return itemStack;
+		int material = this.getMaterialAmount(itemStack);
 		// 材料がないならチャットに出力して終了。
-		if (itemStack.getTagCompound().getByte(OfalenNBTUtil.MATERIAL) < OfalenModConfigCore.amountTeleporterDamage) {
+		if (material < OfalenModConfigCore.amountTeleporterDamage) {
 			OfalenUtil.addChatTranslationMessage(player, "info.ofalen.future.lackingMaterial", new ItemStack(OfalenModItemCore.teleporterOfalen).getDisplayName(), new ItemStack(OfalenModItemCore.partsOfalen, 1, 7).getDisplayName());
 			return itemStack;
 		}
-		ItemStack material = new ItemStack(OfalenModItemCore.partsOfalen, itemStack.getTagCompound().getByte(OfalenNBTUtil.MATERIAL), 7);
 		short channel = (short) itemStack.getItemDamage();
 		// チャンネルが無効ならチャットに出力して終了。
 		if (channel < 1 || !OfalenTeleportHandler.isChannelValid(channel)) {
@@ -78,14 +76,7 @@ public class ItemTeleporter extends ItemFuture {
 			return itemStack;
 		// 材料を消費し、保存。
 		if (!player.capabilities.isCreativeMode) {
-			material.stackSize -= OfalenModConfigCore.amountTeleporterDamage;
-			if (material.stackSize < 1)
-				material = null;
-			if (material != null) {
-				itemStack.getTagCompound().setByte(OfalenNBTUtil.MATERIAL, (byte) material.stackSize);
-			} else {
-				itemStack.getTagCompound().setByte(OfalenNBTUtil.MATERIAL, (byte) 0);
-			}
+			this.consumeMaterial(itemStack, OfalenModConfigCore.amountTeleporterDamage);
 		}
 		// 問題なければテレポート。
 		byte toId = pos.getId();
@@ -104,11 +95,8 @@ public class ItemTeleporter extends ItemFuture {
 	@Override
 	public void addInformation(ItemStack itemStack, EntityPlayer player, List list, boolean isAdvanced) {
 		List<String> stringList = OfalenUtil.getAs(list);
-		int amount = 0;
-		if (itemStack.hasTagCompound()) {
-			amount = itemStack.getTagCompound().getByte(OfalenNBTUtil.MATERIAL);
-		}
-		stringList.add(amount + " / 64");
+		// TODO 標準量を表示, スタック数表示
+		stringList.add(this.getMaterialAmount(itemStack) + " / 64");
 		stringList.add(StatCollector.translateToLocal("info.ofalen.teleporter.channel") + " " + itemStack.getItemDamage());
 	}
 }
