@@ -103,7 +103,7 @@ public class ItemCollector extends ItemFuture implements IItemOfalenSettable {
 				int amount = this.getMaterialAmount(itemStack);
 				// 材料がなくなったら終了。
 				if (amount < 1)
-					return;
+					break;
 				int limit = Integer.MAX_VALUE;
 				if (OfalenModConfigCore.amountCollectorDamageItem > 0)
 					limit = amount / OfalenModConfigCore.amountCollectorDamageItem;
@@ -138,7 +138,7 @@ public class ItemCollector extends ItemFuture implements IItemOfalenSettable {
 				int amount = OfalenUtil.getRemainingDamage(itemStack);
 				// 耐久値が尽きていたら終了。
 				if (amount < 1)
-					return;
+					break;
 				int limit = Integer.MAX_VALUE;
 				if (OfalenModConfigCore.amountCollectorDamageItem > 0)
 					limit = amount / OfalenModConfigCore.amountCollectorDamageItem;
