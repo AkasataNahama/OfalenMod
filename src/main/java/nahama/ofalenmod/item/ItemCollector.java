@@ -46,22 +46,22 @@ public class ItemCollector extends ItemFuture implements IItemOfalenSettable {
 	}
 
 	@Override
-	public void onUpdate(ItemStack thisStack, World world, Entity entity, int slot, boolean isHeld) {
-		super.onUpdate(thisStack, world, entity, slot, isHeld);
+	public void onUpdate(ItemStack itemStack, World world, Entity entity, int slot, boolean isHeld) {
+		super.onUpdate(itemStack, world, entity, slot, isHeld);
 		OfalenTimer.start("ItemCollector.onUpdate");
 		// クライアント側なら終了。
 		if (world.isRemote)
 			return;
 		// フィルタータグが無効だったら初期化する。
-		if (!FilterUtil.isAvailableFilterTag(thisStack))
-			FilterUtil.initFilterTag(thisStack);
-		boolean isItemDisabled = thisStack.getTagCompound().getBoolean(OfalenNBTUtil.IS_ITEM_DISABLED);
-		boolean isExpDisabled = thisStack.getTagCompound().getBoolean(OfalenNBTUtil.IS_EXP_DISABLED);
+		if (!FilterUtil.isAvailableFilterTag(itemStack))
+			FilterUtil.initFilterTag(itemStack);
+		boolean isItemDisabled = itemStack.getTagCompound().getBoolean(OfalenNBTUtil.IS_ITEM_DISABLED);
+		boolean isExpDisabled = itemStack.getTagCompound().getBoolean(OfalenNBTUtil.IS_EXP_DISABLED);
 		// アイテムも経験値も無効化されていたら終了。
 		if (isItemDisabled && isExpDisabled)
 			return;
 		// 耐久値が残っていなかったら終了。
-		if (OfalenUtil.getRemainingDamage(thisStack) < 1)
+		if (OfalenUtil.getRemainingDamage(itemStack) < 1)
 			return;
 		boolean canDamage = true;
 		if (entity instanceof EntityPlayer) {
@@ -73,17 +73,17 @@ public class ItemCollector extends ItemFuture implements IItemOfalenSettable {
 				canDamage = false;
 		}
 		// 無効時間が残っていたら終了。
-		if (thisStack.getTagCompound().getByte(OfalenNBTUtil.INTERVAL) > 0)
+		if (itemStack.getTagCompound().getByte(OfalenNBTUtil.INTERVAL) > 0)
 			return;
 		// 無効時間をリセット。TODO 詳細設定
-		byte intervalMax = (Byte) OfalenDetailedSettingHandler.getCurrentValueFromNBT(OfalenDetailedSettingHandler.getSettingTag(thisStack), "Interval/", this.getSetting().getChildSetting(new ItemStack(Items.quartz)));
-		thisStack.getTagCompound().setByte(OfalenNBTUtil.INTERVAL, intervalMax);
+		byte intervalMax = (Byte) OfalenDetailedSettingHandler.getCurrentValueFromNBT(OfalenDetailedSettingHandler.getSettingTag(itemStack), "Interval/", this.getSetting().getChildSetting(new ItemStack(Items.quartz)));
+		itemStack.getTagCompound().setByte(OfalenNBTUtil.INTERVAL, intervalMax);
 		// 範囲の設定。TODO 詳細設定
 		int rangeItem = 10;
 		int rangeExp = 15;
-		if (thisStack.getTagCompound().getBoolean(OfalenNBTUtil.IS_SET_IN_DETAIL)) {
-			rangeItem = thisStack.getTagCompound().getShort(OfalenNBTUtil.ITEM_RANGE);
-			rangeExp = thisStack.getTagCompound().getShort(OfalenNBTUtil.EXP_RANGE);
+		if (itemStack.getTagCompound().getBoolean(OfalenNBTUtil.IS_SET_IN_DETAIL)) {
+			rangeItem = itemStack.getTagCompound().getShort(OfalenNBTUtil.ITEM_RANGE);
+			rangeExp = itemStack.getTagCompound().getShort(OfalenNBTUtil.EXP_RANGE);
 		}
 		ArrayList<Entity> listWaitingEntity = new ArrayList<Entity>();
 		// EntityItemとEntityXPOrbがあれば移動する。
@@ -97,10 +97,10 @@ public class ItemCollector extends ItemFuture implements IItemOfalenSettable {
 					continue;
 				ItemStack eItemStack = entityItem.getEntityItem();
 				// アイテムフィルターで許可されていなかったら次のEntityへ。
-				if (!FilterUtil.canItemFilterThrough(FilterUtil.getFilterTag(thisStack), eItemStack))
+				if (!FilterUtil.canItemFilterThrough(FilterUtil.getFilterTag(itemStack), eItemStack))
 					continue;
 				// 材料数を取得。
-				int remaining = this.getMaterialAmount(thisStack);
+				int remaining = this.getMaterialAmount(itemStack);
 				// 材料がなくなったら終了。
 				if (remaining < 1)
 					return;
@@ -114,7 +114,7 @@ public class ItemCollector extends ItemFuture implements IItemOfalenSettable {
 				if (remaining >= eItemStack.stackSize * OfalenModConfigCore.amountCollectorDamageItem) {
 					entityItem.setPosition(entity.posX, entity.posY, entity.posZ);
 					if (canDamage)
-						this.consumeMaterial(thisStack, eItemStack.stackSize * OfalenModConfigCore.amountCollectorDamageItem);
+						this.consumeMaterial(itemStack, eItemStack.stackSize * OfalenModConfigCore.amountCollectorDamageItem);
 					continue;
 				}
 				// 耐久値か空きスロットが足りなかったら足りる分だけ移動して終了。
@@ -123,7 +123,7 @@ public class ItemCollector extends ItemFuture implements IItemOfalenSettable {
 				listWaitingEntity.add(OfalenUtil.getEntityItemNearEntity(itemStack1, entity));
 				eItemStack.stackSize -= remaining / OfalenModConfigCore.amountCollectorDamageItem;
 				if (canDamage)
-					this.setMaterialAmount(thisStack, remaining % OfalenModConfigCore.amountCollectorDamageItem);
+					this.setMaterialAmount(itemStack, remaining % OfalenModConfigCore.amountCollectorDamageItem);
 			} else if (!isExpDisabled && (o instanceof EntityXPOrb)) {
 				// EntityXPOrbにキャスト。
 				EntityXPOrb e = (EntityXPOrb) o;
@@ -132,21 +132,21 @@ public class ItemCollector extends ItemFuture implements IItemOfalenSettable {
 				if (distance < 16 || distance > rangeExp * rangeExp)
 					continue;
 				// 耐久値の残りを取得。
-				int remaining = OfalenUtil.getRemainingDamage(thisStack);
+				int remaining = OfalenUtil.getRemainingDamage(itemStack);
 				// 耐久値が尽きていたら終了。
 				if (remaining < 1)
 					return;
 				if (remaining >= e.xpValue * OfalenModConfigCore.amountCollectorDamageExp) {
 					e.setPosition(entity.posX, entity.posY, entity.posZ);
 					if (canDamage)
-						this.consumeMaterial(thisStack, e.xpValue * OfalenModConfigCore.amountCollectorDamageExp);
+						this.consumeMaterial(itemStack, e.xpValue * OfalenModConfigCore.amountCollectorDamageExp);
 					continue;
 				}
 				// 耐久値が足りなかったら足りる分だけ移動して終了。
 				listWaitingEntity.add(new EntityXPOrb(world, entity.posX, entity.posY, entity.posZ, remaining / OfalenModConfigCore.amountCollectorDamageExp));
 				e.xpValue -= remaining / OfalenModConfigCore.amountCollectorDamageExp;
 				if (canDamage)
-					this.consumeMaterial(thisStack, OfalenModConfigCore.amountCollectorDamageExp);
+					this.consumeMaterial(itemStack, OfalenModConfigCore.amountCollectorDamageExp);
 			}
 		}
 		// listWaitingEntityに入っているentityをworldにspawnさせる。ConcurrentModificationException回避。
