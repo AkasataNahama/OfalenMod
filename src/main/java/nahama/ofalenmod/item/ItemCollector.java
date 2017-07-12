@@ -17,12 +17,14 @@ import nahama.ofalenmod.util.OfalenSetting.OfalenSettingList;
 import nahama.ofalenmod.util.OfalenTimer;
 import nahama.ofalenmod.util.OfalenUtil;
 import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.item.EntityXPOrb;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.IIcon;
@@ -35,10 +37,12 @@ import java.util.List;
 public class ItemCollector extends ItemFuture implements IItemOfalenSettable {
 	private IIcon[] icons;
 
-	public ItemCollector() {
-		this.setCreativeTab(OfalenModCore.TAB_OFALEN);
-		this.setMaxStackSize(1);
-		this.setMaxDamage(64 * 9 * 3);
+	@Override
+	public void getSubItems(Item item, CreativeTabs tab, List list) {
+		ItemStack itemStack = new ItemStack(item);
+		// TODO 標準量を使用
+		this.setMaterialAmount(itemStack, 64);
+		OfalenUtil.add(list, itemStack);
 	}
 
 	@Override
@@ -95,9 +99,9 @@ public class ItemCollector extends ItemFuture implements IItemOfalenSettable {
 				// アイテムフィルターで許可されていなかったら次のEntityへ。
 				if (!FilterUtil.canItemFilterThrough(FilterUtil.getFilterTag(thisStack), eItemStack))
 					continue;
-				// 耐久値の残りを取得。
-				int remaining = OfalenUtil.getRemainingDamage(thisStack);
-				// 耐久値が尽きていたら終了。
+				// 材料数を取得。
+				int remaining = this.getMaterialAmount(thisStack);
+				// 材料がなくなったら終了。
 				if (remaining < 1)
 					return;
 				// プレイヤーが持っているなら、インベントリの空きスロット数も考慮。 TODO 詳細設定
@@ -110,7 +114,7 @@ public class ItemCollector extends ItemFuture implements IItemOfalenSettable {
 				if (remaining >= eItemStack.stackSize * OfalenModConfigCore.amountCollectorDamageItem) {
 					entityItem.setPosition(entity.posX, entity.posY, entity.posZ);
 					if (canDamage)
-						thisStack.setItemDamage(thisStack.getItemDamage() + (eItemStack.stackSize * OfalenModConfigCore.amountCollectorDamageItem));
+						this.consumeMaterial(thisStack, eItemStack.stackSize * OfalenModConfigCore.amountCollectorDamageItem);
 					continue;
 				}
 				// 耐久値か空きスロットが足りなかったら足りる分だけ移動して終了。
@@ -119,7 +123,7 @@ public class ItemCollector extends ItemFuture implements IItemOfalenSettable {
 				listWaitingEntity.add(OfalenUtil.getEntityItemNearEntity(itemStack1, entity));
 				eItemStack.stackSize -= remaining / OfalenModConfigCore.amountCollectorDamageItem;
 				if (canDamage)
-					thisStack.setItemDamage(thisStack.getItemDamage() + (remaining / OfalenModConfigCore.amountCollectorDamageItem * OfalenModConfigCore.amountCollectorDamageItem));
+					this.setMaterialAmount(thisStack, remaining % OfalenModConfigCore.amountCollectorDamageItem);
 			} else if (!isExpDisabled && (o instanceof EntityXPOrb)) {
 				// EntityXPOrbにキャスト。
 				EntityXPOrb e = (EntityXPOrb) o;
@@ -135,14 +139,14 @@ public class ItemCollector extends ItemFuture implements IItemOfalenSettable {
 				if (remaining >= e.xpValue * OfalenModConfigCore.amountCollectorDamageExp) {
 					e.setPosition(entity.posX, entity.posY, entity.posZ);
 					if (canDamage)
-						thisStack.setItemDamage(thisStack.getItemDamage() + (e.xpValue * OfalenModConfigCore.amountCollectorDamageExp));
+						this.consumeMaterial(thisStack, e.xpValue * OfalenModConfigCore.amountCollectorDamageExp);
 					continue;
 				}
 				// 耐久値が足りなかったら足りる分だけ移動して終了。
 				listWaitingEntity.add(new EntityXPOrb(world, entity.posX, entity.posY, entity.posZ, remaining / OfalenModConfigCore.amountCollectorDamageExp));
 				e.xpValue -= remaining / OfalenModConfigCore.amountCollectorDamageExp;
 				if (canDamage)
-					thisStack.setItemDamage(thisStack.getItemDamage() + (remaining / OfalenModConfigCore.amountCollectorDamageExp * OfalenModConfigCore.amountCollectorDamageExp));
+					this.consumeMaterial(thisStack, OfalenModConfigCore.amountCollectorDamageExp);
 			}
 		}
 		// listWaitingEntityに入っているentityをworldにspawnさせる。ConcurrentModificationException回避。
@@ -169,16 +173,11 @@ public class ItemCollector extends ItemFuture implements IItemOfalenSettable {
 		return itemStack;
 	}
 
-	@Override
-	public boolean isDamageable() {
-		return false;
-	}
-
 	/** 説明欄の内容を追加する。 */
 	@Override
 	public void addInformation(ItemStack itemStack, EntityPlayer player, List list, boolean isAdvanced) {
 		List<String> stringList = OfalenUtil.getAs(list);
-		stringList.add((itemStack.getMaxDamage() - itemStack.getItemDamage()) + " / " + itemStack.getMaxDamage());
+		stringList.add(this.getMaterialAmount(itemStack) + " / 64");
 		if (itemStack.hasTagCompound()) {
 			stringList.add(StatCollector.translateToLocal("info.ofalen.collector.item") + " " + StatCollector.translateToLocal("info.ofalen.future.isValid." + !itemStack.getTagCompound().getBoolean(OfalenNBTUtil.IS_ITEM_DISABLED)));
 			stringList.add(StatCollector.translateToLocal("info.ofalen.collector.exp") + " " + StatCollector.translateToLocal("info.ofalen.future.isValid." + !itemStack.getTagCompound().getBoolean(OfalenNBTUtil.IS_EXP_DISABLED)));
