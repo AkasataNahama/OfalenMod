@@ -100,18 +100,21 @@ public class ItemCollector extends ItemFuture implements IItemOfalenSettable {
 				if (!FilterUtil.canItemFilterThrough(FilterUtil.getFilterTag(itemStack), eItemStack))
 					continue;
 				// 材料数を取得。
-				int remaining = this.getMaterialAmount(itemStack);
+				int amount = this.getMaterialAmount(itemStack);
 				// 材料がなくなったら終了。
-				if (remaining < 1)
+				if (amount < 1)
 					return;
+				int limit = Integer.MAX_VALUE;
+				if (OfalenModConfigCore.amountCollectorDamageItem > 0)
+					limit = amount / OfalenModConfigCore.amountCollectorDamageItem;
 				// プレイヤーが持っているなら、インベントリの空きスロット数も考慮。 TODO 詳細設定
 				if (entity instanceof EntityPlayer)
-					remaining = Math.min(remaining, OfalenUtil.getRemainingItemAmountInInventory(((EntityPlayer) entity).inventory.mainInventory, eItemStack, ((EntityPlayer) entity).inventory.getInventoryStackLimit()));
+					limit = Math.min(limit, OfalenUtil.getRemainingItemAmountInInventory(((EntityPlayer) entity).inventory.mainInventory, eItemStack, ((EntityPlayer) entity).inventory.getInventoryStackLimit()));
 				// 一個も移動できないなら次のEntityへ。
-				if (remaining < OfalenModConfigCore.amountCollectorDamageItem)
+				if (limit < 1)
 					continue;
 				// スタック数が限界以下ならそのまま移動。
-				if (remaining >= eItemStack.stackSize * OfalenModConfigCore.amountCollectorDamageItem) {
+				if (eItemStack.stackSize <= limit) {
 					entityItem.setPosition(entity.posX, entity.posY, entity.posZ);
 					if (canDamage)
 						this.consumeMaterial(itemStack, eItemStack.stackSize * OfalenModConfigCore.amountCollectorDamageItem);
@@ -119,11 +122,11 @@ public class ItemCollector extends ItemFuture implements IItemOfalenSettable {
 				}
 				// 耐久値か空きスロットが足りなかったら足りる分だけ移動して終了。
 				ItemStack itemStack1 = eItemStack.copy();
-				itemStack1.stackSize = remaining / OfalenModConfigCore.amountCollectorDamageItem;
+				itemStack1.stackSize = limit;
 				listWaitingEntity.add(OfalenUtil.getEntityItemNearEntity(itemStack1, entity));
-				eItemStack.stackSize -= remaining / OfalenModConfigCore.amountCollectorDamageItem;
+				eItemStack.stackSize -= limit;
 				if (canDamage)
-					this.setMaterialAmount(itemStack, remaining % OfalenModConfigCore.amountCollectorDamageItem);
+					this.consumeMaterial(itemStack, limit * OfalenModConfigCore.amountCollectorDamageItem);
 			} else if (!isExpDisabled && (o instanceof EntityXPOrb)) {
 				// EntityXPOrbにキャスト。
 				EntityXPOrb e = (EntityXPOrb) o;
@@ -132,21 +135,25 @@ public class ItemCollector extends ItemFuture implements IItemOfalenSettable {
 				if (distance < 16 || distance > rangeExp * rangeExp)
 					continue;
 				// 耐久値の残りを取得。
-				int remaining = OfalenUtil.getRemainingDamage(itemStack);
+				int amount = OfalenUtil.getRemainingDamage(itemStack);
 				// 耐久値が尽きていたら終了。
-				if (remaining < 1)
+				if (amount < 1)
 					return;
-				if (remaining >= e.xpValue * OfalenModConfigCore.amountCollectorDamageExp) {
+				int limit = Integer.MAX_VALUE;
+				if (OfalenModConfigCore.amountCollectorDamageItem > 0)
+					limit = amount / OfalenModConfigCore.amountCollectorDamageItem;
+				// 経験値量が限界以下ならそのまま移動。
+				if (e.xpValue <= limit) {
 					e.setPosition(entity.posX, entity.posY, entity.posZ);
 					if (canDamage)
 						this.consumeMaterial(itemStack, e.xpValue * OfalenModConfigCore.amountCollectorDamageExp);
 					continue;
 				}
 				// 耐久値が足りなかったら足りる分だけ移動して終了。
-				listWaitingEntity.add(new EntityXPOrb(world, entity.posX, entity.posY, entity.posZ, remaining / OfalenModConfigCore.amountCollectorDamageExp));
-				e.xpValue -= remaining / OfalenModConfigCore.amountCollectorDamageExp;
+				listWaitingEntity.add(new EntityXPOrb(world, entity.posX, entity.posY, entity.posZ, limit));
+				e.xpValue -= limit;
 				if (canDamage)
-					this.consumeMaterial(itemStack, OfalenModConfigCore.amountCollectorDamageExp);
+					this.consumeMaterial(itemStack, limit * OfalenModConfigCore.amountCollectorDamageExp);
 			}
 		}
 		// listWaitingEntityに入っているentityをworldにspawnさせる。ConcurrentModificationException回避。
