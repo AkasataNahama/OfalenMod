@@ -27,4 +27,20 @@ public class ItemFuture extends Item {
 		if (interval > 0)
 			itemStack.getTagCompound().setByte(OfalenNBTUtil.INTERVAL, (byte) (interval - 1));
 	}
+
+	public void consumeMaterial(ItemStack itemStack, int amount) {
+		this.setMaterialAmount(itemStack, this.getMaterialAmount(itemStack) - amount);
+	}
+
+	public void setMaterialAmount(ItemStack itemStack, int amount) {
+		if (!itemStack.hasTagCompound())
+			itemStack.setTagCompound(new NBTTagCompound());
+		itemStack.getTagCompound().setShort(OfalenNBTUtil.MATERIAL, (short) Math.max(0, amount));
+	}
+
+	public short getMaterialAmount(ItemStack itemStack) {
+		if (!itemStack.hasTagCompound())
+			return 0;
+		return itemStack.getTagCompound().getShort(OfalenNBTUtil.MATERIAL);
+	}
 }

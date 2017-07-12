@@ -6,7 +6,9 @@ import nahama.ofalenmod.core.OfalenModItemCore;
 import nahama.ofalenmod.util.OfalenNBTUtil;
 import nahama.ofalenmod.util.OfalenUtil;
 import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.StatCollector;
@@ -17,12 +19,16 @@ import java.util.List;
 public class ItemShield extends ItemFuture {
 	private IIcon invalid;
 
-	public ItemShield() {
-		this.setMaxDamage(64 * 9 * 3);
-	}
-
 	public static boolean isItemMaterial(ItemStack material) {
 		return material != null && material.isItemEqual(new ItemStack(OfalenModItemCore.partsOfalen, 1, 6));
+	}
+
+	@Override
+	public void getSubItems(Item item, CreativeTabs tab, List list) {
+		ItemStack itemStack = new ItemStack(item);
+		// TODO 標準量を使用
+		this.setMaterialAmount(itemStack, 64);
+		OfalenUtil.add(list, itemStack);
 	}
 
 	@Override
@@ -45,7 +51,7 @@ public class ItemShield extends ItemFuture {
 			itemStack.getTagCompound().setBoolean(OfalenNBTUtil.IS_VALID, false);
 			return itemStack;
 		}
-		if (itemStack.getItemDamage() + OfalenModConfigCore.amountShieldDamage > itemStack.getMaxDamage()) {
+		if (this.getMaterialAmount(itemStack) < OfalenModConfigCore.amountShieldDamage) {
 			// 材料がないならチャットに出力して終了。
 			OfalenUtil.addChatTranslationMessage(player, "info.ofalen.future.lackingMaterial", new ItemStack(OfalenModItemCore.shieldOfalen).getDisplayName(), new ItemStack(OfalenModItemCore.partsOfalen, 1, 6).getDisplayName());
 			return itemStack;
@@ -53,11 +59,6 @@ public class ItemShield extends ItemFuture {
 		// シールドを有効にして終了。
 		itemStack.getTagCompound().setBoolean(OfalenNBTUtil.IS_VALID, true);
 		return itemStack;
-	}
-
-	@Override
-	public boolean isDamageable() {
-		return false;
 	}
 
 	@Override
@@ -86,7 +87,8 @@ public class ItemShield extends ItemFuture {
 	@Override
 	public void addInformation(ItemStack itemStack, EntityPlayer player, List list, boolean isAdvanced) {
 		List<String> stringList = OfalenUtil.getAs(list);
-		stringList.add((itemStack.getMaxDamage() - itemStack.getItemDamage()) + " / " + itemStack.getMaxDamage());
+		// TODO 標準量を表示, スタック数表示
+		stringList.add(this.getMaterialAmount(itemStack) + " / 64");
 		if (itemStack.hasTagCompound()) {
 			stringList.add(StatCollector.translateToLocal("info.ofalen.future.isValid." + itemStack.getTagCompound().getBoolean(OfalenNBTUtil.IS_VALID)));
 		}

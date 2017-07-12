@@ -27,7 +27,8 @@ public class OfalenShieldHandler {
 				continue;
 			if (!itemStack.getTagCompound().getBoolean(OfalenNBTUtil.IS_VALID))
 				continue;
-			if (itemStack.getItemDamage() + OfalenModConfigCore.amountShieldDamage > itemStack.getMaxDamage()) {
+			ItemShield item = (ItemShield) itemStack.getItem();
+			if (item.getMaterialAmount(itemStack) < OfalenModConfigCore.amountShieldDamage) {
 				// 材料が足りなかったら無効にする。
 				itemStack.getTagCompound().setBoolean(OfalenNBTUtil.IS_VALID, false);
 				continue;
@@ -36,8 +37,8 @@ public class OfalenShieldHandler {
 			// クリエイティブなら材料を消費しない。
 			if (player.capabilities.isCreativeMode)
 				break;
-			itemStack.setItemDamage(itemStack.getItemDamage() + OfalenModConfigCore.amountShieldDamage);
-			if (itemStack.getItemDamage() + OfalenModConfigCore.amountShieldDamage > itemStack.getMaxDamage()) {
+			item.consumeMaterial(itemStack, OfalenModConfigCore.amountShieldDamage);
+			if (item.getMaterialAmount(itemStack) < OfalenModConfigCore.amountShieldDamage) {
 				// ダメージが最大になったら、無効にする。
 				itemStack.getTagCompound().setBoolean(OfalenNBTUtil.IS_VALID, false);
 				OfalenUtil.addChatTranslationMessage(player, "info.ofalen.shield.brokenShield");
