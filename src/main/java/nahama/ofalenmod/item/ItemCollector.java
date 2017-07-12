@@ -23,7 +23,6 @@ import net.minecraft.entity.item.EntityXPOrb;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.IIcon;
@@ -33,7 +32,7 @@ import net.minecraft.world.World;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ItemCollector extends Item implements IItemOfalenSettable {
+public class ItemCollector extends ItemFuture implements IItemOfalenSettable {
 	private IIcon[] icons;
 
 	public ItemCollector() {
@@ -44,6 +43,7 @@ public class ItemCollector extends Item implements IItemOfalenSettable {
 
 	@Override
 	public void onUpdate(ItemStack thisStack, World world, Entity entity, int slot, boolean isHeld) {
+		super.onUpdate(thisStack, world, entity, slot, isHeld);
 		OfalenTimer.start("ItemCollector.onUpdate");
 		// クライアント側なら終了。
 		if (world.isRemote)
@@ -51,9 +51,6 @@ public class ItemCollector extends Item implements IItemOfalenSettable {
 		// フィルタータグが無効だったら初期化する。
 		if (!FilterUtil.isAvailableFilterTag(thisStack))
 			FilterUtil.initFilterTag(thisStack);
-		// 修繕不可に設定。
-		if (!thisStack.getTagCompound().getBoolean(OfalenNBTUtil.IS_IRREPARABLE))
-			thisStack.getTagCompound().setBoolean(OfalenNBTUtil.IS_IRREPARABLE, true);
 		boolean isItemDisabled = thisStack.getTagCompound().getBoolean(OfalenNBTUtil.IS_ITEM_DISABLED);
 		boolean isExpDisabled = thisStack.getTagCompound().getBoolean(OfalenNBTUtil.IS_EXP_DISABLED);
 		// アイテムも経験値も無効化されていたら終了。
@@ -71,13 +68,9 @@ public class ItemCollector extends Item implements IItemOfalenSettable {
 			if (player.capabilities.isCreativeMode)
 				canDamage = false;
 		}
-		// 無効時間の残りを取得。
-		byte interval = thisStack.getTagCompound().getByte(OfalenNBTUtil.INTERVAL);
-		if (interval > 0) {
-			// 無効時間が残っていたら減らして終了。
-			thisStack.getTagCompound().setByte(OfalenNBTUtil.INTERVAL, --interval);
+		// 無効時間が残っていたら終了。
+		if (thisStack.getTagCompound().getByte(OfalenNBTUtil.INTERVAL) > 0)
 			return;
-		}
 		// 無効時間をリセット。TODO 詳細設定
 		byte intervalMax = (Byte) OfalenDetailedSettingHandler.getCurrentValueFromNBT(OfalenDetailedSettingHandler.getSettingTag(thisStack), "Interval/", this.getSetting().getChildSetting(new ItemStack(Items.quartz)));
 		thisStack.getTagCompound().setByte(OfalenNBTUtil.INTERVAL, intervalMax);
