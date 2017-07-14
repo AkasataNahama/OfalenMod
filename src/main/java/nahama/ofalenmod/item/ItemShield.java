@@ -63,6 +63,7 @@ public class ItemShield extends ItemFuture {
 
 	@Override
 	public void registerIcons(IIconRegister register) {
+		super.registerIcons(register);
 		invalid = register.registerIcon(this.getIconString() + "-0");
 		itemIcon = register.registerIcon(this.getIconString() + "-1");
 	}
@@ -76,12 +77,10 @@ public class ItemShield extends ItemFuture {
 
 	@Override
 	public IIcon getIcon(ItemStack stack, int pass) {
+		// TODO 標準量の設定
+		if (pass == 1 && this.getMaterialAmount(stack) <= 64)
+			return iconOverlayWeak;
 		return this.getIconIndex(stack);
-	}
-
-	@Override
-	public boolean requiresMultipleRenderPasses() {
-		return true;
 	}
 
 	@Override

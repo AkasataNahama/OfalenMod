@@ -194,6 +194,7 @@ public class ItemCollector extends ItemFuture implements IItemOfalenSettable {
 
 	@Override
 	public void registerIcons(IIconRegister register) {
+		super.registerIcons(register);
 		icons = new IIcon[4];
 		for (int i = 0; i < 4; i++) {
 			icons[i] = register.registerIcon(this.getIconString() + "-" + (i / 2) + "-" + (i % 2));
@@ -215,12 +216,10 @@ public class ItemCollector extends ItemFuture implements IItemOfalenSettable {
 
 	@Override
 	public IIcon getIcon(ItemStack stack, int pass) {
+		// TODO 標準量の設定
+		if (pass == 1 && this.getMaterialAmount(stack) <= 64)
+			return iconOverlayWeak;
 		return this.getIconIndex(stack);
-	}
-
-	@Override
-	public boolean requiresMultipleRenderPasses() {
-		return true;
 	}
 
 	@Override

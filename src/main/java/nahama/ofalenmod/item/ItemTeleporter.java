@@ -15,6 +15,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.IIcon;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 
@@ -90,6 +91,14 @@ public class ItemTeleporter extends ItemFuture {
 		itemStack.getTagCompound().setByte(OfalenNBTUtil.INTERVAL, (byte) 10);
 		OfalenModPacketCore.WRAPPER.sendToAll(new MSpawnParticle(toId, pos.getX() + 0.5, pos.getY() + 1.5, pos.getZ() + 0.5, (byte) 1));
 		return itemStack;
+	}
+
+	@Override
+	public IIcon getIcon(ItemStack stack, int pass) {
+		// TODO 標準量の設定
+		if (pass == 1 && this.getMaterialAmount(stack) <= 64)
+			return iconOverlayWeak;
+		return super.getIcon(stack, pass);
 	}
 
 	@Override

@@ -1,14 +1,21 @@
 package nahama.ofalenmod.item;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import nahama.ofalenmod.OfalenModCore;
 import nahama.ofalenmod.util.OfalenNBTUtil;
+import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 
 public class ItemFuture extends Item {
+	@SideOnly(Side.CLIENT)
+	protected IIcon iconOverlayWeak;
+
 	public ItemFuture() {
 		this.setCreativeTab(OfalenModCore.TAB_OFALEN);
 		this.setMaxStackSize(1);
@@ -26,6 +33,16 @@ public class ItemFuture extends Item {
 		byte interval = itemStack.getTagCompound().getByte(OfalenNBTUtil.INTERVAL);
 		if (interval > 0)
 			itemStack.getTagCompound().setByte(OfalenNBTUtil.INTERVAL, (byte) (interval - 1));
+	}
+
+	@Override
+	public boolean requiresMultipleRenderPasses() {
+		return true;
+	}
+
+	@Override
+	public void registerIcons(IIconRegister register) {
+		iconOverlayWeak = register.registerIcon("ofalenmod:future-overlay");
 	}
 
 	public void consumeMaterial(ItemStack itemStack, int amount) {

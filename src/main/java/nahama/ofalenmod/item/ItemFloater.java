@@ -117,6 +117,7 @@ public class ItemFloater extends ItemFuture {
 	/** アイテムのアイコンを登録する処理。 */
 	@Override
 	public void registerIcons(IIconRegister register) {
+		super.registerIcons(register);
 		// 無効時のアイコンを登録。
 		invalid = register.registerIcon(this.getIconString() + "-0");
 		itemIcon = register.registerIcon(this.getIconString() + "-1");
@@ -133,12 +134,10 @@ public class ItemFloater extends ItemFuture {
 
 	@Override
 	public IIcon getIcon(ItemStack stack, int pass) {
+		// TODO 標準量の設定
+		if (pass == 1 && this.getMaterialAmount(stack) <= 64)
+			return iconOverlayWeak;
 		return this.getIconIndex(stack);
-	}
-
-	@Override
-	public boolean requiresMultipleRenderPasses() {
-		return true;
 	}
 
 	@Override
