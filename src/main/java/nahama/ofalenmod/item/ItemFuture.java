@@ -37,11 +37,13 @@ public class ItemFuture extends Item {
 			itemStack.getTagCompound().setByte(OfalenNBTUtil.INTERVAL, (byte) (interval - 1));
 	}
 
+	/** 2層に分けてレンダリングを行うか。 */
 	@Override
 	public boolean requiresMultipleRenderPasses() {
 		return true;
 	}
 
+	/** テクスチャを登録する。 */
 	@Override
 	public void registerIcons(IIconRegister register) {
 		iconOverlayWeak = register.registerIcon("ofalenmod:future-overlay");
@@ -57,18 +59,21 @@ public class ItemFuture extends Item {
 		this.setMaterialAmount(itemStack, this.getMaterialAmount(itemStack) - amount);
 	}
 
+	/** 素材数を上書きする。 */
 	protected void setMaterialAmount(ItemStack itemStack, int amount) {
 		if (!itemStack.hasTagCompound())
 			itemStack.setTagCompound(new NBTTagCompound());
 		itemStack.getTagCompound().setShort(OfalenNBTUtil.MATERIAL, (short) Math.max(0, amount));
 	}
 
+	/** 素材数を返す。 */
 	public short getMaterialAmount(ItemStack itemStack) {
 		if (!itemStack.hasTagCompound())
 			return 0;
 		return itemStack.getTagCompound().getShort(OfalenNBTUtil.MATERIAL);
 	}
 
+	/** プレイヤーのインベントリから素材を補充する。 */
 	protected void chargeMaterial(ItemStack stackFuture, ItemStack stackMaterial, EntityPlayer player) {
 		ItemStack[] stacks = player.inventory.mainInventory;
 		int amount = 0;
@@ -81,6 +86,7 @@ public class ItemFuture extends Item {
 		this.setMaterialAmount(stackFuture, this.getMaterialAmount(stackFuture) + amount);
 	}
 
+	/** 素材を全てドロップする。 */
 	protected void dropMaterial(ItemStack stackFuture, ItemStack stackMaterial, EntityPlayer player) {
 		int amount = this.getMaterialAmount(stackFuture);
 		int limit = stackMaterial.getMaxStackSize();
