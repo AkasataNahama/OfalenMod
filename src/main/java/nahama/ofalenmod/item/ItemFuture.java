@@ -30,8 +30,6 @@ public class ItemFuture extends Item {
 		// NBTを持っていなければ空のものを持たせ、Intervalがあれば減らす。
 		if (!itemStack.hasTagCompound())
 			itemStack.setTagCompound(new NBTTagCompound());
-		if (!itemStack.getTagCompound().getBoolean(OfalenNBTUtil.IS_IRREPARABLE))
-			itemStack.getTagCompound().setBoolean(OfalenNBTUtil.IS_IRREPARABLE, true);
 		byte interval = itemStack.getTagCompound().getByte(OfalenNBTUtil.INTERVAL);
 		if (interval > 0)
 			itemStack.getTagCompound().setByte(OfalenNBTUtil.INTERVAL, (byte) (interval - 1));
