@@ -2,6 +2,7 @@ package nahama.ofalenmod.item;
 
 import nahama.ofalenmod.core.OfalenModConfigCore;
 import nahama.ofalenmod.core.OfalenModItemCore;
+import nahama.ofalenmod.handler.OfalenKeyHandler;
 import nahama.ofalenmod.util.OfalenNBTUtil;
 import nahama.ofalenmod.util.OfalenUtil;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -36,25 +37,40 @@ public class ItemShield extends ItemFuture {
 		// 違うアイテムなら終了。
 		if (itemStack == null || !(itemStack.getItem() instanceof ItemShield))
 			return itemStack;
-		if (!player.isSneaking()) {
-			return itemStack;
-		}
 		// クライアントか、時間がたっていないなら終了。
 		if (world.isRemote || itemStack.getTagCompound().getByte(OfalenNBTUtil.INTERVAL) > 0)
 			return itemStack;
 		itemStack.getTagCompound().setByte(OfalenNBTUtil.INTERVAL, (byte) 10);
-		if (itemStack.getTagCompound().getBoolean(OfalenNBTUtil.IS_VALID)) {
-			// シールドが有効だったら無効にして終了。
-			itemStack.getTagCompound().setBoolean(OfalenNBTUtil.IS_VALID, false);
-			return itemStack;
+		if (!OfalenKeyHandler.isSprintKeyPressed(player)) {
+			// ダッシュキーが押されていなければ、シールドの有効化か無効化。
+			if (itemStack.getTagCompound().getBoolean(OfalenNBTUtil.IS_VALID)) {
+				// シールドが有効だったら無効にする。
+				itemStack.getTagCompound().setBoolean(OfalenNBTUtil.IS_VALID, false);
+			} else {
+				// シールドが無効だったら、
+				if (this.getMaterialAmount(itemStack) < OfalenModConfigCore.amountShieldDamage) {
+					// 材料がないならチャットに出力する。
+					OfalenUtil.addChatTranslationMessage(player, "info.ofalen.future.lackingMaterial", new ItemStack(OfalenModItemCore.shieldOfalen).getDisplayName(), new ItemStack(OfalenModItemCore.partsOfalen, 1, 6).getDisplayName());
+				} else {
+					// シールドを有効にする。
+					itemStack.getTagCompound().setBoolean(OfalenNBTUtil.IS_VALID, true);
+				}
+			}
+		} else {
+			// ダッシュキーが押されていれば、インゴットの補充・取り出し。
+			if (!player.isSneaking()) {
+				// しゃがんでいなければ、補充。
+				this.chargeMaterial(itemStack, new ItemStack(OfalenModItemCore.partsOfalen, 1, 6), player);
+				// インベントリの更新をかけるため、コピーする。
+				return itemStack.copy();
+			} else {
+				// しゃがんでいれば、取り出し。
+				this.dropMaterial(itemStack, new ItemStack(OfalenModItemCore.partsOfalen, 1, 6), player);
+				// シールドが有効だったら無効化。
+				if (itemStack.getTagCompound().getBoolean(OfalenNBTUtil.IS_VALID))
+					itemStack.getTagCompound().setBoolean(OfalenNBTUtil.IS_VALID, false);
+			}
 		}
-		if (this.getMaterialAmount(itemStack) < OfalenModConfigCore.amountShieldDamage) {
-			// 材料がないならチャットに出力して終了。
-			OfalenUtil.addChatTranslationMessage(player, "info.ofalen.future.lackingMaterial", new ItemStack(OfalenModItemCore.shieldOfalen).getDisplayName(), new ItemStack(OfalenModItemCore.partsOfalen, 1, 6).getDisplayName());
-			return itemStack;
-		}
-		// シールドを有効にして終了。
-		itemStack.getTagCompound().setBoolean(OfalenNBTUtil.IS_VALID, true);
 		return itemStack;
 	}
 

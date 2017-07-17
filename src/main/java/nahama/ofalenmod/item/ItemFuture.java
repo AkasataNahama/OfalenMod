@@ -4,8 +4,10 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import nahama.ofalenmod.OfalenModCore;
 import nahama.ofalenmod.util.OfalenNBTUtil;
+import nahama.ofalenmod.util.OfalenUtil;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -45,11 +47,17 @@ public class ItemFuture extends Item {
 		iconOverlayWeak = register.registerIcon("ofalenmod:future-overlay");
 	}
 
+	/**
+	 * 素材数を減らす。
+	 * @param amount 1未満の場合動作無し。
+	 */
 	public void consumeMaterial(ItemStack itemStack, int amount) {
+		if (amount < 1)
+			return;
 		this.setMaterialAmount(itemStack, this.getMaterialAmount(itemStack) - amount);
 	}
 
-	public void setMaterialAmount(ItemStack itemStack, int amount) {
+	protected void setMaterialAmount(ItemStack itemStack, int amount) {
 		if (!itemStack.hasTagCompound())
 			itemStack.setTagCompound(new NBTTagCompound());
 		itemStack.getTagCompound().setShort(OfalenNBTUtil.MATERIAL, (short) Math.max(0, amount));
@@ -59,5 +67,34 @@ public class ItemFuture extends Item {
 		if (!itemStack.hasTagCompound())
 			return 0;
 		return itemStack.getTagCompound().getShort(OfalenNBTUtil.MATERIAL);
+	}
+
+	protected void chargeMaterial(ItemStack stackFuture, ItemStack stackMaterial, EntityPlayer player) {
+		ItemStack[] stacks = player.inventory.mainInventory;
+		int amount = 0;
+		for (int i = 0; i < stacks.length; i++) {
+			if (stacks[i] != null && stacks[i].isItemEqual(stackMaterial)) {
+				amount += stacks[i].stackSize;
+				stacks[i] = null;
+			}
+		}
+		this.setMaterialAmount(stackFuture, this.getMaterialAmount(stackFuture) + amount);
+	}
+
+	protected void dropMaterial(ItemStack stackFuture, ItemStack stackMaterial, EntityPlayer player) {
+		int amount = this.getMaterialAmount(stackFuture);
+		int limit = stackMaterial.getMaxStackSize();
+		while (amount > 0) {
+			ItemStack stackDrop = stackMaterial.copy();
+			if (amount <= limit) {
+				stackDrop.stackSize = amount;
+				amount = 0;
+			} else {
+				stackDrop.stackSize = limit;
+				amount -= limit;
+			}
+			OfalenUtil.dropItemStackNearEntity(stackDrop, player);
+		}
+		this.setMaterialAmount(stackFuture, 0);
 	}
 }
