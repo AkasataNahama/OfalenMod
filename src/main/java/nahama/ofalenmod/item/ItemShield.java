@@ -19,10 +19,7 @@ import java.util.List;
 public class ItemShield extends ItemFuture {
 	private IIcon invalid;
 
-	public static boolean isItemMaterial(ItemStack material) {
-		return material != null && material.isItemEqual(new ItemStack(OfalenModItemCore.partsOfalen, 1, 6));
-	}
-
+	/** クリエイティブタブにアイテムを登録する。 */
 	@Override
 	public void getSubItems(Item item, CreativeTabs tab, List list) {
 		ItemStack itemStack = new ItemStack(item);
@@ -31,6 +28,7 @@ public class ItemShield extends ItemFuture {
 		OfalenUtil.add(list, itemStack);
 	}
 
+	/** 右クリック時の処理。 */
 	@Override
 	public ItemStack onItemRightClick(ItemStack itemStack, World world, EntityPlayer player) {
 		super.onItemRightClick(itemStack, world, player);
@@ -74,6 +72,7 @@ public class ItemShield extends ItemFuture {
 		return itemStack;
 	}
 
+	/** テクスチャを登録する。 */
 	@Override
 	public void registerIcons(IIconRegister register) {
 		super.registerIcons(register);
@@ -81,6 +80,7 @@ public class ItemShield extends ItemFuture {
 		itemIcon = register.registerIcon(this.getIconString() + "-1");
 	}
 
+	/** テクスチャを返す。 */
 	@Override
 	public IIcon getIconIndex(ItemStack itemStack) {
 		if (itemStack.hasTagCompound() && itemStack.getTagCompound().getBoolean(OfalenNBTUtil.IS_VALID))
@@ -88,6 +88,7 @@ public class ItemShield extends ItemFuture {
 		return invalid;
 	}
 
+	/** テクスチャを返す。 */
 	@Override
 	public IIcon getIcon(ItemStack stack, int pass) {
 		// TODO 標準量の設定
@@ -96,6 +97,7 @@ public class ItemShield extends ItemFuture {
 		return this.getIconIndex(stack);
 	}
 
+	/** Tooltipに情報を追加する。 */
 	@Override
 	public void addInformation(ItemStack itemStack, EntityPlayer player, List list, boolean isAdvanced) {
 		List<String> stringList = OfalenUtil.getAs(list);
