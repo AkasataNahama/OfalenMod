@@ -17,18 +17,12 @@ public class OfalenModGuiHandler implements IGuiHandler {
 		case 0:
 		case 1:
 			break;
-		case 2:
-			return new ContainerItemShield(player);
 		case 3:
 			return new ContainerItemTeleporter(player);
-		case 4:
-			return new ContainerItemFloater(player);
 		case 5:
 			return new ContainerItemFilter(player);
 		case 6:
 			return new ContainerItemFilterInstaller(player);
-		case 7:
-			return new ContainerItemCollector(player);
 		}
 		if (!world.blockExists(x, y, z))
 			return null;
@@ -67,18 +61,12 @@ public class OfalenModGuiHandler implements IGuiHandler {
 		case 0:
 		case 1:
 			break;
-		case 2:
-			return new GuiContainerBasic(new ContainerItemShield(player), prefix + "shield");
 		case 3:
 			return new GuiItemTeleporter(player);
-		case 4:
-			return new GuiItemFloater(player);
 		case 5:
 			return new GuiContainerBasic(new ContainerItemFilter(player), prefix + "filterItem");
 		case 6:
 			return new GuiItemFilterInstaller(player);
-		case 7:
-			return new GuiContainerBasic(new ContainerItemCollector(player), prefix + "collector");
 		}
 		if (!world.blockExists(x, y, z))
 			return null;

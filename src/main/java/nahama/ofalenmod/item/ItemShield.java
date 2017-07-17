@@ -1,6 +1,5 @@
 package nahama.ofalenmod.item;
 
-import nahama.ofalenmod.OfalenModCore;
 import nahama.ofalenmod.core.OfalenModConfigCore;
 import nahama.ofalenmod.core.OfalenModItemCore;
 import nahama.ofalenmod.util.OfalenNBTUtil;
@@ -38,8 +37,6 @@ public class ItemShield extends ItemFuture {
 		if (itemStack == null || !(itemStack.getItem() instanceof ItemShield))
 			return itemStack;
 		if (!player.isSneaking()) {
-			// スニークしていなかったらGUIを開く。
-			player.openGui(OfalenModCore.instance, 2, world, (int) player.posX, (int) player.posY, (int) player.posZ);
 			return itemStack;
 		}
 		// クライアントか、時間がたっていないなら終了。

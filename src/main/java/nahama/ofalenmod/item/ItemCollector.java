@@ -1,12 +1,10 @@
 package nahama.ofalenmod.item;
 
-import nahama.ofalenmod.OfalenModCore;
 import nahama.ofalenmod.core.OfalenModBlockCore;
 import nahama.ofalenmod.core.OfalenModConfigCore;
 import nahama.ofalenmod.core.OfalenModItemCore;
 import nahama.ofalenmod.handler.OfalenDetailedSettingHandler;
 import nahama.ofalenmod.handler.OfalenKeyHandler;
-import nahama.ofalenmod.inventory.ContainerItemCollector;
 import nahama.ofalenmod.util.IItemOfalenSettable;
 import nahama.ofalenmod.util.OfalenNBTUtil;
 import nahama.ofalenmod.util.OfalenNBTUtil.FilterUtil;
@@ -65,11 +63,7 @@ public class ItemCollector extends ItemFuture implements IItemOfalenSettable {
 			return;
 		boolean canDamage = true;
 		if (entity instanceof EntityPlayer) {
-			EntityPlayer player = (EntityPlayer) entity;
-			// プレイヤーが持っていて、コレクターのGUIを開いているなら終了。
-			if (player.openContainer != null && player.openContainer instanceof ContainerItemCollector)
-				return;
-			if (player.capabilities.isCreativeMode)
+			if (((EntityPlayer) entity).capabilities.isCreativeMode)
 				canDamage = false;
 		}
 		// 無効時間が残っていたら終了。
@@ -166,7 +160,6 @@ public class ItemCollector extends ItemFuture implements IItemOfalenSettable {
 	@Override
 	public ItemStack onItemRightClick(ItemStack itemStack, World world, EntityPlayer player) {
 		if (!OfalenKeyHandler.isSettingKeyPressed(player)) {
-			player.openGui(OfalenModCore.instance, 7, world, (int) player.posX, (int) player.posY, (int) player.posZ);
 			return itemStack;
 		}
 		NBTTagCompound nbt = itemStack.getTagCompound();

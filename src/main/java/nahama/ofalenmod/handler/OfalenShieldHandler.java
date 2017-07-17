@@ -2,7 +2,6 @@ package nahama.ofalenmod.handler;
 
 import nahama.ofalenmod.core.OfalenModConfigCore;
 import nahama.ofalenmod.core.OfalenModPacketCore;
-import nahama.ofalenmod.inventory.ContainerItemShield;
 import nahama.ofalenmod.item.ItemShield;
 import nahama.ofalenmod.network.MSpawnParticle;
 import nahama.ofalenmod.util.OfalenNBTUtil;
@@ -14,10 +13,6 @@ import net.minecraft.item.ItemStack;
 public class OfalenShieldHandler {
 	/** ダメージを無効にした時の処理。 */
 	public static boolean onProtect(EntityPlayer player) {
-		// シールドのGUIを開いていたら、閉じさせる。
-		if (player.openContainer != null && player.openContainer instanceof ContainerItemShield) {
-			player.closeScreen();
-		}
 		// プレイヤーのインベントリを調査し、有効になっているシールドがあれば耐久値を減らす。
 		boolean flag = false;
 		IInventory inventory = player.inventory;

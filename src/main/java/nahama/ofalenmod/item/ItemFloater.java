@@ -1,6 +1,5 @@
 package nahama.ofalenmod.item;
 
-import nahama.ofalenmod.OfalenModCore;
 import nahama.ofalenmod.core.OfalenModConfigCore;
 import nahama.ofalenmod.core.OfalenModItemCore;
 import nahama.ofalenmod.core.OfalenModPacketCore;
@@ -85,8 +84,6 @@ public class ItemFloater extends ItemFuture {
 		if (itemStack == null || !(itemStack.getItem() instanceof ItemFloater))
 			return itemStack;
 		if (player.isSneaking()) {
-			// スニークしていたらGUIを開く。
-			player.openGui(OfalenModCore.instance, 4, world, (int) player.posX, (int) player.posY, (int) player.posZ);
 			return itemStack;
 		}
 		byte mode = itemStack.getTagCompound().getByte(OfalenNBTUtil.MODE);
