@@ -4,6 +4,7 @@ import nahama.ofalenmod.core.OfalenModConfigCore;
 import nahama.ofalenmod.core.OfalenModItemCore;
 import nahama.ofalenmod.core.OfalenModPacketCore;
 import nahama.ofalenmod.handler.OfalenFlightHandlerClient;
+import nahama.ofalenmod.handler.OfalenKeyHandler;
 import nahama.ofalenmod.network.MSpawnParticle;
 import nahama.ofalenmod.util.OfalenNBTUtil;
 import nahama.ofalenmod.util.OfalenUtil;
@@ -80,33 +81,63 @@ public class ItemFloater extends ItemFuture {
 	@Override
 	public ItemStack onItemRightClick(ItemStack itemStack, World world, EntityPlayer player) {
 		super.onItemRightClick(itemStack, world, player);
-		// 違うアイテムなら終了。
-		if (itemStack == null || !(itemStack.getItem() instanceof ItemFloater))
+		// 違うアイテムか、時間がたっていないなら終了。
+		if (!(itemStack.getItem() instanceof ItemFloater) || itemStack.getTagCompound().getByte(OfalenNBTUtil.INTERVAL) > 0)
 			return itemStack;
-		if (player.isSneaking()) {
-			return itemStack;
-		}
-		byte mode = itemStack.getTagCompound().getByte(OfalenNBTUtil.MODE);
-		if (this.getMaterialAmount(itemStack) < OfalenModConfigCore.amountFloaterDamage) {
-			// 材料がないならチャットに出力して終了。
-			if (!world.isRemote)
-				OfalenUtil.addChatTranslationMessage(player, "info.ofalen.future.lackingMaterial", new ItemStack(OfalenModItemCore.floaterOfalen).getDisplayName(), new ItemStack(OfalenModItemCore.partsOfalen, 1, 8).getDisplayName());
-			if (mode != 0) {
-				itemStack.getTagCompound().setByte(OfalenNBTUtil.MODE, (byte) 0);
-				if (world.isRemote)
+		itemStack.getTagCompound().setByte(OfalenNBTUtil.INTERVAL, (byte) 10);
+		if (!OfalenKeyHandler.isSprintKeyPressed(player)) {
+			// ダッシュキーが押されていなければ、モード変更か無効化。
+			if (!player.isSneaking()) {
+				// しゃがんでいなかったらモードを切り替える。
+				byte mode = itemStack.getTagCompound().getByte(OfalenNBTUtil.MODE);
+				if (this.getMaterialAmount(itemStack) < OfalenModConfigCore.amountFloaterDamage) {
+					// 材料がないならチャットに出力し、無効化して終了。
+					if (!world.isRemote)
+						OfalenUtil.addChatTranslationMessage(player, "info.ofalen.future.lackingMaterial", new ItemStack(OfalenModItemCore.floaterOfalen).getDisplayName(), new ItemStack(OfalenModItemCore.partsOfalen, 1, 8).getDisplayName());
+					if (mode != 0) {
+						itemStack.getTagCompound().setByte(OfalenNBTUtil.MODE, (byte) 0);
+						if (world.isRemote)
+							OfalenFlightHandlerClient.checkPlayer();
+					}
+					return itemStack;
+				}
+				mode++;
+				if (mode > 5)
+					mode = 1;
+				itemStack.getTagCompound().setByte(OfalenNBTUtil.MODE, mode);
+				if (world.isRemote) {
 					OfalenFlightHandlerClient.checkPlayer();
+				} else {
+					OfalenUtil.addChatTranslationMessage(player, "info.ofalen.floater.modeChanged", mode);
+				}
+			} else {
+				// しゃがんでいたら、無効化する。
+				if (itemStack.getTagCompound().getByte(OfalenNBTUtil.MODE) != 0) {
+					itemStack.getTagCompound().setByte(OfalenNBTUtil.MODE, (byte) 0);
+					if (world.isRemote)
+						OfalenFlightHandlerClient.checkPlayer();
+				}
 			}
-			return itemStack;
-		}
-		// スニークしていなかったらモードを切り替える。
-		mode++;
-		if (mode > 5)
-			mode = 1;
-		itemStack.getTagCompound().setByte(OfalenNBTUtil.MODE, mode);
-		if (world.isRemote) {
-			OfalenFlightHandlerClient.checkPlayer();
 		} else {
-			OfalenUtil.addChatTranslationMessage(player, "info.ofalen.floater.modeChanged", mode);
+			// クライアントなら終了。
+			if (world.isRemote)
+				return itemStack;
+			// ダッシュキーが押されていれば、ダストの補充・取り出し。
+			if (!player.isSneaking()) {
+				// しゃがんでいなければ、補充。
+				this.chargeMaterial(itemStack, new ItemStack(OfalenModItemCore.partsOfalen, 1, 8), player);
+				// インベントリの更新をかけるため、コピーする。
+				return itemStack.copy();
+			} else {
+				// しゃがんでいれば、取り出し。
+				this.dropMaterial(itemStack, new ItemStack(OfalenModItemCore.partsOfalen, 1, 8), player);
+				// フローターが有効だったら無効化。
+				if (itemStack.getTagCompound().getByte(OfalenNBTUtil.MODE) != 0) {
+					itemStack.getTagCompound().setByte(OfalenNBTUtil.MODE, (byte) 0);
+					if (world.isRemote)
+						OfalenFlightHandlerClient.checkPlayer();
+				}
+			}
 		}
 		return itemStack;
 	}
