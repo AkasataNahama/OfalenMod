@@ -4,6 +4,7 @@ import nahama.ofalenmod.OfalenModCore;
 import nahama.ofalenmod.core.OfalenModConfigCore;
 import nahama.ofalenmod.core.OfalenModItemCore;
 import nahama.ofalenmod.core.OfalenModPacketCore;
+import nahama.ofalenmod.handler.OfalenKeyHandler;
 import nahama.ofalenmod.handler.OfalenTeleportHandler;
 import nahama.ofalenmod.network.MSpawnParticle;
 import nahama.ofalenmod.util.OfalenLog;
@@ -38,58 +39,77 @@ public class ItemTeleporter extends ItemFuture {
 		OfalenUtil.add(list, itemStack);
 	}
 
+	/** 右クリック時の処理。 */
 	@Override
 	public ItemStack onItemRightClick(ItemStack itemStack, World world, EntityPlayer player) {
 		super.onItemRightClick(itemStack, world, player);
 		// 違うアイテムなら終了。
 		if (!(itemStack.getItem() instanceof ItemTeleporter))
 			return itemStack;
-		// スニークしていなかったらGUIを開く。
-		if (!player.isSneaking()) {
-			player.openGui(OfalenModCore.instance, 3, world, (int) player.posX, (int) player.posY, (int) player.posZ);
-			return itemStack;
+		if (!OfalenKeyHandler.isSprintKeyPressed(player)) {
+			// ダッシュキーが押されていないとき。
+			if (!player.isSneaking()) {
+				// スニークしていなかったらGUIを開く。
+				player.openGui(OfalenModCore.instance, 3, world, (int) player.posX, (int) player.posY, (int) player.posZ);
+			} else {
+				// クライアントか、時間がたっていないなら終了。
+				if (world.isRemote || itemStack.getTagCompound().getByte(OfalenNBTUtil.INTERVAL) > 0)
+					return itemStack;
+				itemStack.getTagCompound().setByte(OfalenNBTUtil.INTERVAL, (byte) 10);
+				// スニークしていたらテレポートする。
+				if (this.getMaterialAmount(itemStack) < OfalenModConfigCore.amountTeleporterDamage) {
+					// 材料がないならチャットに出力して終了。
+					OfalenUtil.addChatTranslationMessage(player, "info.ofalen.future.lackingMaterial", new ItemStack(OfalenModItemCore.teleporterOfalen).getDisplayName(), new ItemStack(OfalenModItemCore.partsOfalen, 1, 7).getDisplayName());
+					return itemStack;
+				}
+				short channel = (short) itemStack.getItemDamage();
+				if (!OfalenTeleportHandler.isChannelValid(channel)) {
+					// チャンネルが無効ならチャットに出力して終了。
+					OfalenUtil.addChatTranslationMessage(player, "info.ofalen.teleporter.channelInvalid");
+					return itemStack;
+				}
+				OfalenTeleportHandler.MarkerPos pos = OfalenTeleportHandler.getCoord(channel);
+				if (pos == null) {
+					// 座標が取得できなかったらログに出力して終了。
+					OfalenLog.error("Error on getting marker coord. channel : " + channel, "ItemTeleporter.onItemRightClick");
+					return itemStack;
+				}
+				player.mountEntity(null);
+				if (!(player instanceof EntityPlayerMP))
+					return itemStack;
+				if (player.ridingEntity != null || player.riddenByEntity != null)
+					return itemStack;
+				// 材料を消費し、保存。
+				if (!player.capabilities.isCreativeMode) {
+					this.consumeMaterial(itemStack, OfalenModConfigCore.amountTeleporterDamage);
+				}
+				// 問題なければテレポート。
+				byte toId = pos.getId();
+				if (player.worldObj.provider.dimensionId != toId) {
+					EntityPlayerMP playerMP = (EntityPlayerMP) player;
+					playerMP.mcServer.getConfigurationManager().transferPlayerToDimension(playerMP, toId, new TeleporterOfalen(playerMP.mcServer.worldServerForDimension(toId)));
+					playerMP.addExperienceLevel(0);
+				}
+				player.setPositionAndUpdate(pos.getX() + 0.5, pos.getY() + 1.1, pos.getZ() + 0.5);
+				player.setSneaking(false);
+				OfalenModPacketCore.WRAPPER.sendToAll(new MSpawnParticle(toId, pos.getX() + 0.5, pos.getY() + 1.5, pos.getZ() + 0.5, (byte) 1));
+			}
+		} else {
+			// クライアントか、時間がたっていないなら終了。
+			if (world.isRemote || itemStack.getTagCompound().getByte(OfalenNBTUtil.INTERVAL) > 0)
+				return itemStack;
+			itemStack.getTagCompound().setByte(OfalenNBTUtil.INTERVAL, (byte) 10);
+			// ダッシュキーが押されていれば、インゴットの補充・取り出し。
+			if (!player.isSneaking()) {
+				// しゃがんでいなければ、補充。
+				this.chargeMaterial(itemStack, new ItemStack(OfalenModItemCore.partsOfalen, 1, 7), player);
+				// インベントリの更新をかけるため、コピーする。
+				return itemStack.copy();
+			} else {
+				// しゃがんでいれば、取り出し。
+				this.dropMaterial(itemStack, new ItemStack(OfalenModItemCore.partsOfalen, 1, 7), player);
+			}
 		}
-		// クライアントか、時間がたっていないなら終了。
-		if (world.isRemote || itemStack.getTagCompound().getByte(OfalenNBTUtil.INTERVAL) > 0)
-			return itemStack;
-		int material = this.getMaterialAmount(itemStack);
-		// 材料がないならチャットに出力して終了。
-		if (material < OfalenModConfigCore.amountTeleporterDamage) {
-			OfalenUtil.addChatTranslationMessage(player, "info.ofalen.future.lackingMaterial", new ItemStack(OfalenModItemCore.teleporterOfalen).getDisplayName(), new ItemStack(OfalenModItemCore.partsOfalen, 1, 7).getDisplayName());
-			return itemStack;
-		}
-		short channel = (short) itemStack.getItemDamage();
-		// チャンネルが無効ならチャットに出力して終了。
-		if (channel < 1 || !OfalenTeleportHandler.isChannelValid(channel)) {
-			OfalenUtil.addChatTranslationMessage(player, "info.ofalen.teleporter.channelInvalid");
-			return itemStack;
-		}
-		OfalenTeleportHandler.MarkerPos pos = OfalenTeleportHandler.getCoord(channel);
-		// 座標が取得できなかったらログに出力して終了。
-		if (pos == null) {
-			OfalenLog.error("Error on getting marker coord. channel : " + channel, "ItemTeleporter.onItemRightClick");
-			return itemStack;
-		}
-		player.mountEntity(null);
-		if (!(player instanceof EntityPlayerMP))
-			return itemStack;
-		if (player.ridingEntity != null || player.riddenByEntity != null)
-			return itemStack;
-		// 材料を消費し、保存。
-		if (!player.capabilities.isCreativeMode) {
-			this.consumeMaterial(itemStack, OfalenModConfigCore.amountTeleporterDamage);
-		}
-		// 問題なければテレポート。
-		byte toId = pos.getId();
-		if (player.worldObj.provider.dimensionId != toId) {
-			EntityPlayerMP playerMP = (EntityPlayerMP) player;
-			playerMP.mcServer.getConfigurationManager().transferPlayerToDimension(playerMP, toId, new TeleporterOfalen(playerMP.mcServer.worldServerForDimension(toId)));
-			playerMP.addExperienceLevel(0);
-		}
-		player.setPositionAndUpdate(pos.getX() + 0.5, pos.getY() + 1.1, pos.getZ() + 0.5);
-		player.setSneaking(false);
-		itemStack.getTagCompound().setByte(OfalenNBTUtil.INTERVAL, (byte) 10);
-		OfalenModPacketCore.WRAPPER.sendToAll(new MSpawnParticle(toId, pos.getX() + 0.5, pos.getY() + 1.5, pos.getZ() + 0.5, (byte) 1));
 		return itemStack;
 	}
 
