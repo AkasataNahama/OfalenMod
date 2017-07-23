@@ -32,6 +32,7 @@ public class ItemTeleporter extends ItemFuture {
 		return material != null && material.isItemEqual(new ItemStack(OfalenModItemCore.partsOfalen, 1, 7));
 	}
 
+	/** クリエイティブタブにアイテムを登録する。 */
 	@Override
 	public void getSubItems(Item item, CreativeTabs creativeTab, List list) {
 		ItemStack itemStack = new ItemStack(item);
@@ -100,7 +101,7 @@ public class ItemTeleporter extends ItemFuture {
 			if (world.isRemote || itemStack.getTagCompound().getByte(OfalenNBTUtil.INTERVAL) > 0)
 				return itemStack;
 			itemStack.getTagCompound().setByte(OfalenNBTUtil.INTERVAL, (byte) 10);
-			// ダッシュキーが押されていれば、インゴットの補充・取り出し。
+			// ダッシュキーが押されていれば、パールの補充・取り出し。
 			if (!player.isSneaking()) {
 				// しゃがんでいなければ、補充。
 				this.chargeMaterial(itemStack, new ItemStack(OfalenModItemCore.partsOfalen, 1, 7), player);
@@ -121,6 +122,7 @@ public class ItemTeleporter extends ItemFuture {
 		itemIcon = register.registerIcon(this.getIconString());
 	}
 
+	/** テクスチャを返す。 */
 	@Override
 	public IIcon getIcon(ItemStack stack, int pass) {
 		// TODO 標準量の設定
@@ -129,6 +131,7 @@ public class ItemTeleporter extends ItemFuture {
 		return super.getIcon(stack, pass);
 	}
 
+	/** Tooltipに情報を追加する。 */
 	@Override
 	public void addInformation(ItemStack itemStack, EntityPlayer player, List list, boolean isAdvanced) {
 		List<String> stringList = OfalenUtil.getAs(list);
