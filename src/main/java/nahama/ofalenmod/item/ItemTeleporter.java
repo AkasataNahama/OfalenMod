@@ -11,6 +11,7 @@ import nahama.ofalenmod.util.OfalenLog;
 import nahama.ofalenmod.util.OfalenNBTUtil;
 import nahama.ofalenmod.util.OfalenUtil;
 import nahama.ofalenmod.world.TeleporterOfalen;
+import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -111,6 +112,13 @@ public class ItemTeleporter extends ItemFuture {
 			}
 		}
 		return itemStack;
+	}
+
+	/** テクスチャを登録する。 */
+	@Override
+	public void registerIcons(IIconRegister register) {
+		super.registerIcons(register);
+		itemIcon = register.registerIcon(this.getIconString());
 	}
 
 	@Override
