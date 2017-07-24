@@ -157,9 +157,9 @@ public class OfalenModRecipeCore {
 				GameRegistry.addRecipe(new MagazineRecipe(new ItemStack(magazineLaserWhite, 1, i), new ItemStack(magazineLaserWhite, 1, i + (32 * j)), CRYSTAL[3], j));
 			}
 		}
-		// シールド関連
-		addShaped(new ItemStack(partsOfalen, OfalenModConfigCore.amountShieldingIngotCrafting, 6), "GOG", "OMO", "GOG", 'G', NUGGET_GOLD, 'O', FRAG[0], 'M', INGOT_IRON);
-		addShaped(new ItemStack(shieldOfalen, 1, shieldOfalen.getMaxDamage()), "IOI", "OEO", "IOI", 'I', INGOT_GOLD, 'O', CORE[0], 'E', getParts(6));
+		// プロテクター関連
+		addShaped(new ItemStack(partsOfalen, OfalenModConfigCore.amountProtectingIngotCrafting, 6), "GOG", "OMO", "GOG", 'G', NUGGET_GOLD, 'O', FRAG[0], 'M', INGOT_IRON);
+		addShaped(new ItemStack(protectorOfalen, 1, protectorOfalen.getMaxDamage()), "IOI", "OEO", "IOI", 'I', INGOT_GOLD, 'O', CORE[0], 'E', getParts(6));
 		// テレポーター関連
 		addShaped(new ItemStack(partsOfalen, OfalenModConfigCore.amountTeleportingPearlCrafting, 7), "GOG", "OMO", "GOG", 'G', NUGGET_GOLD, 'O', FRAG[1], 'M', Items.ender_pearl);
 		addShaped(teleporterOfalen, "IOI", "OEO", "IOI", 'I', INGOT_GOLD, 'O', CORE[1], 'E', getParts(7));

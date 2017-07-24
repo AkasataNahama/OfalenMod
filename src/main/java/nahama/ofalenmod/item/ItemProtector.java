@@ -16,7 +16,7 @@ import net.minecraft.world.World;
 
 import java.util.List;
 
-public class ItemShield extends ItemFuture {
+public class ItemProtector extends ItemFuture {
 	private IIcon invalid;
 
 	/** クリエイティブタブにアイテムを登録する。 */
@@ -37,17 +37,17 @@ public class ItemShield extends ItemFuture {
 			return itemStack;
 		itemStack.getTagCompound().setByte(OfalenNBTUtil.INTERVAL_RIGHT_CLICK, (byte) 10);
 		if (!OfalenKeyHandler.isSprintKeyPressed(player)) {
-			// ダッシュキーが押されていなければ、シールドの有効化か無効化。
+			// ダッシュキーが押されていなければ、プロテクターの有効化か無効化。
 			if (itemStack.getTagCompound().getBoolean(OfalenNBTUtil.IS_VALID)) {
-				// シールドが有効だったら無効にする。
+				// プロテクターが有効だったら無効にする。
 				itemStack.getTagCompound().setBoolean(OfalenNBTUtil.IS_VALID, false);
 			} else {
-				// シールドが無効だったら、
-				if (this.getMaterialAmount(itemStack) < OfalenModConfigCore.amountShieldDamage) {
+				// プロテクターが無効だったら、
+				if (this.getMaterialAmount(itemStack) < OfalenModConfigCore.amountProtectorDamage) {
 					// 材料がないならチャットに出力する。
-					OfalenUtil.addChatTranslationMessage(player, "info.ofalen.future.lackingMaterial", new ItemStack(OfalenModItemCore.shieldOfalen).getDisplayName(), new ItemStack(OfalenModItemCore.partsOfalen, 1, 6).getDisplayName());
+					OfalenUtil.addChatTranslationMessage(player, "info.ofalen.future.lackingMaterial", new ItemStack(OfalenModItemCore.protectorOfalen).getDisplayName(), new ItemStack(OfalenModItemCore.partsOfalen, 1, 6).getDisplayName());
 				} else {
-					// シールドを有効にする。
+					// プロテクターを有効にする。
 					itemStack.getTagCompound().setBoolean(OfalenNBTUtil.IS_VALID, true);
 				}
 			}
@@ -59,7 +59,7 @@ public class ItemShield extends ItemFuture {
 			} else {
 				// しゃがんでいれば、取り出し。
 				this.dropMaterial(itemStack, new ItemStack(OfalenModItemCore.partsOfalen, 1, 6), player);
-				// シールドが有効だったら無効化。
+				// プロテクターが有効だったら無効化。
 				if (itemStack.getTagCompound().getBoolean(OfalenNBTUtil.IS_VALID))
 					itemStack.getTagCompound().setBoolean(OfalenNBTUtil.IS_VALID, false);
 			}

@@ -22,7 +22,7 @@ public class OfalenModConfigCore {
 	private static final String REPAIRING = MACHINE + Configuration.CATEGORY_SPLITTER + "Repairing";
 	private static final String FUSING = MACHINE + Configuration.CATEGORY_SPLITTER + "Fusing";
 	private static final String FUTURE = GENERAL + Configuration.CATEGORY_SPLITTER + "Future";
-	private static final String SHIELD = FUTURE + Configuration.CATEGORY_SPLITTER + "Shield";
+	private static final String PROTECTOR = FUTURE + Configuration.CATEGORY_SPLITTER + "Protector";
 	private static final String TELEPORTER = FUTURE + Configuration.CATEGORY_SPLITTER + "Teleporter";
 	private static final String FLOATER = FUTURE + Configuration.CATEGORY_SPLITTER + "Floater";
 	private static final String COLLECTOR = FUTURE + Configuration.CATEGORY_SPLITTER + "Collector";
@@ -30,7 +30,7 @@ public class OfalenModConfigCore {
 	// General
 	public static boolean isUpdateCheckEnabled = true;
 	// Recipe
-	public static byte amountShieldingIngotCrafting = 4;
+	public static byte amountProtectingIngotCrafting = 4;
 	public static byte amountTeleportingPearlCrafting = 4;
 	public static byte amountFloatingDustCrafting = 4;
 	public static byte amountCollectingLumpCrafting = 64;
@@ -59,8 +59,8 @@ public class OfalenModConfigCore {
 	public static short timeRepairing = 40;
 	// Machine.Fusing
 	public static short timeFusing = 1600;
-	// Future.Shield
-	public static short amountShieldDamage = 1;
+	// Future.Protector
+	public static short amountProtectorDamage = 1;
 	// Future.Teleporter
 	public static short amountTeleporterDamage = 1;
 	// Future.Floater
@@ -93,7 +93,7 @@ public class OfalenModConfigCore {
 		// Recipe
 		cfg.setCategoryLanguageKey(RECIPE, keyCategory + "recipe");
 		cfg.setCategoryRequiresMcRestart(RECIPE, true);
-		amountShieldingIngotCrafting = (byte) cfg.getInt("amountShieldingIngotCrafting", RECIPE, amountShieldingIngotCrafting, 1, 64, "Crafting amount of \"Ingot of Ofalen Shielding\" when using normal recipe." + restart, keyProp + "amountShieldingIngotCrafting");
+		amountProtectingIngotCrafting = (byte) cfg.getInt("amountProtectingIngotCrafting", RECIPE, amountProtectingIngotCrafting, 1, 64, "Crafting amount of \"Ingot of Ofalen Protecting\" when using normal recipe." + restart, keyProp + "amountProtectingIngotCrafting");
 		amountTeleportingPearlCrafting = (byte) cfg.getInt("amountTeleportingPearlCrafting", RECIPE, amountTeleportingPearlCrafting, 1, 64, "Crafting amount of \"Pearl of Ofalen Teleporting\" when using normal recipe." + restart, keyProp + "amountTeleportingPearlCrafting");
 		amountFloatingDustCrafting = (byte) cfg.getInt("amountFloatingDustCrafting", RECIPE, amountFloatingDustCrafting, 1, 64, "Crafting amount of \"Dust of Ofalen Floating\" when using normal recipe." + restart, keyProp + "amountFloatingDustCrafting");
 		amountCollectingLumpCrafting = (byte) cfg.getInt("amountCollectingLumpCrafting", RECIPE, amountCollectingLumpCrafting, 1, 64, "Crafting amount of \"Lump of Ofalen Collecting\" when using normal recipe." + restart, keyProp + "amountCollectingLumpCrafting");
@@ -138,9 +138,9 @@ public class OfalenModConfigCore {
 		timeFusing = (short) cfg.getInt("timeFusing", FUSING, timeFusing, 1, Short.MAX_VALUE, "The time Ofalen Fusing Machine requires for every fusing." + separator + " (tick)" + separator, keyProp + "timeFusing");
 		// Future
 		cfg.setCategoryLanguageKey(FUTURE, keyCategory + "future");
-		// Future.Shield
-		cfg.setCategoryLanguageKey(SHIELD, keyCategory + "shield");
-		amountShieldDamage = (short) cfg.getInt("amountShieldDamage", SHIELD, amountShieldDamage, 0, 64 * 9, "Damage amount of Ofalen Shield when the player is protected." + separator + "Per 1 damage of player." + separator, keyProp + "amountShieldDamage");
+		// Future.Protector
+		cfg.setCategoryLanguageKey(PROTECTOR, keyCategory + "protector");
+		amountProtectorDamage = (short) cfg.getInt("amountProtectorDamage", PROTECTOR, amountProtectorDamage, 0, 64 * 9, "Damage amount of Ofalen Protector when the player is protected." + separator + "Per 1 damage of player." + separator, keyProp + "amountProtectorDamage");
 		// Future.Teleporter
 		cfg.setCategoryLanguageKey(TELEPORTER, keyCategory + "teleporter");
 		amountTeleporterDamage = (short) cfg.getInt("amountTeleporterDamage", TELEPORTER, amountTeleporterDamage, 0, 64, "Damage amount of Ofalen Teleporter when the player teleport." + separator, keyProp + "amountTeleporterDamage");

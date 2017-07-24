@@ -12,8 +12,8 @@ config.ofalen.prop.isUpdateCheckEnabled.tooltip=Set this to true to enable updat
 // Recipe
 config.ofalen.category.recipe=Recipe
 config.ofalen.category.recipe.tooltip=The settings of crafting recipe and Ofalen Smelting recipe.
-config.ofalen.prop.amountShieldingIngotCrafting=Shielding Ingot Crafting Amount
-config.ofalen.prop.amountShieldingIngotCrafting.tooltip=Crafting amount of "Ingot of Ofalen Shielding" when using normal recipe.
+config.ofalen.prop.amountProtectingIngotCrafting=Protecting Ingot Crafting Amount
+config.ofalen.prop.amountProtectingIngotCrafting.tooltip=Crafting amount of "Ingot of Ofalen Protecting" when using normal recipe.
 config.ofalen.prop.amountTeleportingPearlCrafting=Teleporting Pearl Crafting Amount
 config.ofalen.prop.amountTeleportingPearlCrafting.tooltip=Crafting amount of "Pearl of Ofalen Teleporting" when using normal recipe.
 config.ofalen.prop.amountFloatingDustCrafting=Floating Dust Crafting Amount
@@ -87,12 +87,12 @@ config.ofalen.prop.timeFusing=Fusing Time
 config.ofalen.prop.timeFusing.tooltip=The time Ofalen Fusing Machine requires for every fusing. (tick)
 // Future
 config.ofalen.category.future=Future
-config.ofalen.category.future.tooltip=The settings of Shield, Teleporter, Floater and Collector.
-// Future.Shield
-config.ofalen.category.shield=Shield
-config.ofalen.category.shield.tooltip=The settings of Ofalen Shield.
-config.ofalen.prop.amountShieldDamage=Shield Damage Amount
-config.ofalen.prop.amountShieldDamage.tooltip=Damage amount of Ofalen Shield when the player is protected. Per 1 damage of player.
+config.ofalen.category.future.tooltip=The settings of Protector, Teleporter, Floater and Collector.
+// Future.Protector
+config.ofalen.category.protector=Protector
+config.ofalen.category.protector.tooltip=The settings of Ofalen Protector.
+config.ofalen.prop.amountProtectorDamage=Protector Damage Amount
+config.ofalen.prop.amountProtectorDamage.tooltip=Damage amount of Ofalen Protector when the player is protected. Per 1 damage of player.
 // Future.Teleporter
 config.ofalen.category.teleporter=Teleporter
 config.ofalen.category.teleporter.tooltip=The settings of Ofalen Teleporter.
@@ -147,7 +147,7 @@ info.ofalen.color:white=White
 info.ofalen.future.lackingMaterial=%s: %s is lacking!
 info.ofalen.future.isValid.false=Disabled
 info.ofalen.future.isValid.true=Enabled
-info.ofalen.shield.brokenShield=Ofalen Shield: Shield expired!
+info.ofalen.protector.brokenProtector=Ofalen Protector: Protector expired!
 info.ofalen.teleporter.channel=Channel:
 info.ofalen.teleporter.channelInvalid=Ofalen Teleporter: This channel is Invalid!
 info.ofalen.floater.mode=Mode:
@@ -210,7 +210,7 @@ container.ofalen.machine.fusing-0=Ofalen Fusing Machine
 container.ofalen.machine.fusing-1=Ofalen Fusing Machine (1)
 container.ofalen.machine.fusing-2=Ofalen Fusing Machine (2)
 container.ofalen.machine.fusing-3=Ofalen Fusing Machine (3)
-container.ofalen.shield=Ofalen Shield
+container.ofalen.protector=Ofalen Protector
 container.ofalen.teleporter=Ofalen Teleporter
 container.ofalen.markerTeleporting=Ofalen Teleporting Marker
 container.ofalen.floater=Ofalen Floater
@@ -254,7 +254,7 @@ item.ofalen.parts.2.name=Lump of Stone
 item.ofalen.parts.3.name=White Ofalen Fuel
 item.ofalen.parts.4.name=Dark Ofalen Fuel
 item.ofalen.parts.5.name=Ofalen Laser Magazine
-item.ofalen.parts.6.name=Ingot of Ofalen Shield
+item.ofalen.parts.6.name=Ingot of Ofalen Protector
 item.ofalen.parts.7.name=Pearl of Ofalen Teleporting
 item.ofalen.parts.8.name=Dust of Ofalen Floating
 item.ofalen.parts.9.name=Lump of Ofalen Collecting
@@ -359,7 +359,7 @@ item.ofalen.magazineLaserBlue.name=Ofalen Laser Magazine [Blue]
 item.ofalen.magazineLaserWhite.name=Ofalen Laser Magazine [White]
 
 // Future
-item.ofalen.shield.name=Ofalen Shield
+item.ofalen.protector.name=Ofalen Protector
 item.ofalen.teleporter.name=Ofalen Teleporter
 item.ofalen.floater.name=Ofalen Floater
 item.ofalen.collector.name=Ofalen Collector

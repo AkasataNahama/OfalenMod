@@ -45,8 +45,8 @@ public class OfalenModEventHandler {
 		// キャンセル不可能か、プレイヤー以外なら終了。
 		if (event.isCanceled() || !event.isCancelable() || !(event.entityLiving instanceof EntityPlayer))
 			return;
-		// シールドが有効ならダメージを無効化。
-		if (OfalenShieldHandler.onProtect((EntityPlayer) event.entityLiving))
+		// プロテクターが有効ならダメージを無効化。
+		if (OfalenProtectHandler.onProtect((EntityPlayer) event.entityLiving))
 			event.setCanceled(true);
 	}
 

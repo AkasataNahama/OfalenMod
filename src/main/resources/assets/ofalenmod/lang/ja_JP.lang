@@ -12,8 +12,8 @@ config.ofalen.prop.isUpdateCheckEnabled.tooltip=trueなら新しいバージョ�
 // レシピ
 config.ofalen.category.recipe=レシピ
 config.ofalen.category.recipe.tooltip=クラフトレシピとオファレン製錬レシピに関する設定。
-config.ofalen.prop.amountShieldingIngotCrafting=シールドインゴットのクラフト数
-config.ofalen.prop.amountShieldingIngotCrafting.tooltip=通常のレシピを使用した時のオファレンシールドインゴットのクラフト数。
+config.ofalen.prop.amountProtectingIngotCrafting=プロテクターインゴットのクラフト数
+config.ofalen.prop.amountProtectingIngotCrafting.tooltip=通常のレシピを使用した時のオファレンプロテクターインゴットのクラフト数。
 config.ofalen.prop.amountTeleportingPearlCrafting=テレポートパールのクラフト数
 config.ofalen.prop.amountTeleportingPearlCrafting.tooltip=通常のレシピを使用した時のオファレンテレポートパールのクラフト数。
 config.ofalen.prop.amountFloatingDustCrafting=フロートダストのクラフト数
@@ -87,12 +87,12 @@ config.ofalen.prop.timeFusing=融合時間
 config.ofalen.prop.timeFusing.tooltip=オファレン融合機の融合一回にかかる時間。(tick)
 // 未来
 config.ofalen.category.future=未来
-config.ofalen.category.future.tooltip=シールド・テレポーター・フローター・コレクターに関する設定。
-// 未来.シールド
-config.ofalen.category.shield=シールド
-config.ofalen.category.shield.tooltip=オファレンシールドに関する設定。
-config.ofalen.prop.amountShieldDamage=シールドのダメージ量
-config.ofalen.prop.amountShieldDamage.tooltip=プレイヤーを保護した時のオファレンシールドのダメージ量。1プレイヤーダメージあたり。
+config.ofalen.category.future.tooltip=プロテクター・テレポーター・フローター・コレクターに関する設定。
+// 未来.プロテクター
+config.ofalen.category.protector=プロテクター
+config.ofalen.category.protector.tooltip=オファレンプロテクターに関する設定。
+config.ofalen.prop.amountProtectorDamage=プロテクターのダメージ量
+config.ofalen.prop.amountProtectorDamage.tooltip=プレイヤーを保護した時のオファレンプロテクターのダメージ量。1プレイヤーダメージあたり。
 // 未来.テレポーター
 config.ofalen.category.teleporter=テレポーター
 config.ofalen.category.teleporter.tooltip=オファレンテレポーターに関する設定。
@@ -147,7 +147,7 @@ info.ofalen.color:white=白
 info.ofalen.future.lackingMaterial=%s : %sが不足しています!
 info.ofalen.future.isValid.false=無効
 info.ofalen.future.isValid.true=有効
-info.ofalen.shield.brokenShield=オファレンシールド : シールドが無効になりました!
+info.ofalen.protector.brokenProtector=オファレンプロテクター : プロテクターが無効になりました!
 info.ofalen.teleporter.channel=チャンネル :
 info.ofalen.teleporter.channelInvalid=オファレンテレポーター : このチャンネルは無効です!
 info.ofalen.floater.mode=モード :
@@ -210,7 +210,7 @@ container.ofalen.machine.fusing-0=オファレン融合機
 container.ofalen.machine.fusing-1=オファレン融合機 (1)
 container.ofalen.machine.fusing-2=オファレン融合機 (2)
 container.ofalen.machine.fusing-3=オファレン融合機 (3)
-container.ofalen.shield=オファレンシールド
+container.ofalen.protector=オファレンプロテクター
 container.ofalen.teleporter=オファレンテレポーター
 container.ofalen.markerTeleporting=オファレンテレポートマーカー
 container.ofalen.floater=オファレンフローター
@@ -254,7 +254,7 @@ item.ofalen.parts.2.name=石の塊
 item.ofalen.parts.3.name=白色オファレン燃料
 item.ofalen.parts.4.name=黒色オファレン燃料
 item.ofalen.parts.5.name=オファレンレーザーマガジン
-item.ofalen.parts.6.name=オファレンシールドインゴット
+item.ofalen.parts.6.name=オファレンプロテクターインゴット
 item.ofalen.parts.7.name=オファレンテレポーテートパール
 item.ofalen.parts.8.name=オファレンフロートダスト
 item.ofalen.parts.9.name=オファレンコレクトランプ
@@ -359,7 +359,7 @@ item.ofalen.magazineLaserBlue.name=オファレンレーザーマガジン [青]
 item.ofalen.magazineLaserWhite.name=オファレンレーザーマガジン [白]
 
 // 未来系
-item.ofalen.shield.name=オファレンシールド
+item.ofalen.protector.name=オファレンプロテクター
 item.ofalen.teleporter.name=オファレンテレポーター
 item.ofalen.floater.name=オファレンフローター
 item.ofalen.collector.name=オファレンコレクター
