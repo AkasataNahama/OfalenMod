@@ -67,11 +67,11 @@ public class ItemCollector extends ItemFuture implements IItemOfalenSettable {
 				canDamage = false;
 		}
 		// 無効時間が残っていたら終了。
-		if (itemStack.getTagCompound().getByte(OfalenNBTUtil.INTERVAL) > 0)
+		if (itemStack.getTagCompound().getByte(OfalenNBTUtil.INTERVAL_FLOATER) > 0)
 			return;
 		// 無効時間をリセット。TODO 詳細設定
 		byte intervalMax = (Byte) OfalenDetailedSettingHandler.getCurrentValueFromNBT(OfalenDetailedSettingHandler.getSettingTag(itemStack), "Interval/", this.getSetting().getChildSetting(new ItemStack(Items.quartz)));
-		itemStack.getTagCompound().setByte(OfalenNBTUtil.INTERVAL, intervalMax);
+		itemStack.getTagCompound().setByte(OfalenNBTUtil.INTERVAL_FLOATER, intervalMax);
 		// 範囲の設定。TODO 詳細設定
 		int rangeItem = 10;
 		int rangeExp = 15;
@@ -157,18 +157,35 @@ public class ItemCollector extends ItemFuture implements IItemOfalenSettable {
 		OfalenTimer.watchAndLog("ItemCollector.onUpdate", 0.1);
 	}
 
+	/** 右クリック時の処理。 */
 	@Override
 	public ItemStack onItemRightClick(ItemStack itemStack, World world, EntityPlayer player) {
-		if (!OfalenKeyHandler.isSettingKeyPressed(player)) {
+		super.onItemRightClick(itemStack, world, player);
+		// 違うアイテムなら終了。
+		if (!(itemStack.getItem() instanceof ItemCollector))
 			return itemStack;
-		}
-		NBTTagCompound nbt = itemStack.getTagCompound();
-		if (!player.isSneaking()) {
-			// OSS + 右クリックでアイテムのOn/Off。
-			nbt.setBoolean(OfalenNBTUtil.IS_ITEM_DISABLED, !nbt.getBoolean(OfalenNBTUtil.IS_ITEM_DISABLED));
+		// 時間がたっていないなら終了。
+		if (itemStack.getTagCompound().getByte(OfalenNBTUtil.INTERVAL) > 0)
+			return itemStack;
+		itemStack.getTagCompound().setByte(OfalenNBTUtil.INTERVAL, (byte) 10);
+		if (!OfalenKeyHandler.isSprintKeyPressed(player)) {
+			NBTTagCompound nbt = itemStack.getTagCompound();
+			if (!player.isSneaking()) {
+				// 右クリックでアイテムのOn/Off。
+				nbt.setBoolean(OfalenNBTUtil.IS_ITEM_DISABLED, !nbt.getBoolean(OfalenNBTUtil.IS_ITEM_DISABLED));
+			} else {
+				// Shift + 右クリックで経験値のOn/Off。
+				nbt.setBoolean(OfalenNBTUtil.IS_EXP_DISABLED, !nbt.getBoolean(OfalenNBTUtil.IS_EXP_DISABLED));
+			}
 		} else {
-			// OSS + Shift + 右クリックで経験値のOn/Off。
-			nbt.setBoolean(OfalenNBTUtil.IS_EXP_DISABLED, !nbt.getBoolean(OfalenNBTUtil.IS_EXP_DISABLED));
+			// ダッシュキーが押されていれば、ランプの補充・取り出し。
+			if (!player.isSneaking()) {
+				// しゃがんでいなければ、補充。
+				this.chargeMaterial(itemStack, new ItemStack(OfalenModItemCore.partsOfalen, 1, 9), player);
+			} else {
+				// しゃがんでいれば、取り出し。
+				this.dropMaterial(itemStack, new ItemStack(OfalenModItemCore.partsOfalen, 1, 9), player);
+			}
 		}
 		return itemStack;
 	}
