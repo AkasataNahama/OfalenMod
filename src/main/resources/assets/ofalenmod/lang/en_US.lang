@@ -367,7 +367,7 @@ item.ofalen.collector.name=Ofalen Collector
 
 // Filter
 item.ofalen.filterItem.0.name=Item Filter
-item.ofalen.filterItem.1.name=Item Filter (block)
+item.ofalen.filterItem.1.name=Item Filter (Block)
 item.ofalen.installerFilter.name=Filter Installer
 
 // Ofalen Grass

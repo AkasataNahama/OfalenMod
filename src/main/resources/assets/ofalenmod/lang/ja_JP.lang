@@ -367,7 +367,7 @@ item.ofalen.collector.name=オファレンコレクター
 
 // フィルター
 item.ofalen.filterItem.0.name=アイテムフィルター
-item.ofalen.filterItem.1.name=アイテムフィルター（ブロック）
+item.ofalen.filterItem.1.name=アイテムフィルター(ブロック)
 item.ofalen.installerFilter.name=フィルターインストーラー
 
 // オファレン草
