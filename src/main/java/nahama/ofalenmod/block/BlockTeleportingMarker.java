@@ -17,6 +17,7 @@ public class BlockTeleportingMarker extends Block implements ITileEntityProvider
 		this.setResistance(14.0F);
 		this.setStepSound(Block.soundTypePiston);
 		this.setHarvestLevel("pickaxe", 2);
+		this.setLightLevel(1.0F);
 	}
 
 	@Override
