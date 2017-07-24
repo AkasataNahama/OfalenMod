@@ -147,6 +147,7 @@ info.ofalen.color:white=White
 info.ofalen.future.lackingMaterial=%s: %s is lacking!
 info.ofalen.future.isValid.false=Disabled
 info.ofalen.future.isValid.true=Enabled
+info.ofalen.future.lack=(Lack of Material)
 info.ofalen.protector.brokenProtector=Ofalen Protector: Protector expired!
 info.ofalen.teleporter.channel=Channel:
 info.ofalen.teleporter.channelInvalid=Ofalen Teleporter: This channel is Invalid!

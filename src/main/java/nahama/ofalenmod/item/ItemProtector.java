@@ -38,18 +38,12 @@ public class ItemProtector extends ItemFuture {
 		itemStack.getTagCompound().setByte(OfalenNBTUtil.INTERVAL_RIGHT_CLICK, (byte) 10);
 		if (!OfalenKeyHandler.isSprintKeyPressed(player)) {
 			// ダッシュキーが押されていなければ、プロテクターの有効化か無効化。
-			if (itemStack.getTagCompound().getBoolean(OfalenNBTUtil.IS_VALID)) {
-				// プロテクターが有効だったら無効にする。
-				itemStack.getTagCompound().setBoolean(OfalenNBTUtil.IS_VALID, false);
+			if (this.getMaterialAmount(itemStack) < OfalenModConfigCore.amountProtectorDamage) {
+				// 材料がないならチャットに出力する。
+				OfalenUtil.addChatTranslationMessage(player, "info.ofalen.future.lackingMaterial", new ItemStack(OfalenModItemCore.protectorOfalen).getDisplayName(), new ItemStack(OfalenModItemCore.partsOfalen, 1, 6).getDisplayName());
 			} else {
-				// プロテクターが無効だったら、
-				if (this.getMaterialAmount(itemStack) < OfalenModConfigCore.amountProtectorDamage) {
-					// 材料がないならチャットに出力する。
-					OfalenUtil.addChatTranslationMessage(player, "info.ofalen.future.lackingMaterial", new ItemStack(OfalenModItemCore.protectorOfalen).getDisplayName(), new ItemStack(OfalenModItemCore.partsOfalen, 1, 6).getDisplayName());
-				} else {
-					// プロテクターを有効にする。
-					itemStack.getTagCompound().setBoolean(OfalenNBTUtil.IS_VALID, true);
-				}
+				// プロテクターを切り替える。
+				itemStack.getTagCompound().setBoolean(OfalenNBTUtil.IS_VALID, !itemStack.getTagCompound().getBoolean(OfalenNBTUtil.IS_VALID));
 			}
 		} else {
 			// ダッシュキーが押されていれば、インゴットの補充・取り出し。
@@ -59,9 +53,6 @@ public class ItemProtector extends ItemFuture {
 			} else {
 				// しゃがんでいれば、取り出し。
 				this.dropMaterial(itemStack, new ItemStack(OfalenModItemCore.partsOfalen, 1, 6), player);
-				// プロテクターが有効だったら無効化。
-				if (itemStack.getTagCompound().getBoolean(OfalenNBTUtil.IS_VALID))
-					itemStack.getTagCompound().setBoolean(OfalenNBTUtil.IS_VALID, false);
 			}
 		}
 		return itemStack;
@@ -78,7 +69,8 @@ public class ItemProtector extends ItemFuture {
 	/** テクスチャを返す。 */
 	@Override
 	public IIcon getIconIndex(ItemStack itemStack) {
-		if (itemStack.hasTagCompound() && itemStack.getTagCompound().getBoolean(OfalenNBTUtil.IS_VALID))
+		// 有効で、材料があったら有効時のテクスチャ。
+		if (itemStack.hasTagCompound() && itemStack.getTagCompound().getBoolean(OfalenNBTUtil.IS_VALID) && this.getMaterialAmount(itemStack) > 0)
 			return super.getIconIndex(itemStack);
 		return invalid;
 	}
@@ -100,7 +92,10 @@ public class ItemProtector extends ItemFuture {
 		int amount = this.getMaterialAmount(itemStack);
 		stringList.add(OfalenUtil.getStackAmountString(amount, 64) + " (" + amount + " / 64)");
 		if (itemStack.hasTagCompound()) {
-			stringList.add(StatCollector.translateToLocal("info.ofalen.future.isValid." + itemStack.getTagCompound().getBoolean(OfalenNBTUtil.IS_VALID)));
+			String message = StatCollector.translateToLocal("info.ofalen.future.isValid." + itemStack.getTagCompound().getBoolean(OfalenNBTUtil.IS_VALID));
+			if (this.getMaterialAmount(itemStack) < 1)
+				message += " " + StatCollector.translateToLocal("info.ofalen.future.lack");
+			stringList.add(message);
 		}
 	}
 }

@@ -25,11 +25,9 @@ public class OfalenProtectHandler {
 			if (!itemStack.getTagCompound().getBoolean(OfalenNBTUtil.IS_VALID))
 				continue;
 			ItemProtector item = (ItemProtector) itemStack.getItem();
-			if (item.getMaterialAmount(itemStack) < OfalenModConfigCore.amountProtectorDamage) {
-				// 材料が足りなかったら無効にする。
-				itemStack.getTagCompound().setBoolean(OfalenNBTUtil.IS_VALID, false);
+			// 材料が足りなかったら次へ。
+			if (item.getMaterialAmount(itemStack) < OfalenModConfigCore.amountProtectorDamage)
 				continue;
-			}
 			flag = true;
 			// クリエイティブなら材料を消費しない。
 			if (player.capabilities.isCreativeMode)
@@ -38,8 +36,7 @@ public class OfalenProtectHandler {
 			item.consumeMaterial(itemStack, limit);
 			amount -= limit;
 			if (item.getMaterialAmount(itemStack) < OfalenModConfigCore.amountProtectorDamage) {
-				// ダメージが最大になったら、無効にする。
-				itemStack.getTagCompound().setBoolean(OfalenNBTUtil.IS_VALID, false);
+				// ダメージが最大になったら、チャットに通知する。
 				OfalenUtil.addChatTranslationMessage(player, "info.ofalen.protector.brokenProtector");
 			}
 			// ダメージをすべて軽減したら終了。
