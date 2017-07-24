@@ -45,9 +45,6 @@ public class ItemTeleporter extends ItemFuture {
 	@Override
 	public ItemStack onItemRightClick(ItemStack itemStack, World world, EntityPlayer player) {
 		super.onItemRightClick(itemStack, world, player);
-		// 違うアイテムなら終了。
-		if (!(itemStack.getItem() instanceof ItemTeleporter))
-			return itemStack;
 		if (!OfalenKeyHandler.isSprintKeyPressed(player)) {
 			// ダッシュキーが押されていないとき。
 			if (!player.isSneaking()) {

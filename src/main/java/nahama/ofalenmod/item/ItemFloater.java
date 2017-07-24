@@ -85,8 +85,8 @@ public class ItemFloater extends ItemFuture {
 	@Override
 	public ItemStack onItemRightClick(ItemStack itemStack, World world, EntityPlayer player) {
 		super.onItemRightClick(itemStack, world, player);
-		// 違うアイテムか、時間がたっていないなら終了。
-		if (!(itemStack.getItem() instanceof ItemFloater) || itemStack.getTagCompound().getByte(OfalenNBTUtil.INTERVAL_RIGHT_CLICK) > 0)
+		// 時間がたっていないなら終了。
+		if (itemStack.getTagCompound().getByte(OfalenNBTUtil.INTERVAL_RIGHT_CLICK) > 0)
 			return itemStack;
 		itemStack.getTagCompound().setByte(OfalenNBTUtil.INTERVAL_RIGHT_CLICK, (byte) 10);
 		if (!OfalenKeyHandler.isSprintKeyPressed(player)) {

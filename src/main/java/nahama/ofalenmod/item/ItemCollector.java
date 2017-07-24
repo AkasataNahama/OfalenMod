@@ -161,9 +161,6 @@ public class ItemCollector extends ItemFuture implements IItemOfalenSettable {
 	@Override
 	public ItemStack onItemRightClick(ItemStack itemStack, World world, EntityPlayer player) {
 		super.onItemRightClick(itemStack, world, player);
-		// 違うアイテムなら終了。
-		if (!(itemStack.getItem() instanceof ItemCollector))
-			return itemStack;
 		// 時間がたっていないなら終了。
 		if (itemStack.getTagCompound().getByte(OfalenNBTUtil.INTERVAL_RIGHT_CLICK) > 0)
 			return itemStack;
