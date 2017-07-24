@@ -1,5 +1,6 @@
 package nahama.ofalenmod.item;
 
+import cpw.mods.fml.common.FMLCommonHandler;
 import nahama.ofalenmod.OfalenModCore;
 import nahama.ofalenmod.core.OfalenModConfigCore;
 import nahama.ofalenmod.core.OfalenModItemCore;
@@ -17,9 +18,13 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.network.play.server.S07PacketRespawn;
+import net.minecraft.network.play.server.S1DPacketEntityEffect;
+import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldServer;
 
 import java.util.List;
 
@@ -80,9 +85,13 @@ public class ItemTeleporter extends ItemFuture {
 				}
 				// 問題なければテレポート。
 				byte toId = pos.getId();
-				if (player.worldObj.provider.dimensionId != toId) {
+				if (player.dimension != toId) {
 					EntityPlayerMP playerMP = (EntityPlayerMP) player;
-					playerMP.mcServer.getConfigurationManager().transferPlayerToDimension(playerMP, toId, new TeleporterOfalen(playerMP.mcServer.worldServerForDimension(toId)));
+					if (player.dimension == 1) {
+						this.teleportPlayerFromEndDangerously(playerMP, toId);
+					} else {
+						playerMP.mcServer.getConfigurationManager().transferPlayerToDimension(playerMP, toId, new TeleporterOfalen(playerMP.mcServer.worldServerForDimension(toId)));
+					}
 					playerMP.addExperienceLevel(0);
 				}
 				player.setPositionAndUpdate(pos.getX() + 0.5, pos.getY() + 1.1, pos.getZ() + 0.5);
@@ -104,6 +113,44 @@ public class ItemTeleporter extends ItemFuture {
 			}
 		}
 		return itemStack;
+	}
+
+	/** プレイヤーをエンドから別のディメンションにテレポートさせる。 */
+	private void teleportPlayerFromEndDangerously(EntityPlayerMP player, int toId) {
+		// ServerConfigurationManager.transferPlayerToDimensionで行われているのと同様の処理。
+		// 基本的には1。
+		int fromId = player.dimension;
+		player.dimension = toId;
+		WorldServer worldServerEnd = player.mcServer.worldServerForDimension(fromId);
+		WorldServer worldServerDestination = player.mcServer.worldServerForDimension(toId);
+		player.playerNetServerHandler.sendPacket(new S07PacketRespawn(toId, worldServerDestination.difficultySetting, worldServerDestination.getWorldInfo().getTerrainType(), player.theItemInWorldManager.getGameType()));
+		worldServerEnd.removePlayerEntityDangerously(player);
+		player.isDead = false;
+		// ここからServerConfigurationManager.transferEntityToWorld。
+		// この前後にあったネザー用座標変換処理は省略。
+		// ここにあったエンド（及びコメントアウトされていた通常世界・ネザー）からの移動時処理は省略。
+		// ここからエンドからの移動時に実行されていなかった部分。
+		worldServerEnd.theProfiler.startSection("placing");
+		if (player.isEntityAlive()) {
+			// ここにあった座標変換適用処理は省略。
+			new TeleporterOfalen(worldServerDestination).placeInPortal(player, player.posX, player.posY, player.posZ, player.rotationYaw);
+			worldServerDestination.spawnEntityInWorld(player);
+			worldServerDestination.updateEntityWithOptionalForce(player, false);
+		}
+		worldServerEnd.theProfiler.endSection();
+		// ここまでエンドからの移動時に実行されていなかった部分。
+		player.setWorld(worldServerDestination);
+		// ここまでServerConfigurationManager.transferEntityToWorld。
+		player.mcServer.getConfigurationManager().func_72375_a(player, worldServerEnd);
+		player.playerNetServerHandler.setPlayerLocation(player.posX, player.posY, player.posZ, player.rotationYaw, player.rotationPitch);
+		player.theItemInWorldManager.setWorld(worldServerDestination);
+		player.mcServer.getConfigurationManager().updateTimeAndWeatherForPlayer(player, worldServerDestination);
+		player.mcServer.getConfigurationManager().syncPlayerInventory(player);
+		for (Object o : player.getActivePotionEffects()) {
+			PotionEffect potioneffect = (PotionEffect) o;
+			player.playerNetServerHandler.sendPacket(new S1DPacketEntityEffect(player.getEntityId(), potioneffect));
+		}
+		FMLCommonHandler.instance().firePlayerChangedDimensionEvent(player, fromId, toId);
 	}
 
 	/** テクスチャを登録する。 */
