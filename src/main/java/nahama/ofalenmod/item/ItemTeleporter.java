@@ -28,10 +28,6 @@ public class ItemTeleporter extends ItemFuture {
 		this.setMaxDamage(0);
 	}
 
-	public static boolean isItemMaterial(ItemStack material) {
-		return material != null && material.isItemEqual(new ItemStack(OfalenModItemCore.partsOfalen, 1, 7));
-	}
-
 	/** クリエイティブタブにアイテムを登録する。 */
 	@Override
 	public void getSubItems(Item item, CreativeTabs creativeTab, List list) {

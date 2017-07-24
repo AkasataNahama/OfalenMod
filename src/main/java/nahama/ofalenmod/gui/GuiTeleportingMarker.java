@@ -14,7 +14,7 @@ import net.minecraft.util.StatCollector;
 import org.lwjgl.opengl.GL11;
 
 public class GuiTeleportingMarker extends GuiContainer {
-	private static final ResourceLocation GUITEXTURE = new ResourceLocation("ofalenmod:textures/gui/container/marker.png");
+	private static final ResourceLocation GUITEXTURE = new ResourceLocation("ofalenmod:textures/gui/container/teleporter.png");
 	private TileEntityTeleportingMarker tileEntity;
 
 	public GuiTeleportingMarker(EntityPlayer player, TileEntityTeleportingMarker tileEntity) {
