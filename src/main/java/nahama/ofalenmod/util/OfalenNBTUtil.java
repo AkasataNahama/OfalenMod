@@ -37,6 +37,7 @@ public class OfalenNBTUtil {
 	public static final String OWNER_NAME = "OwnerName";
 	// 未来系
 	public static final String INTERVAL = "Interval";
+	public static final String INTERVAL_RIGHT_CLICK = "IntervalRightClick";
 	public static final String IS_VALID = "IsValid";
 	// テレポーター
 	public static final String MATERIAL = "Material";
@@ -44,7 +45,6 @@ public class OfalenNBTUtil {
 	public static final String CHANNEL = "Channel";
 	// フローター
 	public static final String MODE = "Mode";
-	public static final String INTERVAL_FLOATER = "IntervalFloater";
 	// コレクター
 	public static final String IS_ITEM_DISABLED = "IsItemDisabled";
 	public static final String IS_EXP_DISABLED = "IsExpDisabled";

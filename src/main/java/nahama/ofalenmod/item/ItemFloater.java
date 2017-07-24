@@ -51,16 +51,16 @@ public class ItemFloater extends ItemFuture {
 			OfalenFlightHandlerClient.checkPlayer();
 		}
 		// ダストの消費間隔を管理する。
-		byte interval = itemStack.getTagCompound().getByte(OfalenNBTUtil.INTERVAL_FLOATER);
+		byte interval = itemStack.getTagCompound().getByte(OfalenNBTUtil.INTERVAL);
 		if (interval > 0)
-			itemStack.getTagCompound().setByte(OfalenNBTUtil.INTERVAL_FLOATER, (byte) (interval - 1));
+			itemStack.getTagCompound().setByte(OfalenNBTUtil.INTERVAL, (byte) (interval - 1));
 		if (entity.onGround && interval != OfalenModConfigCore.intervalFloaterDamage) {
 			// 持ち主が地上にいるなら間隔をリセットして終了。
-			nbt.setByte(OfalenNBTUtil.INTERVAL_FLOATER, OfalenModConfigCore.intervalFloaterDamage);
+			nbt.setByte(OfalenNBTUtil.INTERVAL, OfalenModConfigCore.intervalFloaterDamage);
 			return;
 		}
 		// 無効か、時間がたっていないなら終了。
-		if (nbt.getByte(OfalenNBTUtil.MODE) < 1 || nbt.getByte(OfalenNBTUtil.INTERVAL_FLOATER) > 0)
+		if (nbt.getByte(OfalenNBTUtil.MODE) < 1 || nbt.getByte(OfalenNBTUtil.INTERVAL) > 0)
 			return;
 		// 耐久値を減らす。
 		if (!((EntityPlayer) entity).capabilities.isCreativeMode)
@@ -70,7 +70,7 @@ public class ItemFloater extends ItemFuture {
 			OfalenModPacketCore.WRAPPER.sendToAll(new MSpawnParticle(entity.worldObj.provider.dimensionId, entity.posX, entity.posY - 1.6D, entity.posZ, (byte) 2));
 		if (this.getMaterialAmount(itemStack) >= OfalenModConfigCore.amountFloaterDamage) {
 			// 耐久値が残っているなら間隔をリセットして終了。
-			nbt.setByte(OfalenNBTUtil.INTERVAL_FLOATER, OfalenModConfigCore.intervalFloaterDamage);
+			nbt.setByte(OfalenNBTUtil.INTERVAL, OfalenModConfigCore.intervalFloaterDamage);
 			return;
 		}
 		// 耐久値が尽きたなら、無効にし、ログに出力する。
@@ -86,9 +86,9 @@ public class ItemFloater extends ItemFuture {
 	public ItemStack onItemRightClick(ItemStack itemStack, World world, EntityPlayer player) {
 		super.onItemRightClick(itemStack, world, player);
 		// 違うアイテムか、時間がたっていないなら終了。
-		if (!(itemStack.getItem() instanceof ItemFloater) || itemStack.getTagCompound().getByte(OfalenNBTUtil.INTERVAL) > 0)
+		if (!(itemStack.getItem() instanceof ItemFloater) || itemStack.getTagCompound().getByte(OfalenNBTUtil.INTERVAL_RIGHT_CLICK) > 0)
 			return itemStack;
-		itemStack.getTagCompound().setByte(OfalenNBTUtil.INTERVAL, (byte) 10);
+		itemStack.getTagCompound().setByte(OfalenNBTUtil.INTERVAL_RIGHT_CLICK, (byte) 10);
 		if (!OfalenKeyHandler.isSprintKeyPressed(player)) {
 			// ダッシュキーが押されていなければ、モード変更か無効化。
 			if (!player.isSneaking()) {

@@ -67,11 +67,11 @@ public class ItemCollector extends ItemFuture implements IItemOfalenSettable {
 				canDamage = false;
 		}
 		// 無効時間が残っていたら終了。
-		if (itemStack.getTagCompound().getByte(OfalenNBTUtil.INTERVAL_FLOATER) > 0)
+		if (itemStack.getTagCompound().getByte(OfalenNBTUtil.INTERVAL) > 0)
 			return;
 		// 無効時間をリセット。TODO 詳細設定
 		byte intervalMax = (Byte) OfalenDetailedSettingHandler.getCurrentValueFromNBT(OfalenDetailedSettingHandler.getSettingTag(itemStack), "Interval/", this.getSetting().getChildSetting(new ItemStack(Items.quartz)));
-		itemStack.getTagCompound().setByte(OfalenNBTUtil.INTERVAL_FLOATER, intervalMax);
+		itemStack.getTagCompound().setByte(OfalenNBTUtil.INTERVAL, intervalMax);
 		// 範囲の設定。TODO 詳細設定
 		int rangeItem = 10;
 		int rangeExp = 15;
@@ -165,9 +165,9 @@ public class ItemCollector extends ItemFuture implements IItemOfalenSettable {
 		if (!(itemStack.getItem() instanceof ItemCollector))
 			return itemStack;
 		// 時間がたっていないなら終了。
-		if (itemStack.getTagCompound().getByte(OfalenNBTUtil.INTERVAL) > 0)
+		if (itemStack.getTagCompound().getByte(OfalenNBTUtil.INTERVAL_RIGHT_CLICK) > 0)
 			return itemStack;
-		itemStack.getTagCompound().setByte(OfalenNBTUtil.INTERVAL, (byte) 10);
+		itemStack.getTagCompound().setByte(OfalenNBTUtil.INTERVAL_RIGHT_CLICK, (byte) 10);
 		if (!OfalenKeyHandler.isSprintKeyPressed(player)) {
 			NBTTagCompound nbt = itemStack.getTagCompound();
 			if (!player.isSneaking()) {

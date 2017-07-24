@@ -55,9 +55,9 @@ public class ItemTeleporter extends ItemFuture {
 				player.openGui(OfalenModCore.instance, 3, world, (int) player.posX, (int) player.posY, (int) player.posZ);
 			} else {
 				// クライアントか、時間がたっていないなら終了。
-				if (world.isRemote || itemStack.getTagCompound().getByte(OfalenNBTUtil.INTERVAL) > 0)
+				if (world.isRemote || itemStack.getTagCompound().getByte(OfalenNBTUtil.INTERVAL_RIGHT_CLICK) > 0)
 					return itemStack;
-				itemStack.getTagCompound().setByte(OfalenNBTUtil.INTERVAL, (byte) 10);
+				itemStack.getTagCompound().setByte(OfalenNBTUtil.INTERVAL_RIGHT_CLICK, (byte) 10);
 				// スニークしていたらテレポートする。
 				if (this.getMaterialAmount(itemStack) < OfalenModConfigCore.amountTeleporterDamage) {
 					// 材料がないならチャットに出力して終了。
@@ -98,9 +98,9 @@ public class ItemTeleporter extends ItemFuture {
 			}
 		} else {
 			// クライアントか、時間がたっていないなら終了。
-			if (world.isRemote || itemStack.getTagCompound().getByte(OfalenNBTUtil.INTERVAL) > 0)
+			if (world.isRemote || itemStack.getTagCompound().getByte(OfalenNBTUtil.INTERVAL_RIGHT_CLICK) > 0)
 				return itemStack;
-			itemStack.getTagCompound().setByte(OfalenNBTUtil.INTERVAL, (byte) 10);
+			itemStack.getTagCompound().setByte(OfalenNBTUtil.INTERVAL_RIGHT_CLICK, (byte) 10);
 			// ダッシュキーが押されていれば、パールの補充・取り出し。
 			if (!player.isSneaking()) {
 				// しゃがんでいなければ、補充。

@@ -36,9 +36,9 @@ public class ItemShield extends ItemFuture {
 		if (itemStack == null || !(itemStack.getItem() instanceof ItemShield))
 			return itemStack;
 		// クライアントか、時間がたっていないなら終了。
-		if (world.isRemote || itemStack.getTagCompound().getByte(OfalenNBTUtil.INTERVAL) > 0)
+		if (world.isRemote || itemStack.getTagCompound().getByte(OfalenNBTUtil.INTERVAL_RIGHT_CLICK) > 0)
 			return itemStack;
-		itemStack.getTagCompound().setByte(OfalenNBTUtil.INTERVAL, (byte) 10);
+		itemStack.getTagCompound().setByte(OfalenNBTUtil.INTERVAL_RIGHT_CLICK, (byte) 10);
 		if (!OfalenKeyHandler.isSprintKeyPressed(player)) {
 			// ダッシュキーが押されていなければ、シールドの有効化か無効化。
 			if (itemStack.getTagCompound().getBoolean(OfalenNBTUtil.IS_VALID)) {

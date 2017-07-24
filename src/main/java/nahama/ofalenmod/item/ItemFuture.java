@@ -33,6 +33,9 @@ public class ItemFuture extends Item {
 		byte interval = itemStack.getTagCompound().getByte(OfalenNBTUtil.INTERVAL);
 		if (interval > 0)
 			itemStack.getTagCompound().setByte(OfalenNBTUtil.INTERVAL, (byte) (interval - 1));
+		interval = itemStack.getTagCompound().getByte(OfalenNBTUtil.INTERVAL_RIGHT_CLICK);
+		if (interval > 0)
+			itemStack.getTagCompound().setByte(OfalenNBTUtil.INTERVAL_RIGHT_CLICK, (byte) (interval - 1));
 	}
 
 	/** 2層に分けてレンダリングを行うか。 */
