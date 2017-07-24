@@ -127,6 +127,7 @@ public class OfalenModItemCore {
 	public static Item hoeOfalenG3;
 	// その他の道具
 	public static Item toolOfalenP;
+	@SuppressWarnings("WeakerAccess")
 	public static Item swordCreative;
 	// レーザー関連
 	public static Item pistolLaser;
