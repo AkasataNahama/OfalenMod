@@ -143,8 +143,14 @@ public class OfalenUtil {
 		return ret;
 	}
 
+	/** 翻訳したメッセージをプレイヤーのチャット欄に出力する。 */
 	public static void addChatTranslationMessage(EntityPlayer player, String message, Object... objects) {
-		player.addChatMessage(new ChatComponentTranslation(message, objects));
+		if (player.worldObj.isRemote) {
+			// クライアントでは無視する。
+			OfalenLog.debuggingInfo("addChatTranslationMessage is ignored on client world.", "OfalenUtil");
+		} else {
+			player.addChatMessage(new ChatComponentTranslation(message, objects));
+		}
 	}
 
 	/** FMLCommonHandlerを利用したサイドの判定。Minecraft起動時に確定。 */

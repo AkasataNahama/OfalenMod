@@ -45,8 +45,7 @@ public class ItemShield extends ItemFuture {
 				// シールドが無効だったら、
 				if (this.getMaterialAmount(itemStack) < OfalenModConfigCore.amountShieldDamage) {
 					// 材料がないならチャットに出力する。
-					if (!world.isRemote)
-						OfalenUtil.addChatTranslationMessage(player, "info.ofalen.future.lackingMaterial", new ItemStack(OfalenModItemCore.shieldOfalen).getDisplayName(), new ItemStack(OfalenModItemCore.partsOfalen, 1, 6).getDisplayName());
+					OfalenUtil.addChatTranslationMessage(player, "info.ofalen.future.lackingMaterial", new ItemStack(OfalenModItemCore.shieldOfalen).getDisplayName(), new ItemStack(OfalenModItemCore.partsOfalen, 1, 6).getDisplayName());
 				} else {
 					// シールドを有効にする。
 					itemStack.getTagCompound().setBoolean(OfalenNBTUtil.IS_VALID, true);

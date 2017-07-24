@@ -71,8 +71,7 @@ public class ItemFloater extends ItemFuture {
 		nbt.setByte(OfalenNBTUtil.MODE, (byte) 0);
 		if (world.isRemote && entity == Minecraft.getMinecraft().thePlayer)
 			OfalenFlightHandlerClient.checkPlayer();
-		if (!world.isRemote)
-			OfalenUtil.addChatTranslationMessage((EntityPlayer) entity, "info.ofalen.future.lackingMaterial", new ItemStack(OfalenModItemCore.floaterOfalen).getDisplayName(), new ItemStack(OfalenModItemCore.partsOfalen, 1, 8).getDisplayName());
+		OfalenUtil.addChatTranslationMessage((EntityPlayer) entity, "info.ofalen.future.lackingMaterial", new ItemStack(OfalenModItemCore.floaterOfalen).getDisplayName(), new ItemStack(OfalenModItemCore.partsOfalen, 1, 8).getDisplayName());
 	}
 
 	/** 右クリック時の処理。 */
@@ -90,8 +89,7 @@ public class ItemFloater extends ItemFuture {
 				byte mode = itemStack.getTagCompound().getByte(OfalenNBTUtil.MODE);
 				if (this.getMaterialAmount(itemStack) < OfalenModConfigCore.amountFloaterDamage) {
 					// 材料がないならチャットに出力し、無効化して終了。
-					if (!world.isRemote)
-						OfalenUtil.addChatTranslationMessage(player, "info.ofalen.future.lackingMaterial", new ItemStack(OfalenModItemCore.floaterOfalen).getDisplayName(), new ItemStack(OfalenModItemCore.partsOfalen, 1, 8).getDisplayName());
+					OfalenUtil.addChatTranslationMessage(player, "info.ofalen.future.lackingMaterial", new ItemStack(OfalenModItemCore.floaterOfalen).getDisplayName(), new ItemStack(OfalenModItemCore.partsOfalen, 1, 8).getDisplayName());
 					if (mode != 0) {
 						itemStack.getTagCompound().setByte(OfalenNBTUtil.MODE, (byte) 0);
 						if (world.isRemote)
@@ -103,11 +101,9 @@ public class ItemFloater extends ItemFuture {
 				if (mode > 5)
 					mode = 1;
 				itemStack.getTagCompound().setByte(OfalenNBTUtil.MODE, mode);
-				if (world.isRemote) {
+				if (world.isRemote)
 					OfalenFlightHandlerClient.checkPlayer();
-				} else {
-					OfalenUtil.addChatTranslationMessage(player, "info.ofalen.floater.modeChanged", mode);
-				}
+				OfalenUtil.addChatTranslationMessage(player, "info.ofalen.floater.modeChanged", mode);
 			} else {
 				// しゃがんでいたら、無効化する。
 				if (itemStack.getTagCompound().getByte(OfalenNBTUtil.MODE) != 0) {
