@@ -12,7 +12,9 @@ import net.minecraft.item.ItemStack;
 
 public class OfalenProtectHandler {
 	/** ダメージを無効にした時の処理。 */
-	public static boolean onProtect(EntityPlayer player) {
+	public static float onProtect(EntityPlayer player, float amountDamage) {
+		int amount = (int) (amountDamage * OfalenModConfigCore.amountProtectorDamage);
+		float remainingDamage = amountDamage - amount;
 		// プレイヤーのインベントリを調査し、有効になっているプロテクターがあれば耐久値を減らす。
 		boolean flag = false;
 		IInventory inventory = player.inventory;
@@ -32,18 +34,22 @@ public class OfalenProtectHandler {
 			// クリエイティブなら材料を消費しない。
 			if (player.capabilities.isCreativeMode)
 				break;
-			item.consumeMaterial(itemStack, OfalenModConfigCore.amountProtectorDamage);
+			int limit = Math.min(amount, item.getMaterialAmount(itemStack));
+			item.consumeMaterial(itemStack, limit);
+			amount -= limit;
 			if (item.getMaterialAmount(itemStack) < OfalenModConfigCore.amountProtectorDamage) {
 				// ダメージが最大になったら、無効にする。
 				itemStack.getTagCompound().setBoolean(OfalenNBTUtil.IS_VALID, false);
 				OfalenUtil.addChatTranslationMessage(player, "info.ofalen.protector.brokenProtector");
 			}
-			break;
+			// ダメージをすべて軽減したら終了。
+			if (amount < 1)
+				break;
 		}
 		if (flag) {
 			// パーティクルを表示させるようパケットを送る。
 			OfalenModPacketCore.WRAPPER.sendToAll(new MSpawnParticle(player.worldObj.provider.dimensionId, player.posX, player.posY, player.posZ, (byte) 0));
 		}
-		return flag;
+		return remainingDamage + amount;
 	}
 }

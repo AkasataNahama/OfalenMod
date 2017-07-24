@@ -42,12 +42,11 @@ public class OfalenModEventHandler {
 	/** EntityLivingBaseがダメージを受けた時の処理。 */
 	@SubscribeEvent
 	public void onLivingHurt(LivingHurtEvent event) {
-		// キャンセル不可能か、プレイヤー以外なら終了。
-		if (event.isCanceled() || !event.isCancelable() || !(event.entityLiving instanceof EntityPlayer))
+		// キャンセル済みか、プレイヤー以外なら終了。サーバー側のみで呼ばれる。
+		if (event.isCanceled() || !(event.entityLiving instanceof EntityPlayer))
 			return;
-		// プロテクターが有効ならダメージを無効化。
-		if (OfalenProtectHandler.onProtect((EntityPlayer) event.entityLiving))
-			event.setCanceled(true);
+		// プロテクターがダメージを軽減する。
+		event.ammount = OfalenProtectHandler.onProtect((EntityPlayer) event.entityLiving, event.ammount);
 	}
 
 	/** EntityLivingBaseのアップデート時の処理。 */
