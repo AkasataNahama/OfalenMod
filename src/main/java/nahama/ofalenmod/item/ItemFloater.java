@@ -26,12 +26,6 @@ public class ItemFloater extends ItemFuture {
 	/** 無効時のアイコン。 */
 	private IIcon invalid;
 
-	/** 材料として使用できるかの判定。 */
-	public static boolean isItemMaterial(ItemStack material) {
-		// フロートパウダーのみ使用可能。
-		return material != null && material.isItemEqual(new ItemStack(OfalenModItemCore.partsOfalen, 1, 8));
-	}
-
 	@Override
 	public void getSubItems(Item item, CreativeTabs tab, List list) {
 		ItemStack itemStack = new ItemStack(item);
