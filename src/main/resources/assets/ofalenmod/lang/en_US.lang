@@ -125,6 +125,8 @@ info.ofalen.metaMod.description=This mod adds a new ore "Ofalen", to add a new s
 info.ofalen.notificationVersion=Ofalen Mod : New version is available!
 info.ofalen.using=Using
 info.ofalen.latest=Latest
+info.ofalen.util.stack=Stack
+info.ofalen.util.item=Item
 // Smelting Machine
 info.ofalen.recipeSmelting=Ofalen Smelting
 // Perfect Tool

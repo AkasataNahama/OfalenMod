@@ -125,6 +125,8 @@ info.ofalen.metaMod.description=このMODは、新しい鉱石「オファレン
 info.ofalen.notificationVersion=オファレンMOD : 新しいバージョンがリリースされています!
 info.ofalen.using=現在
 info.ofalen.latest=最新
+info.ofalen.util.stack=スタック
+info.ofalen.util.item=アイテム
 // 製錬機
 info.ofalen.recipeSmelting=オファレン製錬機
 // 万能ツール

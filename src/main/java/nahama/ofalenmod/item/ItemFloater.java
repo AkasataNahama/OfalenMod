@@ -160,8 +160,9 @@ public class ItemFloater extends ItemFuture {
 	@Override
 	public void addInformation(ItemStack itemStack, EntityPlayer player, List list, boolean isAdvanced) {
 		List<String> stringList = OfalenUtil.getAs(list);
-		// TODO 標準量を表示, スタック数表示
-		stringList.add(this.getMaterialAmount(itemStack) + " / 64");
+		// TODO 標準量を表示
+		int amount = this.getMaterialAmount(itemStack);
+		stringList.add(OfalenUtil.getStackAmountString(amount, 64) + " (" + amount + " / 64)");
 		if (itemStack.hasTagCompound()) {
 			stringList.add(StatCollector.translateToLocal("info.ofalen.floater.mode") + " " + itemStack.getTagCompound().getByte(OfalenNBTUtil.MODE));
 		}

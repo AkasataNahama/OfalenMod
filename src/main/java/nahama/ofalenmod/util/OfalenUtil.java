@@ -8,6 +8,7 @@ import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ChatComponentTranslation;
+import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 
 import java.io.IOException;
@@ -172,5 +173,21 @@ public class OfalenUtil {
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public static <T> List<T> getAs(List list) {
 		return (List<T>) list;
+	}
+
+	/**
+	 * 与えられたアイテム数を"x Stack y Item"の形で表示した文字列を返す。
+	 * @param amount アイテム数
+	 * @param limit スタック限界
+	 */
+	public static String getStackAmountString(int amount, int limit) {
+		String string = "";
+		int stack = amount / limit;
+		if (stack > 0)
+			string += stack + " " + StatCollector.translateToLocal("info.ofalen.util.stack") + " ";
+		int item = amount % limit;
+		if (stack < 1 || item > 0)
+			string += item + " " + StatCollector.translateToLocal("info.ofalen.util.item");
+		return string;
 	}
 }
