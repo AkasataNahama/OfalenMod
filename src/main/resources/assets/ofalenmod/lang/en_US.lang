@@ -105,7 +105,7 @@ config.ofalen.prop.amountFloaterDamage=Floater Damage Amount
 config.ofalen.prop.amountFloaterDamage.tooltip=Damage amount of Ofalen Floater when the player float.
 config.ofalen.prop.intervalFloaterDamage=Floater Damage Interval
 config.ofalen.prop.intervalFloaterDamage.tooltip=Damage interval of Ofalen Floater. (tick)
-// Futuer.Collector
+// Future.Collector
 config.ofalen.category.collector=Collector
 config.ofalen.category.collector.tooltip=The settings of Ofalen Collector.
 config.ofalen.prop.amountCollectorDamageItem=Collector Damage Amount (Item)

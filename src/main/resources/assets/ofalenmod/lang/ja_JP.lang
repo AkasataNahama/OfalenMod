@@ -105,7 +105,7 @@ config.ofalen.prop.amountFloaterDamage=フローターのダメージ量
 config.ofalen.prop.amountFloaterDamage.tooltip=プレイヤーを飛行させたときのオファレンフローターのダメージ量。
 config.ofalen.prop.intervalFloaterDamage=フローターのダメージ間隔
 config.ofalen.prop.intervalFloaterDamage.tooltip=オファレンフローターのダメージ間隔。(tick)
-// Futuer.Collector
+// 未来.コレクター
 config.ofalen.category.collector=コレクター
 config.ofalen.category.collector.tooltip=オファレンコレクターに関する設定。
 config.ofalen.prop.amountCollectorDamageItem=コレクターのダメージ量(アイテム)
