@@ -35,8 +35,8 @@ public class ItemShield extends ItemFuture {
 		// 違うアイテムなら終了。
 		if (itemStack == null || !(itemStack.getItem() instanceof ItemShield))
 			return itemStack;
-		// クライアントか、時間がたっていないなら終了。
-		if (world.isRemote || itemStack.getTagCompound().getByte(OfalenNBTUtil.INTERVAL_RIGHT_CLICK) > 0)
+		// 時間がたっていないなら終了。
+		if (itemStack.getTagCompound().getByte(OfalenNBTUtil.INTERVAL_RIGHT_CLICK) > 0)
 			return itemStack;
 		itemStack.getTagCompound().setByte(OfalenNBTUtil.INTERVAL_RIGHT_CLICK, (byte) 10);
 		if (!OfalenKeyHandler.isSprintKeyPressed(player)) {
@@ -48,7 +48,8 @@ public class ItemShield extends ItemFuture {
 				// シールドが無効だったら、
 				if (this.getMaterialAmount(itemStack) < OfalenModConfigCore.amountShieldDamage) {
 					// 材料がないならチャットに出力する。
-					OfalenUtil.addChatTranslationMessage(player, "info.ofalen.future.lackingMaterial", new ItemStack(OfalenModItemCore.shieldOfalen).getDisplayName(), new ItemStack(OfalenModItemCore.partsOfalen, 1, 6).getDisplayName());
+					if (!world.isRemote)
+						OfalenUtil.addChatTranslationMessage(player, "info.ofalen.future.lackingMaterial", new ItemStack(OfalenModItemCore.shieldOfalen).getDisplayName(), new ItemStack(OfalenModItemCore.partsOfalen, 1, 6).getDisplayName());
 				} else {
 					// シールドを有効にする。
 					itemStack.getTagCompound().setBoolean(OfalenNBTUtil.IS_VALID, true);
@@ -59,8 +60,6 @@ public class ItemShield extends ItemFuture {
 			if (!player.isSneaking()) {
 				// しゃがんでいなければ、補充。
 				this.chargeMaterial(itemStack, new ItemStack(OfalenModItemCore.partsOfalen, 1, 6), player);
-				// インベントリの更新をかけるため、コピーする。
-				return itemStack.copy();
 			} else {
 				// しゃがんでいれば、取り出し。
 				this.dropMaterial(itemStack, new ItemStack(OfalenModItemCore.partsOfalen, 1, 6), player);

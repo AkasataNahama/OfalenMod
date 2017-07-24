@@ -123,15 +123,10 @@ public class ItemFloater extends ItemFuture {
 				}
 			}
 		} else {
-			// クライアントなら終了。
-			if (world.isRemote)
-				return itemStack;
 			// ダッシュキーが押されていれば、ダストの補充・取り出し。
 			if (!player.isSneaking()) {
 				// しゃがんでいなければ、補充。
 				this.chargeMaterial(itemStack, new ItemStack(OfalenModItemCore.partsOfalen, 1, 8), player);
-				// インベントリの更新をかけるため、コピーする。
-				return itemStack.copy();
 			} else {
 				// しゃがんでいれば、取り出し。
 				this.dropMaterial(itemStack, new ItemStack(OfalenModItemCore.partsOfalen, 1, 8), player);

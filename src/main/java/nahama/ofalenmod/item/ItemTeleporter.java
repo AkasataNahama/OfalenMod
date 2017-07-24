@@ -97,16 +97,14 @@ public class ItemTeleporter extends ItemFuture {
 				OfalenModPacketCore.WRAPPER.sendToAll(new MSpawnParticle(toId, pos.getX() + 0.5, pos.getY() + 1.5, pos.getZ() + 0.5, (byte) 1));
 			}
 		} else {
-			// クライアントか、時間がたっていないなら終了。
-			if (world.isRemote || itemStack.getTagCompound().getByte(OfalenNBTUtil.INTERVAL_RIGHT_CLICK) > 0)
+			// 時間がたっていないなら終了。
+			if (itemStack.getTagCompound().getByte(OfalenNBTUtil.INTERVAL_RIGHT_CLICK) > 0)
 				return itemStack;
 			itemStack.getTagCompound().setByte(OfalenNBTUtil.INTERVAL_RIGHT_CLICK, (byte) 10);
 			// ダッシュキーが押されていれば、パールの補充・取り出し。
 			if (!player.isSneaking()) {
 				// しゃがんでいなければ、補充。
 				this.chargeMaterial(itemStack, new ItemStack(OfalenModItemCore.partsOfalen, 1, 7), player);
-				// インベントリの更新をかけるため、コピーする。
-				return itemStack.copy();
 			} else {
 				// しゃがんでいれば、取り出し。
 				this.dropMaterial(itemStack, new ItemStack(OfalenModItemCore.partsOfalen, 1, 7), player);
