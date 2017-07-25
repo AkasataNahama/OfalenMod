@@ -3,12 +3,11 @@ package nahama.ofalenmod.item;
 import nahama.ofalenmod.core.OfalenModConfigCore;
 import nahama.ofalenmod.core.OfalenModItemCore;
 import nahama.ofalenmod.core.OfalenModPacketCore;
-import nahama.ofalenmod.handler.OfalenFlightHandlerClient;
+import nahama.ofalenmod.handler.OfalenFlightHandlerServer;
 import nahama.ofalenmod.handler.OfalenKeyHandler;
 import nahama.ofalenmod.network.MSpawnParticle;
 import nahama.ofalenmod.util.OfalenNBTUtil;
 import nahama.ofalenmod.util.OfalenUtil;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
@@ -40,14 +39,13 @@ public class ItemFloater extends ItemFuture {
 		// 持ち主がプレイヤー以外なら終了。
 		if (!(entity instanceof EntityPlayer))
 			return;
+		EntityPlayer player = (EntityPlayer) entity;
 		NBTTagCompound nbt = itemStack.getTagCompound();
-		if (world.isRemote && nbt.getByte(OfalenNBTUtil.MODE) > 0 && OfalenFlightHandlerClient.isPlayer(entity) && !OfalenFlightHandlerClient.canFloat()) {
-			OfalenFlightHandlerClient.checkPlayer();
-		}
+		// このフローターが有効で、ハンドラーが無効化されていたら、再調査させる。
+		if (!world.isRemote && nbt.getByte(OfalenNBTUtil.MODE) > 0 && !OfalenFlightHandlerServer.canFlightPlayer(player))
+			OfalenFlightHandlerServer.checkPlayer(player);
 		// ダストの消費間隔を管理する。
 		byte interval = itemStack.getTagCompound().getByte(OfalenNBTUtil.INTERVAL);
-		if (interval > 0)
-			itemStack.getTagCompound().setByte(OfalenNBTUtil.INTERVAL, (byte) (interval - 1));
 		if (entity.onGround && interval != OfalenModConfigCore.intervalFloaterDamage) {
 			// 持ち主が地上にいるなら間隔をリセットして終了。
 			nbt.setByte(OfalenNBTUtil.INTERVAL, OfalenModConfigCore.intervalFloaterDamage);
@@ -57,7 +55,7 @@ public class ItemFloater extends ItemFuture {
 		if (nbt.getByte(OfalenNBTUtil.MODE) < 1 || nbt.getByte(OfalenNBTUtil.INTERVAL) > 0)
 			return;
 		// 耐久値を減らす。
-		if (!((EntityPlayer) entity).capabilities.isCreativeMode)
+		if (!player.capabilities.isCreativeMode)
 			this.consumeMaterial(itemStack, OfalenModConfigCore.amountFloaterDamage);
 		// サーバー側なら全クライアントにパーティクルを生成するようパケットを送信。
 		if (!world.isRemote)
@@ -69,9 +67,9 @@ public class ItemFloater extends ItemFuture {
 		}
 		// 耐久値が尽きたなら、無効にし、ログに出力する。
 		nbt.setByte(OfalenNBTUtil.MODE, (byte) 0);
-		if (world.isRemote && entity == Minecraft.getMinecraft().thePlayer)
-			OfalenFlightHandlerClient.checkPlayer();
-		OfalenUtil.addChatTranslationMessage((EntityPlayer) entity, "info.ofalen.future.lackingMaterial", new ItemStack(OfalenModItemCore.floaterOfalen).getDisplayName(), new ItemStack(OfalenModItemCore.partsOfalen, 1, 8).getDisplayName());
+		if (!world.isRemote && OfalenFlightHandlerServer.canFlightPlayer(player))
+			OfalenFlightHandlerServer.checkPlayer(player);
+		OfalenUtil.addChatTranslationMessage(player, "info.ofalen.future.lackingMaterial", new ItemStack(OfalenModItemCore.floaterOfalen).getDisplayName(), new ItemStack(OfalenModItemCore.partsOfalen, 1, 8).getDisplayName());
 	}
 
 	/** 右クリック時の処理。 */
@@ -92,8 +90,8 @@ public class ItemFloater extends ItemFuture {
 					OfalenUtil.addChatTranslationMessage(player, "info.ofalen.future.lackingMaterial", new ItemStack(OfalenModItemCore.floaterOfalen).getDisplayName(), new ItemStack(OfalenModItemCore.partsOfalen, 1, 8).getDisplayName());
 					if (mode != 0) {
 						itemStack.getTagCompound().setByte(OfalenNBTUtil.MODE, (byte) 0);
-						if (world.isRemote)
-							OfalenFlightHandlerClient.checkPlayer();
+						if (!world.isRemote)
+							OfalenFlightHandlerServer.checkPlayer(player);
 					}
 					return itemStack;
 				}
@@ -101,15 +99,15 @@ public class ItemFloater extends ItemFuture {
 				if (mode > 5)
 					mode = 1;
 				itemStack.getTagCompound().setByte(OfalenNBTUtil.MODE, mode);
-				if (world.isRemote)
-					OfalenFlightHandlerClient.checkPlayer();
+				if (!world.isRemote)
+					OfalenFlightHandlerServer.checkPlayer(player);
 				OfalenUtil.addChatTranslationMessage(player, "info.ofalen.floater.modeChanged", mode);
 			} else {
 				// しゃがんでいたら、無効化する。
 				if (itemStack.getTagCompound().getByte(OfalenNBTUtil.MODE) != 0) {
 					itemStack.getTagCompound().setByte(OfalenNBTUtil.MODE, (byte) 0);
-					if (world.isRemote)
-						OfalenFlightHandlerClient.checkPlayer();
+					if (!world.isRemote)
+						OfalenFlightHandlerServer.checkPlayer(player);
 				}
 			}
 		} else {
@@ -123,8 +121,8 @@ public class ItemFloater extends ItemFuture {
 				// フローターが有効だったら無効化。
 				if (itemStack.getTagCompound().getByte(OfalenNBTUtil.MODE) != 0) {
 					itemStack.getTagCompound().setByte(OfalenNBTUtil.MODE, (byte) 0);
-					if (world.isRemote)
-						OfalenFlightHandlerClient.checkPlayer();
+					if (!world.isRemote)
+						OfalenFlightHandlerServer.checkPlayer(player);
 				}
 			}
 		}

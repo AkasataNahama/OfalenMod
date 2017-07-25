@@ -1,45 +1,18 @@
 package nahama.ofalenmod.handler;
 
-import nahama.ofalenmod.core.OfalenModPacketCore;
-import nahama.ofalenmod.item.ItemFloater;
-import nahama.ofalenmod.network.MFloaterMode;
-import nahama.ofalenmod.util.OfalenNBTUtil;
 import nahama.ofalenmod.util.OfalenUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.entity.Entity;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.item.ItemStack;
 
 public class OfalenFlightHandlerClient {
 	/** フローターのモード。 */
 	private static byte mode;
-	private static byte interval;
-
-	/** プレイヤーがフローターを有効にしているか確認する。 */
-	public static void checkPlayer() {
-		byte newMode = 0;
-		IInventory inventory = Minecraft.getMinecraft().thePlayer.inventory;
-		for (int i = 0; i < inventory.getSizeInventory(); i++) {
-			ItemStack itemStack = inventory.getStackInSlot(i);
-			if (itemStack == null || !(itemStack.getItem() instanceof ItemFloater) || !itemStack.hasTagCompound())
-				continue;
-			newMode = itemStack.getTagCompound().getByte(OfalenNBTUtil.MODE);
-			// 有効なフローターを見つけたら調査を終了する。
-			if (newMode > 0)
-				break;
-		}
-		setMode(newMode);
-	}
 
 	/** フローターのモードを更新する。 */
-	private static void setMode(byte newMode) {
-		if (mode != newMode) {
-			// モードを設定する。
-			mode = newMode;
-			// サーバーに通知する。
-			OfalenModPacketCore.WRAPPER.sendToServer(new MFloaterMode(mode, false));
-		}
+	public static void setMode(byte newMode) {
+		// モードを設定する。
+		mode = newMode;
 	}
 
 	/** 浮遊が許可されているかどうか。 */
@@ -71,11 +44,6 @@ public class OfalenFlightHandlerClient {
 
 	/** プレイヤーを浮遊させる。 */
 	public static void floatPlayer() {
-		interval--;
-		if (interval < 1) {
-			checkPlayer();
-			interval = 20;
-		}
 		// 空中移動係数を変更する。
 		Minecraft.getMinecraft().thePlayer.jumpMovementFactor *= getFactor(mode);
 		EntityPlayerSP player = Minecraft.getMinecraft().thePlayer;

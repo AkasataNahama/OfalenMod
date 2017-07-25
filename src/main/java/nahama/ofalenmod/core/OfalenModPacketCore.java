@@ -25,7 +25,7 @@ public class OfalenModPacketCore {
 		discriminator = 0;
 		registerMessage(MTeleporterChannel.class, MTeleporterChannel.Handler.class, Side.SERVER);
 		registerMessage(MTeleporterMeta.class, MTeleporterMeta.Handler.class, Side.SERVER);
-		registerMessage(MFloaterMode.class, MFloaterMode.Handler.class, Side.SERVER);
+		registerMessage(MFloaterMode.class, MFloaterMode.Handler.class, Side.CLIENT);
 		registerMessage(MSpawnParticle.class, MSpawnParticle.Handler.class, Side.CLIENT);
 		registerMessage(MFilterInstaller.class, MFilterInstaller.Handler.class, Side.SERVER);
 		registerMessage(MWorldEditorSetting.class, MWorldEditorSetting.Handler.class, Side.SERVER);

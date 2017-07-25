@@ -52,30 +52,32 @@ public class OfalenModEventHandler {
 	/** EntityLivingBaseのアップデート時の処理。 */
 	@SubscribeEvent
 	public void onLivingUpdate(LivingUpdateEvent event) {
-		if (!event.entityLiving.worldObj.isRemote || !OfalenFlightHandlerClient.isPlayer(event.entityLiving))
-			return;
-		// クライアント側で、本人プレイヤーの時。（マルチプレイでの別プレイヤーでない時。）
-		// 浮遊が許可されていないなら終了。
-		if (!OfalenFlightHandlerClient.canFloat())
-			return;
-		OfalenFlightHandlerClient.floatPlayer();
+		if (event.entityLiving.worldObj.isRemote) {
+			// クライアントでは、プレイヤーで、有効なら飛行させる。
+			if (OfalenFlightHandlerClient.isPlayer(event.entityLiving) && OfalenFlightHandlerClient.canFloat())
+				OfalenFlightHandlerClient.floatPlayer();
+		} else {
+			// サーバーでは、プレイヤーなら更新する。
+			if (event.entityLiving instanceof EntityPlayer)
+				OfalenFlightHandlerServer.onUpdatePlayer((EntityPlayer) event.entityLiving);
+		}
 	}
 
 	/** EntityLivingBaseが落下した時の処理。 */
 	@SubscribeEvent
 	public void onLivingFall(LivingFallEvent event) {
-		// キャンセル不可能か、プレイヤー以外なら終了。
-		if (event.isCanceled() || !event.isCancelable() || !(event.entityLiving instanceof EntityPlayer))
+		// キャンセル済みか、プレイヤー以外なら終了。
+		if (event.isCanceled() || !(event.entityLiving instanceof EntityPlayer))
 			return;
 		if (event.entityLiving.worldObj.isRemote) {
 			// クライアント側では、フローターが有効なら落下（音とか）をキャンセル。
 			if (OfalenFlightHandlerClient.isPlayer(event.entityLiving) && OfalenFlightHandlerClient.canFloat())
 				event.setCanceled(true);
-			return;
+		} else {
+			// サーバー側では、フローターが有効なら落下（ダメージとか）をキャンセル。
+			if (OfalenFlightHandlerServer.canFlightPlayer((EntityPlayer) event.entityLiving))
+				event.setCanceled(true);
 		}
-		// サーバー側では、フローターが有効なら落下（ダメージとか）をキャンセル。
-		if (OfalenFlightHandlerServer.canFlightPlayer((EntityPlayer) event.entityLiving))
-			event.setCanceled(true);
 	}
 
 	@SubscribeEvent
