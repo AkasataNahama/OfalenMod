@@ -22,8 +22,15 @@ public class OfalenFlightHandlerServer {
 	}
 
 	public static void onUpdatePlayer(EntityPlayer player) {
-		if (canFlightPlayer(player) && player.worldObj.rand.nextInt(40) == 0)
+		FloaterState state = playersFloating.get(player.getCommandSenderName());
+		if (state == null || state.mode == 0)
+			return;
+		if (state.interval > 0)
+			state.interval--;
+		if (state.interval < 1) {
+			state.interval = 20;
 			checkPlayer(player);
+		}
 	}
 
 	/** プレイヤーがフローターを有効にしているか確認する。 */
