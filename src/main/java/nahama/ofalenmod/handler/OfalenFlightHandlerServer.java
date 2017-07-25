@@ -14,7 +14,7 @@ import java.util.Map;
 
 public class OfalenFlightHandlerServer {
 	/** フローターを有効にしているプレイヤーの名前のリスト。 */
-	private static Map<String, Byte> playersFloating = new HashMap<String, Byte>();
+	private static Map<String, FloaterState> playersFloating = new HashMap<String, FloaterState>();
 
 	/** 初期化処理。 */
 	public static void init() {
@@ -44,10 +44,10 @@ public class OfalenFlightHandlerServer {
 
 	/** プレイヤーのフローターのモードを登録する。 */
 	private static void setPlayerFlightMode(EntityPlayer player, byte mode) {
-		Byte lastMode = playersFloating.get(player.getCommandSenderName());
-		if (lastMode == null)
-			lastMode = 0;
-		if (lastMode == mode)
+		FloaterState state = playersFloating.get(player.getCommandSenderName());
+		if (state == null)
+			state = new FloaterState();
+		if (state.mode == mode)
 			return;
 		OfalenModPacketCore.WRAPPER.sendTo(new MFloaterMode(mode), (EntityPlayerMP) player);
 		if (mode < 1) {
@@ -55,13 +55,19 @@ public class OfalenFlightHandlerServer {
 			playersFloating.remove(player.getCommandSenderName());
 		} else {
 			// 有効なら上書きする。
-			playersFloating.put(player.getCommandSenderName(), mode);
+			state.mode = mode;
+			playersFloating.put(player.getCommandSenderName(), state);
 		}
 	}
 
 	/** プレイヤーのフローターが有効かどうか。 */
 	public static boolean canFlightPlayer(EntityPlayer player) {
-		Byte mode = playersFloating.get(player.getCommandSenderName());
-		return mode != null && mode > 0;
+		FloaterState state = playersFloating.get(player.getCommandSenderName());
+		return state != null && state.mode > 0;
+	}
+
+	private static class FloaterState {
+		public byte mode;
+		public byte interval;
 	}
 }
