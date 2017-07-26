@@ -63,11 +63,11 @@ public class ItemFloater extends ItemFuture {
 		if (!world.isRemote)
 			OfalenModPacketCore.WRAPPER.sendToAll(new MSpawnParticle(entity.worldObj.provider.dimensionId, entity.posX, entity.posY - 1.6D, entity.posZ, (byte) 2));
 		if (this.getMaterialAmount(itemStack) < OfalenModConfigCore.amountFloaterDamage) {
-			// 耐久値が尽きたなら、無効にし、ログに出力する。
-			nbt.setByte(OfalenNBTUtil.MODE, (byte) 0);
-			if (!world.isRemote && OfalenFlightHandlerServer.canFlightPlayer(player))
-				OfalenFlightHandlerServer.checkPlayer(player);
+			// 材料が尽きたならチャットに出力し、無効化する。
 			OfalenUtil.addChatTranslationMessage(player, "info.ofalen.future.lackingMaterial", new ItemStack(OfalenModItemCore.floaterOfalen).getDisplayName(), new ItemStack(OfalenModItemCore.partsOfalen, 1, 8).getDisplayName());
+			nbt.setBoolean(OfalenNBTUtil.IS_VALID, false);
+			if (!world.isRemote)
+				OfalenFlightHandlerServer.checkPlayer(player);
 		}
 	}
 
