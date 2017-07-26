@@ -46,13 +46,14 @@ public class ItemFloater extends ItemFuture {
 			OfalenFlightHandlerServer.checkPlayer(player);
 		// ダストの消費間隔を管理する。
 		byte interval = itemStack.getTagCompound().getByte(OfalenNBTUtil.INTERVAL);
-		if (entity.onGround && interval != OfalenModConfigCore.intervalFloaterDamage) {
-			// 持ち主が地上にいるなら間隔をリセットして終了。
-			nbt.setByte(OfalenNBTUtil.INTERVAL, OfalenModConfigCore.intervalFloaterDamage);
+		if (entity.onGround || !nbt.getBoolean(OfalenNBTUtil.IS_VALID)) {
+			// 持ち主が地上にいるか、無効なら間隔をリセットして終了。
+			if (interval != OfalenModConfigCore.intervalFloaterDamage)
+				nbt.setByte(OfalenNBTUtil.INTERVAL, OfalenModConfigCore.intervalFloaterDamage);
 			return;
 		}
-		// 無効か、時間がたっていないなら終了。
-		if (!nbt.getBoolean(OfalenNBTUtil.IS_VALID) || nbt.getByte(OfalenNBTUtil.INTERVAL) > 0)
+		// 時間がたっていないなら終了。
+		if (nbt.getByte(OfalenNBTUtil.INTERVAL) > 0)
 			return;
 		// 耐久値を減らす。
 		if (!player.capabilities.isCreativeMode)
