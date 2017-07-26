@@ -17,6 +17,8 @@ import net.minecraft.world.World;
 public class ItemFuture extends Item {
 	@SideOnly(Side.CLIENT)
 	protected IIcon iconOverlayWeak;
+	@SideOnly(Side.CLIENT)
+	protected IIcon iconOverlayLacking;
 
 	public ItemFuture() {
 		this.setCreativeTab(OfalenModCore.TAB_OFALEN);
@@ -47,7 +49,8 @@ public class ItemFuture extends Item {
 	/** テクスチャを登録する。 */
 	@Override
 	public void registerIcons(IIconRegister register) {
-		iconOverlayWeak = register.registerIcon("ofalenmod:future-overlay");
+		iconOverlayWeak = register.registerIcon("ofalenmod:future-overlay-weak");
+		iconOverlayLacking = register.registerIcon("ofalenmod:future-overlay-lacking");
 	}
 
 	/**

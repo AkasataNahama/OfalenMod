@@ -1,5 +1,6 @@
 package nahama.ofalenmod.handler;
 
+import nahama.ofalenmod.core.OfalenModConfigCore;
 import nahama.ofalenmod.core.OfalenModPacketCore;
 import nahama.ofalenmod.item.ItemFloater;
 import nahama.ofalenmod.network.MFloaterMode;
@@ -40,7 +41,11 @@ public class OfalenFlightHandlerServer {
 		IInventory inventory = player.inventory;
 		for (int i = 0; i < inventory.getSizeInventory(); i++) {
 			ItemStack itemStack = inventory.getStackInSlot(i);
-			if (itemStack == null || !(itemStack.getItem() instanceof ItemFloater) || !itemStack.hasTagCompound() || !itemStack.getTagCompound().getBoolean(OfalenNBTUtil.IS_VALID))
+			// フローターでないか、NBTを持っていないなら無視。
+			if (itemStack == null || !(itemStack.getItem() instanceof ItemFloater) || !itemStack.hasTagCompound())
+				continue;
+			// 無効か、材料不足なら無視。
+			if (!itemStack.getTagCompound().getBoolean(OfalenNBTUtil.IS_VALID) || ((ItemFloater) itemStack.getItem()).getMaterialAmount(itemStack) < OfalenModConfigCore.amountFloaterDamage)
 				continue;
 			newMode = itemStack.getTagCompound().getByte(OfalenNBTUtil.MODE);
 			// 有効なフローターを見つけたら調査を終了する。

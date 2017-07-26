@@ -42,12 +42,12 @@ public class ItemFloater extends ItemFuture {
 		EntityPlayer player = (EntityPlayer) entity;
 		NBTTagCompound nbt = itemStack.getTagCompound();
 		// このフローターが有効で、ハンドラーが無効化されていたら、再調査させる。
-		if (!world.isRemote && nbt.getBoolean(OfalenNBTUtil.IS_VALID) && !OfalenFlightHandlerServer.canFlightPlayer(player))
+		if (!world.isRemote && nbt.getBoolean(OfalenNBTUtil.IS_VALID) && this.getMaterialAmount(itemStack) >= OfalenModConfigCore.amountFloaterDamage && !OfalenFlightHandlerServer.canFlightPlayer(player))
 			OfalenFlightHandlerServer.checkPlayer(player);
 		// ダストの消費間隔を管理する。
 		byte interval = nbt.getByte(OfalenNBTUtil.INTERVAL);
-		if (entity.onGround || !nbt.getBoolean(OfalenNBTUtil.IS_VALID)) {
-			// 持ち主が地上にいるか、無効なら間隔をリセットして終了。
+		if (entity.onGround || !nbt.getBoolean(OfalenNBTUtil.IS_VALID) || this.getMaterialAmount(itemStack) < OfalenModConfigCore.amountFloaterDamage) {
+			// 持ち主が地上にいるか、無効か、材料不足なら間隔をリセットして終了。
 			if (interval != OfalenModConfigCore.intervalFloaterDamage)
 				nbt.setByte(OfalenNBTUtil.INTERVAL, OfalenModConfigCore.intervalFloaterDamage);
 			return;
@@ -63,9 +63,8 @@ public class ItemFloater extends ItemFuture {
 		if (!world.isRemote)
 			OfalenModPacketCore.WRAPPER.sendToAll(new MSpawnParticle(entity.worldObj.provider.dimensionId, entity.posX, entity.posY - 1.6D, entity.posZ, (byte) 2));
 		if (this.getMaterialAmount(itemStack) < OfalenModConfigCore.amountFloaterDamage) {
-			// 材料が尽きたならチャットに出力し、無効化する。
+			// 材料が尽きたならチャットに出力し、調査する。
 			OfalenUtil.addChatTranslationMessage(player, "info.ofalen.future.lackingMaterial", new ItemStack(OfalenModItemCore.floaterOfalen).getDisplayName(), new ItemStack(OfalenModItemCore.partsOfalen, 1, 8).getDisplayName());
-			nbt.setBoolean(OfalenNBTUtil.IS_VALID, false);
 			if (!world.isRemote)
 				OfalenFlightHandlerServer.checkPlayer(player);
 		}
@@ -84,25 +83,14 @@ public class ItemFloater extends ItemFuture {
 			// ダッシュキーが押されていなければ、モード変更か無効化。
 			if (!player.isSneaking()) {
 				// しゃがんでいなかったらモードを切り替える。
-				if (this.getMaterialAmount(itemStack) < OfalenModConfigCore.amountFloaterDamage) {
-					// 材料がないならチャットに出力し、無効化する。
-					OfalenUtil.addChatTranslationMessage(player, "info.ofalen.future.lackingMaterial", new ItemStack(OfalenModItemCore.floaterOfalen).getDisplayName(), new ItemStack(OfalenModItemCore.partsOfalen, 1, 8).getDisplayName());
-					if (nbt.getBoolean(OfalenNBTUtil.IS_VALID)) {
-						nbt.setBoolean(OfalenNBTUtil.IS_VALID, false);
-						if (!world.isRemote)
-							OfalenFlightHandlerServer.checkPlayer(player);
-					}
-				} else {
-					// 材料が足りていたらモードを変更する。
-					byte mode = nbt.getByte(OfalenNBTUtil.MODE);
-					mode++;
-					if (mode > 5)
-						mode = 1;
-					nbt.setByte(OfalenNBTUtil.MODE, mode);
-					OfalenUtil.addChatTranslationMessage(player, "info.ofalen.floater.modeChanged", mode);
-					if (!world.isRemote)
-						OfalenFlightHandlerServer.checkPlayer(player);
-				}
+				byte mode = nbt.getByte(OfalenNBTUtil.MODE);
+				mode++;
+				if (mode > 5)
+					mode = 1;
+				nbt.setByte(OfalenNBTUtil.MODE, mode);
+				OfalenUtil.addChatTranslationMessage(player, "info.ofalen.floater.modeChanged", mode);
+				if (!world.isRemote)
+					OfalenFlightHandlerServer.checkPlayer(player);
 			} else {
 				// しゃがんでいたら、有効化・無効化する。
 				nbt.setBoolean(OfalenNBTUtil.IS_VALID, !nbt.getBoolean(OfalenNBTUtil.IS_VALID));
@@ -117,9 +105,8 @@ public class ItemFloater extends ItemFuture {
 			} else {
 				// しゃがんでいれば、取り出し。
 				this.dropMaterial(itemStack, new ItemStack(OfalenModItemCore.partsOfalen, 1, 8), player);
-				// フローターが有効だったら無効化。
+				// フローターが有効だったら更新する。
 				if (nbt.getBoolean(OfalenNBTUtil.IS_VALID)) {
-					nbt.setBoolean(OfalenNBTUtil.IS_VALID, false);
 					if (!world.isRemote)
 						OfalenFlightHandlerServer.checkPlayer(player);
 				}
@@ -148,9 +135,14 @@ public class ItemFloater extends ItemFuture {
 
 	@Override
 	public IIcon getIcon(ItemStack stack, int pass) {
-		// TODO 標準量の設定
-		if (pass == 1 && this.getMaterialAmount(stack) <= 64)
-			return iconOverlayWeak;
+		if (pass == 1) {
+			int material = this.getMaterialAmount(stack);
+			if (material < OfalenModConfigCore.amountFloaterDamage)
+				return iconOverlayLacking;
+			// TODO 標準量の設定
+			if (material <= 64)
+				return iconOverlayWeak;
+		}
 		return this.getIconIndex(stack);
 	}
 
@@ -161,7 +153,10 @@ public class ItemFloater extends ItemFuture {
 		int amount = this.getMaterialAmount(itemStack);
 		stringList.add(OfalenUtil.getStackAmountString(amount, 64) + " (" + amount + " / 64)");
 		if (itemStack.hasTagCompound()) {
-			stringList.add(StatCollector.translateToLocal("info.ofalen.future.isValid." + itemStack.getTagCompound().getBoolean(OfalenNBTUtil.IS_VALID)));
+			String message = StatCollector.translateToLocal("info.ofalen.future.isValid." + itemStack.getTagCompound().getBoolean(OfalenNBTUtil.IS_VALID));
+			if (this.getMaterialAmount(itemStack) < OfalenModConfigCore.amountFloaterDamage)
+				message += " " + StatCollector.translateToLocal("info.ofalen.future.lack");
+			stringList.add(message);
 			stringList.add(StatCollector.translateToLocal("info.ofalen.floater.mode") + " " + itemStack.getTagCompound().getByte(OfalenNBTUtil.MODE));
 		}
 	}
