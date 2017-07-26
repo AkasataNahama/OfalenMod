@@ -225,9 +225,14 @@ public class ItemCollector extends ItemFuture implements IItemOfalenSettable {
 
 	@Override
 	public IIcon getIcon(ItemStack stack, int pass) {
-		// TODO 標準量の設定
-		if (pass == 1 && this.getMaterialAmount(stack) <= 64)
-			return iconOverlayWeak;
+		if (pass == 1) {
+			int material = this.getMaterialAmount(stack);
+			if (material < OfalenModConfigCore.amountCollectorDamageItem && material < OfalenModConfigCore.amountCollectorDamageExp)
+				return iconOverlayLacking;
+			// TODO 標準量の設定
+			if (material <= 64)
+				return iconOverlayWeak;
+		}
 		return this.getIconIndex(stack);
 	}
 
