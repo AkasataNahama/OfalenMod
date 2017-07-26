@@ -70,7 +70,7 @@ public class ItemProtector extends ItemFuture {
 	@Override
 	public IIcon getIconIndex(ItemStack itemStack) {
 		// 有効で、材料があったら有効時のテクスチャ。
-		if (itemStack.hasTagCompound() && itemStack.getTagCompound().getBoolean(OfalenNBTUtil.IS_VALID) && this.getMaterialAmount(itemStack) > 0)
+		if (itemStack.hasTagCompound() && itemStack.getTagCompound().getBoolean(OfalenNBTUtil.IS_VALID))
 			return super.getIconIndex(itemStack);
 		return invalid;
 	}
@@ -78,9 +78,14 @@ public class ItemProtector extends ItemFuture {
 	/** テクスチャを返す。 */
 	@Override
 	public IIcon getIcon(ItemStack stack, int pass) {
-		// TODO 標準量の設定
-		if (pass == 1 && this.getMaterialAmount(stack) <= 64)
-			return iconOverlayWeak;
+		if (pass == 1) {
+			int material = this.getMaterialAmount(stack);
+			if (material < OfalenModConfigCore.amountProtectorDamage)
+				return iconOverlayLacking;
+			// TODO 標準量の設定
+			if (material <= 64)
+				return iconOverlayWeak;
+		}
 		return this.getIconIndex(stack);
 	}
 
