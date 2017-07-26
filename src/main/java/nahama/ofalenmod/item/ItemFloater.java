@@ -85,7 +85,7 @@ public class ItemFloater extends ItemFuture {
 				// しゃがんでいなかったらモードを切り替える。
 				byte mode = nbt.getByte(OfalenNBTUtil.MODE);
 				mode++;
-				if (mode > 5)
+				if (mode > 6)
 					mode = 1;
 				nbt.setByte(OfalenNBTUtil.MODE, mode);
 				OfalenUtil.addChatTranslationMessage(player, "info.ofalen.floater.modeChanged", mode);

@@ -38,6 +38,8 @@ public class OfalenFlightHandlerClient {
 			return 4;
 		case 5:
 			return 1;
+		case 6:
+			return 8;
 		}
 		return 1;
 	}
@@ -64,6 +66,9 @@ public class OfalenFlightHandlerClient {
 			break;
 		case 5:
 			horizontalFlight(player);
+			break;
+		case 6:
+			speedyFlight(player);
 			break;
 		}
 		// プレイヤーが空中にいるならパーティクルを表示する。
@@ -122,5 +127,21 @@ public class OfalenFlightHandlerClient {
 	private static void horizontalFlight(EntityPlayerSP player) {
 		// 上下移動をキャンセル。
 		player.motionY = 0.0D;
+	}
+
+	/** スピードモードで浮遊させる。 */
+	private static void speedyFlight(EntityPlayerSP player) {
+		// 入力情報を更新。
+		player.movementInput.updatePlayerMoveState();
+		// 上下移動をキャンセル。
+		player.motionY = 0.0D;
+		if (player.movementInput.sneak) {
+			// スニークキーに入力があれば下降。
+			player.motionY -= 0.8D;
+		}
+		if (player.movementInput.jump) {
+			// ジャンプキーに入力があれば上昇。
+			player.motionY += 0.8D;
+		}
 	}
 }
