@@ -152,7 +152,8 @@ info.ofalen.protector.brokenProtector=オファレンプロテクター : プロ
 info.ofalen.teleporter.channel=チャンネル :
 info.ofalen.teleporter.channelInvalid=オファレンテレポーター : このチャンネルは無効です!
 info.ofalen.floater.mode=モード :
-info.ofalen.floater.modeChanged=オファレンフローター : モードを%sにチェンジしました!
+info.ofalen.floater.modeChanged=オファレンフローター : フローターのモードを%sに変更しました!
+info.ofalen.floater.modeChanged.handler=オファレンフローター : 現在のモードは%sです!
 info.ofalen.collector.item=アイテム :
 info.ofalen.collector.exp=経験値 :
 // フィルター

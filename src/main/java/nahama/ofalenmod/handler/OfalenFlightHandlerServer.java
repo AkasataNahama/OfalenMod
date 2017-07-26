@@ -4,6 +4,7 @@ import nahama.ofalenmod.core.OfalenModPacketCore;
 import nahama.ofalenmod.item.ItemFloater;
 import nahama.ofalenmod.network.MFloaterMode;
 import nahama.ofalenmod.util.OfalenNBTUtil;
+import nahama.ofalenmod.util.OfalenUtil;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.inventory.IInventory;
@@ -56,7 +57,9 @@ public class OfalenFlightHandlerServer {
 			state = new FloaterState();
 		if (state.mode == mode)
 			return;
+		// モード変更をClientHandlerとチャットに通知する。
 		OfalenModPacketCore.WRAPPER.sendTo(new MFloaterMode(mode), (EntityPlayerMP) player);
+		OfalenUtil.addChatTranslationMessage(player, "info.ofalen.floater.modeChanged.handler", mode);
 		if (mode < 1) {
 			// モードが1未満（無効）なら削除する。
 			playersFloating.remove(player.getCommandSenderName());

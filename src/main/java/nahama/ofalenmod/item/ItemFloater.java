@@ -99,9 +99,9 @@ public class ItemFloater extends ItemFuture {
 					if (mode > 5)
 						mode = 1;
 					nbt.setByte(OfalenNBTUtil.MODE, mode);
+					OfalenUtil.addChatTranslationMessage(player, "info.ofalen.floater.modeChanged", mode);
 					if (!world.isRemote)
 						OfalenFlightHandlerServer.checkPlayer(player);
-					OfalenUtil.addChatTranslationMessage(player, "info.ofalen.floater.modeChanged", mode);
 				}
 			} else {
 				// しゃがんでいたら、有効化・無効化する。
