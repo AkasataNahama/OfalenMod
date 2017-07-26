@@ -45,8 +45,10 @@ public class OfalenModEventHandler {
 		// キャンセル済みか、プレイヤー以外なら終了。サーバー側のみで呼ばれる。
 		if (event.isCanceled() || !(event.entityLiving instanceof EntityPlayer))
 			return;
+		EntityPlayer player = (EntityPlayer) event.entityLiving;
 		// プロテクターがダメージを軽減する。
-		event.ammount = OfalenProtectHandler.onProtect((EntityPlayer) event.entityLiving, event.ammount);
+		event.ammount = OfalenProtectHandler.onProtect(player, event.ammount);
+		OfalenFlightHandlerServer.onPlayerHurt(player);
 	}
 
 	/** EntityLivingBaseのアップデート時の処理。 */
