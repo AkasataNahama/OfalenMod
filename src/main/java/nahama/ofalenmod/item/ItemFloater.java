@@ -55,22 +55,20 @@ public class ItemFloater extends ItemFuture {
 		// 時間がたっていないなら終了。
 		if (interval > 0)
 			return;
+		nbt.setByte(OfalenNBTUtil.INTERVAL, OfalenModConfigCore.intervalFloaterDamage);
 		// 耐久値を減らす。
 		if (!player.capabilities.isCreativeMode)
 			this.consumeMaterial(itemStack, OfalenModConfigCore.amountFloaterDamage);
 		// サーバー側なら全クライアントにパーティクルを生成するようパケットを送信。
 		if (!world.isRemote)
 			OfalenModPacketCore.WRAPPER.sendToAll(new MSpawnParticle(entity.worldObj.provider.dimensionId, entity.posX, entity.posY - 1.6D, entity.posZ, (byte) 2));
-		if (this.getMaterialAmount(itemStack) >= OfalenModConfigCore.amountFloaterDamage) {
-			// 耐久値が残っているなら間隔をリセットして終了。
-			nbt.setByte(OfalenNBTUtil.INTERVAL, OfalenModConfigCore.intervalFloaterDamage);
-			return;
+		if (this.getMaterialAmount(itemStack) < OfalenModConfigCore.amountFloaterDamage) {
+			// 耐久値が尽きたなら、無効にし、ログに出力する。
+			nbt.setByte(OfalenNBTUtil.MODE, (byte) 0);
+			if (!world.isRemote && OfalenFlightHandlerServer.canFlightPlayer(player))
+				OfalenFlightHandlerServer.checkPlayer(player);
+			OfalenUtil.addChatTranslationMessage(player, "info.ofalen.future.lackingMaterial", new ItemStack(OfalenModItemCore.floaterOfalen).getDisplayName(), new ItemStack(OfalenModItemCore.partsOfalen, 1, 8).getDisplayName());
 		}
-		// 耐久値が尽きたなら、無効にし、ログに出力する。
-		nbt.setByte(OfalenNBTUtil.MODE, (byte) 0);
-		if (!world.isRemote && OfalenFlightHandlerServer.canFlightPlayer(player))
-			OfalenFlightHandlerServer.checkPlayer(player);
-		OfalenUtil.addChatTranslationMessage(player, "info.ofalen.future.lackingMaterial", new ItemStack(OfalenModItemCore.floaterOfalen).getDisplayName(), new ItemStack(OfalenModItemCore.partsOfalen, 1, 8).getDisplayName());
 	}
 
 	/** 右クリック時の処理。 */
