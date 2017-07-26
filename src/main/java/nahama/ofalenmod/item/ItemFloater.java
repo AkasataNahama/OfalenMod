@@ -76,10 +76,11 @@ public class ItemFloater extends ItemFuture {
 	@Override
 	public ItemStack onItemRightClick(ItemStack itemStack, World world, EntityPlayer player) {
 		super.onItemRightClick(itemStack, world, player);
+		NBTTagCompound nbt = itemStack.getTagCompound();
 		// 時間がたっていないなら終了。
-		if (itemStack.getTagCompound().getByte(OfalenNBTUtil.INTERVAL_RIGHT_CLICK) > 0)
+		if (nbt.getByte(OfalenNBTUtil.INTERVAL_RIGHT_CLICK) > 0)
 			return itemStack;
-		itemStack.getTagCompound().setByte(OfalenNBTUtil.INTERVAL_RIGHT_CLICK, (byte) 10);
+		nbt.setByte(OfalenNBTUtil.INTERVAL_RIGHT_CLICK, (byte) 10);
 		if (!OfalenKeyHandler.isSprintKeyPressed(player)) {
 			// ダッシュキーが押されていなければ、モード変更か無効化。
 			if (!player.isSneaking()) {
@@ -87,25 +88,25 @@ public class ItemFloater extends ItemFuture {
 				if (this.getMaterialAmount(itemStack) < OfalenModConfigCore.amountFloaterDamage) {
 					// 材料がないならチャットに出力し、無効化する。
 					OfalenUtil.addChatTranslationMessage(player, "info.ofalen.future.lackingMaterial", new ItemStack(OfalenModItemCore.floaterOfalen).getDisplayName(), new ItemStack(OfalenModItemCore.partsOfalen, 1, 8).getDisplayName());
-					if (itemStack.getTagCompound().getBoolean(OfalenNBTUtil.IS_VALID)) {
-						itemStack.getTagCompound().setBoolean(OfalenNBTUtil.IS_VALID, false);
+					if (nbt.getBoolean(OfalenNBTUtil.IS_VALID)) {
+						nbt.setBoolean(OfalenNBTUtil.IS_VALID, false);
 						if (!world.isRemote)
 							OfalenFlightHandlerServer.checkPlayer(player);
 					}
 				} else {
 					// 材料が足りていたらモードを変更する。
-					byte mode = itemStack.getTagCompound().getByte(OfalenNBTUtil.MODE);
+					byte mode = nbt.getByte(OfalenNBTUtil.MODE);
 					mode++;
 					if (mode > 5)
 						mode = 1;
-					itemStack.getTagCompound().setByte(OfalenNBTUtil.MODE, mode);
+					nbt.setByte(OfalenNBTUtil.MODE, mode);
 					if (!world.isRemote)
 						OfalenFlightHandlerServer.checkPlayer(player);
 					OfalenUtil.addChatTranslationMessage(player, "info.ofalen.floater.modeChanged", mode);
 				}
 			} else {
 				// しゃがんでいたら、有効化・無効化する。
-				itemStack.getTagCompound().setBoolean(OfalenNBTUtil.IS_VALID, !itemStack.getTagCompound().getBoolean(OfalenNBTUtil.IS_VALID));
+				nbt.setBoolean(OfalenNBTUtil.IS_VALID, !nbt.getBoolean(OfalenNBTUtil.IS_VALID));
 				if (!world.isRemote)
 					OfalenFlightHandlerServer.checkPlayer(player);
 			}
@@ -118,8 +119,8 @@ public class ItemFloater extends ItemFuture {
 				// しゃがんでいれば、取り出し。
 				this.dropMaterial(itemStack, new ItemStack(OfalenModItemCore.partsOfalen, 1, 8), player);
 				// フローターが有効だったら無効化。
-				if (itemStack.getTagCompound().getBoolean(OfalenNBTUtil.IS_VALID)) {
-					itemStack.getTagCompound().setBoolean(OfalenNBTUtil.IS_VALID, false);
+				if (nbt.getBoolean(OfalenNBTUtil.IS_VALID)) {
+					nbt.setBoolean(OfalenNBTUtil.IS_VALID, false);
 					if (!world.isRemote)
 						OfalenFlightHandlerServer.checkPlayer(player);
 				}
