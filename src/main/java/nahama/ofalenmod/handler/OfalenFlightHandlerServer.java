@@ -39,7 +39,7 @@ public class OfalenFlightHandlerServer {
 		IInventory inventory = player.inventory;
 		for (int i = 0; i < inventory.getSizeInventory(); i++) {
 			ItemStack itemStack = inventory.getStackInSlot(i);
-			if (itemStack == null || !(itemStack.getItem() instanceof ItemFloater) || !itemStack.hasTagCompound())
+			if (itemStack == null || !(itemStack.getItem() instanceof ItemFloater) || !itemStack.hasTagCompound() || !itemStack.getTagCompound().getBoolean(OfalenNBTUtil.IS_VALID))
 				continue;
 			newMode = itemStack.getTagCompound().getByte(OfalenNBTUtil.MODE);
 			// 有効なフローターを見つけたら調査を終了する。

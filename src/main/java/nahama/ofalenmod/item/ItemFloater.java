@@ -42,7 +42,7 @@ public class ItemFloater extends ItemFuture {
 		EntityPlayer player = (EntityPlayer) entity;
 		NBTTagCompound nbt = itemStack.getTagCompound();
 		// このフローターが有効で、ハンドラーが無効化されていたら、再調査させる。
-		if (!world.isRemote && nbt.getByte(OfalenNBTUtil.MODE) > 0 && !OfalenFlightHandlerServer.canFlightPlayer(player))
+		if (!world.isRemote && nbt.getBoolean(OfalenNBTUtil.IS_VALID) && !OfalenFlightHandlerServer.canFlightPlayer(player))
 			OfalenFlightHandlerServer.checkPlayer(player);
 		// ダストの消費間隔を管理する。
 		byte interval = itemStack.getTagCompound().getByte(OfalenNBTUtil.INTERVAL);
@@ -52,7 +52,7 @@ public class ItemFloater extends ItemFuture {
 			return;
 		}
 		// 無効か、時間がたっていないなら終了。
-		if (nbt.getByte(OfalenNBTUtil.MODE) < 1 || nbt.getByte(OfalenNBTUtil.INTERVAL) > 0)
+		if (!nbt.getBoolean(OfalenNBTUtil.IS_VALID) || nbt.getByte(OfalenNBTUtil.INTERVAL) > 0)
 			return;
 		// 耐久値を減らす。
 		if (!player.capabilities.isCreativeMode)
@@ -84,31 +84,30 @@ public class ItemFloater extends ItemFuture {
 			// ダッシュキーが押されていなければ、モード変更か無効化。
 			if (!player.isSneaking()) {
 				// しゃがんでいなかったらモードを切り替える。
-				byte mode = itemStack.getTagCompound().getByte(OfalenNBTUtil.MODE);
 				if (this.getMaterialAmount(itemStack) < OfalenModConfigCore.amountFloaterDamage) {
-					// 材料がないならチャットに出力し、無効化して終了。
+					// 材料がないならチャットに出力し、無効化する。
 					OfalenUtil.addChatTranslationMessage(player, "info.ofalen.future.lackingMaterial", new ItemStack(OfalenModItemCore.floaterOfalen).getDisplayName(), new ItemStack(OfalenModItemCore.partsOfalen, 1, 8).getDisplayName());
-					if (mode != 0) {
-						itemStack.getTagCompound().setByte(OfalenNBTUtil.MODE, (byte) 0);
+					if (itemStack.getTagCompound().getBoolean(OfalenNBTUtil.IS_VALID)) {
+						itemStack.getTagCompound().setBoolean(OfalenNBTUtil.IS_VALID, false);
 						if (!world.isRemote)
 							OfalenFlightHandlerServer.checkPlayer(player);
 					}
-					return itemStack;
-				}
-				mode++;
-				if (mode > 5)
-					mode = 1;
-				itemStack.getTagCompound().setByte(OfalenNBTUtil.MODE, mode);
-				if (!world.isRemote)
-					OfalenFlightHandlerServer.checkPlayer(player);
-				OfalenUtil.addChatTranslationMessage(player, "info.ofalen.floater.modeChanged", mode);
-			} else {
-				// しゃがんでいたら、無効化する。
-				if (itemStack.getTagCompound().getByte(OfalenNBTUtil.MODE) != 0) {
-					itemStack.getTagCompound().setByte(OfalenNBTUtil.MODE, (byte) 0);
+				} else {
+					// 材料が足りていたらモードを変更する。
+					byte mode = itemStack.getTagCompound().getByte(OfalenNBTUtil.MODE);
+					mode++;
+					if (mode > 5)
+						mode = 1;
+					itemStack.getTagCompound().setByte(OfalenNBTUtil.MODE, mode);
 					if (!world.isRemote)
 						OfalenFlightHandlerServer.checkPlayer(player);
+					OfalenUtil.addChatTranslationMessage(player, "info.ofalen.floater.modeChanged", mode);
 				}
+			} else {
+				// しゃがんでいたら、有効化・無効化する。
+				itemStack.getTagCompound().setBoolean(OfalenNBTUtil.IS_VALID, !itemStack.getTagCompound().getBoolean(OfalenNBTUtil.IS_VALID));
+				if (!world.isRemote)
+					OfalenFlightHandlerServer.checkPlayer(player);
 			}
 		} else {
 			// ダッシュキーが押されていれば、ダストの補充・取り出し。
@@ -119,8 +118,8 @@ public class ItemFloater extends ItemFuture {
 				// しゃがんでいれば、取り出し。
 				this.dropMaterial(itemStack, new ItemStack(OfalenModItemCore.partsOfalen, 1, 8), player);
 				// フローターが有効だったら無効化。
-				if (itemStack.getTagCompound().getByte(OfalenNBTUtil.MODE) != 0) {
-					itemStack.getTagCompound().setByte(OfalenNBTUtil.MODE, (byte) 0);
+				if (itemStack.getTagCompound().getBoolean(OfalenNBTUtil.IS_VALID)) {
+					itemStack.getTagCompound().setBoolean(OfalenNBTUtil.IS_VALID, false);
 					if (!world.isRemote)
 						OfalenFlightHandlerServer.checkPlayer(player);
 				}
@@ -142,7 +141,7 @@ public class ItemFloater extends ItemFuture {
 	@Override
 	public IIcon getIconIndex(ItemStack itemStack) {
 		// 有効なら通常のアイコン、無効なら無効時のアイコン。
-		if (itemStack.hasTagCompound() && itemStack.getTagCompound().getByte(OfalenNBTUtil.MODE) > 0)
+		if (itemStack.hasTagCompound() && itemStack.getTagCompound().getBoolean(OfalenNBTUtil.IS_VALID))
 			return super.getIconIndex(itemStack);
 		return invalid;
 	}
@@ -162,6 +161,7 @@ public class ItemFloater extends ItemFuture {
 		int amount = this.getMaterialAmount(itemStack);
 		stringList.add(OfalenUtil.getStackAmountString(amount, 64) + " (" + amount + " / 64)");
 		if (itemStack.hasTagCompound()) {
+			stringList.add(StatCollector.translateToLocal("info.ofalen.future.isValid." + itemStack.getTagCompound().getBoolean(OfalenNBTUtil.IS_VALID)));
 			stringList.add(StatCollector.translateToLocal("info.ofalen.floater.mode") + " " + itemStack.getTagCompound().getByte(OfalenNBTUtil.MODE));
 		}
 	}
