@@ -103,7 +103,8 @@ public class OfalenFlightHandlerClient {
 		player.movementInput.updatePlayerMoveState();
 		if (!jump && player.movementInput.jump) {
 			// ジャンプキーが押された瞬間なら上昇。
-			player.motionY = 0.8D;
+			player.jump();
+			player.motionY *= 2;
 		}
 	}
 
