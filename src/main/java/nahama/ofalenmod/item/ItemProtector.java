@@ -98,7 +98,7 @@ public class ItemProtector extends ItemFuture {
 		stringList.add(OfalenUtil.getStackAmountString(amount, 64) + " (" + amount + " / 64)");
 		if (itemStack.hasTagCompound()) {
 			String message = StatCollector.translateToLocal("info.ofalen.future.isValid." + itemStack.getTagCompound().getBoolean(OfalenNBTUtil.IS_VALID));
-			if (this.getMaterialAmount(itemStack) < 1)
+			if (this.getMaterialAmount(itemStack) < OfalenModConfigCore.amountProtectorDamage)
 				message += " " + StatCollector.translateToLocal("info.ofalen.future.lack");
 			stringList.add(message);
 		}
