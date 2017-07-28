@@ -59,7 +59,8 @@ public class ItemCollector extends ItemFuture implements IItemOfalenSettable {
 		if (isItemDisabled && isExpDisabled)
 			return;
 		// 材料が残っていなかったら終了。
-		if (this.getMaterialAmount(itemStack) < 1)
+		int amountMin = Math.min(OfalenModConfigCore.amountCollectorDamageItem, OfalenModConfigCore.amountCollectorDamageExp);
+		if (this.getMaterialAmount(itemStack) < amountMin)
 			return;
 		boolean canDamage = true;
 		if (entity instanceof EntityPlayer) {
@@ -82,6 +83,9 @@ public class ItemCollector extends ItemFuture implements IItemOfalenSettable {
 		ArrayList<Entity> listWaitingEntity = new ArrayList<Entity>();
 		// EntityItemとEntityXPOrbがあれば移動する。
 		for (Object o : world.loadedEntityList) {
+			// 材料が残っていなかったら終了。
+			if (this.getMaterialAmount(itemStack) < amountMin)
+				break;
 			if (!isItemDisabled && o instanceof EntityItem) {
 				// EntityItemにキャスト。
 				EntityItem entityItem = (EntityItem) o;
@@ -95,9 +99,6 @@ public class ItemCollector extends ItemFuture implements IItemOfalenSettable {
 					continue;
 				// 材料数を取得。
 				int amount = this.getMaterialAmount(itemStack);
-				// 材料がなくなったら終了。
-				if (amount < 1)
-					break;
 				int limit = Integer.MAX_VALUE;
 				if (OfalenModConfigCore.amountCollectorDamageItem > 0)
 					limit = amount / OfalenModConfigCore.amountCollectorDamageItem;
@@ -130,12 +131,12 @@ public class ItemCollector extends ItemFuture implements IItemOfalenSettable {
 					continue;
 				// 材料の残りを取得。
 				int amount = this.getMaterialAmount(itemStack);
-				// 材料が尽きていたら終了。
-				if (amount < 1)
-					break;
 				int limit = Integer.MAX_VALUE;
-				if (OfalenModConfigCore.amountCollectorDamageItem > 0)
-					limit = amount / OfalenModConfigCore.amountCollectorDamageItem;
+				if (OfalenModConfigCore.amountCollectorDamageExp > 0)
+					limit = amount / OfalenModConfigCore.amountCollectorDamageExp;
+				// 全く運べない（材料がない）なら次へ。
+				if (limit < 1)
+					continue;
 				// 経験値量が限界以下ならそのまま移動。
 				if (e.xpValue <= limit) {
 					e.setPosition(entity.posX, entity.posY, entity.posZ);
