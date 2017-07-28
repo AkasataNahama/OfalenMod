@@ -58,8 +58,8 @@ public class ItemCollector extends ItemFuture implements IItemOfalenSettable {
 		// アイテムも経験値も無効化されていたら終了。
 		if (isItemDisabled && isExpDisabled)
 			return;
-		// 耐久値が残っていなかったら終了。
-		if (OfalenUtil.getRemainingDamage(itemStack) < 1)
+		// 材料が残っていなかったら終了。
+		if (this.getMaterialAmount(itemStack) < 1)
 			return;
 		boolean canDamage = true;
 		if (entity instanceof EntityPlayer) {
@@ -114,7 +114,7 @@ public class ItemCollector extends ItemFuture implements IItemOfalenSettable {
 						this.consumeMaterial(itemStack, eItemStack.stackSize * OfalenModConfigCore.amountCollectorDamageItem);
 					continue;
 				}
-				// 耐久値か空きスロットが足りなかったら足りる分だけ移動して終了。
+				// 材料か空きスロットが足りなかったら足りる分だけ移動して終了。
 				ItemStack itemStack1 = eItemStack.copy();
 				itemStack1.stackSize = limit;
 				listWaitingEntity.add(OfalenUtil.getEntityItemNearEntity(itemStack1, entity));
@@ -128,9 +128,9 @@ public class ItemCollector extends ItemFuture implements IItemOfalenSettable {
 				// 範囲外なら次のEntityへ。
 				if (distance < 16 || distance > rangeExp * rangeExp)
 					continue;
-				// 耐久値の残りを取得。
-				int amount = OfalenUtil.getRemainingDamage(itemStack);
-				// 耐久値が尽きていたら終了。
+				// 材料の残りを取得。
+				int amount = this.getMaterialAmount(itemStack);
+				// 材料が尽きていたら終了。
 				if (amount < 1)
 					break;
 				int limit = Integer.MAX_VALUE;
@@ -143,7 +143,7 @@ public class ItemCollector extends ItemFuture implements IItemOfalenSettable {
 						this.consumeMaterial(itemStack, e.xpValue * OfalenModConfigCore.amountCollectorDamageExp);
 					continue;
 				}
-				// 耐久値が足りなかったら足りる分だけ移動して終了。
+				// 材料が足りなかったら足りる分だけ移動して終了。
 				listWaitingEntity.add(new EntityXPOrb(world, entity.posX, entity.posY, entity.posZ, limit));
 				e.xpValue -= limit;
 				if (canDamage)

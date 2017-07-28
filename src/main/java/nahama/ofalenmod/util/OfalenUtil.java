@@ -30,11 +30,6 @@ public class OfalenUtil {
 		//			}
 	}
 
-	/** 残りの耐久値を返す。 */
-	public static int getRemainingDamage(ItemStack itemStack) {
-		return itemStack.getMaxDamage() - itemStack.getItemDamage();
-	}
-
 	/** sampleStackがstacksにあといくつ入るか返す。 */
 	public static int getRemainingItemAmountInInventory(ItemStack[] stacks, ItemStack sampleStack, int limitStack) {
 		int ret = 0;
