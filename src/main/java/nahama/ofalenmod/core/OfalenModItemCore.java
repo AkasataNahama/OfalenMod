@@ -260,10 +260,10 @@ public class OfalenModItemCore {
 		ballFireproofG1 = new ItemOfalenBall(new PotionEffect(Potion.fireResistance.getId(), 2400, 0));
 		ballFireproofG1.setUnlocalizedName("ofalen.ball.fireproof.G1").setTextureName("ofalenmod:ball-1-4");
 		GameRegistry.registerItem(ballFireproofG1, "ballFireProofG1");
-		ballFireproofG2 = new ItemOfalenBall(new PotionEffect(Potion.fireResistance.getId(), 2400, 1));
+		ballFireproofG2 = new ItemOfalenBall(new PotionEffect(Potion.fireResistance.getId(), 4800, 0));
 		ballFireproofG2.setUnlocalizedName("ofalen.ball.fireproof.G2").setTextureName("ofalenmod:ball-2-4");
 		GameRegistry.registerItem(ballFireproofG2, "ballFireproofG2");
-		ballFireproofG3 = new ItemOfalenBall(new PotionEffect(Potion.fireResistance.getId(), 2400, 3));
+		ballFireproofG3 = new ItemOfalenBall(new PotionEffect(Potion.fireResistance.getId(), 9600, 0));
 		ballFireproofG3.setUnlocalizedName("ofalen.ball.fireproof.G3").setTextureName("ofalenmod:ball-3-4");
 		GameRegistry.registerItem(ballFireproofG3, "ballFireproofG3");
 		// 採掘玉
@@ -280,20 +280,20 @@ public class OfalenModItemCore {
 		ballNightVisionG1 = new ItemOfalenBall(new PotionEffect(Potion.nightVision.getId(), 2400, 0));
 		ballNightVisionG1.setUnlocalizedName("ofalen.ball.nightVision.G1").setTextureName("ofalenmod:ball-1-6");
 		GameRegistry.registerItem(ballNightVisionG1, "ballNightVisionG1");
-		ballNightVisionG2 = new ItemOfalenBall(new PotionEffect(Potion.nightVision.getId(), 2400, 1));
+		ballNightVisionG2 = new ItemOfalenBall(new PotionEffect(Potion.nightVision.getId(), 4800, 0));
 		ballNightVisionG2.setUnlocalizedName("ofalen.ball.nightVision.G2").setTextureName("ofalenmod:ball-2-6");
 		GameRegistry.registerItem(ballNightVisionG2, "ballNightVisionG2");
-		ballNightVisionG3 = new ItemOfalenBall(new PotionEffect(Potion.nightVision.getId(), 2400, 3));
+		ballNightVisionG3 = new ItemOfalenBall(new PotionEffect(Potion.nightVision.getId(), 9600, 0));
 		ballNightVisionG3.setUnlocalizedName("ofalen.ball.nightVision.G3").setTextureName("ofalenmod:ball-3-6");
 		GameRegistry.registerItem(ballNightVisionG3, "ballNightVisionG3");
 		// 透明玉
 		ballTransparentG1 = new ItemOfalenBall(new PotionEffect(Potion.invisibility.getId(), 2400, 0));
 		ballTransparentG1.setUnlocalizedName("ofalen.ball.transparent.G1").setTextureName("ofalenmod:ball-1-7");
 		GameRegistry.registerItem(ballTransparentG1, "ballTransparentG1");
-		ballTransparentG2 = new ItemOfalenBall(new PotionEffect(Potion.invisibility.getId(), 2400, 1));
+		ballTransparentG2 = new ItemOfalenBall(new PotionEffect(Potion.invisibility.getId(), 4800, 0));
 		ballTransparentG2.setUnlocalizedName("ofalen.ball.transparent.G2").setTextureName("ofalenmod:ball-2-7");
 		GameRegistry.registerItem(ballTransparentG2, "ballTransparentG2");
-		ballTransparentG3 = new ItemOfalenBall(new PotionEffect(Potion.invisibility.getId(), 2400, 3));
+		ballTransparentG3 = new ItemOfalenBall(new PotionEffect(Potion.invisibility.getId(), 9600, 0));
 		ballTransparentG3.setUnlocalizedName("ofalen.ball.transparent.G3").setTextureName("ofalenmod:ball-3-7");
 		GameRegistry.registerItem(ballTransparentG3, "ballTransparentG3");
 		// 満腹玉
