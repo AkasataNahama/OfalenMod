@@ -47,8 +47,8 @@ public class ItemCollector extends ItemFuture implements IItemOfalenSettable {
 	public void onUpdate(ItemStack itemStack, World world, Entity entity, int slot, boolean isHeld) {
 		super.onUpdate(itemStack, world, entity, slot, isHeld);
 		OfalenTimer.start("ItemCollector.onUpdate");
-		// クライアント側なら終了。
-		if (world.isRemote)
+		// クライアント側か、プレイヤーでないなら終了。
+		if (world.isRemote || !(entity instanceof EntityPlayer))
 			return;
 		// フィルタータグが無効だったら初期化する。
 		if (!FilterUtil.isAvailableFilterTag(itemStack))
@@ -62,11 +62,10 @@ public class ItemCollector extends ItemFuture implements IItemOfalenSettable {
 		int amountMin = Math.min(OfalenModConfigCore.amountCollectorDamageItem, OfalenModConfigCore.amountCollectorDamageExp);
 		if (this.getMaterialAmount(itemStack) < amountMin)
 			return;
+		EntityPlayer player = (EntityPlayer) entity;
 		boolean canDamage = true;
-		if (entity instanceof EntityPlayer) {
-			if (((EntityPlayer) entity).capabilities.isCreativeMode)
-				canDamage = false;
-		}
+		if (player.capabilities.isCreativeMode)
+			canDamage = false;
 		// 無効時間が残っていたら終了。
 		if (itemStack.getTagCompound().getByte(OfalenNBTUtil.INTERVAL) > 0)
 			return;
@@ -89,7 +88,7 @@ public class ItemCollector extends ItemFuture implements IItemOfalenSettable {
 			if (!isItemDisabled && o instanceof EntityItem) {
 				// EntityItemにキャスト。
 				EntityItem entityItem = (EntityItem) o;
-				double distance = entity.getDistanceSqToEntity(entityItem);
+				double distance = player.getDistanceSqToEntity(entityItem);
 				// 範囲外か、拾えない状態（ドロップされてすぐ）なら次のEntityへ。
 				if (distance < 2 || distance > rangeItem * rangeItem || entityItem.delayBeforeCanPickup > 0)
 					continue;
@@ -99,18 +98,17 @@ public class ItemCollector extends ItemFuture implements IItemOfalenSettable {
 					continue;
 				// 材料数を取得。
 				int amount = this.getMaterialAmount(itemStack);
-				int limit = Integer.MAX_VALUE;
+				// インベントリの空きスロット数を取得。 TODO 詳細設定
+				int limit = OfalenUtil.getRemainingItemAmountInInventory(player.inventory.mainInventory, eItemStack, player.inventory.getInventoryStackLimit());
+				// 材料の限界も考慮。
 				if (OfalenModConfigCore.amountCollectorDamageItem > 0)
-					limit = amount / OfalenModConfigCore.amountCollectorDamageItem;
-				// プレイヤーが持っているなら、インベントリの空きスロット数も考慮。 TODO 詳細設定
-				if (entity instanceof EntityPlayer)
-					limit = Math.min(limit, OfalenUtil.getRemainingItemAmountInInventory(((EntityPlayer) entity).inventory.mainInventory, eItemStack, ((EntityPlayer) entity).inventory.getInventoryStackLimit()));
+					limit = Math.min(limit, amount / OfalenModConfigCore.amountCollectorDamageItem);
 				// 一個も移動できないなら次のEntityへ。
 				if (limit < 1)
 					continue;
 				// スタック数が限界以下ならそのまま移動。
 				if (eItemStack.stackSize <= limit) {
-					entityItem.setPosition(entity.posX, entity.posY, entity.posZ);
+					entityItem.setPosition(player.posX, player.posY, player.posZ);
 					if (canDamage)
 						this.consumeMaterial(itemStack, eItemStack.stackSize * OfalenModConfigCore.amountCollectorDamageItem);
 					continue;
@@ -118,14 +116,14 @@ public class ItemCollector extends ItemFuture implements IItemOfalenSettable {
 				// 材料か空きスロットが足りなかったら足りる分だけ移動して終了。
 				ItemStack itemStack1 = eItemStack.copy();
 				itemStack1.stackSize = limit;
-				listWaitingEntity.add(OfalenUtil.getEntityItemNearEntity(itemStack1, entity));
+				listWaitingEntity.add(OfalenUtil.getEntityItemNearEntity(itemStack1, player));
 				eItemStack.stackSize -= limit;
 				if (canDamage)
 					this.consumeMaterial(itemStack, limit * OfalenModConfigCore.amountCollectorDamageItem);
 			} else if (!isExpDisabled && (o instanceof EntityXPOrb)) {
 				// EntityXPOrbにキャスト。
 				EntityXPOrb e = (EntityXPOrb) o;
-				double distance = entity.getDistanceSqToEntity(e);
+				double distance = player.getDistanceSqToEntity(e);
 				// 範囲外なら次のEntityへ。
 				if (distance < 16 || distance > rangeExp * rangeExp)
 					continue;
@@ -139,13 +137,13 @@ public class ItemCollector extends ItemFuture implements IItemOfalenSettable {
 					continue;
 				// 経験値量が限界以下ならそのまま移動。
 				if (e.xpValue <= limit) {
-					e.setPosition(entity.posX, entity.posY, entity.posZ);
+					e.setPosition(player.posX, player.posY, player.posZ);
 					if (canDamage)
 						this.consumeMaterial(itemStack, e.xpValue * OfalenModConfigCore.amountCollectorDamageExp);
 					continue;
 				}
 				// 材料が足りなかったら足りる分だけ移動して終了。
-				listWaitingEntity.add(new EntityXPOrb(world, entity.posX, entity.posY, entity.posZ, limit));
+				listWaitingEntity.add(new EntityXPOrb(world, player.posX, player.posY, player.posZ, limit));
 				e.xpValue -= limit;
 				if (canDamage)
 					this.consumeMaterial(itemStack, limit * OfalenModConfigCore.amountCollectorDamageExp);
