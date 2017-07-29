@@ -29,8 +29,7 @@ public class ItemFilter extends Item {
 
 	@Override
 	public void onUpdate(ItemStack itemStack, World world, Entity entity, int slot, boolean flag) {
-		if (!FilterUtil.isAvailableFilterTag(itemStack))
-			FilterUtil.initFilterTag(itemStack);
+		FilterUtil.onUpdateFilter(itemStack);
 	}
 
 	@Override

@@ -138,6 +138,11 @@ public class OfalenNBTUtil {
 			return !isWhite;
 		}
 
+		public static void onUpdateFilter(ItemStack itemStack) {
+			if (!isAvailableFilterTag(itemStack))
+				initFilterTag(itemStack);
+		}
+
 		public static void initFilterTag(ItemStack itemStack) {
 			NBTTagCompound nbt = new NBTTagCompound();
 			if (itemStack.hasTagCompound())

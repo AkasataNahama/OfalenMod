@@ -52,8 +52,7 @@ public class ItemOfalenPerfectTool extends ItemTool {
 		if (world.isRemote)
 			return;
 		// フィルタータグが無効だったら初期化する。
-		if (!FilterUtil.isAvailableFilterTag(itemStack))
-			FilterUtil.initFilterTag(itemStack);
+		FilterUtil.onUpdateFilter(itemStack);
 		byte interval = itemStack.getTagCompound().getByte(OfalenNBTUtil.INTERVAL);
 		if (interval > 0)
 			itemStack.getTagCompound().setByte(OfalenNBTUtil.INTERVAL, (byte) (interval - 1));

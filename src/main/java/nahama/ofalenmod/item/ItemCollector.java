@@ -51,8 +51,7 @@ public class ItemCollector extends ItemFuture implements IItemOfalenSettable {
 		if (world.isRemote || !(entity instanceof EntityPlayer))
 			return;
 		// フィルタータグが無効だったら初期化する。
-		if (!FilterUtil.isAvailableFilterTag(itemStack))
-			FilterUtil.initFilterTag(itemStack);
+		FilterUtil.onUpdateFilter(itemStack);
 		boolean isItemDisabled = itemStack.getTagCompound().getBoolean(OfalenNBTUtil.IS_ITEM_DISABLED);
 		boolean isExpDisabled = itemStack.getTagCompound().getBoolean(OfalenNBTUtil.IS_EXP_DISABLED);
 		// アイテムも経験値も無効化されていたら終了。

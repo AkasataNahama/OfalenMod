@@ -15,7 +15,6 @@ public class ItemBlockFilterable extends ItemBlock {
 	@Override
 	public void onUpdate(ItemStack itemStack, World world, Entity entity, int slot, boolean flag) {
 		super.onUpdate(itemStack, world, entity, slot, flag);
-		if(!OfalenNBTUtil.FilterUtil.isAvailableFilterTag(itemStack))
-			OfalenNBTUtil.FilterUtil.initFilterTag(itemStack);
+		OfalenNBTUtil.FilterUtil.onUpdateFilter(itemStack);
 	}
 }
