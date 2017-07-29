@@ -107,6 +107,7 @@ public class OfalenModItemCore {
 	public static Item ballExplosion;
 	public static Item ballHungry;
 	public static Item ballPerfect;
+	public static Item ballPerfect2;
 	// 道具G1
 	public static Item swordOfalenG1;
 	public static Item shovelOfalenG1;
@@ -314,6 +315,17 @@ public class OfalenModItemCore {
 		GameRegistry.registerItem(ballHungry, "ballHungry");
 		ballPerfect = new ItemPerfectBall(new PotionEffect[] { new PotionEffect(Potion.regeneration.id, 2400, 7), new PotionEffect(Potion.damageBoost.id, 2400, 7), new PotionEffect(Potion.resistance.id, 2400, 7) }).setUnlocalizedName("ofalen.ball.perfect").setTextureName("ofalenmod:ball-2-1");
 		GameRegistry.registerItem(ballPerfect, "ballPerfectOfalen");
+		PotionEffect[] effects = new PotionEffect[7];
+		effects[0] = new PotionEffect(Potion.regeneration.id, 2400, 7);
+		effects[1] = new PotionEffect(Potion.damageBoost.id, 2400, 7);
+		effects[2] = new PotionEffect(Potion.resistance.id, 2400, 7);
+		effects[3] = new PotionEffect(Potion.fireResistance.id, 19200, 0);
+		effects[4] = new PotionEffect(Potion.digSpeed.id, 2400, 7);
+		effects[5] = new PotionEffect(Potion.nightVision.id, 19200, 0);
+		effects[6] = new PotionEffect(Potion.invisibility.id, 19200, 0);
+		ballPerfect2 = new ItemPerfectBall(effects);
+		ballPerfect2.setUnlocalizedName("ofalen.ball.perfect.2").setTextureName("ofalenmod:ball-3-1");
+		GameRegistry.registerItem(ballPerfect2, "ballPerfectOfalen2");
 		// 道具G1
 		swordOfalenG1 = new ItemSword(ToolMaterial.EMERALD).setCreativeTab(tab).setUnlocalizedName("ofalen.sword.1").setTextureName("ofalenmod:tool-sword-1");
 		GameRegistry.registerItem(swordOfalenG1, "swordOfalen");

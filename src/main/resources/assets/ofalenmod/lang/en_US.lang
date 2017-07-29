@@ -326,6 +326,7 @@ item.ofalen.ball.explosion.2.name=Ofalen Explosion Ball Grade 3
 
 item.ofalen.ball.hungry.name=Ofalen Hungry Ball
 item.ofalen.ball.perfect.name=Ofalen Synthesized Ball
+item.ofalen.ball.perfect.2.name=Ofalen Perfect Ball
 
 // Tool
 item.ofalen.sword.1.name=Ofalen Sword Grade 1
