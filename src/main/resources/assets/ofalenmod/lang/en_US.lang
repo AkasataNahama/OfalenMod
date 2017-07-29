@@ -162,6 +162,7 @@ info.ofalen.filter.item.installed=Item Filter
 info.ofalen.filter.black=Black List
 info.ofalen.filter.white=White List
 // World Editor
+info.ofalen.editor.hasNBT=Containing setting data
 info.ofalen.setting.editor.range.isAbsolute=Coord Saving
 info.ofalen.setting.editor.range.isAbsolute.0=Relative
 info.ofalen.setting.editor.range.isAbsolute.1=Absolute

@@ -2,7 +2,7 @@ package nahama.ofalenmod.core;
 
 import cpw.mods.fml.common.registry.GameRegistry;
 import nahama.ofalenmod.block.*;
-import nahama.ofalenmod.item.block.ItemBlockFilterable;
+import nahama.ofalenmod.item.block.ItemBlockWorldEditorBase;
 import nahama.ofalenmod.item.block.ItemOfalenBlock;
 import nahama.ofalenmod.tileentity.*;
 import net.minecraft.block.Block;
@@ -85,7 +85,7 @@ public class OfalenModBlockCore {
 				return new TileEntityPlacer();
 			}
 		}.setBlockName("ofalen.placer").setBlockTextureName("ofalenmod:placer");
-		GameRegistry.registerBlock(placerOfalen, ItemBlockFilterable.class, "placer");
+		GameRegistry.registerBlock(placerOfalen, ItemBlockWorldEditorBase.class, "placer");
 		GameRegistry.registerTileEntity(TileEntityPlacer.class, "OfalenMod.Placer");
 		// 移動機
 		moverOfalen = new BlockWorldEditorBase() {
@@ -94,7 +94,7 @@ public class OfalenModBlockCore {
 				return new TileEntityMover();
 			}
 		}.setBlockName("ofalen.mover").setBlockTextureName("ofalenmod:mover");
-		GameRegistry.registerBlock(moverOfalen, ItemBlockFilterable.class, "mover");
+		GameRegistry.registerBlock(moverOfalen, ItemBlockWorldEditorBase.class, "mover");
 		GameRegistry.registerTileEntity(TileEntityMover.class, "OfalenMod.Mover");
 		// 移動機
 		breakerOfalen = new BlockWorldEditorBase() {
@@ -103,7 +103,7 @@ public class OfalenModBlockCore {
 				return new TileEntityBreaker();
 			}
 		}.setBlockName("ofalen.breaker").setBlockTextureName("ofalenmod:breaker");
-		GameRegistry.registerBlock(breakerOfalen, ItemBlockFilterable.class, "breaker");
+		GameRegistry.registerBlock(breakerOfalen, ItemBlockWorldEditorBase.class, "breaker");
 		GameRegistry.registerTileEntity(TileEntityBreaker.class, "OfalenMod.Breaker");
 		// 収集機
 		blockCollectorOfalen = new BlockWorldEditorBase() {
@@ -112,7 +112,7 @@ public class OfalenModBlockCore {
 				return new TileEntityCollector();
 			}
 		}.setBlockName("ofalen.collector").setBlockTextureName("ofalenmod:collector");
-		GameRegistry.registerBlock(blockCollectorOfalen, ItemBlockFilterable.class, "collector_block");
+		GameRegistry.registerBlock(blockCollectorOfalen, ItemBlockWorldEditorBase.class, "collector_block");
 		GameRegistry.registerTileEntity(TileEntityCollector.class, "OfalenMod.Collector");
 		// 測量器
 		surveyorOfalen = new BlockSurveyor().setBlockName("ofalen.surveyor").setBlockTextureName("ofalenmod:surveyor");

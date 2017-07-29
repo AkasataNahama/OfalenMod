@@ -162,6 +162,7 @@ info.ofalen.filter.item.installed=アイテムフィルター
 info.ofalen.filter.black=ブラックリスト
 info.ofalen.filter.white=ホワイトリスト
 // World Editor
+info.ofalen.editor.hasNBT=設定のデータが保存されています
 info.ofalen.setting.editor.range.isAbsolute=座標記録
 info.ofalen.setting.editor.range.isAbsolute.0=相対値
 info.ofalen.setting.editor.range.isAbsolute.1=絶対値
