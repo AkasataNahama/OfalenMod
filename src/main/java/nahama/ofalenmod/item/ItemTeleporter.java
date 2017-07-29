@@ -46,8 +46,8 @@ public class ItemTeleporter extends ItemFuture {
 	@Override
 	public ItemStack onItemRightClick(ItemStack itemStack, World world, EntityPlayer player) {
 		super.onItemRightClick(itemStack, world, player);
-		if (!OfalenKeyHandler.isSprintKeyPressed(player)) {
-			// ダッシュキーが押されていないとき。
+		if (!OfalenKeyHandler.isSettingKeyPressed(player)) {
+			// 設定キーが押されていないとき。
 			if (!player.isSneaking()) {
 				// スニークしていなかったらGUIを開く。
 				player.openGui(OfalenModCore.instance, 3, world, (int) player.posX, (int) player.posY, (int) player.posZ);
@@ -103,7 +103,7 @@ public class ItemTeleporter extends ItemFuture {
 			if (itemStack.getTagCompound().getByte(OfalenNBTUtil.INTERVAL_RIGHT_CLICK) > 0)
 				return itemStack;
 			itemStack.getTagCompound().setByte(OfalenNBTUtil.INTERVAL_RIGHT_CLICK, (byte) 10);
-			// ダッシュキーが押されていれば、パールの補充・取り出し。
+			// 設定キーが押されていれば、パールの補充・取り出し。
 			if (!player.isSneaking()) {
 				// しゃがんでいなければ、補充。
 				this.chargeMaterial(itemStack, new ItemStack(OfalenModItemCore.partsOfalen, 1, 7), player);

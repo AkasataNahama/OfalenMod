@@ -36,8 +36,8 @@ public class ItemProtector extends ItemFuture {
 		if (itemStack.getTagCompound().getByte(OfalenNBTUtil.INTERVAL_RIGHT_CLICK) > 0)
 			return itemStack;
 		itemStack.getTagCompound().setByte(OfalenNBTUtil.INTERVAL_RIGHT_CLICK, (byte) 10);
-		if (!OfalenKeyHandler.isSprintKeyPressed(player)) {
-			// ダッシュキーが押されていなければ、プロテクターの有効化か無効化。
+		if (!OfalenKeyHandler.isSettingKeyPressed(player)) {
+			// 設定キーが押されていなければ、プロテクターの有効化か無効化。
 			if (this.getMaterialAmount(itemStack) < OfalenModConfigCore.amountProtectorDamage) {
 				// 材料がないならチャットに出力する。
 				OfalenUtil.addChatTranslationMessage(player, "info.ofalen.future.lackingMaterial", new ItemStack(OfalenModItemCore.protectorOfalen).getDisplayName(), new ItemStack(OfalenModItemCore.partsOfalen, 1, 6).getDisplayName());
@@ -46,7 +46,7 @@ public class ItemProtector extends ItemFuture {
 				itemStack.getTagCompound().setBoolean(OfalenNBTUtil.IS_VALID, !itemStack.getTagCompound().getBoolean(OfalenNBTUtil.IS_VALID));
 			}
 		} else {
-			// ダッシュキーが押されていれば、インゴットの補充・取り出し。
+			// 設定キーが押されていれば、インゴットの補充・取り出し。
 			if (!player.isSneaking()) {
 				// しゃがんでいなければ、補充。
 				this.chargeMaterial(itemStack, new ItemStack(OfalenModItemCore.partsOfalen, 1, 6), player);

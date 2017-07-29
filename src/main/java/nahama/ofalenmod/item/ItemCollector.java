@@ -163,7 +163,7 @@ public class ItemCollector extends ItemFuture implements IItemOfalenSettable {
 		if (itemStack.getTagCompound().getByte(OfalenNBTUtil.INTERVAL_RIGHT_CLICK) > 0)
 			return itemStack;
 		itemStack.getTagCompound().setByte(OfalenNBTUtil.INTERVAL_RIGHT_CLICK, (byte) 10);
-		if (!OfalenKeyHandler.isSprintKeyPressed(player)) {
+		if (!OfalenKeyHandler.isSettingKeyPressed(player)) {
 			NBTTagCompound nbt = itemStack.getTagCompound();
 			if (!player.isSneaking()) {
 				// 右クリックでアイテムのOn/Off。
@@ -173,7 +173,7 @@ public class ItemCollector extends ItemFuture implements IItemOfalenSettable {
 				nbt.setBoolean(OfalenNBTUtil.IS_EXP_DISABLED, !nbt.getBoolean(OfalenNBTUtil.IS_EXP_DISABLED));
 			}
 		} else {
-			// ダッシュキーが押されていれば、ランプの補充・取り出し。
+			// 設定キーが押されていれば、ランプの補充・取り出し。
 			if (!player.isSneaking()) {
 				// しゃがんでいなければ、補充。
 				this.chargeMaterial(itemStack, new ItemStack(OfalenModItemCore.partsOfalen, 1, 9), player);

@@ -79,8 +79,8 @@ public class ItemFloater extends ItemFuture {
 		if (nbt.getByte(OfalenNBTUtil.INTERVAL_RIGHT_CLICK) > 0)
 			return itemStack;
 		nbt.setByte(OfalenNBTUtil.INTERVAL_RIGHT_CLICK, (byte) 10);
-		if (!OfalenKeyHandler.isSprintKeyPressed(player)) {
-			// ダッシュキーが押されていなければ、モード変更か無効化。
+		if (!OfalenKeyHandler.isSettingKeyPressed(player)) {
+			// 設定キーが押されていなければ、モード変更か無効化。
 			if (!player.isSneaking()) {
 				// しゃがんでいなかったらモードを切り替える。
 				byte mode = nbt.getByte(OfalenNBTUtil.MODE);
@@ -98,7 +98,7 @@ public class ItemFloater extends ItemFuture {
 					OfalenFlightHandlerServer.checkPlayer(player);
 			}
 		} else {
-			// ダッシュキーが押されていれば、ダストの補充・取り出し。
+			// 設定キーが押されていれば、ダストの補充・取り出し。
 			if (!player.isSneaking()) {
 				// しゃがんでいなければ、補充。
 				this.chargeMaterial(itemStack, new ItemStack(OfalenModItemCore.partsOfalen, 1, 8), player);
