@@ -312,7 +312,7 @@ public class OfalenModItemCore {
 		GameRegistry.registerItem(ballExplosion, "ballExplosion");
 		ballHungry = new ItemOfalenBall(new PotionEffect(Potion.hunger.id, 40, 1599)).setUnlocalizedName("ofalen.ball.hungry").setTextureName("ofalenmod:hungry_ball");
 		GameRegistry.registerItem(ballHungry, "ballHungry");
-		ballPerfect = new ItemPerfectBall(new PotionEffect[] { new PotionEffect(Potion.regeneration.id, 2400, 7), new PotionEffect(Potion.damageBoost.id, 2400, 7), new PotionEffect(Potion.resistance.id, 2400, 7) }).setUnlocalizedName("ofalen.ball.perfect").setTextureName("ofalenmod:ball-3-1");
+		ballPerfect = new ItemPerfectBall(new PotionEffect[] { new PotionEffect(Potion.regeneration.id, 2400, 7), new PotionEffect(Potion.damageBoost.id, 2400, 7), new PotionEffect(Potion.resistance.id, 2400, 7) }).setUnlocalizedName("ofalen.ball.perfect").setTextureName("ofalenmod:ball-2-1");
 		GameRegistry.registerItem(ballPerfect, "ballPerfectOfalen");
 		// 道具G1
 		swordOfalenG1 = new ItemSword(ToolMaterial.EMERALD).setCreativeTab(tab).setUnlocalizedName("ofalen.sword.1").setTextureName("ofalenmod:tool-sword-1");
