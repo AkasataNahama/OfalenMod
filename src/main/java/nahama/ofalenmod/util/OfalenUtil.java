@@ -10,6 +10,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
+import org.lwjgl.input.Keyboard;
+import org.lwjgl.input.Mouse;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -22,12 +24,12 @@ public class OfalenUtil {
 	/** キーバインディングに登録されたキーが押されているか。 */
 	public static boolean isKeyPressed(KeyBinding key) {
 		// クライアント側なら、取得して返す。
-		return key.getIsKeyPressed();
-		//			if (key > 0) {
-		//				return Keyboard.isKeyDown(key);
-		//			} else {
-		//				return Mouse.isButtonDown(100 + key);
-		//			}
+		int code = key.getKeyCode();
+		if (code > 0) {
+			return Keyboard.isKeyDown(code);
+		} else {
+			return Mouse.isButtonDown(100 + code);
+		}
 	}
 
 	/** sampleStackがstacksにあといくつ入るか返す。 */
