@@ -41,6 +41,8 @@ public abstract class TileEntityWorldEditorBase extends TileEntity implements IS
 	private boolean isSurveying;
 	/** 次にパーティクルを発生させるまでの残り時間。 */
 	private byte intervalParticle;
+	/** 燃料の残り燃焼時間。 */
+	private byte remainingEnergy;
 
 	/** 更新時の処理。 */
 	@Override
@@ -69,7 +71,7 @@ public abstract class TileEntityWorldEditorBase extends TileEntity implements IS
 		}
 		interval = intervalProcessing;
 		// 作業が不可能な状態か、燃料が足りなかったら作業を停止。
-		if (!this.canWork() || this.getAmountFuel() < 1) {
+		if (!this.canWork() || !this.hasEnoughEnergy()) {
 			this.setIsWorking(false);
 			return;
 		}
@@ -90,7 +92,7 @@ public abstract class TileEntityWorldEditorBase extends TileEntity implements IS
 		}
 		// 作業を実行し、成功したら燃料を消費する。
 		if (this.work(coordWorking.x, coordWorking.y, coordWorking.z))
-			this.addAmountFuel(-1);
+			this.consumeEnergy(1);
 	}
 
 	private void initRangeAndCoord() {
@@ -156,7 +158,7 @@ public abstract class TileEntityWorldEditorBase extends TileEntity implements IS
 	}
 
 	/** 燃料の数を返す。 */
-	public short getAmountFuel() {
+	private short getAmountFuel() {
 		int amount = 0;
 		for (ItemStack itemStack : fuels) {
 			if (itemStack != null && isItemFuel(itemStack))
@@ -166,7 +168,7 @@ public abstract class TileEntityWorldEditorBase extends TileEntity implements IS
 	}
 
 	/** 燃料の数を設定する。 */
-	public void setAmountFuel(int amount) {
+	private void setAmountFuel(int amount) {
 		fuels = new ItemStack[this.getSizeFuelInventory()];
 		if (amount < 1)
 			return;
@@ -177,6 +179,28 @@ public abstract class TileEntityWorldEditorBase extends TileEntity implements IS
 			}
 			fuels[i] = this.getFuelStack(64);
 			amount -= 64;
+		}
+	}
+
+	/** 十分なエネルギーがあるか。 */
+	private boolean hasEnoughEnergy() {
+		return remainingEnergy > 0 || this.getAmountFuel() > 0;
+	}
+
+	protected int getAmountEnergy() {
+		// TODO Config設定
+		return this.getAmountFuel() * 20 + remainingEnergy;
+	}
+
+	/** エネルギーを消費する。 */
+	protected void consumeEnergy(int amount) {
+		if (remainingEnergy >= amount) {
+			remainingEnergy -= amount;
+		} else {
+			amount -= remainingEnergy;
+			this.addAmountFuel(-(amount / 20 + 1));
+			// TODO Config設定
+			remainingEnergy = (byte) (20 - amount % 20);
 		}
 	}
 
@@ -390,6 +414,7 @@ public abstract class TileEntityWorldEditorBase extends TileEntity implements IS
 		nbt.setBoolean(OfalenNBTUtil.CAN_RESTART, canRestart);
 		nbt.setBoolean(OfalenNBTUtil.IS_WORKING, isWorking);
 		nbt.setTag(FilterUtil.ITEM_FILTER, tagItemFilter);
+		nbt.setByte(OfalenNBTUtil.REMAINING_ENERGY, remainingEnergy);
 	}
 
 	/** TileEntityの情報をNBTから読み込む。 */
@@ -408,6 +433,7 @@ public abstract class TileEntityWorldEditorBase extends TileEntity implements IS
 		canRestart = nbt.getBoolean(OfalenNBTUtil.CAN_RESTART);
 		isWorking = nbt.getBoolean(OfalenNBTUtil.IS_WORKING);
 		tagItemFilter = nbt.getCompoundTag(FilterUtil.ITEM_FILTER);
+		remainingEnergy = nbt.getByte(OfalenNBTUtil.REMAINING_ENERGY);
 	}
 
 	@Override

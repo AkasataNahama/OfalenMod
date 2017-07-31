@@ -43,7 +43,8 @@ public class TileEntityCollector extends TileEntityWorldEditorBase {
 	@Override
 	protected boolean work(int x, int y, int z) {
 		// searchNextBlockを無効化してあるため、intervalがなくなるたびに呼ばれる。
-		int amountFuel = this.getAmountFuel();
+		int amountEnergy = this.getAmountEnergy();
+		int lastAmountEnergy = amountEnergy;
 		// EntityItemとEntityXPOrbがあれば収集する。
 		for (Object o : worldObj.loadedEntityList) {
 			if (!isItemDisabled && o instanceof EntityItem) {
@@ -56,7 +57,7 @@ public class TileEntityCollector extends TileEntityWorldEditorBase {
 				// アイテムフィルターで許可されていなかったら次のEntityへ。
 				if (!OfalenNBTUtil.FilterUtil.canItemFilterThrough(tagItemFilter, eItemStack))
 					continue;
-				int remaining = amountFuel;
+				int remaining = amountEnergy;
 				// 燃料が尽きていたら終了。
 				if (remaining < 1)
 					break;
@@ -67,7 +68,7 @@ public class TileEntityCollector extends TileEntityWorldEditorBase {
 					continue;
 				// スタック数が限界以下ならそのまま収集。
 				if (remaining >= eItemStack.stackSize) {
-					amountFuel -= eItemStack.stackSize;
+					amountEnergy -= eItemStack.stackSize;
 					if (!canDeleteItem)
 						this.addInInventory(eItemStack.copy());
 					entityItem.setDead();
@@ -79,13 +80,13 @@ public class TileEntityCollector extends TileEntityWorldEditorBase {
 				if (!canDeleteItem)
 					this.addInInventory(itemStack1);
 				eItemStack.stackSize -= remaining;
-				amountFuel -= remaining;
+				amountEnergy -= remaining;
 			} else if (!isExpDisabled && (o instanceof EntityXPOrb)) {
 				// EntityXPOrbにキャスト。
 				EntityXPOrb e = (EntityXPOrb) o;
 				if (!range.isInRange(e))
 					continue;
-				int remaining = amountFuel;
+				int remaining = amountEnergy;
 				// 燃料が尽きていたら終了。
 				if (remaining < 1)
 					break;
@@ -96,7 +97,7 @@ public class TileEntityCollector extends TileEntityWorldEditorBase {
 					continue;
 				// 燃料が足りていたらそのまま収集。
 				if (remaining >= e.xpValue) {
-					amountFuel -= e.xpValue;
+					amountEnergy -= e.xpValue;
 					if (!canDeleteExp)
 						this.addExpCrystal(e.xpValue);
 					e.setDead();
@@ -106,10 +107,10 @@ public class TileEntityCollector extends TileEntityWorldEditorBase {
 				if (!canDeleteExp)
 					this.addExpCrystal(remaining);
 				e.xpValue -= remaining;
-				amountFuel -= remaining;
+				amountEnergy -= remaining;
 			}
 		}
-		this.setAmountFuel(amountFuel);
+		this.consumeEnergy(lastAmountEnergy - amountEnergy);
 		return false;
 	}
 

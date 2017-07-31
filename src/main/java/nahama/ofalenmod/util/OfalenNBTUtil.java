@@ -61,6 +61,7 @@ public class OfalenNBTUtil {
 	public static final String CAN_RESTART = "CanRestart";
 	public static final String IS_WORKING = "IsWorking";
 	public static final String TILE_ENTITY_WORLD_EDITOR_BASE = "TileEntityWorldEditorBase";
+	public static final String REMAINING_ENERGY = "RemainingEnergy";
 	// 移動機
 	public static final String CAN_MOVE_TILE_ENTITY = "CanMoveTileEntity";
 	public static final String MOVING_BLOCKS = "MovingBlocks";
