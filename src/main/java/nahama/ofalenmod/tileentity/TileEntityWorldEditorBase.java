@@ -17,30 +17,30 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.util.ForgeDirection;
 
 public abstract class TileEntityWorldEditorBase extends TileEntity implements ISidedInventory, FilterUtil.IFilterable {
-	/** 作業範囲の保存が相対的か。 */
-	protected boolean isAbsoluteRangeSaving;
 	/** 作業範囲。 */
 	protected BlockRange range;
-	/** 作業する座標。 */
-	protected BlockPos coordWorking;
-	/** 燃料のインベントリ。 */
-	protected ItemStack[] fuels = new ItemStack[this.getSizeFuelInventory()];
 	/** 次に作業するまでの残り時間。 */
 	protected short interval;
-	/** 次の作業までの間隔。 */
-	protected short intervalProcessing = 10;
-	/** 範囲内の作業が終わった時の再起動までの間隔。 */
-	protected short intervalRestarting = 40;
-	/** 再起動が可能かどうか。 */
-	protected boolean canRestart;
-	/** 作業しているかどうか。 */
-	protected boolean isWorking;
 	/** アイテムフィルターのタグ。 */
 	protected NBTTagCompound tagItemFilter = FilterUtil.getInitializedFilterTag();
+	/** 作業範囲の保存が相対的か。 */
+	private boolean isAbsoluteRangeSaving;
+	/** 作業する座標。 */
+	private BlockPos coordWorking;
+	/** 燃料のインベントリ。 */
+	private ItemStack[] fuels = new ItemStack[this.getSizeFuelInventory()];
+	/** 次の作業までの間隔。 */
+	private short intervalProcessing = 10;
+	/** 範囲内の作業が終わった時の再起動までの間隔。 */
+	private short intervalRestarting = 40;
+	/** 再起動が可能かどうか。 */
+	private boolean canRestart;
+	/** 作業しているかどうか。 */
+	private boolean isWorking;
 	/** 測量器が隣接しているかどうか。 */
-	protected boolean isSurveying;
+	private boolean isSurveying;
 	/** 次にパーティクルを発生させるまでの残り時間。 */
-	protected byte intervalParticle;
+	private byte intervalParticle;
 
 	/** 更新時の処理。 */
 	@Override
@@ -93,12 +93,12 @@ public abstract class TileEntityWorldEditorBase extends TileEntity implements IS
 			this.addAmountFuel(-1);
 	}
 
-	protected void initRangeAndCoord() {
+	private void initRangeAndCoord() {
 		range = new BlockRange(xCoord, yCoord, zCoord, xCoord, yCoord, zCoord);
 		this.resetCoordWorking();
 	}
 
-	protected void resetCoordWorking() {
+	private void resetCoordWorking() {
 		coordWorking = range.posMin.copy();
 		coordWorking.x--;
 	}
@@ -132,7 +132,7 @@ public abstract class TileEntityWorldEditorBase extends TileEntity implements IS
 	}
 
 	/** このTileEntityがある座標かどうか。 */
-	protected boolean isCoordThis(int x, int y, int z) {
+	private boolean isCoordThis(int x, int y, int z) {
 		return x == xCoord && y == yCoord && z == zCoord;
 	}
 
@@ -181,7 +181,7 @@ public abstract class TileEntityWorldEditorBase extends TileEntity implements IS
 	}
 
 	/** 燃料を追加する。（負の値も可。） */
-	public int addAmountFuel(int amount) {
+	private void addAmountFuel(int amount) {
 		for (int i = 0; i < fuels.length; i++) {
 			ItemStack fuel = fuels[i];
 			if (fuel == null)
@@ -196,21 +196,20 @@ public abstract class TileEntityWorldEditorBase extends TileEntity implements IS
 			}
 			if (tmpAmount < 64) {
 				fuels[i] = this.getFuelStack(tmpAmount);
-				return 0;
+				return;
 			}
 			fuels[i] = this.getFuelStack(64);
 			amount = tmpAmount - 64;
 		}
-		return amount;
 	}
 
 	/** 指定されたスタック数で燃料のItemStackを生成し返す。 */
-	public ItemStack getFuelStack(int amount) {
+	private ItemStack getFuelStack(int amount) {
 		return new ItemStack(OfalenModItemCore.partsOfalen, amount, 4);
 	}
 
 	/** 燃料インベントリのスロット数を返す。 */
-	public int getSizeFuelInventory() {
+	private int getSizeFuelInventory() {
 		return 27;
 	}
 
@@ -367,7 +366,7 @@ public abstract class TileEntityWorldEditorBase extends TileEntity implements IS
 		}
 	}
 
-	protected void survey() {
+	private void survey() {
 		OfalenModPacketCore.WRAPPER.sendToAll(new MSpawnParticleWithRange(this.getColor(), (byte) worldObj.provider.dimensionId, range.copy()));
 	}
 

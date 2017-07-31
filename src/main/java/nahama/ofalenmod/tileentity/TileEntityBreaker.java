@@ -8,7 +8,7 @@ import net.minecraft.nbt.NBTTagCompound;
 
 public class TileEntityBreaker extends TileEntityWorldEditorBase {
 	/** ブロックを削除するかどうか。 */
-	public boolean canDeleteBrokenBlock;
+	private boolean canDeleteBrokenBlock;
 
 	@Override
 	protected boolean canWork() {

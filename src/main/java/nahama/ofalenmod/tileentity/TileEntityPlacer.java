@@ -49,7 +49,7 @@ public class TileEntityPlacer extends TileEntityWorldEditorBase implements IInve
 	}
 
 	/** itemStacks内でブロックとして設置できるアイテムの最初の番号を返す。 */
-	protected int getFirstValidIndex() {
+	private int getFirstValidIndex() {
 		for (int i = 0; i < itemStacks.length; i++) {
 			if (itemStacks[i] != null && Block.getBlockFromItem(itemStacks[i].getItem()) != Blocks.air && OfalenNBTUtil.FilterUtil.canItemFilterThrough(tagItemFilter, itemStacks[i]))
 				return i;

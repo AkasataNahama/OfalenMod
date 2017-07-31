@@ -14,8 +14,8 @@ import java.util.Map;
 
 public class TileEntityMover extends TileEntityWorldEditorBase {
 	/** TileEntityを動かせるかどうか。 */
-	public boolean canMoveTileEntity;
-	protected HashMap<BlockPos, BlockData> listMovingBlock = new HashMap<BlockPos, BlockData>();
+	private boolean canMoveTileEntity;
+	private HashMap<BlockPos, BlockData> listMovingBlock = new HashMap<BlockPos, BlockData>();
 
 	@Override
 	protected boolean canWork() {
@@ -122,6 +122,17 @@ public class TileEntityMover extends TileEntityWorldEditorBase {
 			tileEntity.writeToNBT(tagTileEntity);
 		}
 
+		public static BlockData loadFromNBT(NBTTagCompound nbt) {
+			BlockData ret = new BlockData(Block.getBlockById(nbt.getShort(OfalenNBTUtil.TILE_ID)), nbt.getByte(OfalenNBTUtil.META));
+			if (nbt.hasKey(OfalenNBTUtil.TILE_ENTITY, 10))
+				ret.tagTileEntity = nbt.getCompoundTag(OfalenNBTUtil.TILE_ENTITY);
+			return ret;
+		}
+
+		public static BlockData loadFromCoord(World world, int x, int y, int z, boolean canLoadTileEntity) {
+			return new BlockData(world.getBlock(x, y, z), world.getBlockMetadata(x, y, z), canLoadTileEntity ? world.getTileEntity(x, y, z) : null);
+		}
+
 		public void putInWorld(World world, int x, int y, int z) {
 			world.setBlock(x, y, z, block, meta, 3);
 			if (tagTileEntity == null)
@@ -139,17 +150,6 @@ public class TileEntityMover extends TileEntityWorldEditorBase {
 			if (tagTileEntity != null)
 				nbt.setTag(OfalenNBTUtil.TILE_ENTITY, tagTileEntity);
 			return nbt;
-		}
-
-		public static BlockData loadFromNBT(NBTTagCompound nbt) {
-			BlockData ret = new BlockData(Block.getBlockById(nbt.getShort(OfalenNBTUtil.TILE_ID)), nbt.getByte(OfalenNBTUtil.META));
-			if (nbt.hasKey(OfalenNBTUtil.TILE_ENTITY, 10))
-				ret.tagTileEntity = nbt.getCompoundTag(OfalenNBTUtil.TILE_ENTITY);
-			return ret;
-		}
-
-		public static BlockData loadFromCoord(World world, int x, int y, int z, boolean canLoadTileEntity) {
-			return new BlockData(world.getBlock(x, y, z), world.getBlockMetadata(x, y, z), canLoadTileEntity ? world.getTileEntity(x, y, z) : null);
 		}
 	}
 }

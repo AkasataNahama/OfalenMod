@@ -1,23 +1,27 @@
 package nahama.ofalenmod.tileentity;
 
 import nahama.ofalenmod.core.OfalenModItemCore;
-import nahama.ofalenmod.util.*;
+import nahama.ofalenmod.util.BlockPos;
+import nahama.ofalenmod.util.BlockRange;
+import nahama.ofalenmod.util.OfalenLog;
+import nahama.ofalenmod.util.OfalenNBTUtil;
+import nahama.ofalenmod.util.OfalenUtil;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.item.EntityXPOrb;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 
 public class TileEntityCollector extends TileEntityWorldEditorBase {
-	/** アイテムの収集が無効かどうか。 */
-	public boolean isItemDisabled;
-	/** 経験値の収集が無効かどうか。 */
-	public boolean isExpDisabled;
-	/** アイテムを消去するかどうか。 */
-	public boolean canDeleteItem;
-	/** 経験値を消去するかどうか。 */
-	public boolean canDeleteExp;
 	/** 収集したアイテム。 */
 	protected ItemStack[] itemStacks = new ItemStack[this.getSizeOwnInventory()];
+	/** アイテムの収集が無効かどうか。 */
+	private boolean isItemDisabled;
+	/** 経験値の収集が無効かどうか。 */
+	private boolean isExpDisabled;
+	/** アイテムを消去するかどうか。 */
+	private boolean canDeleteItem;
+	/** 経験値を消去するかどうか。 */
+	private boolean canDeleteExp;
 
 	@Override
 	protected BlockPos searchNextBlock(BlockRange range, BlockPos start) {
@@ -109,20 +113,22 @@ public class TileEntityCollector extends TileEntityWorldEditorBase {
 		return false;
 	}
 
-	/** 経験値を結晶化し、インベントリに入れる。余りの数を返す。 */
-	protected int addExpCrystal(int xpValue) {
+	/** 経験値を結晶化し、インベントリに入れる。 */
+	private void addExpCrystal(int xpValue) {
 		while (true) {
-			if (xpValue < 65)
-				return this.addInInventory(new ItemStack(OfalenModItemCore.crystalExp, xpValue));
+			if (xpValue < 65) {
+				this.addInInventory(new ItemStack(OfalenModItemCore.crystalExp, xpValue));
+				return;
+			}
 			int surplus = this.addInInventory(new ItemStack(OfalenModItemCore.crystalExp, 64));
 			xpValue -= 64;
 			if (surplus > 0)
-				return xpValue + surplus;
+				return;
 		}
 	}
 
 	/** インベントリにできるだけ入れて、余りの個数を返す。 */
-	protected int addInInventory(ItemStack itemStack) {
+	private int addInInventory(ItemStack itemStack) {
 		int limit = Math.min(itemStack.getMaxStackSize(), this.getInventoryStackLimit());
 		for (int i = 0; i < itemStacks.length; i++) {
 			// 空のスロットがあったら、代入する。
