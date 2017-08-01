@@ -13,6 +13,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class TileEntityMover extends TileEntityWorldEditorBase {
+	/** 撤去が無効か。 */
+	private boolean isRemovingDisabled;
+	/** 設置が無効か。 */
+	private boolean isPlacingDisabled;
 	/** TileEntityを動かせるかどうか。 */
 	private boolean canMoveTileEntity;
 	private Map<BlockPos, BlockData> listMovingBlock = new HashMap<BlockPos, BlockData>();
@@ -24,10 +28,23 @@ public class TileEntityMover extends TileEntityWorldEditorBase {
 
 	@Override
 	protected boolean canWorkWithCoord(int x, int y, int z) {
-		Block block = worldObj.getBlock(x, y, z);
+		boolean isAir = worldObj.isAirBlock(x, y, z);
+		// 対応する座標にデータが保存されていないか。
+		boolean isPlacingAir = !listMovingBlock.containsKey(new BlockPos(x - range.posMin.x, y - range.posMin.y, z - range.posMin.z));
+		if (isRemovingDisabled) {
+			// 撤去が無効の時、設置ができないならfalse。
+			if (!isAir || isPlacingAir)
+				return false;
+		}
+		if (isPlacingDisabled) {
+			// 設置が無効の時、撤去ができないならfalse。
+			if (isAir || !isPlacingAir)
+				return false;
+		}
 		// 空気から空気への置き換えならfalse。
-		if (worldObj.isAirBlock(x, y, z) && !listMovingBlock.containsKey(new BlockPos(x - range.posMin.x, y - range.posMin.y, z - range.posMin.z)))
+		if (isAir && isPlacingAir)
 			return false;
+		Block block = worldObj.getBlock(x, y, z);
 		// 破壊不可ブロックならfalse
 		if (block.getBlockHardness(worldObj, x, y, z) < 0.0F)
 			return false;
@@ -55,27 +72,48 @@ public class TileEntityMover extends TileEntityWorldEditorBase {
 
 	@Override
 	public byte getAmountSettingID() {
-		return (byte) (super.getAmountSettingID() + 1);
+		return (byte) (super.getAmountSettingID() + 3);
 	}
 
 	@Override
 	public short getWithID(int id) {
-		if (id == super.getAmountSettingID())
+		switch (id - super.getAmountSettingID()) {
+		case 0:
+			return (short) (isRemovingDisabled ? 1 : 0);
+		case 1:
+			return (short) (isPlacingDisabled ? 1 : 0);
+		case 2:
 			return (short) (canMoveTileEntity ? 1 : 0);
+		}
 		return super.getWithID(id);
 	}
 
 	@Override
 	public void setWithID(int id, int value) {
 		super.setWithID(id, value);
-		if (id == super.getAmountSettingID())
+		switch (id - super.getAmountSettingID()) {
+		case 0:
+			isRemovingDisabled = (value != 0);
+			break;
+		case 1:
+			isPlacingDisabled = (value != 0);
+			break;
+		case 2:
 			canMoveTileEntity = (value != 0);
+			break;
+		}
 	}
 
 	@Override
 	public String getSettingNameWithID(int id) {
-		if (id == super.getAmountSettingID())
+		switch (id - super.getAmountSettingID()) {
+		case 0:
+			return "info.ofalen.setting.mover.isRemovingDisabled";
+		case 1:
+			return "info.ofalen.setting.mover.isPlacingDisabled";
+		case 2:
 			return "info.ofalen.setting.mover.canMoveTileEntity";
+		}
 		return super.getSettingNameWithID(id);
 	}
 
