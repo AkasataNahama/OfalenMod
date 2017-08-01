@@ -1,19 +1,24 @@
 package nahama.ofalenmod.util;
 
+import com.google.common.base.Objects;
 import net.minecraft.nbt.NBTTagCompound;
 
 /** x, y, zの座標をshortで保持する。equalsオーバーライド済み。 */
 public class BlockPos {
-	public short x, y, z;
 	private static final short MAX_X_Z = 30000;
 	private static final short MIN_X_Z = -30000;
 	private static final short MAX_Y = 255;
 	private static final short MIN_Y = 0;
+	public short x, y, z;
 
 	public BlockPos(int x, int y, int z) {
 		this.x = (short) x;
 		this.y = (short) y;
 		this.z = (short) z;
+	}
+
+	public static BlockPos loadFromNBT(NBTTagCompound nbt) {
+		return new BlockPos(nbt.getShort(OfalenNBTUtil.X), nbt.getShort(OfalenNBTUtil.Y), nbt.getShort(OfalenNBTUtil.Z));
 	}
 
 	public boolean isValid() {
@@ -53,10 +58,6 @@ public class BlockPos {
 		return nbt;
 	}
 
-	public static BlockPos loadFromNBT(NBTTagCompound nbt) {
-		return new BlockPos(nbt.getShort(OfalenNBTUtil.X), nbt.getShort(OfalenNBTUtil.Y), nbt.getShort(OfalenNBTUtil.Z));
-	}
-
 	@Override
 	public boolean equals(Object obj) {
 		if (super.equals(obj))
@@ -70,5 +71,10 @@ public class BlockPos {
 	/** "x, y, z" */
 	public String toStringCoord() {
 		return x + ", " + y + ", " + z;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hashCode(x, y, z);
 	}
 }
