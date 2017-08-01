@@ -65,7 +65,7 @@ public abstract class BlockWorldEditorBase extends BlockContainer {
 				return;
 			}
 			// 測量杖を持っていたら、作業範囲を設定する。
-			if (itemStack.getItem() == OfalenModItemCore.caneSurveying) {
+			if (itemStack.getItem() == OfalenModItemCore.wandSurveying) {
 				BlockRangeWithStandard range = BlockRangeWithStandard.loadFromNBT(itemStack.getTagCompound().getCompoundTag(OfalenNBTUtil.RANGE));
 				if (range != null) {
 					TileEntity tileEntity = world.getTileEntity(x, y, z);

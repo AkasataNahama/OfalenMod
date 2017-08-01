@@ -387,7 +387,7 @@ item.ofalen.seeds.2.name=Blue Ofalen Grass Seeds
 item.ofalen.seeds.3.name=White Ofalen Grass Seeds
 
 // 測量杖
-item.ofalen.caneSurveying.name=Cane of Surveying
+item.ofalen.wandSurveying.name=Wand of Surveying
 
 // 経験値結晶
 item.ofalen.crystalExp.name=Experience Crystal

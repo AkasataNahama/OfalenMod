@@ -14,8 +14,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 
-public class ItemSurveyingCane extends Item {
-	public ItemSurveyingCane() {
+public class ItemSurveyingWand extends Item {
+	public ItemSurveyingWand() {
 		this.setCreativeTab(OfalenModCore.TAB_OFALEN);
 		this.setFull3D();
 		this.setMaxStackSize(1);

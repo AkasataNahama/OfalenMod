@@ -387,7 +387,7 @@ item.ofalen.seeds.2.name=青色オファレン草の種
 item.ofalen.seeds.3.name=白色オファレン草の種
 
 // 測量杖
-item.ofalen.caneSurveying.name=測量杖
+item.ofalen.wandSurveying.name=測量杖
 
 // 経験値結晶
 item.ofalen.crystalExp.name=経験値の結晶

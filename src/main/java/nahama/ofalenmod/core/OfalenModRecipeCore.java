@@ -191,7 +191,7 @@ public class OfalenModRecipeCore {
 		// 測量器
 		addShaped(surveyorOfalen, "DRD", "OWP", "GVB", 'R', GEM[0], 'G', GEM[1], 'B', GEM[2], 'W', BLOCK[3], 'O', GEM[4], 'V', GEM[5], 'P', GEM[6], 'D', GEM[7]);
 		// 測量杖
-		addShaped(caneSurveying, "  B", " S ", "S  ", 'S', Items.stick, 'B', surveyorOfalen);
+		addShaped(wandSurveying, "  B", " S ", "S  ", 'S', Items.stick, 'B', surveyorOfalen);
 		// 詳細設定器
 		addShaped(setterDetailed, "XYX", "XZX", "XYX", 'X', getParts(0), 'Y', GEM[7], 'Z', Blocks.crafting_table);
 	}

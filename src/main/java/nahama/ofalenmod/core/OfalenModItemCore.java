@@ -148,7 +148,7 @@ public class OfalenModItemCore {
 	// オファレン草
 	public static Item seedsOfalen;
 	// 測量杖
-	public static Item caneSurveying;
+	public static Item wandSurveying;
 	// 経験値の結晶
 	public static Item crystalExp;
 
@@ -395,8 +395,8 @@ public class OfalenModItemCore {
 		seedsOfalen = new ItemOfalenSeed(OfalenModBlockCore.grassOfalen).setUnlocalizedName("ofalen.seeds").setTextureName("ofalenmod:seeds");
 		GameRegistry.registerItem(seedsOfalen, "seedsOfalen");
 		// 測量杖
-		caneSurveying = new ItemSurveyingCane().setUnlocalizedName("ofalen.caneSurveying").setTextureName("ofalenmod:surveying_cane");
-		GameRegistry.registerItem(caneSurveying, "caneSurveying");
+		wandSurveying = new ItemSurveyingWand().setUnlocalizedName("ofalen.wandSurveying").setTextureName("ofalenmod:surveying_wand");
+		GameRegistry.registerItem(wandSurveying, "wandSurveying");
 		// 経験値の結晶
 		crystalExp = new ItemExpCrystal().setUnlocalizedName("ofalen.crystalExp").setTextureName("ofalenmod:exp_crystal");
 		GameRegistry.registerItem(crystalExp, "crystalExp");
