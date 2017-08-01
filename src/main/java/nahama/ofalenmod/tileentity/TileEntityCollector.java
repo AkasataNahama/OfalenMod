@@ -3,7 +3,6 @@ package nahama.ofalenmod.tileentity;
 import nahama.ofalenmod.core.OfalenModItemCore;
 import nahama.ofalenmod.util.BlockPos;
 import nahama.ofalenmod.util.BlockRange;
-import nahama.ofalenmod.util.OfalenLog;
 import nahama.ofalenmod.util.OfalenNBTUtil;
 import nahama.ofalenmod.util.OfalenUtil;
 import net.minecraft.entity.item.EntityItem;
@@ -116,26 +115,28 @@ public class TileEntityCollector extends TileEntityWorldEditorBase {
 
 	/** 経験値を結晶化し、インベントリに入れる。 */
 	private void addExpCrystal(int xpValue) {
-		while (true) {
-			if (xpValue < 65) {
-				this.addInInventory(new ItemStack(OfalenModItemCore.crystalExp, xpValue));
-				return;
-			}
-			int surplus = this.addInInventory(new ItemStack(OfalenModItemCore.crystalExp, 64));
-			xpValue -= 64;
-			if (surplus > 0)
-				return;
+		int amount = xpValue;
+		for (int i = 0; i < itemStacks.length; i++) {
+			ItemStack itemStack = itemStacks[i];
+			if (itemStack == null || itemStack.getItem() != OfalenModItemCore.crystalExp)
+				continue;
+			amount += itemStack.stackSize * OfalenUtil.power(64, itemStack.getItemDamage());
+			itemStacks[i] = null;
+		}
+		for (int i = (int) (Math.log(amount) / Math.log(64)); i >= 0; i--) {
+			this.addInInventory(new ItemStack(OfalenModItemCore.crystalExp, amount / OfalenUtil.power(64, i), i));
+			amount %= OfalenUtil.power(64, i);
 		}
 	}
 
 	/** インベントリにできるだけ入れて、余りの個数を返す。 */
-	private int addInInventory(ItemStack itemStack) {
+	private void addInInventory(ItemStack itemStack) {
 		int limit = Math.min(itemStack.getMaxStackSize(), this.getInventoryStackLimit());
 		for (int i = 0; i < itemStacks.length; i++) {
 			// 空のスロットがあったら、代入する。
 			if (itemStacks[i] == null) {
 				itemStacks[i] = itemStack;
-				return 0;
+				break;
 			}
 			// スタック限界まで入っているか、スタック不可なら次へ。
 			if (itemStacks[i].stackSize >= limit || !OfalenUtil.canStack(itemStacks[i], itemStack))
@@ -143,15 +144,12 @@ public class TileEntityCollector extends TileEntityWorldEditorBase {
 			// スロットの空きが足りるなら足して終了。
 			if (itemStacks[i].stackSize + itemStack.stackSize <= limit) {
 				itemStacks[i].stackSize += itemStack.stackSize;
-				return 0;
+				break;
 			}
 			// 足りないなら限界まで入れて次へ。
 			itemStack.stackSize -= limit - itemStacks[i].stackSize;
 			itemStacks[i].stackSize = limit;
 		}
-		OfalenLog.error("ItemStack deleted on addInInventory.", "TileEntityCollector");
-		OfalenLog.error(itemStack.toString(), "TileEntityCollector");
-		return itemStack.stackSize;
 	}
 
 	@Override

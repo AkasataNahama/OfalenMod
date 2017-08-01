@@ -201,6 +201,7 @@ info.ofalen.setting.collector.canDelete.item.1=消去
 info.ofalen.setting.collector.canDelete.exp=収集した経験値
 info.ofalen.setting.collector.canDelete.exp.0=格納
 info.ofalen.setting.collector.canDelete.exp.1=消去
+info.ofalen.crystalExp.size=経験値量 :
 
 // GUI
 container.ofalen.machine.smelting-0=オファレン製錬機

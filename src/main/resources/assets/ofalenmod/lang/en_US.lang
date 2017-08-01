@@ -201,6 +201,7 @@ info.ofalen.setting.collector.canDelete.item.1=Delete
 info.ofalen.setting.collector.canDelete.exp=Collected Exp
 info.ofalen.setting.collector.canDelete.exp.0=Store
 info.ofalen.setting.collector.canDelete.exp.1=Delete
+info.ofalen.crystalExp.size=Experience Amount:
 
 // GUI
 container.ofalen.machine.smelting-0=Ofalen Smelting Machine
