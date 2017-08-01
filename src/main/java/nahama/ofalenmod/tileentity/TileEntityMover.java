@@ -28,6 +28,9 @@ public class TileEntityMover extends TileEntityWorldEditorBase {
 		// 空気から空気への置き換えならfalse。
 		if (worldObj.isAirBlock(x, y, z) && !listMovingBlock.containsKey(new BlockPos(x - range.posMin.x, y - range.posMin.y, z - range.posMin.z)))
 			return false;
+		// 破壊不可ブロックならfalse
+		if (block.getBlockHardness(worldObj, x, y, z) < 0.0F)
+			return false;
 		// フィルターで許可されていて、TileEntityを移動できるならtrue、移動できないなら持っていなければtrue。
 		return OfalenNBTUtil.FilterUtil.canItemFilterThrough(tagItemFilter, new ItemStack(block, 1, worldObj.getBlockMetadata(x, y, z))) && (canMoveTileEntity || !block.hasTileEntity(worldObj.getBlockMetadata(x, y, z)));
 	}
