@@ -31,7 +31,7 @@ public class TileEntityMover extends TileEntityWorldEditorBase {
 
 	@Override
 	protected boolean work(int x, int y, int z) {
-		BlockPos pos = new BlockPos(x - xCoord, y - yCoord, z - zCoord);
+		BlockPos pos = new BlockPos(x - range.posMin.x, y - range.posMin.y, z - range.posMin.z);
 		BlockData data = listMovingBlock.get(pos);
 		listMovingBlock.put(pos, BlockData.loadFromCoord(worldObj, x, y, z, canMoveTileEntity));
 		if (data != null) {
