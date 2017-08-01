@@ -25,25 +25,19 @@ public class BlockPos {
 		return MIN_X_Z <= x && x <= MAX_X_Z && MIN_Y <= y && y <= MAX_Y && MIN_X_Z <= z && z <= MAX_X_Z;
 	}
 
-	public void checkAndFixCoord(int type) {
-		if ((type & 1) == 1) {
-			if (x < MIN_X_Z)
-				x = MIN_X_Z;
-			if (x > MAX_X_Z)
-				x = MAX_X_Z;
-		}
-		if ((type & 2) == 2) {
-			if (y < MIN_Y)
-				y = MIN_Y;
-			if (y > MAX_Y)
-				y = MAX_Y;
-		}
-		if ((type & 4) == 4) {
-			if (z < MIN_X_Z)
-				z = MIN_X_Z;
-			if (z > MAX_X_Z)
-				z = MAX_X_Z;
-		}
+	public void checkAndFixCoord() {
+		if (x < MIN_X_Z)
+			x = MIN_X_Z;
+		if (x > MAX_X_Z)
+			x = MAX_X_Z;
+		if (y < MIN_Y)
+			y = MIN_Y;
+		if (y > MAX_Y)
+			y = MAX_Y;
+		if (z < MIN_X_Z)
+			z = MIN_X_Z;
+		if (z > MAX_X_Z)
+			z = MAX_X_Z;
 	}
 
 	public BlockPos copy() {

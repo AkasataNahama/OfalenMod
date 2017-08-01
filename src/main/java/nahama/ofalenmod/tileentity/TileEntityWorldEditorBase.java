@@ -326,8 +326,8 @@ public abstract class TileEntityWorldEditorBase extends TileEntity implements IS
 			break;
 		}
 		// 座標が正常な値かどうか確認し、不正なら修正する。
-		range.posMin.checkAndFixCoord(7);
-		range.posMax.checkAndFixCoord(7);
+		range.posMin.checkAndFixCoord();
+		range.posMax.checkAndFixCoord();
 		// サーバー側で設定変更されたら、作業を停止する。
 		if (!worldObj.isRemote) {
 			this.setIsWorking(false);
@@ -425,6 +425,8 @@ public abstract class TileEntityWorldEditorBase extends TileEntity implements IS
 		range = BlockRange.loadFromNBT(nbt.getCompoundTag(OfalenNBTUtil.RANGE));
 		if (!isAbsoluteRangeSaving)
 			range.applyOffset(xCoord, yCoord, zCoord);
+		range.posMin.checkAndFixCoord();
+		range.posMax.checkAndFixCoord();
 		coordWorking = BlockPos.loadFromNBT(nbt.getCompoundTag(OfalenNBTUtil.WORKING_COORD));
 		interval = nbt.getShort(OfalenNBTUtil.INTERVAL);
 		intervalProcessing = nbt.getShort(OfalenNBTUtil.PROCESSING_INTERVAL);
