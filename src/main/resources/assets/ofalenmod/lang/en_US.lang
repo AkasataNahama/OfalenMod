@@ -201,7 +201,12 @@ info.ofalen.setting.collector.canDelete.item.1=Delete
 info.ofalen.setting.collector.canDelete.exp=Collected Exp
 info.ofalen.setting.collector.canDelete.exp.0=Store
 info.ofalen.setting.collector.canDelete.exp.1=Delete
+// Experience Crystal
 info.ofalen.crystalExp.size=Experience Amount:
+// Surveying Wand
+info.ofalen.wandSurveying.standard.a=Standard Point (White):
+info.ofalen.wandSurveying.standard.b=Standard Point (Black):
+info.ofalen.wandSurveying.range=Range:
 
 // GUI
 container.ofalen.machine.smelting-0=Ofalen Smelting Machine

@@ -6,13 +6,17 @@ import nahama.ofalenmod.util.BlockPos;
 import nahama.ofalenmod.util.BlockRangeWithStandard;
 import nahama.ofalenmod.util.OfalenNBTUtil;
 import nahama.ofalenmod.util.OfalenParticleUtil;
+import nahama.ofalenmod.util.OfalenUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
+
+import java.util.List;
 
 public class ItemSurveyingWand extends Item {
 	public ItemSurveyingWand() {
@@ -55,5 +59,17 @@ public class ItemSurveyingWand extends Item {
 		}
 		nbt.setTag(OfalenNBTUtil.RANGE, range.getNBT());
 		return true;
+	}
+
+	@Override
+	public void addInformation(ItemStack itemStack, EntityPlayer player, List list, boolean isAdvanced) {
+		super.addInformation(itemStack, player, list, isAdvanced);
+		List<String> stringList = OfalenUtil.getAs(list);
+		if (itemStack.hasTagCompound()) {
+			BlockRangeWithStandard range = BlockRangeWithStandard.loadFromNBT(itemStack.getTagCompound().getCompoundTag(OfalenNBTUtil.RANGE));
+			stringList.add(StatCollector.translateToLocal("info.ofalen.wandSurveying.standard.a") + " (" + range.posA.toStringCoord() + ")");
+			stringList.add(StatCollector.translateToLocal("info.ofalen.wandSurveying.standard.b") + " (" + range.posB.toStringCoord() + ")");
+			stringList.add(StatCollector.translateToLocal("info.ofalen.wandSurveying.range") + " (" + range.toStringRange() + ")");
+		}
 	}
 }
