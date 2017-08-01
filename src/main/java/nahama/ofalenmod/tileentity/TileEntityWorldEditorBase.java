@@ -252,17 +252,17 @@ public abstract class TileEntityWorldEditorBase extends TileEntity implements IS
 		case 0:
 			return (short) (isAbsoluteRangeSaving ? 1 : 0);
 		case 1:
-			return range.posMin.x;
+			return (short) range.posMin.x;
 		case 2:
-			return range.posMax.x;
+			return (short) range.posMax.x;
 		case 3:
-			return range.posMin.y;
+			return (short) range.posMin.y;
 		case 4:
-			return range.posMax.y;
+			return (short) range.posMax.y;
 		case 5:
-			return range.posMin.z;
+			return (short) range.posMin.z;
 		case 6:
-			return range.posMax.z;
+			return (short) range.posMax.z;
 		case 7:
 			return intervalProcessing;
 		case 8:

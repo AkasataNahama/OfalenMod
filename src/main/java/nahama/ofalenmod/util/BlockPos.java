@@ -9,16 +9,16 @@ public class BlockPos {
 	private static final short MIN_X_Z = -30000;
 	private static final short MAX_Y = 255;
 	private static final short MIN_Y = 0;
-	public short x, y, z;
+	public int x, y, z;
 
 	public BlockPos(int x, int y, int z) {
-		this.x = (short) x;
-		this.y = (short) y;
-		this.z = (short) z;
+		this.x = x;
+		this.y = y;
+		this.z = z;
 	}
 
 	public static BlockPos loadFromNBT(NBTTagCompound nbt) {
-		return new BlockPos(nbt.getShort(OfalenNBTUtil.X), nbt.getShort(OfalenNBTUtil.Y), nbt.getShort(OfalenNBTUtil.Z));
+		return new BlockPos(nbt.getInteger(OfalenNBTUtil.X), nbt.getInteger(OfalenNBTUtil.Y), nbt.getInteger(OfalenNBTUtil.Z));
 	}
 
 	public boolean isValid() {
@@ -52,9 +52,9 @@ public class BlockPos {
 
 	public NBTTagCompound getNBT() {
 		NBTTagCompound nbt = new NBTTagCompound();
-		nbt.setShort(OfalenNBTUtil.X, x);
-		nbt.setShort(OfalenNBTUtil.Y, y);
-		nbt.setShort(OfalenNBTUtil.Z, z);
+		nbt.setInteger(OfalenNBTUtil.X, x);
+		nbt.setInteger(OfalenNBTUtil.Y, y);
+		nbt.setInteger(OfalenNBTUtil.Z, z);
 		return nbt;
 	}
 
