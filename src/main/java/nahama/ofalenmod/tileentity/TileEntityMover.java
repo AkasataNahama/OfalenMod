@@ -15,7 +15,7 @@ import java.util.Map;
 public class TileEntityMover extends TileEntityWorldEditorBase {
 	/** TileEntityを動かせるかどうか。 */
 	private boolean canMoveTileEntity;
-	private HashMap<BlockPos, BlockData> listMovingBlock = new HashMap<BlockPos, BlockData>();
+	private Map<BlockPos, BlockData> listMovingBlock = new HashMap<BlockPos, BlockData>();
 
 	@Override
 	protected boolean canWork() {
@@ -25,6 +25,9 @@ public class TileEntityMover extends TileEntityWorldEditorBase {
 	@Override
 	protected boolean canWorkWithCoord(int x, int y, int z) {
 		Block block = worldObj.getBlock(x, y, z);
+		// 空気から空気への置き換えならfalse。
+		if (worldObj.isAirBlock(x, y, z) && !listMovingBlock.containsKey(new BlockPos(x - range.posMin.x, y - range.posMin.y, z - range.posMin.z)))
+			return false;
 		// フィルターで許可されていて、TileEntityを移動できるならtrue、移動できないなら持っていなければtrue。
 		return OfalenNBTUtil.FilterUtil.canItemFilterThrough(tagItemFilter, new ItemStack(block, 1, worldObj.getBlockMetadata(x, y, z))) && (canMoveTileEntity || !block.hasTileEntity(worldObj.getBlockMetadata(x, y, z)));
 	}
@@ -33,7 +36,12 @@ public class TileEntityMover extends TileEntityWorldEditorBase {
 	protected boolean work(int x, int y, int z) {
 		BlockPos pos = new BlockPos(x - range.posMin.x, y - range.posMin.y, z - range.posMin.z);
 		BlockData data = listMovingBlock.get(pos);
-		listMovingBlock.put(pos, BlockData.loadFromCoord(worldObj, x, y, z, canMoveTileEntity));
+		// 空気ブロックでないなら保存する。
+		if (!worldObj.isAirBlock(x, y, z)) {
+			listMovingBlock.put(pos, BlockData.loadFromCoord(worldObj, x, y, z, canMoveTileEntity));
+		} else {
+			listMovingBlock.remove(pos);
+		}
 		if (data != null) {
 			data.putInWorld(worldObj, x, y, z);
 		} else {
