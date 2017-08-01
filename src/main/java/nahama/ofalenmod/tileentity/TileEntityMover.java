@@ -28,7 +28,8 @@ public class TileEntityMover extends TileEntityWorldEditorBase {
 
 	@Override
 	protected boolean canWorkWithCoord(int x, int y, int z) {
-		boolean isAir = worldObj.isAirBlock(x, y, z);
+		BlockData data = BlockData.loadFromCoord(worldObj, x, y, z, false);
+		boolean isAir = data.block.isAir(worldObj, x, y, z);
 		// 対応する座標にデータが保存されていないか。
 		boolean isPlacingAir = !listMovingBlock.containsKey(new BlockPos(x - range.posMin.x, y - range.posMin.y, z - range.posMin.z));
 		if (isRemovingDisabled) {
@@ -44,31 +45,31 @@ public class TileEntityMover extends TileEntityWorldEditorBase {
 		// 空気から空気への置き換えならfalse。
 		if (isAir && isPlacingAir)
 			return false;
-		Block block = worldObj.getBlock(x, y, z);
 		// 破壊不可ブロックならfalse
-		if (block.getBlockHardness(worldObj, x, y, z) < 0.0F)
+		if (data.block.getBlockHardness(worldObj, x, y, z) < 0.0F)
 			return false;
 		// フィルターで許可されていて、TileEntityを移動できるならtrue、移動できないなら持っていなければtrue。
-		return OfalenNBTUtil.FilterUtil.canItemFilterThrough(tagItemFilter, new ItemStack(block, 1, worldObj.getBlockMetadata(x, y, z))) && (canMoveTileEntity || !block.hasTileEntity(worldObj.getBlockMetadata(x, y, z)));
+		return OfalenNBTUtil.FilterUtil.canItemFilterThrough(tagItemFilter, new ItemStack(data.block, 1, data.meta)) && (canMoveTileEntity || !data.block.hasTileEntity(data.meta));
 	}
 
 	@Override
 	protected boolean work(int x, int y, int z) {
 		BlockPos pos = new BlockPos(x - range.posMin.x, y - range.posMin.y, z - range.posMin.z);
-		BlockData data = listMovingBlock.get(pos);
+		BlockData dataPlacing = listMovingBlock.get(pos);
 		if (!worldObj.isAirBlock(x, y, z)) {
 			// 空気ブロックでないなら、保存し、音とパーティクルを出す。
-			listMovingBlock.put(pos, BlockData.loadFromCoord(worldObj, x, y, z, canMoveTileEntity));
-			worldObj.playAuxSFX(2001, x, y, z, Block.getIdFromBlock(worldObj.getBlock(x, y, z)) + (worldObj.getBlockMetadata(x, y, z) << 12));
+			BlockData dataMoving = BlockData.loadFromCoord(worldObj, x, y, z, canMoveTileEntity);
+			listMovingBlock.put(pos, dataMoving);
+			worldObj.playAuxSFX(2001, x, y, z, Block.getIdFromBlock(dataMoving.block) + (dataMoving.meta << 12));
 		} else {
 			// 空気ならマップから対応座標のデータを削除する。
 			listMovingBlock.remove(pos);
 		}
-		if (data != null) {
+		if (dataPlacing != null) {
 			// 対応座標のデータがあったら、設置し、音を出す。
-			data.putInWorld(worldObj, x, y, z);
-			Block block = data.block;
-			worldObj.playSoundEffect(x + 0.5D, y + 0.5D, z + 0.5D, block.stepSound.func_150496_b(), (block.stepSound.getVolume() + 1.0F) / 2.0F, block.stepSound.getPitch() * 0.8F);
+			dataPlacing.putInWorld(worldObj, x, y, z);
+			Block.SoundType stepSound = dataPlacing.block.stepSound;
+			worldObj.playSoundEffect(x + 0.5D, y + 0.5D, z + 0.5D, stepSound.func_150496_b(), (stepSound.getVolume() + 1.0F) / 2.0F, stepSound.getPitch() * 0.8F);
 		} else {
 			// ないなら、空気に置き換える。
 			worldObj.setBlockToAir(x, y, z);
