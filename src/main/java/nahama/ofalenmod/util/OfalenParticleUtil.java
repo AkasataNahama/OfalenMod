@@ -39,17 +39,6 @@ public class OfalenParticleUtil {
 		}
 	}
 
-	public static void spawnParticleWithBlockRange(World world, BlockRangeWithStandard range, int type) {
-		spawnParticleWithBlockRange(world, range.convertToNormal(), type);
-		spawnParticleAroundBlock(world, range.posA, type);
-		spawnParticleAroundBlock(world, range.posB, type);
-	}
-
-	public static void spawnParticleAroundBlock(World world, BlockPos pos, int type) {
-		double[] color = getColorWithTypeForParticle(type);
-		spawnParticleAroundBlock(world, pos, color[0], color[1], color[2]);
-	}
-
 	public static void spawnParticleAroundBlock(World world, BlockPos pos, double colorR, double colorG, double colorB) {
 		for (double dx = pos.x; dx <= pos.x + 1; dx += 0.2) {
 			for (double dy = pos.y; dy <= pos.y + 1; dy += 0.2) {
@@ -77,7 +66,7 @@ public class OfalenParticleUtil {
 		}
 	}
 
-	public static double[] getColorWithTypeForParticle(int type) {
+	private static double[] getColorWithTypeForParticle(int type) {
 		double[] color = new double[3];
 		switch (type) {
 		case 2:

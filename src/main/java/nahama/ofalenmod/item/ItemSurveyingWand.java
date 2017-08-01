@@ -35,7 +35,9 @@ public class ItemSurveyingWand extends Item {
 		BlockRangeWithStandard range = BlockRangeWithStandard.loadFromNBT(nbt.getCompoundTag(OfalenNBTUtil.RANGE));
 		if (range == null)
 			return;
-		OfalenParticleUtil.spawnParticleWithBlockRange(world, range, 3);
+		OfalenParticleUtil.spawnParticleWithBlockRange(world, range.convertToNormal(), 0.498, 0.498, 0.498);
+		OfalenParticleUtil.spawnParticleAroundBlock(world, range.posA, 1, 1, 1);
+		OfalenParticleUtil.spawnParticleAroundBlock(world, range.posB, 0, 0, 0);
 	}
 
 	@Override
