@@ -56,15 +56,21 @@ public class TileEntityMover extends TileEntityWorldEditorBase {
 	protected boolean work(int x, int y, int z) {
 		BlockPos pos = new BlockPos(x - range.posMin.x, y - range.posMin.y, z - range.posMin.z);
 		BlockData data = listMovingBlock.get(pos);
-		// 空気ブロックでないなら保存する。
 		if (!worldObj.isAirBlock(x, y, z)) {
+			// 空気ブロックでないなら、保存し、音とパーティクルを出す。
 			listMovingBlock.put(pos, BlockData.loadFromCoord(worldObj, x, y, z, canMoveTileEntity));
+			worldObj.playAuxSFX(2001, x, y, z, Block.getIdFromBlock(worldObj.getBlock(x, y, z)) + (worldObj.getBlockMetadata(x, y, z) << 12));
 		} else {
+			// 空気ならマップから対応座標のデータを削除する。
 			listMovingBlock.remove(pos);
 		}
 		if (data != null) {
+			// 対応座標のデータがあったら、設置し、音を出す。
 			data.putInWorld(worldObj, x, y, z);
+			Block block = data.block;
+			worldObj.playSoundEffect(x + 0.5D, y + 0.5D, z + 0.5D, block.stepSound.func_150496_b(), (block.stepSound.getVolume() + 1.0F) / 2.0F, block.stepSound.getPitch() * 0.8F);
 		} else {
+			// ないなら、空気に置き換える。
 			worldObj.setBlockToAir(x, y, z);
 		}
 		return true;
