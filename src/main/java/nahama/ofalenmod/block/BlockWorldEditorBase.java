@@ -111,8 +111,6 @@ public abstract class BlockWorldEditorBase extends BlockContainer {
 		if (tileEntity == null || !(tileEntity instanceof TileEntityWorldEditorBase) || !itemStack.hasTagCompound())
 			return;
 		TileEntityWorldEditorBase editor = (TileEntityWorldEditorBase) tileEntity;
-		// 測量器が隣接しているか判定する。
-		editor.searchSurveyor();
 		// TileEntityのデータが保存されていないなら、アイテムフィルターの情報だけ読み込む。
 		if (!itemStack.getTagCompound().hasKey(OfalenNBTUtil.TILE_ENTITY_WORLD_EDITOR_BASE, new NBTTagCompound().getId())) {
 			editor.setTagItemFilter(FilterUtil.getFilterTag(itemStack));
@@ -126,6 +124,8 @@ public abstract class BlockWorldEditorBase extends BlockContainer {
 		editor.readFromNBT(nbt);
 		// フィルターの情報をItemStackのものに更新する。
 		editor.setTagItemFilter(FilterUtil.getFilterTag(itemStack));
+		// 測量器が隣接しているか判定する。
+		editor.searchSurveyor();
 	}
 
 	/** 破壊された時の処理。 */
