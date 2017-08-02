@@ -51,7 +51,6 @@ public class OfalenNBTUtil {
 	public static final String ITEM_RANGE = "ItemRange";
 	public static final String EXP_RANGE = "ExpRange";
 	// 世界系 (INTERVALも使用)
-	public static final String IS_NBT_SAVED = "IsNBTSaved";
 	public static final String IS_RANGE_SAVING_ABSOLUTE = "IsRangeSavingAbsolute";
 	public static final String RANGE = "Range";
 	public static final String WORKING_COORD = "WorkingCoord";
@@ -61,6 +60,7 @@ public class OfalenNBTUtil {
 	public static final String CAN_RESTART = "CanRestart";
 	public static final String IS_WORKING = "IsWorking";
 	public static final String TILE_ENTITY_WORLD_EDITOR_BASE = "TileEntityWorldEditorBase";
+	public static final String IS_SURVEYING = "IsSurveying";
 	public static final String REMAINING_ENERGY = "RemainingEnergy";
 	// 移動機
 	public static final String CAN_MOVE_TILE_ENTITY = "CanMoveTileEntity";

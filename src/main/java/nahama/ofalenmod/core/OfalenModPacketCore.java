@@ -11,7 +11,6 @@ import nahama.ofalenmod.network.MFilterInstaller;
 import nahama.ofalenmod.network.MFloaterMode;
 import nahama.ofalenmod.network.MKeyStateChange;
 import nahama.ofalenmod.network.MSpawnParticle;
-import nahama.ofalenmod.network.MSpawnParticleWithRange;
 import nahama.ofalenmod.network.MTeleporterChannel;
 import nahama.ofalenmod.network.MTeleporterMeta;
 import nahama.ofalenmod.network.MWorldEditorSetting;
@@ -29,7 +28,6 @@ public class OfalenModPacketCore {
 		registerMessage(MSpawnParticle.class, MSpawnParticle.Handler.class, Side.CLIENT);
 		registerMessage(MFilterInstaller.class, MFilterInstaller.Handler.class, Side.SERVER);
 		registerMessage(MWorldEditorSetting.class, MWorldEditorSetting.Handler.class, Side.SERVER);
-		registerMessage(MSpawnParticleWithRange.class, MSpawnParticleWithRange.Handler.class, Side.CLIENT);
 		registerMessage(MApplyDetailedSetter.class, MApplyDetailedSetter.Handler.class, Side.SERVER);
 		registerMessage(MKeyStateChange.class, MKeyStateChange.Handler.class, Side.SERVER);
 	}

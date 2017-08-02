@@ -2,17 +2,19 @@ package nahama.ofalenmod.tileentity;
 
 import nahama.ofalenmod.block.BlockSurveyor;
 import nahama.ofalenmod.core.OfalenModItemCore;
-import nahama.ofalenmod.core.OfalenModPacketCore;
-import nahama.ofalenmod.network.MSpawnParticleWithRange;
 import nahama.ofalenmod.util.BlockPos;
 import nahama.ofalenmod.util.BlockRange;
 import nahama.ofalenmod.util.OfalenNBTUtil;
 import nahama.ofalenmod.util.OfalenNBTUtil.FilterUtil;
+import nahama.ofalenmod.util.OfalenParticleUtil;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.network.NetworkManager;
+import net.minecraft.network.Packet;
+import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.util.ForgeDirection;
 
@@ -39,8 +41,6 @@ public abstract class TileEntityWorldEditorBase extends TileEntity implements IS
 	private boolean isWorking;
 	/** 測量器が隣接しているかどうか。 */
 	private boolean isSurveying;
-	/** 次にパーティクルを発生させるまでの残り時間。 */
-	private byte intervalParticle;
 	/** 燃料の残り燃焼時間。 */
 	private byte remainingEnergy;
 
@@ -50,17 +50,16 @@ public abstract class TileEntityWorldEditorBase extends TileEntity implements IS
 		super.updateEntity();
 		if (range == null || coordWorking == null)
 			this.initRangeAndCoord();
-		// クライアント側なら終了。
-		if (worldObj.isRemote)
-			return;
-		if (intervalParticle > 0) {
-			intervalParticle--;
-		} else {
-			if (isSurveying) {
+		// クライアント側ならパーティクルを表示して終了。
+		if (worldObj.isRemote) {
+			if (interval > 0)
+				interval--;
+			if (isSurveying && interval < 1) {
 				// 測量器が隣接していて、残り時間が0になったらパーティクルを発生させる。
-				this.survey();
-				intervalParticle = 20;
+				OfalenParticleUtil.spawnParticleWithBlockRange(worldObj, range.copy(), this.getColor());
+				interval = 20;
 			}
+			return;
 		}
 		// 作業していないなら終了。
 		if (!isWorking)
@@ -96,7 +95,7 @@ public abstract class TileEntityWorldEditorBase extends TileEntity implements IS
 	}
 
 	private void initRangeAndCoord() {
-		range = new BlockRange(xCoord, yCoord, zCoord, xCoord, yCoord, zCoord);
+		this.setRange(new BlockRange(xCoord, yCoord, zCoord, xCoord, yCoord, zCoord));
 		this.resetCoordWorking();
 	}
 
@@ -244,6 +243,8 @@ public abstract class TileEntityWorldEditorBase extends TileEntity implements IS
 
 	public void setRange(BlockRange range) {
 		this.range = range;
+		if (isSurveying)
+			worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
 	}
 
 	/** 設定IDに応じて表示値を返す。 */
@@ -388,10 +389,26 @@ public abstract class TileEntityWorldEditorBase extends TileEntity implements IS
 				break;
 			}
 		}
+		worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
 	}
 
-	private void survey() {
-		OfalenModPacketCore.WRAPPER.sendToAll(new MSpawnParticleWithRange(this.getColor(), (byte) worldObj.provider.dimensionId, range.copy()));
+	/** 送信するパケットを返す。 */
+	@Override
+	public Packet getDescriptionPacket() {
+		NBTTagCompound nbt = new NBTTagCompound();
+		nbt.setBoolean(OfalenNBTUtil.IS_SURVEYING, isSurveying);
+		if (range != null)
+			nbt.setTag(OfalenNBTUtil.RANGE, range.getNBT());
+		return new S35PacketUpdateTileEntity(this.xCoord, this.yCoord, this.zCoord, 0, nbt);
+	}
+
+	/** パケットを処理する。 */
+	@Override
+	public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity pkt) {
+		NBTTagCompound nbt = pkt.func_148857_g();
+		isSurveying = nbt.getBoolean(OfalenNBTUtil.IS_SURVEYING);
+		range = BlockRange.loadFromNBT(nbt.getCompoundTag(OfalenNBTUtil.RANGE));
+		this.resetCoordWorking();
 	}
 
 	/** 色の番号を返す。4 : 橙, 5 : 翠, 6 : 紫, 7 : 黒。 */
@@ -414,6 +431,7 @@ public abstract class TileEntityWorldEditorBase extends TileEntity implements IS
 		nbt.setBoolean(OfalenNBTUtil.CAN_RESTART, canRestart);
 		nbt.setBoolean(OfalenNBTUtil.IS_WORKING, isWorking);
 		nbt.setTag(FilterUtil.ITEM_FILTER, tagItemFilter);
+		nbt.setBoolean(OfalenNBTUtil.IS_SURVEYING, isSurveying);
 		nbt.setByte(OfalenNBTUtil.REMAINING_ENERGY, remainingEnergy);
 	}
 
@@ -435,6 +453,7 @@ public abstract class TileEntityWorldEditorBase extends TileEntity implements IS
 		canRestart = nbt.getBoolean(OfalenNBTUtil.CAN_RESTART);
 		isWorking = nbt.getBoolean(OfalenNBTUtil.IS_WORKING);
 		tagItemFilter = nbt.getCompoundTag(FilterUtil.ITEM_FILTER);
+		isSurveying = nbt.getBoolean(OfalenNBTUtil.IS_SURVEYING);
 		remainingEnergy = nbt.getByte(OfalenNBTUtil.REMAINING_ENERGY);
 	}
 
