@@ -4,10 +4,13 @@ import nahama.ofalenmod.tileentity.TileEntityWorldEditorBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.ICrafting;
+import net.minecraft.inventory.IInventory;
+import net.minecraft.inventory.Slot;
+import net.minecraft.item.ItemStack;
 
 public class ContainerSettingWorldEditorBase extends Container {
 	protected TileEntityWorldEditorBase tileEntity;
-	protected short[] lastValues;
+	private short[] lastValues;
 
 	public ContainerSettingWorldEditorBase(TileEntityWorldEditorBase tileEntity) {
 		this.tileEntity = tileEntity;
@@ -46,5 +49,14 @@ public class ContainerSettingWorldEditorBase extends Container {
 	@Override
 	public void updateProgressBar(int channel, int value) {
 		tileEntity.setWithID(channel, value);
+	}
+
+	@Override
+	public Slot getSlotFromInventory(IInventory inventory, int num) {
+		return new Slot(inventory, num, 0, 0);
+	}
+
+	@Override
+	public void putStackInSlot(int p_75141_1_, ItemStack p_75141_2_) {
 	}
 }
