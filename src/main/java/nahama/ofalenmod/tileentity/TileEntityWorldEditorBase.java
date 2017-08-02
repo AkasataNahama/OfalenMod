@@ -408,7 +408,8 @@ public abstract class TileEntityWorldEditorBase extends TileEntity implements IS
 		NBTTagCompound nbt = pkt.func_148857_g();
 		isSurveying = nbt.getBoolean(OfalenNBTUtil.IS_SURVEYING);
 		range = BlockRange.loadFromNBT(nbt.getCompoundTag(OfalenNBTUtil.RANGE));
-		this.resetCoordWorking();
+		if (range != null)
+			this.resetCoordWorking();
 	}
 
 	/** 色の番号を返す。4 : 橙, 5 : 翠, 6 : 紫, 7 : 黒。 */
@@ -419,10 +420,12 @@ public abstract class TileEntityWorldEditorBase extends TileEntity implements IS
 	public void writeToNBT(NBTTagCompound nbt) {
 		super.writeToNBT(nbt);
 		nbt.setBoolean(OfalenNBTUtil.IS_RANGE_SAVING_ABSOLUTE, isAbsoluteRangeSaving);
-		BlockRange tmp = range.copy();
-		if (!isAbsoluteRangeSaving)
-			tmp.applyOffset(xCoord, yCoord, zCoord, true);
-		nbt.setTag(OfalenNBTUtil.RANGE, tmp.getNBT());
+		if (range != null) {
+			BlockRange tmp = range.copy();
+			if (!isAbsoluteRangeSaving)
+				tmp.applyOffset(xCoord, yCoord, zCoord, true);
+			nbt.setTag(OfalenNBTUtil.RANGE, tmp.getNBT());
+		}
 		nbt.setTag(OfalenNBTUtil.WORKING_COORD, coordWorking.getNBT());
 		nbt.setShort(OfalenNBTUtil.INTERVAL, interval);
 		nbt.setShort(OfalenNBTUtil.PROCESSING_INTERVAL, intervalProcessing);
@@ -441,10 +444,12 @@ public abstract class TileEntityWorldEditorBase extends TileEntity implements IS
 		super.readFromNBT(nbt);
 		isAbsoluteRangeSaving = nbt.getBoolean(OfalenNBTUtil.IS_RANGE_SAVING_ABSOLUTE);
 		range = BlockRange.loadFromNBT(nbt.getCompoundTag(OfalenNBTUtil.RANGE));
-		if (!isAbsoluteRangeSaving)
-			range.applyOffset(xCoord, yCoord, zCoord);
-		range.posMin.checkAndFixCoord();
-		range.posMax.checkAndFixCoord();
+		if (range != null) {
+			if (!isAbsoluteRangeSaving)
+				range.applyOffset(xCoord, yCoord, zCoord);
+			range.posMin.checkAndFixCoord();
+			range.posMax.checkAndFixCoord();
+		}
 		coordWorking = BlockPos.loadFromNBT(nbt.getCompoundTag(OfalenNBTUtil.WORKING_COORD));
 		interval = nbt.getShort(OfalenNBTUtil.INTERVAL);
 		intervalProcessing = nbt.getShort(OfalenNBTUtil.PROCESSING_INTERVAL);
