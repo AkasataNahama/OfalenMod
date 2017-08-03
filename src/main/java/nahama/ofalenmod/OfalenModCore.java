@@ -31,6 +31,7 @@ import nahama.ofalenmod.entity.EntityLaserGreen;
 import nahama.ofalenmod.entity.EntityLaserRed;
 import nahama.ofalenmod.entity.EntityWhiteLaser;
 import nahama.ofalenmod.generator.WorldGenOfalenOre;
+import nahama.ofalenmod.handler.OfalenFlightHandlerClient;
 import nahama.ofalenmod.handler.OfalenFlightHandlerServer;
 import nahama.ofalenmod.handler.OfalenKeyHandler;
 import nahama.ofalenmod.handler.OfalenModAnniversaryHandler;
@@ -60,8 +61,8 @@ public class OfalenModCore {
 	public static final String MOD_ID = "OfalenMod";
 	public static final String MOD_NAME = "Ofalen Mod";
 	public static final String UNLOCALIZED_MOD_NAME = "mod.ofalen.name";
-	public static final String MINECRAFT_VERSION = "1.7.10";
-	public static final String MOD_VERSION = "2.0.0";
+	private static final String MINECRAFT_VERSION = "1.7.10";
+	private static final String MOD_VERSION = "2.0.0";
 	public static final String VERSION = "[" + MINECRAFT_VERSION + "]" + MOD_VERSION;
 	public static final VersionUtil.VersionString VERSION_STRING = new VersionUtil.VersionString(OfalenModCore.MOD_ID, OfalenModCore.VERSION);
 	// TODO リリース時に変更
@@ -141,6 +142,8 @@ public class OfalenModCore {
 		OfalenTimer.start("OfalenModCore.serverStarting");
 		// 各種ハンドラを初期化する。
 		OfalenTeleportHandler.init();
+		if (OfalenUtil.isClient())
+			OfalenFlightHandlerClient.setMode((byte) 0);
 		OfalenFlightHandlerServer.init();
 		OfalenModAnniversaryHandler.init();
 		OfalenKeyHandler.onServerStarting();
