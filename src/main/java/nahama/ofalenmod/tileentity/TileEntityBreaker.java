@@ -18,14 +18,19 @@ public class TileEntityBreaker extends TileEntityWorldEditorBase {
 	@Override
 	protected boolean canWorkWithCoord(int x, int y, int z) {
 		Block block = worldObj.getBlock(x, y, z);
-		return !block.isAir(worldObj, x, y, z) && OfalenNBTUtil.FilterUtil.canItemFilterThrough(tagItemFilter, new ItemStack(block, 1, worldObj.getBlockMetadata(x, y, z)));
+		// 破壊不可ブロックならfalse。
+		if (block.getBlockHardness(worldObj, x, y, z) < 0.0F)
+			return false;
+		// 空気ブロックならfalse。
+		if (block.isAir(worldObj, x, y, z))
+			return false;
+		// フィルターで許可されていればtrue。
+		return OfalenNBTUtil.FilterUtil.canItemFilterThrough(tagItemFilter, new ItemStack(block, 1, worldObj.getBlockMetadata(x, y, z)));
 	}
 
 	@Override
 	protected boolean work(int x, int y, int z) {
 		Block block = worldObj.getBlock(x, y, z);
-		if (block.getBlockHardness(worldObj, x, y, z) < 0.0F)
-			return false;
 		int meta = worldObj.getBlockMetadata(x, y, z);
 		boolean flag;
 		try {
