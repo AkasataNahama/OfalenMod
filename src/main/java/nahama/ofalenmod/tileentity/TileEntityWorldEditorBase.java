@@ -101,6 +101,7 @@ public abstract class TileEntityWorldEditorBase extends TileEntity implements IS
 
 	private void resetCoordWorking() {
 		coordWorking = range.posMin.copy();
+		coordWorking.y = range.posMax.y;
 		coordWorking.x--;
 	}
 
@@ -112,6 +113,7 @@ public abstract class TileEntityWorldEditorBase extends TileEntity implements IS
 		BlockPos checking = start.copy();
 		if (!range.isInRange(checking)) {
 			checking = range.posMin.copy();
+			checking.y = range.posMax.y;
 			checking.x--;
 		}
 		while (true) {
@@ -121,7 +123,7 @@ public abstract class TileEntityWorldEditorBase extends TileEntity implements IS
 				checking.z++;
 				if (!range.isInRange(checking)) {
 					checking.z = range.posMin.z;
-					checking.y++;
+					checking.y--;
 					if (!range.isInRange(checking)) {
 						return null;
 					}
