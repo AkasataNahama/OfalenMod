@@ -207,6 +207,27 @@ info.ofalen.crystalExp.size=経験値量 :
 info.ofalen.wandSurveying.standard.a=基準点 (白) :
 info.ofalen.wandSurveying.standard.b=基準点 (黒) :
 info.ofalen.wandSurveying.range=範囲:
+// 詳細設定
+info.ofalen.settingDetailed.boolean.true=有効
+info.ofalen.settingDetailed.boolean.false=無効
+// コレクター
+info.ofalen.settingDetailed.OfalenCollector.AutoStopping=自動停止
+info.ofalen.settingDetailed.OfalenCollector.Interval=動作間隔 [tick]
+info.ofalen.settingDetailed.OfalenCollector.Item=アイテム
+info.ofalen.settingDetailed.OfalenCollector.Item.Range=収集範囲
+info.ofalen.settingDetailed.OfalenCollector.Item.Range.DesignationMode=指定形式
+info.ofalen.settingDetailed.OfalenCollector.Item.Range.Length.0=距離 : 1
+info.ofalen.settingDetailed.OfalenCollector.Item.Range.Length.1=距離 : 2
+info.ofalen.settingDetailed.OfalenCollector.Item.Range.Length.2=距離 : 3
+info.ofalen.settingDetailed.OfalenCollector.Exp=経験値
+info.ofalen.settingDetailed.OfalenCollector.Exp.Range=収集範囲
+info.ofalen.settingDetailed.OfalenCollector.Exp.Range.DesignationMode=指定形式
+info.ofalen.settingDetailed.OfalenCollector.Exp.Range.Length.0=距離 : 1
+info.ofalen.settingDetailed.OfalenCollector.Exp.Range.Length.1=距離 : 2
+info.ofalen.settingDetailed.OfalenCollector.Exp.Range.Length.2=距離 : 3
+info.ofalen.settingDetailed.collector.sphere=球
+info.ofalen.settingDetailed.collector.cylinder=円柱
+info.ofalen.settingDetailed.collector.cuboid=直方体
 
 // GUI
 container.ofalen.machine.smelting-0=オファレン製錬機
@@ -237,6 +258,7 @@ container.ofalen.mover=オファレンブロックムーバー
 container.ofalen.breaker=オファレンブロックブレイカー
 container.ofalen.blockCollector=オファレンコレクターブロック
 container.ofalen.boxPresent=オファレンプレゼントボックス
+container.ofalen.setterDetailed=オファレン詳細設定器
 
 // アイテム
 item.ofalen.gem.0.name=赤色オファレン
@@ -412,6 +434,7 @@ tile.ofalen.block.6.name=紫色オファレンブロック
 tile.ofalen.block.7.name=黒色オファレンブロック
 tile.ofalen.markerTeleporting.name=オファレンテレポートマーカー
 tile.ofalen.boxPresent.name=オファレンプレゼントボックス
+tile.ofalen.setterDetailed.name=オファレン詳細設定器
 
 // 機械
 tile.ofalen.machineSmelting.name=オファレン製錬機

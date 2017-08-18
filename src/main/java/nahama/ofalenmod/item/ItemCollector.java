@@ -3,15 +3,16 @@ package nahama.ofalenmod.item;
 import nahama.ofalenmod.core.OfalenModBlockCore;
 import nahama.ofalenmod.core.OfalenModConfigCore;
 import nahama.ofalenmod.core.OfalenModItemCore;
-import nahama.ofalenmod.handler.OfalenDetailedSettingHandler;
 import nahama.ofalenmod.handler.OfalenKeyHandler;
-import nahama.ofalenmod.util.IItemOfalenSettable;
+import nahama.ofalenmod.setting.IItemOfalenSettable;
+import nahama.ofalenmod.setting.OfalenSettingBoolean;
+import nahama.ofalenmod.setting.OfalenSettingByte;
+import nahama.ofalenmod.setting.OfalenSettingCategory;
+import nahama.ofalenmod.setting.OfalenSettingCategoryOrigin;
+import nahama.ofalenmod.setting.OfalenSettingContent;
+import nahama.ofalenmod.setting.OfalenSettingFloat;
 import nahama.ofalenmod.util.OfalenNBTUtil;
 import nahama.ofalenmod.util.OfalenNBTUtil.FilterUtil;
-import nahama.ofalenmod.util.OfalenSetting;
-import nahama.ofalenmod.util.OfalenSetting.OfalenSettingByte;
-import nahama.ofalenmod.util.OfalenSetting.OfalenSettingDouble;
-import nahama.ofalenmod.util.OfalenSetting.OfalenSettingList;
 import nahama.ofalenmod.util.OfalenTimer;
 import nahama.ofalenmod.util.OfalenUtil;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -24,16 +25,54 @@ import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTBase;
+import net.minecraft.nbt.NBTTagByte;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
+import net.minecraftforge.oredict.OreDictionary;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class ItemCollector extends ItemFuture implements IItemOfalenSettable {
 	private IIcon[] icons;
+	private OfalenSettingCategoryOrigin settingCategoryOrigin;
+	private OfalenSettingByte settingInterval;
+
+	public ItemCollector() {
+		super();
+		OfalenTimer.start("ItemCollector.init");
+		// 詳細設定の初期化を行う。
+		settingCategoryOrigin = new OfalenSettingCategoryOrigin("OfalenCollector", new ItemStack(this, 1, OreDictionary.WILDCARD_VALUE));
+		// 自動停止機能が有効か。
+		settingCategoryOrigin.registerChildSetting(new OfalenSettingBoolean("AutoStopping", new ItemStack(Blocks.redstone_torch), true));
+		// インターバル。
+		settingInterval = new OfalenSettingByte("Interval", new ItemStack(Items.quartz), 10, 0);
+		settingCategoryOrigin.registerChildSetting(settingInterval);
+		// アイテム。
+		OfalenSettingCategory categoryItem = new OfalenSettingCategory("Item", new ItemStack(OfalenModItemCore.partsOfalen, 1, 9));
+		settingCategoryOrigin.registerChildSetting(categoryItem);
+		// 範囲。
+		OfalenSettingCategory categoryRange = new OfalenSettingCategory("Range", new ItemStack(OfalenModBlockCore.surveyorOfalen));
+		categoryItem.registerChildSetting(categoryRange);
+		categoryRange.registerChildSetting(new OfalenSettingDesignationMode("DesignationMode", new ItemStack(Items.stick), 0));
+		categoryRange.registerChildSetting(new OfalenSettingFloat("Length.0", new ItemStack(OfalenModItemCore.gemOfalen, 1, 0), 10));
+		categoryRange.registerChildSetting(new OfalenSettingFloat("Length.1", new ItemStack(OfalenModItemCore.gemOfalen, 1, 1), 10));
+		categoryRange.registerChildSetting(new OfalenSettingFloat("Length.2", new ItemStack(OfalenModItemCore.gemOfalen, 1, 2), 10));
+		// 経験値。
+		OfalenSettingCategory categoryExp = new OfalenSettingCategory("Exp", new ItemStack(Items.book));
+		settingCategoryOrigin.registerChildSetting(categoryExp);
+		// 範囲。
+		categoryRange = new OfalenSettingCategory("Range", new ItemStack(OfalenModBlockCore.surveyorOfalen));
+		categoryExp.registerChildSetting(categoryRange);
+		categoryRange.registerChildSetting(new OfalenSettingDesignationMode("DesignationMode", new ItemStack(Items.stick), 0));
+		categoryRange.registerChildSetting(new OfalenSettingFloat("Length.0", new ItemStack(OfalenModItemCore.gemOfalen, 1, 0), 10));
+		categoryRange.registerChildSetting(new OfalenSettingFloat("Length.1", new ItemStack(OfalenModItemCore.gemOfalen, 1, 1), 10));
+		categoryRange.registerChildSetting(new OfalenSettingFloat("Length.2", new ItemStack(OfalenModItemCore.gemOfalen, 1, 2), 10));
+		OfalenTimer.watchAndLog("ItemCollector.init");
+	}
 
 	@Override
 	public void getSubItems(Item item, CreativeTabs tab, List list) {
@@ -69,7 +108,7 @@ public class ItemCollector extends ItemFuture implements IItemOfalenSettable {
 		if (itemStack.getTagCompound().getByte(OfalenNBTUtil.INTERVAL) > 0)
 			return;
 		// 無効時間をリセット。TODO 詳細設定
-		byte intervalMax = (Byte) OfalenDetailedSettingHandler.getCurrentValueFromNBT(OfalenDetailedSettingHandler.getSettingTag(itemStack), "Interval/", this.getSetting().getChildSetting(new ItemStack(Items.quartz)));
+		byte intervalMax = settingInterval.getValueByStack(itemStack);
 		itemStack.getTagCompound().setByte(OfalenNBTUtil.INTERVAL, intervalMax);
 		// 範囲の設定。TODO 詳細設定
 		int rangeItem = 10;
@@ -235,36 +274,65 @@ public class ItemCollector extends ItemFuture implements IItemOfalenSettable {
 	}
 
 	@Override
-	public OfalenSettingList getSetting() {
-		ArrayList<OfalenSetting> list1;
-		ArrayList<OfalenSetting> list2;
-		ArrayList<OfalenSetting> list3;
-		// コレクター。
-		list1 = new ArrayList<OfalenSetting>();
-		// 自動停止機能が有効か。
-		list1.add(new OfalenSetting.OfalenSettingBoolean("AutoStopping", new ItemStack(Blocks.redstone_torch), true));
-		// インターバル。
-		list1.add(new OfalenSettingByte("Interval", new ItemStack(Items.quartz), 10, true));
-		// アイテム。
-		list2 = new ArrayList<OfalenSetting>();
-		// 範囲。
-		list3 = new ArrayList<OfalenSetting>();
-		list3.add(new OfalenSettingByte("DesignationMode", new ItemStack(Items.stick), 1, 1, 3));
-		list3.add(new OfalenSettingDouble("Length.0", new ItemStack(OfalenModItemCore.gemOfalen, 1, 0), 10.0D));
-		list3.add(new OfalenSettingDouble("Length.1", new ItemStack(OfalenModItemCore.gemOfalen, 1, 1), 10.0D));
-		list3.add(new OfalenSettingDouble("Length.2", new ItemStack(OfalenModItemCore.gemOfalen, 1, 2), 10.0D));
-		list2.add(new OfalenSettingList("Range", new ItemStack(OfalenModBlockCore.surveyorOfalen), list3));
-		list1.add(new OfalenSettingList("Item", new ItemStack(OfalenModItemCore.partsOfalen, 1, 9), list2));
-		// 経験値。
-		list2 = new ArrayList<OfalenSetting>();
-		// 範囲。
-		list3 = new ArrayList<OfalenSetting>();
-		list3.add(new OfalenSettingByte("DesignationMode", new ItemStack(Items.stick), 1, 1, 3));
-		list3.add(new OfalenSettingDouble("Length.0", new ItemStack(OfalenModItemCore.gemOfalen, 1, 0), 10.0D));
-		list3.add(new OfalenSettingDouble("Length.1", new ItemStack(OfalenModItemCore.gemOfalen, 1, 1), 10.0D));
-		list3.add(new OfalenSettingDouble("Length.2", new ItemStack(OfalenModItemCore.gemOfalen, 1, 2), 10.0D));
-		list2.add(new OfalenSettingList("Range", new ItemStack(OfalenModBlockCore.surveyorOfalen), list3));
-		list1.add(new OfalenSettingList("Exp", new ItemStack(Items.book), list2));
-		return new OfalenSettingList("OfalenCollector", null, list1);
+	public OfalenSettingCategoryOrigin getSetting() {
+		return settingCategoryOrigin;
+	}
+
+	private static class OfalenSettingDesignationMode extends OfalenSettingContent<Byte> {
+		public OfalenSettingDesignationMode(String name, ItemStack stack, int valueDefault) {
+			super(name, stack, (byte) valueDefault);
+		}
+
+		@Override
+		public NBTBase getTagFromValue(Byte value) {
+			return new NBTTagByte(value);
+		}
+
+		@Override
+		public Byte getValueFromTag(NBTBase nbt) {
+			byte value = valueDefault;
+			if (nbt instanceof NBTBase.NBTPrimitive)
+				value = ((NBTBase.NBTPrimitive) nbt).func_150290_f();
+			return getValidValue(value);
+		}
+
+		@Override
+		public Byte getChangedValue(Byte current, ItemStack stackSpecifier) {
+			int value = valueDefault;
+			if (stackSpecifier.getItem() == OfalenModItemCore.gemOfalen)
+				value = stackSpecifier.getItemDamage();
+			return getValidValue(value);
+		}
+
+		@Override
+		public List<ItemStack> getSelectableItemList() {
+			List<ItemStack> list = new ArrayList<ItemStack>();
+			list.add(new ItemStack(OfalenModItemCore.gemOfalen, 1, 0));
+			list.add(new ItemStack(OfalenModItemCore.gemOfalen, 1, 1));
+			list.add(new ItemStack(OfalenModItemCore.gemOfalen, 1, 2));
+			list.add(new ItemStack(Blocks.dirt));
+			return list;
+		}
+
+		private byte getValidValue(int value) {
+			value = Math.max(0, value);
+			value = Math.min(2, value);
+			return (byte) value;
+		}
+
+		@Override
+		protected String getMessageFromValue(Byte value) {
+			if (value != null) {
+				switch (value) {
+				case 0:
+					return StatCollector.translateToLocal(LANGUAGE_PREFIX + "collector.sphere");
+				case 1:
+					return StatCollector.translateToLocal(LANGUAGE_PREFIX + "collector.cylinder");
+				case 2:
+					return StatCollector.translateToLocal(LANGUAGE_PREFIX + "collector.cuboid");
+				}
+			}
+			return super.getMessageFromValue(value);
+		}
 	}
 }

@@ -1,12 +1,13 @@
 package nahama.ofalenmod.gui;
 
 import nahama.ofalenmod.core.OfalenModPacketCore;
-import nahama.ofalenmod.handler.OfalenDetailedSettingHandler;
 import nahama.ofalenmod.inventory.ContainerDetailedSetter;
 import nahama.ofalenmod.network.MApplyDetailedSetter;
+import nahama.ofalenmod.setting.IItemOfalenSettable;
+import nahama.ofalenmod.setting.OfalenSetting;
+import nahama.ofalenmod.setting.OfalenSettingCategory;
+import nahama.ofalenmod.setting.OfalenSettingContent;
 import nahama.ofalenmod.tileentity.TileEntityDetailedSetter;
-import nahama.ofalenmod.util.IItemOfalenSettable;
-import nahama.ofalenmod.util.OfalenSetting;
 import nahama.ofalenmod.util.OfalenTimer;
 import nahama.ofalenmod.util.OfalenUtil;
 import net.minecraft.client.Minecraft;
@@ -17,6 +18,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.StatCollector;
 import org.lwjgl.opengl.GL11;
+
+import java.util.List;
 
 public class GuiDetailedSetter extends GuiContainer {
 	private static final ResourceLocation GUITEXTURE = new ResourceLocation("ofalenmod:textures/gui/container/detailed_setter.png");
@@ -34,40 +37,66 @@ public class GuiDetailedSetter extends GuiContainer {
 		StringBuilder s = new StringBuilder(StatCollector.translateToLocal(tileEntity.getInventoryName()));
 		fontRendererObj.drawString(s.toString(), xSize / 2 - fontRendererObj.getStringWidth(s.toString()) / 2, 6, 0x404040);
 		fontRendererObj.drawString(StatCollector.translateToLocal("container.inventory"), 8, ySize - 96 + 2, 0x404040);
-		// 右側に情報を表示する。
-		ItemStack itemStack = tileEntity.getStackInSlot(0);
-		if (itemStack == null || !(itemStack.getItem() instanceof IItemOfalenSettable))
+		// 入っているアイテムを判定し、描画する。
+		ItemStack stackOrigin = tileEntity.getStackInSlot(0);
+		// 対応していないアイテムなら終了。
+		if (stackOrigin == null || !(stackOrigin.getItem() instanceof IItemOfalenSettable))
 			return;
-		int i = 0;
-		// 一番上のスロットの右にはアイテム名を表示する。
-		OfalenSetting setting = ((IItemOfalenSettable) itemStack.getItem()).getSetting();
-		fontRendererObj.drawString(setting.getLocalizedSettingName(), 29, 21 + (i * 18), 0x404040);
-		// 設定のパス。
-		s = new StringBuilder();
-		for (i = 1; i < tileEntity.getFirstInvalidSlot(); i++) {
-			setting = setting.getChildSetting(tileEntity.getStackInSlot(i));
-			fontRendererObj.drawString(setting.getLocalizedSettingName(), 29, 21 + (i * 18), 0x404040);
-			s.append(setting.getSettingName()).append("/");
-		}
-		if (tileEntity.isApplicableState()) {
-			// 適用可能な状態なら、現在の値と適用後の値を表示。
-			Object currentValue = OfalenDetailedSettingHandler.getCurrentValueFromNBT(OfalenDetailedSettingHandler.getSettingTag(itemStack), s.toString(), setting);
-			fontRendererObj.drawString(currentValue.toString() + " -> " + setting.getSettingValue(currentValue, tileEntity.getStackInSlot(i)), 29, 21 + (i * 18), 0x404040);
-		} else {
-			// 指定が完全でないなら、候補アイテムを表示。
-			int j = 0;
-			for (ItemStack stack : setting.getSelectableItems()) {
-				int posX = 26 + (j * 18);
-				int posY = 18 + (i * 18);
-				GL11.glEnable(GL11.GL_LIGHTING);
-				itemRender.renderItemAndEffectIntoGUI(fontRendererObj, mc.getTextureManager(), stack, posX, posY);
-				itemRender.renderItemOverlayIntoGUI(fontRendererObj, mc.getTextureManager(), stack, posX, posY, null);
-				mc.getTextureManager().bindTexture(GUITEXTURE);
-				this.drawTexturedModalRect(posX - 1, posY - 1, 184, 0, 18, 18);
-				j++;
+		// 最初のアイテムが正しいなら、設定を取得する。
+		OfalenSetting setting = ((IItemOfalenSettable) stackOrigin.getItem()).getSetting();
+		// 設定名（アイテム名）を表示する。
+		fontRendererObj.drawString(setting.getLocalizedName(), 29, 21, 0x404040);
+		// 各スロットに対し、メッセージや候補アイテムを描画する。
+		for (int slotNum = 1; slotNum < tileEntity.getSizeInventory(); slotNum++) {
+			ItemStack stack = tileEntity.getStackInSlot(slotNum);
+			OfalenSetting lastSetting = setting;
+			if (setting != null) {
+				if (setting instanceof OfalenSettingCategory) {
+					setting = ((OfalenSettingCategory) setting).getChildSetting(stack);
+				} else {
+					setting = null;
+				}
 			}
+			// このスロットの横に表示するメッセージ。
+			String message = null;
+			if (setting != null) {
+				// settingが取得できたなら、メッセージを取得する。
+				message = setting.getLocalizedName();
+			} else {
+				// settingが取得できなかった時。（スロットが空か不正、もしくは終端設定の次）
+				if (lastSetting != null) {
+					if (stack == null) {
+						// アイテムが入っていないなら、候補のアイテムを表示する。
+						this.drawSelectableItems(slotNum, lastSetting.getSelectableItemList());
+					} else if (lastSetting instanceof OfalenSettingContent<?>) {
+						// 終端設定の次ならメッセージを取得する。
+						OfalenSettingContent<?> settingContent = (OfalenSettingContent<?>) lastSetting;
+						message = settingContent.getSecondMessage(stackOrigin, stack);
+					}
+				}
+			}
+			if (message != null)
+				this.drawMessage(slotNum, message);
 		}
 		OfalenTimer.watchAndLog("GuiDetailedSetter.drawGuiContainerForegroundLayer", 0.3);
+	}
+
+	private void drawSelectableItems(int slotNum, List<ItemStack> list) {
+		int i = 0;
+		for (ItemStack stack : list) {
+			int posX = 26 + (i * 18);
+			int posY = 18 + (slotNum * 18);
+			GL11.glEnable(GL11.GL_LIGHTING);
+			itemRender.renderItemAndEffectIntoGUI(fontRendererObj, mc.getTextureManager(), stack, posX, posY);
+			itemRender.renderItemOverlayIntoGUI(fontRendererObj, mc.getTextureManager(), stack, posX, posY, null);
+			mc.getTextureManager().bindTexture(GUITEXTURE);
+			this.drawTexturedModalRect(posX - 1, posY - 1, 184, 0, 18, 18);
+			i++;
+		}
+	}
+
+	private void drawMessage(int slotNum, String message) {
+		fontRendererObj.drawString(message, 29, 21 + (slotNum * 18), 0x404040);
 	}
 
 	@Override

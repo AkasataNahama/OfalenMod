@@ -207,6 +207,27 @@ info.ofalen.crystalExp.size=Experience Amount:
 info.ofalen.wandSurveying.standard.a=Standard Point (White):
 info.ofalen.wandSurveying.standard.b=Standard Point (Black):
 info.ofalen.wandSurveying.range=Range:
+// Detailed Setting
+info.ofalen.settingDetailed.boolean.true=Enabled
+info.ofalen.settingDetailed.boolean.false=Disabled
+// Collector
+info.ofalen.settingDetailed.OfalenCollector.AutoStopping=Auto Stopping
+info.ofalen.settingDetailed.OfalenCollector.Interval=Interval [tick]
+info.ofalen.settingDetailed.OfalenCollector.Item=Item
+info.ofalen.settingDetailed.OfalenCollector.Item.Range=Collecting Range
+info.ofalen.settingDetailed.OfalenCollector.Item.Range.DesignationMode=Designation Mode
+info.ofalen.settingDetailed.OfalenCollector.Item.Range.Length.0=Length: 1
+info.ofalen.settingDetailed.OfalenCollector.Item.Range.Length.1=Length: 2
+info.ofalen.settingDetailed.OfalenCollector.Item.Range.Length.2=Length: 3
+info.ofalen.settingDetailed.OfalenCollector.Exp=Experience
+info.ofalen.settingDetailed.OfalenCollector.Exp.Range=Collecting Range
+info.ofalen.settingDetailed.OfalenCollector.Exp.Range.DesignationMode=Designation Mode
+info.ofalen.settingDetailed.OfalenCollector.Exp.Range.Length.0=Length: 1
+info.ofalen.settingDetailed.OfalenCollector.Exp.Range.Length.1=Length: 2
+info.ofalen.settingDetailed.OfalenCollector.Exp.Range.Length.2=Length: 3
+info.ofalen.settingDetailed.collector.sphere=Sphere
+info.ofalen.settingDetailed.collector.cylinder=Cylinder
+info.ofalen.settingDetailed.collector.cuboid=Cuboid
 
 // GUI
 container.ofalen.machine.smelting-0=Ofalen Smelting Machine
@@ -237,6 +258,7 @@ container.ofalen.mover=Ofalen Block Mover
 container.ofalen.breaker=Ofalen Block Breaker
 container.ofalen.blockCollector=Ofalen Collector Block
 container.ofalen.boxPresent=Ofalen Present Box
+container.ofalen.setterDetailed=Ofalen Detailed Setter
 
 // Item
 item.ofalen.gem.0.name=Red Ofalen
@@ -412,6 +434,7 @@ tile.ofalen.block.6.name=Purple Ofalen Block
 tile.ofalen.block.7.name=Dark Ofalen Block
 tile.ofalen.markerTeleporting.name=Ofalen Teleporting Marker
 tile.ofalen.boxPresent.name=Ofalen Present Box
+tile.ofalen.setterDetailed.name=Ofalen Detailed Setter
 
 // Machine
 tile.ofalen.machineSmelting.name=Ofalen Smelting Machine

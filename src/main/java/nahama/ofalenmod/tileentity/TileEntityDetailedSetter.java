@@ -1,7 +1,12 @@
 package nahama.ofalenmod.tileentity;
 
-import nahama.ofalenmod.handler.OfalenDetailedSettingHandler;
-import nahama.ofalenmod.util.*;
+import nahama.ofalenmod.setting.IItemOfalenSettable;
+import nahama.ofalenmod.setting.OfalenSetting;
+import nahama.ofalenmod.setting.OfalenSettingCategory;
+import nahama.ofalenmod.setting.OfalenSettingContent;
+import nahama.ofalenmod.util.OfalenLog;
+import nahama.ofalenmod.util.OfalenNBTUtil;
+import nahama.ofalenmod.util.OfalenTimer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
@@ -11,64 +16,82 @@ import net.minecraft.tileentity.TileEntity;
 
 public class TileEntityDetailedSetter extends TileEntity implements IInventory {
 	protected ItemStack[] itemStacks = new ItemStack[this.getSizeInventory()];
+	/** インベントリの状態。 */
 	protected byte state = -1;
 
+	/** 入れられたアイテムによって設定を適用する。 */
 	public void apply() {
 		OfalenTimer.start("TileEntityDetailedSetter.apply");
 		if (itemStacks[0] == null || !(itemStacks[0].getItem() instanceof IItemOfalenSettable)) {
 			OfalenLog.debuggingInfo("Failed to apply detailed setting!", "TileEntityDetailedSetter");
 			return;
 		}
+		// 設定を取得していく。
 		OfalenSetting setting = ((IItemOfalenSettable) itemStacks[0].getItem()).getSetting();
-		// 設定のパス。
-		String s = "";
-		int i = 0;
-		while (setting.hasChildSetting()) {
-			i++;
-			setting = setting.getChildSetting(itemStacks[i]);
-			s += setting.getSettingName() + "/";
+		int i;
+		for (i = 1; i < this.getSizeInventory(); i++) {
+			if (setting != null && setting instanceof OfalenSettingCategory) {
+				setting = ((OfalenSettingCategory) setting).getChildSetting(itemStacks[i]);
+			} else {
+				break;
+			}
 		}
-		i++;
-		NBTTagCompound nbtSetting = OfalenDetailedSettingHandler.getSettingTag(itemStacks[0]);
-		OfalenDetailedSettingHandler.applySettingToNBT(nbtSetting, s, setting, itemStacks[i]);
+		if (setting == null || !(setting instanceof OfalenSettingContent<?>)) {
+			// 正しく取得できなかったら終了。
+			OfalenLog.error("Failed to apply detailed setting!", "TileEntityDetailedSetter");
+			return;
+		}
+		// 設定を適用する。
+		((OfalenSettingContent<?>) setting).changeTagByStack(itemStacks[0], itemStacks[i]);
 		OfalenTimer.watchAndLog("TileEntityDetailedSetter.apply");
 	}
 
+	/** 更新時の処理。 */
 	@Override
 	public void updateEntity() {
+		// 状態を更新させる。
 		if (state != -1)
 			state = -1;
 	}
 
+	/** インベントリの状態により数値を返す。 */
 	protected byte getState() {
+		// 状態が更新されていなければ更新する。
 		if (state < 0)
 			state = (byte) this.updateState();
 		return state;
 	}
 
-	protected int updateState() {
+	/** 状態を更新する。 */
+	private int updateState() {
+		// 最初の不正スロットの番号。最後まで正しかったら64追加。
 		if (itemStacks[0] == null || !(itemStacks[0].getItem() instanceof IItemOfalenSettable))
 			return 0;
 		OfalenSetting setting = ((IItemOfalenSettable) itemStacks[0].getItem()).getSetting();
 		for (int i = 1; i < itemStacks.length; i++) {
-			// 空のスロットがあったら終了。
+			// 空のスロットなら終了。
 			if (itemStacks[i] == null)
 				return i;
-			// 不正なアイテムがあったら終了。
-			if (!setting.isValidItem(itemStacks[i]))
-				return i;
-			// 設定の末端に達したら終了。
-			if (!setting.hasChildSetting())
+			// 設定の末端に達したら適用可能として終了。
+			if (setting instanceof OfalenSettingContent<?>)
 				return i + 64;
-			setting = setting.getChildSetting(itemStacks[i]);
+			// キャストエラー防止。
+			if (!(setting instanceof OfalenSettingCategory))
+				break;
+			setting = ((OfalenSettingCategory) setting).getChildSetting(itemStacks[i]);
+			// 不正なアイテムだったら終了。
+			if (setting == null)
+				return i;
 		}
 		return 0;
 	}
 
+	/** 設定を適用可能な状態か。 */
 	public boolean isApplicableState() {
 		return this.getState() > 63;
 	}
 
+	/** 最初の不正スロットの番号を返す。 */
 	public int getFirstInvalidSlot() {
 		return this.getState() % 32;
 	}
@@ -104,7 +127,7 @@ public class TileEntityDetailedSetter extends TileEntity implements IInventory {
 		}
 	}
 
-	protected boolean isExistingSlot(int slot) {
+	private boolean isExistingSlot(int slot) {
 		return 0 <= slot && slot < this.getSizeInventory();
 	}
 
