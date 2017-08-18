@@ -1,7 +1,8 @@
 package nahama.ofalenmod.util;
 
-import com.google.common.base.Objects;
 import net.minecraft.nbt.NBTTagCompound;
+
+import java.util.Arrays;
 
 /** x, y, zの座標をshortで保持する。equalsオーバーライド済み。 */
 public class BlockPos {
@@ -69,6 +70,6 @@ public class BlockPos {
 
 	@Override
 	public int hashCode() {
-		return Objects.hashCode(x, y, z);
+		return Arrays.hashCode(new Integer[] { x, y, z });
 	}
 }
