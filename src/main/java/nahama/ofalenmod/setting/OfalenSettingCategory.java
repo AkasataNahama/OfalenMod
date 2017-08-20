@@ -41,4 +41,8 @@ public class OfalenSettingCategory extends OfalenSetting {
 		}
 		return null;
 	}
+
+	public OfalenSettingCategory getChildCategory(String name) {
+		return (OfalenSettingCategory) this.getChildSetting(name);
+	}
 }
