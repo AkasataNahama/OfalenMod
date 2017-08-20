@@ -33,4 +33,12 @@ public class OfalenSettingCategory extends OfalenSetting {
 		}
 		return null;
 	}
+
+	public OfalenSetting getChildSetting(String name) {
+		for (OfalenSetting setting : listSetting) {
+			if (setting.getName().equals(name))
+				return setting;
+		}
+		return null;
+	}
 }
