@@ -7,8 +7,8 @@ import net.minecraftforge.oredict.OreDictionary;
 import java.util.List;
 
 public abstract class OfalenSetting {
-	protected final String PATH_SEPARATOR = ".";
-	protected final String LANGUAGE_PREFIX = "info.ofalen.settingDetailed.";
+	protected static final String PATH_SEPARATOR = ".";
+	protected static final String LANGUAGE_PREFIX = "info.ofalen.settingDetailed.";
 	private final String name;
 	private final ItemStack stack;
 	private String path;
