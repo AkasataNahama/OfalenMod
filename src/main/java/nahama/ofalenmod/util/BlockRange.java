@@ -79,8 +79,8 @@ public class BlockRange {
 		return posMin.equals(range.posMin) && posMax.equals(range.posMax);
 	}
 
-	/** "min(x, y, z), max(x, y, z)" */
+	/** "Min(x, y, z), Max(x, y, z)" */
 	public String toStringRange() {
-		return "min(" + posMax.toStringCoord() + "), max(" + posMin.toStringCoord() + ")";
+		return "Min(" + posMin.toStringCoord() + "), Max(" + posMax.toStringCoord() + ")";
 	}
 }
