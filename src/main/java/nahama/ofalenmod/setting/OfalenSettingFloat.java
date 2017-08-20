@@ -43,9 +43,9 @@ public class OfalenSettingFloat extends OfalenSettingContent<Float> {
 	public Float getChangedValue(Float current, ItemStack stackSpecifier) {
 		double value = valueDefault;
 		if (stackSpecifier.getItem() == Item.getItemFromBlock(Blocks.stone)) {
-			value = Math.round(current * 10.0D) / 10.0D + stackSpecifier.stackSize * 0.1D;
+			value = (Math.round(current * 10.0D) + stackSpecifier.stackSize) / 10.0D;
 		} else if (stackSpecifier.getItem() == Item.getItemFromBlock(Blocks.cobblestone)) {
-			value = Math.round(current * 10.0D) / 10.0D - stackSpecifier.stackSize * 0.1D;
+			value = (Math.round(current * 10.0D) - stackSpecifier.stackSize) / 10.0D;
 		}
 		return getValidValue(value);
 	}
