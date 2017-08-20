@@ -131,7 +131,8 @@ info.ofalen.util.item=Item
 info.ofalen.recipeSmelting=Ofalen Smelting
 // Perfect Tool
 info.ofalen.toolPerfect.mode=Right Click Effect
-info.ofalen.toolPerfect.mode.changed=Right Click Effect is changed to %s
+info.ofalen.toolPerfect.mode.changed=Right Click Effect is changed to %s.
+info.ofalen.toolPerfect.mode.-1=Invalid
 info.ofalen.toolPerfect.mode.0=Single Breaking
 info.ofalen.toolPerfect.mode.1=Range Breaking
 info.ofalen.toolPerfect.mode.1.range=    Range
@@ -210,6 +211,35 @@ info.ofalen.wandSurveying.range=Range:
 // Detailed Setting
 info.ofalen.settingDetailed.boolean.true=Enabled
 info.ofalen.settingDetailed.boolean.false=Disabled
+// Perfect Tool
+info.ofalen.settingDetailed.OfalenPerfectTool.ModeChangeNotification=Change Notification
+info.ofalen.settingDetailed.OfalenPerfectTool.ModeChange=Right Click Effect
+info.ofalen.settingDetailed.OfalenPerfectTool.ModeChange.Mode.0=Single Breaking
+info.ofalen.settingDetailed.OfalenPerfectTool.ModeChange.Mode.1=Range Breaking
+info.ofalen.settingDetailed.OfalenPerfectTool.ModeChange.Mode.2=Cultivating
+info.ofalen.settingDetailed.OfalenPerfectTool.ModeChange.Mode.3=Guarding
+info.ofalen.settingDetailed.OfalenPerfectTool.NormalBreaking=Normal Breaking (Left Click)
+info.ofalen.settingDetailed.OfalenPerfectTool.NormalBreaking.ItemFilter=Item Filter
+info.ofalen.settingDetailed.OfalenPerfectTool.NormalBreaking.BreakingEfficiency=Breaking Efficiency
+info.ofalen.settingDetailed.OfalenPerfectTool.SingleBreaking=Single Breaking
+info.ofalen.settingDetailed.OfalenPerfectTool.SingleBreaking.ItemFilter=Item Filter
+info.ofalen.settingDetailed.OfalenPerfectTool.RangeBreaking=Range Breaking
+info.ofalen.settingDetailed.OfalenPerfectTool.RangeBreaking.ItemFilter=Item Filter
+info.ofalen.settingDetailed.OfalenPerfectTool.RangeBreaking.EyeResponse=Eye Response
+info.ofalen.settingDetailed.OfalenPerfectTool.RangeBreaking.DefaultRange=Standard Range
+info.ofalen.settingDetailed.OfalenPerfectTool.RangeBreaking.DefaultRange.Length.X+=Length: X+
+info.ofalen.settingDetailed.OfalenPerfectTool.RangeBreaking.DefaultRange.Length.Y+=Length: Y+
+info.ofalen.settingDetailed.OfalenPerfectTool.RangeBreaking.DefaultRange.Length.Z+=Length: Z+
+info.ofalen.settingDetailed.OfalenPerfectTool.RangeBreaking.DefaultRange.Length.X-=Length: X-
+info.ofalen.settingDetailed.OfalenPerfectTool.RangeBreaking.DefaultRange.Length.Y-=Length: Z-
+info.ofalen.settingDetailed.OfalenPerfectTool.RangeBreaking.DefaultRange.Length.Z-=Length: Y-
+info.ofalen.settingDetailed.OfalenPerfectTool.RangeBreaking.Strength=Expansion Strength
+info.ofalen.settingDetailed.OfalenPerfectTool.RangeBreaking.Strength.Length.X+=Length: X+
+info.ofalen.settingDetailed.OfalenPerfectTool.RangeBreaking.Strength.Length.Y+=Length: Y+
+info.ofalen.settingDetailed.OfalenPerfectTool.RangeBreaking.Strength.Length.Z+=Length: Z+
+info.ofalen.settingDetailed.OfalenPerfectTool.RangeBreaking.Strength.Length.X-=Length: X-
+info.ofalen.settingDetailed.OfalenPerfectTool.RangeBreaking.Strength.Length.Y-=Length: Z-
+info.ofalen.settingDetailed.OfalenPerfectTool.RangeBreaking.Strength.Length.Z-=Length: Y-
 // Collector
 info.ofalen.settingDetailed.OfalenCollector.AutoStopping=Auto Stopping
 info.ofalen.settingDetailed.OfalenCollector.Interval=Interval [tick]
