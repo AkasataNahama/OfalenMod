@@ -11,6 +11,7 @@ import nahama.ofalenmod.setting.OfalenSettingCategory;
 import nahama.ofalenmod.setting.OfalenSettingCategoryOrigin;
 import nahama.ofalenmod.setting.OfalenSettingContent;
 import nahama.ofalenmod.setting.OfalenSettingFloat;
+import nahama.ofalenmod.util.EntityRange;
 import nahama.ofalenmod.util.OfalenNBTUtil;
 import nahama.ofalenmod.util.OfalenNBTUtil.FilterUtil;
 import nahama.ofalenmod.util.OfalenTimer;
@@ -39,7 +40,10 @@ import java.util.List;
 public class ItemCollector extends ItemFuture implements IItemOfalenSettable {
 	private IIcon[] icons;
 	private OfalenSettingCategoryOrigin settingCategoryOrigin;
+	private OfalenSettingBoolean settingAutoStopping;
 	private OfalenSettingByte settingInterval;
+	private OfalenSettingCategory categoryItemRange;
+	private OfalenSettingCategory categoryExpRange;
 
 	public ItemCollector() {
 		super();
@@ -47,7 +51,8 @@ public class ItemCollector extends ItemFuture implements IItemOfalenSettable {
 		// 詳細設定の初期化を行う。
 		settingCategoryOrigin = new OfalenSettingCategoryOrigin("OfalenCollector", new ItemStack(this, 1, OreDictionary.WILDCARD_VALUE));
 		// 自動停止機能が有効か。
-		settingCategoryOrigin.registerChildSetting(new OfalenSettingBoolean("AutoStopping", new ItemStack(Blocks.redstone_torch), true));
+		settingAutoStopping = new OfalenSettingBoolean("AutoStopping", new ItemStack(Blocks.redstone_torch), true);
+		settingCategoryOrigin.registerChildSetting(settingAutoStopping);
 		// インターバル。
 		settingInterval = new OfalenSettingByte("Interval", new ItemStack(Items.quartz), 10, 0);
 		settingCategoryOrigin.registerChildSetting(settingInterval);
@@ -55,22 +60,22 @@ public class ItemCollector extends ItemFuture implements IItemOfalenSettable {
 		OfalenSettingCategory categoryItem = new OfalenSettingCategory("Item", new ItemStack(OfalenModItemCore.partsOfalen, 1, 9));
 		settingCategoryOrigin.registerChildSetting(categoryItem);
 		// 範囲。
-		OfalenSettingCategory categoryRange = new OfalenSettingCategory("Range", new ItemStack(OfalenModBlockCore.surveyorOfalen));
-		categoryItem.registerChildSetting(categoryRange);
-		categoryRange.registerChildSetting(new OfalenSettingDesignationMode("DesignationMode", new ItemStack(Items.stick), 0));
-		categoryRange.registerChildSetting(new OfalenSettingFloat("Length.0", new ItemStack(OfalenModItemCore.gemOfalen, 1, 0), 10));
-		categoryRange.registerChildSetting(new OfalenSettingFloat("Length.1", new ItemStack(OfalenModItemCore.gemOfalen, 1, 1), 10));
-		categoryRange.registerChildSetting(new OfalenSettingFloat("Length.2", new ItemStack(OfalenModItemCore.gemOfalen, 1, 2), 10));
+		categoryItemRange = new OfalenSettingCategory("Range", new ItemStack(OfalenModBlockCore.surveyorOfalen));
+		categoryItem.registerChildSetting(categoryItemRange);
+		categoryItemRange.registerChildSetting(new OfalenSettingDesignationMode("DesignationMode", new ItemStack(Items.stick), 0));
+		categoryItemRange.registerChildSetting(new OfalenSettingFloat("Length.0", new ItemStack(OfalenModItemCore.gemOfalen, 1, 0), 10, 0));
+		categoryItemRange.registerChildSetting(new OfalenSettingFloat("Length.1", new ItemStack(OfalenModItemCore.gemOfalen, 1, 1), 10, 0));
+		categoryItemRange.registerChildSetting(new OfalenSettingFloat("Length.2", new ItemStack(OfalenModItemCore.gemOfalen, 1, 2), 10, 0));
 		// 経験値。
 		OfalenSettingCategory categoryExp = new OfalenSettingCategory("Exp", new ItemStack(Items.book));
 		settingCategoryOrigin.registerChildSetting(categoryExp);
 		// 範囲。
-		categoryRange = new OfalenSettingCategory("Range", new ItemStack(OfalenModBlockCore.surveyorOfalen));
-		categoryExp.registerChildSetting(categoryRange);
-		categoryRange.registerChildSetting(new OfalenSettingDesignationMode("DesignationMode", new ItemStack(Items.stick), 0));
-		categoryRange.registerChildSetting(new OfalenSettingFloat("Length.0", new ItemStack(OfalenModItemCore.gemOfalen, 1, 0), 10));
-		categoryRange.registerChildSetting(new OfalenSettingFloat("Length.1", new ItemStack(OfalenModItemCore.gemOfalen, 1, 1), 10));
-		categoryRange.registerChildSetting(new OfalenSettingFloat("Length.2", new ItemStack(OfalenModItemCore.gemOfalen, 1, 2), 10));
+		categoryExpRange = new OfalenSettingCategory("Range", new ItemStack(OfalenModBlockCore.surveyorOfalen));
+		categoryExp.registerChildSetting(categoryExpRange);
+		categoryExpRange.registerChildSetting(new OfalenSettingDesignationMode("DesignationMode", new ItemStack(Items.stick), 0));
+		categoryExpRange.registerChildSetting(new OfalenSettingFloat("Length.0", new ItemStack(OfalenModItemCore.gemOfalen, 1, 0), 10, 0));
+		categoryExpRange.registerChildSetting(new OfalenSettingFloat("Length.1", new ItemStack(OfalenModItemCore.gemOfalen, 1, 1), 10, 0));
+		categoryExpRange.registerChildSetting(new OfalenSettingFloat("Length.2", new ItemStack(OfalenModItemCore.gemOfalen, 1, 2), 10, 0));
 		OfalenTimer.watchAndLog("ItemCollector.init");
 	}
 
@@ -107,16 +112,18 @@ public class ItemCollector extends ItemFuture implements IItemOfalenSettable {
 		// 無効時間が残っていたら終了。
 		if (itemStack.getTagCompound().getByte(OfalenNBTUtil.INTERVAL) > 0)
 			return;
-		// 無効時間をリセット。TODO 詳細設定
+		// 無効時間をリセット。
 		byte intervalMax = settingInterval.getValueByStack(itemStack);
 		itemStack.getTagCompound().setByte(OfalenNBTUtil.INTERVAL, intervalMax);
-		// 範囲の設定。TODO 詳細設定
-		int rangeItem = 10;
-		int rangeExp = 15;
-		if (itemStack.getTagCompound().getBoolean(OfalenNBTUtil.IS_SET_IN_DETAIL)) {
-			rangeItem = itemStack.getTagCompound().getShort(OfalenNBTUtil.ITEM_RANGE);
-			rangeExp = itemStack.getTagCompound().getShort(OfalenNBTUtil.EXP_RANGE);
-		}
+		// アイテムの範囲を設定する。
+		EntityRange rangeItemMin = EntityRange.getRangeByType(player, 0, 2);
+		double[] lengths = new double[] { this.getLengthByNumber(itemStack, categoryItemRange, 0), this.getLengthByNumber(itemStack, categoryItemRange, 1), this.getLengthByNumber(itemStack, categoryItemRange, 2) };
+		EntityRange rangeItem = EntityRange.getRangeByType(player, ((OfalenSettingDesignationMode) categoryItemRange.getChildSetting("DesignationMode")).getValueByStack(itemStack), lengths);
+		// 経験値の範囲を設定する。
+		EntityRange rangeExpMin = EntityRange.getRangeByType(player, 0, 4);
+		lengths = new double[] { this.getLengthByNumber(itemStack, categoryExpRange, 0), this.getLengthByNumber(itemStack, categoryExpRange, 1), this.getLengthByNumber(itemStack, categoryExpRange, 2) };
+		EntityRange rangeExp = EntityRange.getRangeByType(player, ((OfalenSettingDesignationMode) categoryExpRange.getChildSetting("DesignationMode")).getValueByStack(itemStack), lengths);
+		// 後でスポーンさせるEntityのリスト。
 		ArrayList<Entity> listWaitingEntity = new ArrayList<Entity>();
 		// EntityItemとEntityXPOrbがあれば移動する。
 		for (Object o : world.loadedEntityList) {
@@ -126,9 +133,8 @@ public class ItemCollector extends ItemFuture implements IItemOfalenSettable {
 			if (!isItemDisabled && o instanceof EntityItem) {
 				// EntityItemにキャスト。
 				EntityItem entityItem = (EntityItem) o;
-				double distance = player.getDistanceSqToEntity(entityItem);
-				// 範囲外か、拾えない状態（ドロップされてすぐ）なら次のEntityへ。
-				if (distance < 2 || distance > rangeItem * rangeItem || entityItem.delayBeforeCanPickup > 0)
+				// 拾えない状態（ドロップされてすぐ）か、範囲外なら次のEntityへ。
+				if (entityItem.delayBeforeCanPickup > 0 || rangeItemMin.isInRange(entityItem) || !rangeItem.isInRange(entityItem))
 					continue;
 				ItemStack eItemStack = entityItem.getEntityItem();
 				// アイテムフィルターで許可されていなかったら次のEntityへ。
@@ -136,8 +142,11 @@ public class ItemCollector extends ItemFuture implements IItemOfalenSettable {
 					continue;
 				// 材料数を取得。
 				int amount = this.getMaterialAmount(itemStack);
-				// インベントリの空きスロット数を取得。 TODO 詳細設定
-				int limit = OfalenUtil.getRemainingItemAmountInInventory(player.inventory.mainInventory, eItemStack, player.inventory.getInventoryStackLimit());
+				// 回収量の上限値。
+				int limit = Integer.MAX_VALUE;
+				// 詳細設定で有効ならインベントリの空きスロット数を取得。
+				if (settingAutoStopping.getValueByStack(itemStack))
+					limit = OfalenUtil.getRemainingItemAmountInInventory(player.inventory.mainInventory, eItemStack, player.inventory.getInventoryStackLimit());
 				// 材料の限界も考慮。
 				if (OfalenModConfigCore.amountCollectorDamageItem > 0)
 					limit = Math.min(limit, amount / OfalenModConfigCore.amountCollectorDamageItem);
@@ -160,10 +169,9 @@ public class ItemCollector extends ItemFuture implements IItemOfalenSettable {
 					this.consumeMaterial(itemStack, limit * OfalenModConfigCore.amountCollectorDamageItem);
 			} else if (!isExpDisabled && (o instanceof EntityXPOrb)) {
 				// EntityXPOrbにキャスト。
-				EntityXPOrb e = (EntityXPOrb) o;
-				double distance = player.getDistanceSqToEntity(e);
+				EntityXPOrb entityXPOrb = (EntityXPOrb) o;
 				// 範囲外なら次のEntityへ。
-				if (distance < 16 || distance > rangeExp * rangeExp)
+				if (rangeExpMin.isInRange(entityXPOrb) || !rangeExp.isInRange(entityXPOrb))
 					continue;
 				// 材料の残りを取得。
 				int amount = this.getMaterialAmount(itemStack);
@@ -174,15 +182,15 @@ public class ItemCollector extends ItemFuture implements IItemOfalenSettable {
 				if (limit < 1)
 					continue;
 				// 経験値量が限界以下ならそのまま移動。
-				if (e.xpValue <= limit) {
-					e.setPosition(player.posX, player.posY, player.posZ);
+				if (entityXPOrb.xpValue <= limit) {
+					entityXPOrb.setPosition(player.posX, player.posY, player.posZ);
 					if (canDamage)
-						this.consumeMaterial(itemStack, e.xpValue * OfalenModConfigCore.amountCollectorDamageExp);
+						this.consumeMaterial(itemStack, entityXPOrb.xpValue * OfalenModConfigCore.amountCollectorDamageExp);
 					continue;
 				}
 				// 材料が足りなかったら足りる分だけ移動して終了。
 				listWaitingEntity.add(new EntityXPOrb(world, player.posX, player.posY, player.posZ, limit));
-				e.xpValue -= limit;
+				entityXPOrb.xpValue -= limit;
 				if (canDamage)
 					this.consumeMaterial(itemStack, limit * OfalenModConfigCore.amountCollectorDamageExp);
 			}
@@ -192,6 +200,10 @@ public class ItemCollector extends ItemFuture implements IItemOfalenSettable {
 			world.spawnEntityInWorld(e);
 		}
 		OfalenTimer.watchAndLog("ItemCollector.onUpdate", 0.1);
+	}
+
+	private float getLengthByNumber(ItemStack itemStack, OfalenSettingCategory category, int num) {
+		return ((OfalenSettingFloat) category.getChildSetting("Length." + num)).getValueByStack(itemStack);
 	}
 
 	/** 右クリック時の処理。 */
