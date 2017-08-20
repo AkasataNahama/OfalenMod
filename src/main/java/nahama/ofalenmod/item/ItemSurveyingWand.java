@@ -67,6 +67,8 @@ public class ItemSurveyingWand extends Item {
 		List<String> stringList = OfalenUtil.getAs(list);
 		if (itemStack.hasTagCompound()) {
 			BlockRangeWithStandard range = BlockRangeWithStandard.loadFromNBT(itemStack.getTagCompound().getCompoundTag(OfalenNBTUtil.RANGE));
+			if (range == null)
+				return;
 			stringList.add(StatCollector.translateToLocal("info.ofalen.wandSurveying.standard.a") + " (" + range.posA.toStringCoord() + ")");
 			stringList.add(StatCollector.translateToLocal("info.ofalen.wandSurveying.standard.b") + " (" + range.posB.toStringCoord() + ")");
 			stringList.add(StatCollector.translateToLocal("info.ofalen.wandSurveying.range") + " (" + range.toStringRange() + ")");
