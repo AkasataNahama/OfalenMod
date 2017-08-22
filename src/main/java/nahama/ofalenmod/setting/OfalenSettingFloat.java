@@ -13,7 +13,7 @@ public class OfalenSettingFloat extends OfalenSettingContent<Float> {
 	private final float valueMin, valueMax;
 
 	public OfalenSettingFloat(String name, ItemStack stack, double valueDefault) {
-		this(name, stack, valueDefault, Float.MIN_VALUE);
+		this(name, stack, valueDefault, -Float.MAX_VALUE);
 	}
 
 	public OfalenSettingFloat(String name, ItemStack stack, double valueDefault, double valueMin) {
