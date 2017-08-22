@@ -63,9 +63,9 @@ public class ItemCollector extends ItemFuture implements IItemOfalenSettable {
 		categoryItemRange = new OfalenSettingCategory("Range", new ItemStack(OfalenModBlockCore.surveyorOfalen));
 		categoryItem.registerChildSetting(categoryItemRange);
 		categoryItemRange.registerChildSetting(new OfalenSettingDesignationMode("DesignationMode", new ItemStack(Items.stick), 0));
-		categoryItemRange.registerChildSetting(new OfalenSettingFloat("Length.0", new ItemStack(OfalenModItemCore.gemOfalen, 1, 0), 10, 0));
-		categoryItemRange.registerChildSetting(new OfalenSettingFloat("Length.1", new ItemStack(OfalenModItemCore.gemOfalen, 1, 1), 10, 0));
-		categoryItemRange.registerChildSetting(new OfalenSettingFloat("Length.2", new ItemStack(OfalenModItemCore.gemOfalen, 1, 2), 10, 0));
+		categoryItemRange.registerChildSetting(new OfalenSettingFloat("Length-0", new ItemStack(OfalenModItemCore.gemOfalen, 1, 0), 10, 0));
+		categoryItemRange.registerChildSetting(new OfalenSettingFloat("Length-1", new ItemStack(OfalenModItemCore.gemOfalen, 1, 1), 10, 0));
+		categoryItemRange.registerChildSetting(new OfalenSettingFloat("Length-2", new ItemStack(OfalenModItemCore.gemOfalen, 1, 2), 10, 0));
 		// 経験値。
 		OfalenSettingCategory categoryExp = new OfalenSettingCategory("Exp", new ItemStack(Items.book));
 		settingCategoryOrigin.registerChildSetting(categoryExp);
@@ -73,9 +73,9 @@ public class ItemCollector extends ItemFuture implements IItemOfalenSettable {
 		categoryExpRange = new OfalenSettingCategory("Range", new ItemStack(OfalenModBlockCore.surveyorOfalen));
 		categoryExp.registerChildSetting(categoryExpRange);
 		categoryExpRange.registerChildSetting(new OfalenSettingDesignationMode("DesignationMode", new ItemStack(Items.stick), 0));
-		categoryExpRange.registerChildSetting(new OfalenSettingFloat("Length.0", new ItemStack(OfalenModItemCore.gemOfalen, 1, 0), 10, 0));
-		categoryExpRange.registerChildSetting(new OfalenSettingFloat("Length.1", new ItemStack(OfalenModItemCore.gemOfalen, 1, 1), 10, 0));
-		categoryExpRange.registerChildSetting(new OfalenSettingFloat("Length.2", new ItemStack(OfalenModItemCore.gemOfalen, 1, 2), 10, 0));
+		categoryExpRange.registerChildSetting(new OfalenSettingFloat("Length-0", new ItemStack(OfalenModItemCore.gemOfalen, 1, 0), 10, 0));
+		categoryExpRange.registerChildSetting(new OfalenSettingFloat("Length-1", new ItemStack(OfalenModItemCore.gemOfalen, 1, 1), 10, 0));
+		categoryExpRange.registerChildSetting(new OfalenSettingFloat("Length-2", new ItemStack(OfalenModItemCore.gemOfalen, 1, 2), 10, 0));
 		OfalenTimer.watchAndLog("ItemCollector.init");
 	}
 
@@ -203,7 +203,7 @@ public class ItemCollector extends ItemFuture implements IItemOfalenSettable {
 	}
 
 	private float getLengthByNumber(ItemStack itemStack, OfalenSettingCategory category, int num) {
-		return ((OfalenSettingFloat) category.getChildSetting("Length." + num)).getValueByStack(itemStack);
+		return ((OfalenSettingFloat) category.getChildSetting("Length-" + num)).getValueByStack(itemStack);
 	}
 
 	/** 右クリック時の処理。 */

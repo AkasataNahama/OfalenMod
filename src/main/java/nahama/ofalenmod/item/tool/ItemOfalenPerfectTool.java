@@ -133,7 +133,7 @@ public class ItemOfalenPerfectTool extends ItemTool implements IItemOfalenSettab
 				mode = 3;
 			if (3 < mode)
 				mode = 0;
-			if (((OfalenSettingBoolean) this.getSetting().getChildCategory("ModeChange").getChildSetting("Mode." + mode)).getValueByStack(stack))
+			if (((OfalenSettingBoolean) this.getSetting().getChildCategory("ModeChange").getChildSetting("Mode-" + mode)).getValueByStack(stack))
 				return (byte) mode;
 		} while (mode != current);
 		return -1;
@@ -214,7 +214,7 @@ public class ItemOfalenPerfectTool extends ItemTool implements IItemOfalenSettab
 
 	/** 詳細設定から長さを取得する。 */
 	private int getLengthSetting(ItemStack itemStack, OfalenSettingCategory category, String name) {
-		return ((OfalenSettingInteger) category.getChildSetting("Length." + name)).getValueByStack(itemStack);
+		return ((OfalenSettingInteger) category.getChildSetting("Length-" + name)).getValueByStack(itemStack);
 	}
 
 	/** 有効な長さを返す。 */
@@ -298,10 +298,10 @@ public class ItemOfalenPerfectTool extends ItemTool implements IItemOfalenSettab
 		origin.registerChildSetting(new OfalenSettingBoolean("ModeChangeNotification", new ItemStack(Blocks.redstone_torch), true));
 		OfalenSettingCategory category = new OfalenSettingCategory("ModeChange", new ItemStack(Blocks.glass));
 		origin.registerChildSetting(category);
-		category.registerChildSetting(new OfalenSettingBoolean("Mode.0", new ItemStack(Items.gold_ingot), true));
-		category.registerChildSetting(new OfalenSettingBoolean("Mode.1", new ItemStack(Items.diamond), true));
-		category.registerChildSetting(new OfalenSettingBoolean("Mode.2", new ItemStack(Items.wheat_seeds), true));
-		category.registerChildSetting(new OfalenSettingBoolean("Mode.3", new ItemStack(Items.bone), true));
+		category.registerChildSetting(new OfalenSettingBoolean("Mode-0", new ItemStack(Items.gold_ingot), true));
+		category.registerChildSetting(new OfalenSettingBoolean("Mode-1", new ItemStack(Items.diamond), true));
+		category.registerChildSetting(new OfalenSettingBoolean("Mode-2", new ItemStack(Items.wheat_seeds), true));
+		category.registerChildSetting(new OfalenSettingBoolean("Mode-3", new ItemStack(Items.bone), true));
 		// 通常破壊。
 		category = new OfalenSettingCategory("NormalBreaking", new ItemStack(Items.iron_ingot));
 		origin.registerChildSetting(category);
@@ -318,20 +318,20 @@ public class ItemOfalenPerfectTool extends ItemTool implements IItemOfalenSettab
 		category.registerChildSetting(new OfalenSettingBoolean("EyeResponse", new ItemStack(Items.stick), true));
 		OfalenSettingCategory category1 = new OfalenSettingCategory("DefaultRange", new ItemStack(OfalenModBlockCore.surveyorOfalen));
 		category.registerChildSetting(category1);
-		category1.registerChildSetting(new OfalenSettingInteger("Length.X+", new ItemStack(OfalenModItemCore.gemOfalen, 1, 0), 1, 0));
-		category1.registerChildSetting(new OfalenSettingInteger("Length.Y+", new ItemStack(OfalenModItemCore.gemOfalen, 1, 1), 1, 0));
-		category1.registerChildSetting(new OfalenSettingInteger("Length.Z+", new ItemStack(OfalenModItemCore.gemOfalen, 1, 2), 1, 0));
-		category1.registerChildSetting(new OfalenSettingInteger("Length.X-", new ItemStack(OfalenModItemCore.gemOfalen, 1, 4), 1, 0));
-		category1.registerChildSetting(new OfalenSettingInteger("Length.Y-", new ItemStack(OfalenModItemCore.gemOfalen, 1, 5), 1, 0));
-		category1.registerChildSetting(new OfalenSettingInteger("Length.Z-", new ItemStack(OfalenModItemCore.gemOfalen, 1, 6), 1, 0));
+		category1.registerChildSetting(new OfalenSettingInteger("Length-X+", new ItemStack(OfalenModItemCore.gemOfalen, 1, 0), 1, 0));
+		category1.registerChildSetting(new OfalenSettingInteger("Length-Y+", new ItemStack(OfalenModItemCore.gemOfalen, 1, 1), 1, 0));
+		category1.registerChildSetting(new OfalenSettingInteger("Length-Z+", new ItemStack(OfalenModItemCore.gemOfalen, 1, 2), 1, 0));
+		category1.registerChildSetting(new OfalenSettingInteger("Length-X-", new ItemStack(OfalenModItemCore.gemOfalen, 1, 4), 1, 0));
+		category1.registerChildSetting(new OfalenSettingInteger("Length-Y-", new ItemStack(OfalenModItemCore.gemOfalen, 1, 5), 1, 0));
+		category1.registerChildSetting(new OfalenSettingInteger("Length-Z-", new ItemStack(OfalenModItemCore.gemOfalen, 1, 6), 1, 0));
 		category1 = new OfalenSettingCategory("Strength", new ItemStack(OfalenModItemCore.wandSurveying));
 		category.registerChildSetting(category1);
-		category1.registerChildSetting(new OfalenSettingInteger("Length.X+", new ItemStack(OfalenModItemCore.gemOfalen, 1, 0), 1, 0));
-		category1.registerChildSetting(new OfalenSettingInteger("Length.Y+", new ItemStack(OfalenModItemCore.gemOfalen, 1, 1), 1, 0));
-		category1.registerChildSetting(new OfalenSettingInteger("Length.Z+", new ItemStack(OfalenModItemCore.gemOfalen, 1, 2), 1, 0));
-		category1.registerChildSetting(new OfalenSettingInteger("Length.X-", new ItemStack(OfalenModItemCore.gemOfalen, 1, 4), 1, 0));
-		category1.registerChildSetting(new OfalenSettingInteger("Length.Y-", new ItemStack(OfalenModItemCore.gemOfalen, 1, 5), 1, 0));
-		category1.registerChildSetting(new OfalenSettingInteger("Length.Z-", new ItemStack(OfalenModItemCore.gemOfalen, 1, 6), 1, 0));
+		category1.registerChildSetting(new OfalenSettingInteger("Length-X+", new ItemStack(OfalenModItemCore.gemOfalen, 1, 0), 1, 0));
+		category1.registerChildSetting(new OfalenSettingInteger("Length-Y+", new ItemStack(OfalenModItemCore.gemOfalen, 1, 1), 1, 0));
+		category1.registerChildSetting(new OfalenSettingInteger("Length-Z+", new ItemStack(OfalenModItemCore.gemOfalen, 1, 2), 1, 0));
+		category1.registerChildSetting(new OfalenSettingInteger("Length-X-", new ItemStack(OfalenModItemCore.gemOfalen, 1, 4), 1, 0));
+		category1.registerChildSetting(new OfalenSettingInteger("Length-Y-", new ItemStack(OfalenModItemCore.gemOfalen, 1, 5), 1, 0));
+		category1.registerChildSetting(new OfalenSettingInteger("Length-Z-", new ItemStack(OfalenModItemCore.gemOfalen, 1, 6), 1, 0));
 		return origin;
 	}
 }

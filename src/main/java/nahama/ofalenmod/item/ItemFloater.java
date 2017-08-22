@@ -169,12 +169,12 @@ public class ItemFloater extends ItemFuture implements IItemOfalenSettable {
 
 	/** 有効な飛行形態か。 */
 	private boolean isValidFlightForm(ItemStack itemStack, byte modeFloater) {
-		return ((OfalenSettingFlightForm) this.getSetting().getChildCategory("Mode." + modeFloater).getChildSetting("FlightForm")).getValueByStack(itemStack) > 0;
+		return ((OfalenSettingFlightForm) this.getSetting().getChildCategory("Mode-" + modeFloater).getChildSetting("FlightForm")).getValueByStack(itemStack) > 0;
 	}
 
 	/** モード名を詳細設定から取得して返す。 */
 	private String getModeName(ItemStack itemStack, byte modeFloater) {
-		return ((OfalenSettingString) this.getSetting().getChildCategory("Mode." + modeFloater).getChildSetting("Name")).getValueByStack(itemStack);
+		return ((OfalenSettingString) this.getSetting().getChildCategory("Mode-" + modeFloater).getChildSetting("Name")).getValueByStack(itemStack);
 	}
 
 	/** アイテムのアイコンを登録する処理。 */
@@ -232,54 +232,54 @@ public class ItemFloater extends ItemFuture implements IItemOfalenSettable {
 		if (origin != null)
 			return origin;
 		origin = new OfalenSettingCategoryOrigin("OfalenFloater", new ItemStack(OfalenModItemCore.floaterOfalen, 1, OreDictionary.WILDCARD_VALUE));
-		OfalenSettingCategory category = new OfalenSettingCategory("Mode.1", new ItemStack(OfalenModItemCore.gemOfalen, 1, 0));
+		OfalenSettingCategory category = new OfalenSettingCategory("Mode-1", new ItemStack(OfalenModItemCore.gemOfalen, 1, 0));
 		origin.registerChildSetting(category);
 		category.registerChildSetting(new OfalenSettingString("Name", new ItemStack(Items.paper), "Jet Mode"));
 		category.registerChildSetting(new OfalenSettingFlightForm("FlightForm", new ItemStack(OfalenModItemCore.partsOfalen, 1, 8), 1));
-		category.registerChildSetting(new OfalenSettingFloat("Parameter.HorizontalSpeed", new ItemStack(Items.diamond), 2.0, 0.0));
-		category.registerChildSetting(new OfalenSettingFloat("Parameter.1", new ItemStack(OfalenModItemCore.fragmentOfalen, 1, 0), 0.2));
-		category.registerChildSetting(new OfalenSettingFloat("Parameter.2", new ItemStack(OfalenModItemCore.fragmentOfalen, 1, 1), 1.0));
-		category.registerChildSetting(new OfalenSettingFloat("Parameter.3", new ItemStack(OfalenModItemCore.fragmentOfalen, 1, 2), -0.1));
-		category = new OfalenSettingCategory("Mode.2", new ItemStack(OfalenModItemCore.gemOfalen, 1, 1));
+		category.registerChildSetting(new OfalenSettingFloat("Parameter-HorizontalSpeed", new ItemStack(Items.diamond), 2.0, 0.0));
+		category.registerChildSetting(new OfalenSettingFloat("Parameter-1", new ItemStack(OfalenModItemCore.fragmentOfalen, 1, 0), 0.2));
+		category.registerChildSetting(new OfalenSettingFloat("Parameter-2", new ItemStack(OfalenModItemCore.fragmentOfalen, 1, 1), 1.0));
+		category.registerChildSetting(new OfalenSettingFloat("Parameter-3", new ItemStack(OfalenModItemCore.fragmentOfalen, 1, 2), -0.1));
+		category = new OfalenSettingCategory("Mode-2", new ItemStack(OfalenModItemCore.gemOfalen, 1, 1));
 		origin.registerChildSetting(category);
 		category.registerChildSetting(new OfalenSettingString("Name", new ItemStack(Items.paper), "Glide Mode"));
 		category.registerChildSetting(new OfalenSettingFlightForm("FlightForm", new ItemStack(OfalenModItemCore.partsOfalen, 1, 8), 1));
-		category.registerChildSetting(new OfalenSettingFloat("Parameter.HorizontalSpeed", new ItemStack(Items.diamond), 4.0, 0.0));
-		category.registerChildSetting(new OfalenSettingFloat("Parameter.1", new ItemStack(OfalenModItemCore.fragmentOfalen, 1, 0), 0.0));
-		category.registerChildSetting(new OfalenSettingFloat("Parameter.2", new ItemStack(OfalenModItemCore.fragmentOfalen, 1, 1), 0.0));
-		category.registerChildSetting(new OfalenSettingFloat("Parameter.3", new ItemStack(OfalenModItemCore.fragmentOfalen, 1, 2), 0.1));
-		category = new OfalenSettingCategory("Mode.3", new ItemStack(OfalenModItemCore.gemOfalen, 1, 2));
+		category.registerChildSetting(new OfalenSettingFloat("Parameter-HorizontalSpeed", new ItemStack(Items.diamond), 4.0, 0.0));
+		category.registerChildSetting(new OfalenSettingFloat("Parameter-1", new ItemStack(OfalenModItemCore.fragmentOfalen, 1, 0), 0.0));
+		category.registerChildSetting(new OfalenSettingFloat("Parameter-2", new ItemStack(OfalenModItemCore.fragmentOfalen, 1, 1), 0.0));
+		category.registerChildSetting(new OfalenSettingFloat("Parameter-3", new ItemStack(OfalenModItemCore.fragmentOfalen, 1, 2), 0.1));
+		category = new OfalenSettingCategory("Mode-3", new ItemStack(OfalenModItemCore.gemOfalen, 1, 2));
 		origin.registerChildSetting(category);
 		category.registerChildSetting(new OfalenSettingString("Name", new ItemStack(Items.paper), "Jump Mode"));
 		category.registerChildSetting(new OfalenSettingFlightForm("FlightForm", new ItemStack(OfalenModItemCore.partsOfalen, 1, 8), 2));
-		category.registerChildSetting(new OfalenSettingFloat("Parameter.HorizontalSpeed", new ItemStack(Items.diamond), 2.0, 0.0));
-		category.registerChildSetting(new OfalenSettingFloat("Parameter.1", new ItemStack(OfalenModItemCore.fragmentOfalen, 1, 0), 2.0));
-		category.registerChildSetting(new OfalenSettingFloat("Parameter.2", new ItemStack(OfalenModItemCore.fragmentOfalen, 1, 1), 0.0));
-		category.registerChildSetting(new OfalenSettingFloat("Parameter.3", new ItemStack(OfalenModItemCore.fragmentOfalen, 1, 2), 0.0));
-		category = new OfalenSettingCategory("Mode.4", new ItemStack(OfalenModItemCore.gemOfalen, 1, 4));
+		category.registerChildSetting(new OfalenSettingFloat("Parameter-HorizontalSpeed", new ItemStack(Items.diamond), 2.0, 0.0));
+		category.registerChildSetting(new OfalenSettingFloat("Parameter-1", new ItemStack(OfalenModItemCore.fragmentOfalen, 1, 0), 2.0));
+		category.registerChildSetting(new OfalenSettingFloat("Parameter-2", new ItemStack(OfalenModItemCore.fragmentOfalen, 1, 1), 0.0));
+		category.registerChildSetting(new OfalenSettingFloat("Parameter-3", new ItemStack(OfalenModItemCore.fragmentOfalen, 1, 2), 0.0));
+		category = new OfalenSettingCategory("Mode-4", new ItemStack(OfalenModItemCore.gemOfalen, 1, 4));
 		origin.registerChildSetting(category);
 		category.registerChildSetting(new OfalenSettingString("Name", new ItemStack(Items.paper), "Float Mode"));
 		category.registerChildSetting(new OfalenSettingFlightForm("FlightForm", new ItemStack(OfalenModItemCore.partsOfalen, 1, 8), 3));
-		category.registerChildSetting(new OfalenSettingFloat("Parameter.HorizontalSpeed", new ItemStack(Items.diamond), 4.0, 0.0));
-		category.registerChildSetting(new OfalenSettingFloat("Parameter.1", new ItemStack(OfalenModItemCore.fragmentOfalen, 1, 0), 0.4));
-		category.registerChildSetting(new OfalenSettingFloat("Parameter.2", new ItemStack(OfalenModItemCore.fragmentOfalen, 1, 1), 0.4));
-		category.registerChildSetting(new OfalenSettingFloat("Parameter.3", new ItemStack(OfalenModItemCore.fragmentOfalen, 1, 2), 0.0));
-		category = new OfalenSettingCategory("Mode.5", new ItemStack(OfalenModItemCore.gemOfalen, 1, 5));
+		category.registerChildSetting(new OfalenSettingFloat("Parameter-HorizontalSpeed", new ItemStack(Items.diamond), 4.0, 0.0));
+		category.registerChildSetting(new OfalenSettingFloat("Parameter-1", new ItemStack(OfalenModItemCore.fragmentOfalen, 1, 0), 0.4));
+		category.registerChildSetting(new OfalenSettingFloat("Parameter-2", new ItemStack(OfalenModItemCore.fragmentOfalen, 1, 1), 0.4));
+		category.registerChildSetting(new OfalenSettingFloat("Parameter-3", new ItemStack(OfalenModItemCore.fragmentOfalen, 1, 2), 0.0));
+		category = new OfalenSettingCategory("Mode-5", new ItemStack(OfalenModItemCore.gemOfalen, 1, 5));
 		origin.registerChildSetting(category);
 		category.registerChildSetting(new OfalenSettingString("Name", new ItemStack(Items.paper), "Horizontal Mode"));
 		category.registerChildSetting(new OfalenSettingFlightForm("FlightForm", new ItemStack(OfalenModItemCore.partsOfalen, 1, 8), 3));
-		category.registerChildSetting(new OfalenSettingFloat("Parameter.HorizontalSpeed", new ItemStack(Items.diamond), 1.0, 0.0));
-		category.registerChildSetting(new OfalenSettingFloat("Parameter.1", new ItemStack(OfalenModItemCore.fragmentOfalen, 1, 0), 0.0));
-		category.registerChildSetting(new OfalenSettingFloat("Parameter.2", new ItemStack(OfalenModItemCore.fragmentOfalen, 1, 1), 0.0));
-		category.registerChildSetting(new OfalenSettingFloat("Parameter.3", new ItemStack(OfalenModItemCore.fragmentOfalen, 1, 2), 0.0));
-		category = new OfalenSettingCategory("Mode.6", new ItemStack(OfalenModItemCore.gemOfalen, 1, 6));
+		category.registerChildSetting(new OfalenSettingFloat("Parameter-HorizontalSpeed", new ItemStack(Items.diamond), 1.0, 0.0));
+		category.registerChildSetting(new OfalenSettingFloat("Parameter-1", new ItemStack(OfalenModItemCore.fragmentOfalen, 1, 0), 0.0));
+		category.registerChildSetting(new OfalenSettingFloat("Parameter-2", new ItemStack(OfalenModItemCore.fragmentOfalen, 1, 1), 0.0));
+		category.registerChildSetting(new OfalenSettingFloat("Parameter-3", new ItemStack(OfalenModItemCore.fragmentOfalen, 1, 2), 0.0));
+		category = new OfalenSettingCategory("Mode-6", new ItemStack(OfalenModItemCore.gemOfalen, 1, 6));
 		origin.registerChildSetting(category);
 		category.registerChildSetting(new OfalenSettingString("Name", new ItemStack(Items.paper), "Speed Mode"));
 		category.registerChildSetting(new OfalenSettingFlightForm("FlightForm", new ItemStack(OfalenModItemCore.partsOfalen, 1, 8), 3));
-		category.registerChildSetting(new OfalenSettingFloat("Parameter.HorizontalSpeed", new ItemStack(Items.diamond), 8.0, 0.0));
-		category.registerChildSetting(new OfalenSettingFloat("Parameter.1", new ItemStack(OfalenModItemCore.fragmentOfalen, 1, 0), 0.8));
-		category.registerChildSetting(new OfalenSettingFloat("Parameter.2", new ItemStack(OfalenModItemCore.fragmentOfalen, 1, 1), 0.8));
-		category.registerChildSetting(new OfalenSettingFloat("Parameter.3", new ItemStack(OfalenModItemCore.fragmentOfalen, 1, 2), 0.0));
+		category.registerChildSetting(new OfalenSettingFloat("Parameter-HorizontalSpeed", new ItemStack(Items.diamond), 8.0, 0.0));
+		category.registerChildSetting(new OfalenSettingFloat("Parameter-1", new ItemStack(OfalenModItemCore.fragmentOfalen, 1, 0), 0.8));
+		category.registerChildSetting(new OfalenSettingFloat("Parameter-2", new ItemStack(OfalenModItemCore.fragmentOfalen, 1, 1), 0.8));
+		category.registerChildSetting(new OfalenSettingFloat("Parameter-3", new ItemStack(OfalenModItemCore.fragmentOfalen, 1, 2), 0.0));
 		return origin;
 	}
 

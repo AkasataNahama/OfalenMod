@@ -99,16 +99,16 @@ public class OfalenFlightHandlerServer {
 		if (floater == null || modeSelected == 0)
 			return new FloaterMode(null, (byte) 0, 0.0F);
 		// 詳細設定の選択中モードのカテゴリを取得する。
-		OfalenSettingCategory category = ((IItemOfalenSettable) floater.getItem()).getSetting().getChildCategory("Mode." + modeSelected);
+		OfalenSettingCategory category = ((IItemOfalenSettable) floater.getItem()).getSetting().getChildCategory("Mode-" + modeSelected);
 		// モード名。
 		String name = ((OfalenSettingString) category.getChildSetting("Name")).getValueByStack(floater);
 		// 飛行形態。
 		byte modeFlight = ((ItemFloater.OfalenSettingFlightForm) category.getChildSetting("FlightForm")).getValueByStack(floater);
 		// 移動速度などのパラメータ。
-		float factor = ((OfalenSettingFloat) category.getChildSetting("Parameter.HorizontalSpeed")).getValueByStack(floater);
-		float param1 = ((OfalenSettingFloat) category.getChildSetting("Parameter.1")).getValueByStack(floater);
-		float param2 = ((OfalenSettingFloat) category.getChildSetting("Parameter.2")).getValueByStack(floater);
-		float param3 = ((OfalenSettingFloat) category.getChildSetting("Parameter.3")).getValueByStack(floater);
+		float factor = ((OfalenSettingFloat) category.getChildSetting("Parameter-HorizontalSpeed")).getValueByStack(floater);
+		float param1 = ((OfalenSettingFloat) category.getChildSetting("Parameter-1")).getValueByStack(floater);
+		float param2 = ((OfalenSettingFloat) category.getChildSetting("Parameter-2")).getValueByStack(floater);
+		float param3 = ((OfalenSettingFloat) category.getChildSetting("Parameter-3")).getValueByStack(floater);
 		return new FloaterMode(name, modeFlight, factor, param1, param2, param3);
 	}
 
