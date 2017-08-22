@@ -17,7 +17,12 @@ public class OfalenTimer {
 	}
 
 	private static long getTime(String name) {
-		return System.nanoTime() - timeMap.get(name);
+		Long time = timeMap.get(name);
+		if (time == null) {
+			OfalenLog.debuggingInfo("Failed to get time of " + name);
+			return 0;
+		}
+		return System.nanoTime() - time;
 	}
 
 	public static void watchAndLog(String name) {
