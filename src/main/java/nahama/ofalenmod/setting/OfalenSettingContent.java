@@ -4,6 +4,7 @@ import nahama.ofalenmod.util.OfalenNBTUtil;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.StatCollector;
 
 public abstract class OfalenSettingContent<T> extends OfalenSetting {
 	protected final T valueDefault;
@@ -65,16 +66,20 @@ public abstract class OfalenSettingContent<T> extends OfalenSetting {
 	/** 値からメッセージの文字列を返す。 */
 	protected String getMessageFromValue(T value) {
 		if (value == null)
-			return "INVALID";
+			return StatCollector.translateToLocal("info.ofalen.settingDetailed.message.invalid");
 		return value.toString();
 	}
 
 	/** 現在値と変更値を文字列として返す。 */
 	public String getSecondMessage(ItemStack stackOrigin, ItemStack stackSpecifier) {
 		T current = this.getValueByStack(stackOrigin);
+		T changed = this.getChangedValue(current, stackSpecifier);
 		String string = this.getMessageFromValue(current);
-		if (stackSpecifier != null)
-			string += " -> " + this.getMessageFromValue(this.getChangedValue(current, stackSpecifier));
+		if ((current == null) != (changed == null) || (current != null && !current.equals(changed))) {
+			string += " -> " + this.getMessageFromValue(changed);
+		} else {
+			string += " " + StatCollector.translateToLocal("info.ofalen.settingDetailed.message.noChange");
+		}
 		return string;
 	}
 }
