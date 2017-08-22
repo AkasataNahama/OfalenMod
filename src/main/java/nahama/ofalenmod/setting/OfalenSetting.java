@@ -38,7 +38,7 @@ public abstract class OfalenSetting {
 
 	/** 翻訳されたこの設定の名前を返す。 */
 	public String getLocalizedName() {
-		return StatCollector.translateToLocal(LANGUAGE_PREFIX + path);
+		return StatCollector.translateToLocal(LANGUAGE_PREFIX + this.getPath());
 	}
 
 	/** この設定を指定するためのItemStackを返す。 */
@@ -51,6 +51,6 @@ public abstract class OfalenSetting {
 
 	/** この次の操作を指定するItemStackであるか。 */
 	public boolean isSpecifierStack(ItemStack itemStack) {
-		return OreDictionary.itemMatches(stack, itemStack, false);
+		return OreDictionary.itemMatches(this.getSpecifierStack(), itemStack, false);
 	}
 }
