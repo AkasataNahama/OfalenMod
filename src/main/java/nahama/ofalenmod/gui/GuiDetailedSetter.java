@@ -88,7 +88,7 @@ public class GuiDetailedSetter extends GuiContainer {
 			int posY = 18 + (slotNum * 18);
 			GL11.glEnable(GL11.GL_LIGHTING);
 			itemRender.renderItemAndEffectIntoGUI(fontRendererObj, mc.getTextureManager(), stack, posX, posY);
-			itemRender.renderItemOverlayIntoGUI(fontRendererObj, mc.getTextureManager(), stack, posX, posY, null);
+			GL11.glDisable(GL11.GL_LIGHTING);
 			mc.getTextureManager().bindTexture(GUITEXTURE);
 			this.drawTexturedModalRect(posX - 1, posY - 1, 184, 0, 18, 18);
 			i++;
