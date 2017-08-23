@@ -132,12 +132,12 @@ info.ofalen.recipeSmelting=Ofalen Smelting
 // Perfect Tool
 info.ofalen.toolPerfect.mode=Right Click Effect
 info.ofalen.toolPerfect.mode.changed=Right Click Effect is changed to %s.
-info.ofalen.toolPerfect.mode.-1=Invalid
+info.ofalen.toolPerfect.mode.-1=Disabled
 info.ofalen.toolPerfect.mode.0=Single Breaking
 info.ofalen.toolPerfect.mode.1=Range Breaking
 info.ofalen.toolPerfect.mode.1.range=    Range
 info.ofalen.toolPerfect.mode.2=Hoe
-info.ofalen.toolPerfect.mode.3=Sword Guard
+info.ofalen.toolPerfect.mode.3=Guard
 // Laser
 info.ofalen.crystal=Crystal
 info.ofalen.color:red=Red
@@ -221,8 +221,8 @@ info.ofalen.settingDetailed.OfalenPerfectTool.ModeChangeNotification=Change Noti
 info.ofalen.settingDetailed.OfalenPerfectTool.ModeChange=Right Click Effect
 info.ofalen.settingDetailed.OfalenPerfectTool.ModeChange.Mode-0=Single Breaking
 info.ofalen.settingDetailed.OfalenPerfectTool.ModeChange.Mode-1=Range Breaking
-info.ofalen.settingDetailed.OfalenPerfectTool.ModeChange.Mode-2=Cultivating
-info.ofalen.settingDetailed.OfalenPerfectTool.ModeChange.Mode-3=Guarding
+info.ofalen.settingDetailed.OfalenPerfectTool.ModeChange.Mode-2=Hoe
+info.ofalen.settingDetailed.OfalenPerfectTool.ModeChange.Mode-3=Guard
 info.ofalen.settingDetailed.OfalenPerfectTool.NormalBreaking=Normal Breaking (Left Click)
 info.ofalen.settingDetailed.OfalenPerfectTool.NormalBreaking.ItemFilter=Item Filter
 info.ofalen.settingDetailed.OfalenPerfectTool.NormalBreaking.BreakingEfficiency=Breaking Efficiency
