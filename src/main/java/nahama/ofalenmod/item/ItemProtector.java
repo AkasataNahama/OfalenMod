@@ -24,7 +24,7 @@ public class ItemProtector extends ItemFuture {
 	public void getSubItems(Item item, CreativeTabs tab, List list) {
 		ItemStack itemStack = new ItemStack(item);
 		// TODO 標準量を使用
-		this.setMaterialAmount(itemStack, 64);
+		this.setMaterialAmount(itemStack, 64 * 9 * 6);
 		OfalenUtil.add(list, itemStack);
 	}
 
