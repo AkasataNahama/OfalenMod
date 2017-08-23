@@ -156,6 +156,9 @@ public class ItemCollector extends ItemFuture implements IItemOfalenSettable {
 				// スタック数が限界以下ならそのまま移動。
 				if (eItemStack.stackSize <= limit) {
 					entityItem.setPosition(player.posX, player.posY, player.posZ);
+					entityItem.motionX = 0.0;
+					entityItem.motionY = 0.0;
+					entityItem.motionZ = 0.0;
 					if (canDamage)
 						this.consumeMaterial(itemStack, eItemStack.stackSize * OfalenModConfigCore.amountCollectorDamageItem);
 					continue;
@@ -184,6 +187,9 @@ public class ItemCollector extends ItemFuture implements IItemOfalenSettable {
 				// 経験値量が限界以下ならそのまま移動。
 				if (entityXPOrb.xpValue <= limit) {
 					entityXPOrb.setPosition(player.posX, player.posY, player.posZ);
+					entityXPOrb.motionX = 0.0;
+					entityXPOrb.motionY = 0.0;
+					entityXPOrb.motionZ = 0.0;
 					if (canDamage)
 						this.consumeMaterial(itemStack, entityXPOrb.xpValue * OfalenModConfigCore.amountCollectorDamageExp);
 					continue;
