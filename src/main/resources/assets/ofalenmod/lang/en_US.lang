@@ -122,6 +122,11 @@ config.ofalen.prop.amountCollectorDamageItem=Collector Damage Amount (Item)
 config.ofalen.prop.amountCollectorDamageItem.tooltip=Damage amount of Ofalen Collector when item is collected. Per 1 item.
 config.ofalen.prop.amountCollectorDamageExp=Collector Damage Amount (Exp)
 config.ofalen.prop.amountCollectorDamageExp.tooltip=Damage amount of Ofalen Collector when experience orb is collected. Per 1 exp.
+// WorldEditor
+config.ofalen.category.general.world_editor=World Editor
+config.ofalen.category.general.world_editor.tooltip=The settings of Placer, Mover, Breaker and Collector Block.
+config.ofalen.prop.energyDarkFuel=Dark Fuel Energy
+config.ofalen.prop.energyDarkFuel.tooltip=Number of operations per Dark Fuel.
 
 // Key Binding
 key.ofalen.category=Ofalen Mod

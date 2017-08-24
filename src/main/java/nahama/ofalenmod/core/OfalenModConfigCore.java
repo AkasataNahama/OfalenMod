@@ -28,6 +28,7 @@ public class OfalenModConfigCore {
 	private static final String TELEPORTER = FUTURE + Configuration.CATEGORY_SPLITTER + "teleporter";
 	private static final String FLOATER = FUTURE + Configuration.CATEGORY_SPLITTER + "floater";
 	private static final String COLLECTOR = FUTURE + Configuration.CATEGORY_SPLITTER + "collector";
+	private static final String WORLD_EDITOR = Configuration.CATEGORY_GENERAL + Configuration.CATEGORY_SPLITTER + "world_editor";
 	public static Configuration cfg;
 	// General
 	public static boolean isUpdateCheckEnabled = true;
@@ -76,6 +77,8 @@ public class OfalenModConfigCore {
 	public static short amountCollectingLumpReference = 64;
 	public static short amountCollectorDamageItem = 1;
 	public static short amountCollectorDamageExp = 1;
+	// WorldEditor
+	public static short energyDarkFuel = 20;
 
 	/** Configを読み込む。 */
 	public static void loadConfig(File fileConfig) {
@@ -363,6 +366,14 @@ public class OfalenModConfigCore {
 		amountCollectorDamageExp = (short) prop.getInt();
 		propOrder.add(prop.getName());
 		cfg.setCategoryPropertyOrder(category, propOrder);
+		// WorldEditor
+		category = WORLD_EDITOR;
+		cfg.setCategoryLanguageKey(WORLD_EDITOR, keyCategory + WORLD_EDITOR);
+		//
+		prop = cfg.get(category, "energyDarkFuel", energyDarkFuel, null, 1, Short.MAX_VALUE);
+		prop.comment = "Number of operations per Dark Fuel." + getIntGuide(prop);
+		prop.setLanguageKey(keyProp + prop.getName());
+		energyDarkFuel = (short) prop.getInt();
 		cfg.save();
 	}
 

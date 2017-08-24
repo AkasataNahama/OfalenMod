@@ -122,6 +122,11 @@ config.ofalen.prop.amountCollectorDamageItem=コレクターのダメージ量(�
 config.ofalen.prop.amountCollectorDamageItem.tooltip=アイテムを収集した時のコレクターのダメージ量。アイテム1個あたり。
 config.ofalen.prop.amountCollectorDamageExp=コレクターのダメージ量(経験値)
 config.ofalen.prop.amountCollectorDamageExp.tooltip=経験値オーブを収集した時のコレクターのダメージ量。1経験値あたり。
+// 世界
+config.ofalen.category.general.world_editor=世界
+config.ofalen.category.general.world_editor.tooltip=プレーサー・ムーバー・ブレーカー・コレクターブロックに関する設定。
+config.ofalen.prop.energyDarkFuel=黒燃料のエネルギー
+config.ofalen.prop.energyDarkFuel.tooltip=黒燃料1個あたりの作業回数。
 
 // キーバインディング
 key.ofalen.category=オファレンMOD

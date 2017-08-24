@@ -1,6 +1,7 @@
 package nahama.ofalenmod.tileentity;
 
 import nahama.ofalenmod.block.BlockSurveyor;
+import nahama.ofalenmod.core.OfalenModConfigCore;
 import nahama.ofalenmod.core.OfalenModItemCore;
 import nahama.ofalenmod.util.BlockPos;
 import nahama.ofalenmod.util.BlockRange;
@@ -189,8 +190,7 @@ public abstract class TileEntityWorldEditorBase extends TileEntity implements IS
 	}
 
 	protected int getAmountEnergy() {
-		// TODO Config設定
-		return this.getAmountFuel() * 20 + remainingEnergy;
+		return this.getAmountFuel() * OfalenModConfigCore.energyDarkFuel + remainingEnergy;
 	}
 
 	/** エネルギーを消費する。 */
@@ -199,9 +199,9 @@ public abstract class TileEntityWorldEditorBase extends TileEntity implements IS
 			remainingEnergy -= amount;
 		} else {
 			amount -= remainingEnergy;
-			this.addAmountFuel(-(amount / 20 + 1));
-			// TODO Config設定
-			remainingEnergy = (byte) (20 - amount % 20);
+			int energy = OfalenModConfigCore.energyDarkFuel;
+			this.addAmountFuel(-(amount / energy + 1));
+			remainingEnergy = (byte) (energy - amount % energy);
 		}
 	}
 
