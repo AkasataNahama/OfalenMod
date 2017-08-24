@@ -12,7 +12,7 @@ public class OfalenModConfigCore {
 	// カテゴリー名
 	public static final String GENERAL = "general";
 	private static final String SYSTEM = GENERAL + Configuration.CATEGORY_SPLITTER + "system";
-	private static final String RECIPE = GENERAL + Configuration.CATEGORY_SPLITTER + "recipe";
+	private static final String MATERIAL = GENERAL + Configuration.CATEGORY_SPLITTER + "material";
 	private static final String ORE = GENERAL + Configuration.CATEGORY_SPLITTER + "ore";
 	private static final String GENERATE = ORE + Configuration.CATEGORY_SPLITTER + "generate";
 	private static final String TOOL = GENERAL + Configuration.CATEGORY_SPLITTER + "tool";
@@ -104,10 +104,9 @@ public class OfalenModConfigCore {
 		prop.setLanguageKey(keyProp + prop.getName());
 		prop.requiresMcRestart();
 		isUpdateCheckEnabled = prop.getBoolean();
-		// Recipe
-		category = RECIPE;
+		// Material
+		category = MATERIAL;
 		cfg.setCategoryLanguageKey(category, keyCategory + category);
-		cfg.setCategoryRequiresMcRestart(category, true);
 		//
 		String diagram = separator + " -------" + separator + " |0 1 2|" + separator + " |3 4 5|" + separator + " |6 7 8|" + separator + " -------";
 		prop = cfg.get(category, "positionStoneLumpRecipeBlank", positionStoneLumpRecipeBlank, null, 0, 8);

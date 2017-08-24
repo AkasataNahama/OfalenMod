@@ -10,8 +10,8 @@ config.ofalen.category.general.system.tooltip=MODのシステムに関する設�
 config.ofalen.prop.enableUpdateCheck=アップデートチェックの有効化
 config.ofalen.prop.enableUpdateCheck.tooltip=trueなら新しいバージョンがリリースされているか確認し、通知します。
 // レシピ
-config.ofalen.category.general.recipe=レシピ
-config.ofalen.category.general.recipe.tooltip=クラフトレシピとオファレン製錬レシピに関する設定。
+config.ofalen.category.general.material=素材
+config.ofalen.category.general.material.tooltip=素材に関する設定。
 config.ofalen.prop.amountProtectingIngotCrafting=プロテクトインゴットのクラフト数
 config.ofalen.prop.amountProtectingIngotCrafting.tooltip=通常のレシピを使用した時のオファレンプロテクトインゴットのクラフト数。
 config.ofalen.prop.amountTeleportingPearlCrafting=テレポートパールのクラフト数

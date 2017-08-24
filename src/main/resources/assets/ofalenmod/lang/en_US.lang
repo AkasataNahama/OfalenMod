@@ -9,9 +9,9 @@ config.ofalen.category.general.system=System
 config.ofalen.category.general.system.tooltip=The settings of mod system.
 config.ofalen.prop.enableUpdateCheck=Enable Update Check
 config.ofalen.prop.enableUpdateCheck.tooltip=Set this to true to enable update check of Ofalen Mod.
-// Recipe
-config.ofalen.category.general.recipe=Recipe
-config.ofalen.category.general.recipe.tooltip=The settings of crafting recipe and Ofalen Smelting recipe.
+// Material
+config.ofalen.category.general.material=Material
+config.ofalen.category.general.material.tooltip=The settings of material.
 config.ofalen.prop.positionStoneLumpRecipeBlank=Lump of Stone Recipe Blank Position
 config.ofalen.prop.positionStoneLumpRecipeBlank.tooltip=Position of space on recipe of "Lump of Stone". [0 1 2] / [3 4 5] / [6 7 8]
 // Ore
