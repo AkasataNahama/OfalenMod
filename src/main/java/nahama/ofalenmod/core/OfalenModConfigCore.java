@@ -14,7 +14,7 @@ public class OfalenModConfigCore {
 	private static final String ORE = GENERAL + Configuration.CATEGORY_SPLITTER + "Ore";
 	private static final String GENERATE = ORE + Configuration.CATEGORY_SPLITTER + "Generate";
 	private static final String TOOL = GENERAL + Configuration.CATEGORY_SPLITTER + "Tool";
-	private static final String PERFECT_TOOL = TOOL + Configuration.CATEGORY_SPLITTER + "Tool";
+	private static final String PERFECT_TOOL = TOOL + Configuration.CATEGORY_SPLITTER + "PerfectTool";
 	private static final String BALL = GENERAL + Configuration.CATEGORY_SPLITTER + "Ball";
 	private static final String EXPLOSION_BALL = BALL + Configuration.CATEGORY_SPLITTER + "ExplosionBall";
 	private static final String MACHINE = GENERAL + Configuration.CATEGORY_SPLITTER + "Machine";
