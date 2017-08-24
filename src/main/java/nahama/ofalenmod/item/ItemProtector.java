@@ -82,8 +82,7 @@ public class ItemProtector extends ItemFuture {
 			int material = this.getMaterialAmount(stack);
 			if (material < OfalenModConfigCore.amountProtectorDamage)
 				return iconOverlayLacking;
-			// TODO 標準量の設定
-			if (material <= 64)
+			if (material <= OfalenModConfigCore.amountProtectingIngotReference)
 				return iconOverlayWeak;
 		}
 		return this.getIconIndex(stack);
@@ -93,9 +92,8 @@ public class ItemProtector extends ItemFuture {
 	@Override
 	public void addInformation(ItemStack itemStack, EntityPlayer player, List list, boolean isAdvanced) {
 		List<String> stringList = OfalenUtil.getAs(list);
-		// TODO 標準量を表示
 		int amount = this.getMaterialAmount(itemStack);
-		stringList.add(OfalenUtil.getStackAmountString(amount, 64) + " (" + amount + " / 64)");
+		stringList.add(OfalenUtil.getStackAmountString(amount, 64) + " (" + amount + " / " + OfalenModConfigCore.amountProtectingIngotReference + ")");
 		if (itemStack.hasTagCompound()) {
 			String message = StatCollector.translateToLocal("info.ofalen.future.isValid." + itemStack.getTagCompound().getBoolean(OfalenNBTUtil.IS_VALID));
 			if (this.getMaterialAmount(itemStack) < OfalenModConfigCore.amountProtectorDamage)

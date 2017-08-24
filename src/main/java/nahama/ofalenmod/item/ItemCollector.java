@@ -246,9 +246,8 @@ public class ItemCollector extends ItemFuture implements IItemOfalenSettable {
 	@Override
 	public void addInformation(ItemStack itemStack, EntityPlayer player, List list, boolean isAdvanced) {
 		List<String> stringList = OfalenUtil.getAs(list);
-		// TODO 標準量を表示
 		int amount = this.getMaterialAmount(itemStack);
-		stringList.add(OfalenUtil.getStackAmountString(amount, 64) + " (" + amount + " / 64)");
+		stringList.add(OfalenUtil.getStackAmountString(amount, 64) + " (" + amount + " / " + OfalenModConfigCore.amountCollectingLumpReference + ")");
 		if (itemStack.hasTagCompound()) {
 			stringList.add(StatCollector.translateToLocal("info.ofalen.collector.item") + " " + StatCollector.translateToLocal("info.ofalen.future.isValid." + !itemStack.getTagCompound().getBoolean(OfalenNBTUtil.IS_ITEM_DISABLED)));
 			stringList.add(StatCollector.translateToLocal("info.ofalen.collector.exp") + " " + StatCollector.translateToLocal("info.ofalen.future.isValid." + !itemStack.getTagCompound().getBoolean(OfalenNBTUtil.IS_EXP_DISABLED)));
@@ -284,8 +283,7 @@ public class ItemCollector extends ItemFuture implements IItemOfalenSettable {
 			int material = this.getMaterialAmount(stack);
 			if (material < OfalenModConfigCore.amountCollectorDamageItem && material < OfalenModConfigCore.amountCollectorDamageExp)
 				return iconOverlayLacking;
-			// TODO 標準量の設定
-			if (material <= 64)
+			if (material <= OfalenModConfigCore.amountCollectingLumpReference)
 				return iconOverlayWeak;
 		}
 		return this.getIconIndex(stack);

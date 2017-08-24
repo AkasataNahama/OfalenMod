@@ -61,16 +61,20 @@ public class OfalenModConfigCore {
 	public static short timeFusing = 1600;
 	// Future.Protector
 	public static byte amountProtectingIngotCrafting = 4;
+	public static short amountProtectingIngotReference = 64;
 	public static short amountProtectorDamage = 1;
 	// Future.Teleporter
 	public static byte amountTeleportingPearlCrafting = 4;
+	public static short amountTeleportingPearlReference = 64;
 	public static short amountTeleporterDamage = 1;
 	// Future.Floater
 	public static byte amountFloatingDustCrafting = 4;
+	public static short amountFloatingDustReference = 64;
 	public static short amountFloaterDamage = 1;
 	public static byte intervalFloaterDamage = 20;
 	// Future.Collector
 	public static byte amountCollectingLumpCrafting = 64;
+	public static short amountCollectingLumpReference = 64;
 	public static short amountCollectorDamageItem = 1;
 	public static short amountCollectorDamageExp = 1;
 
@@ -264,6 +268,12 @@ public class OfalenModConfigCore {
 		amountProtectingIngotCrafting = (byte) prop.getInt();
 		propOrder.add(prop.getName());
 		//
+		prop = cfg.get(category, "amountProtectingIngotReference", amountProtectingIngotReference, null, 0, Short.MAX_VALUE);
+		prop.comment = "The amount of \"Ingot of Ofalen Protecting\" referred for rendering icon." + getIntGuide(prop);
+		prop.setLanguageKey(keyProp + prop.getName());
+		amountProtectingIngotReference = (short) prop.getInt();
+		propOrder.add(prop.getName());
+		//
 		prop = cfg.get(category, "amountProtectorDamage", amountProtectorDamage, null, 0, 64 * 9);
 		prop.comment = "Damage amount of Ofalen Protector when the player is protected." + separator + "Per 1 damage of player." + getIntGuide(prop);
 		prop.setLanguageKey(keyProp + prop.getName());
@@ -282,6 +292,12 @@ public class OfalenModConfigCore {
 		amountTeleportingPearlCrafting = (byte) prop.getInt();
 		propOrder.add(prop.getName());
 		//
+		prop = cfg.get(category, "amountTeleportingPearlReference", amountTeleportingPearlReference, null, 0, Short.MAX_VALUE);
+		prop.comment = "The amount of \"Pearl of Ofalen Teleporting\" referred for rendering icon." + getIntGuide(prop);
+		prop.setLanguageKey(keyProp + prop.getName());
+		amountTeleportingPearlReference = (short) prop.getInt();
+		propOrder.add(prop.getName());
+		//
 		prop = cfg.get(category, "amountTeleporterDamage", amountTeleporterDamage, null, 0, 64);
 		prop.comment = "Damage amount of Ofalen Teleporter when the player teleport." + getIntGuide(prop);
 		prop.setLanguageKey(keyProp + prop.getName());
@@ -298,6 +314,12 @@ public class OfalenModConfigCore {
 		prop.setLanguageKey(keyProp + prop.getName());
 		prop.setRequiresMcRestart(true);
 		amountFloatingDustCrafting = (byte) prop.getInt();
+		propOrder.add(prop.getName());
+		//
+		prop = cfg.get(category, "amountFloatingDustReference", amountFloatingDustReference, null, 0, Short.MAX_VALUE);
+		prop.comment = "The amount of \"Dust of Ofalen Floating\" referred for rendering icon." + getIntGuide(prop);
+		prop.setLanguageKey(keyProp + prop.getName());
+		amountFloatingDustReference = (short) prop.getInt();
 		propOrder.add(prop.getName());
 		//
 		prop = cfg.get(category, "amountFloaterDamage", amountFloaterDamage, null, 0, 64 * 9);
@@ -322,6 +344,12 @@ public class OfalenModConfigCore {
 		prop.setLanguageKey(keyProp + prop.getName());
 		prop.setRequiresMcRestart(true);
 		amountCollectingLumpCrafting = (byte) prop.getInt();
+		propOrder.add(prop.getName());
+		//
+		prop = cfg.get(category, "amountCollectingLumpReference", amountCollectingLumpReference, null, 0, Short.MAX_VALUE);
+		prop.comment = "The amount of \"Lump of Ofalen Collecting\" referred for rendering icon." + getIntGuide(prop);
+		prop.setLanguageKey(keyProp + prop.getName());
+		amountCollectingLumpReference = (short) prop.getInt();
 		propOrder.add(prop.getName());
 		//
 		prop = cfg.get(category, "amountCollectorDamageItem", amountCollectorDamageItem, null, 0, 64 * 9);
