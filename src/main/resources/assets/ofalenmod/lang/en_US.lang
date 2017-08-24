@@ -7,8 +7,8 @@ config.ofalen.category.general.tooltip=All settings of Ofalen Mod.
 // System
 config.ofalen.category.system=System
 config.ofalen.category.system.tooltip=The settings of mod system.
-config.ofalen.prop.isUpdateCheckEnabled=Enable Update Check
-config.ofalen.prop.isUpdateCheckEnabled.tooltip=Set this to true to enable update check of Ofalen Mod.
+config.ofalen.prop.enableUpdateCheck=Enable Update Check
+config.ofalen.prop.enableUpdateCheck.tooltip=Set this to true to enable update check of Ofalen Mod.
 // Recipe
 config.ofalen.category.recipe=Recipe
 config.ofalen.category.recipe.tooltip=The settings of crafting recipe and Ofalen Smelting recipe.
@@ -32,8 +32,8 @@ config.ofalen.prop.amountDrop.tooltip=Drop amount of Ofalen Fragment when Ofalen
 // Ore.Generate
 config.ofalen.category.generate=Generate
 config.ofalen.category.generate.tooltip=The settings of generating Ofalen Ore.
-config.ofalen.prop.isGeneratorEnabled=Enable Generator
-config.ofalen.prop.isGeneratorEnabled.tooltip=Set this to true to generate Ofalen Ore into newly generated chunk.
+config.ofalen.prop.enableGenerator=Enable Generator
+config.ofalen.prop.enableGenerator.tooltip=Set this to true to generate Ofalen Ore into newly generated chunk.
 config.ofalen.prop.frequencyGeneration=Generation Frequency
 config.ofalen.prop.frequencyGeneration.tooltip=The number of Ofalen Ore generation of each color for each chunk.
 config.ofalen.prop.limitGeneration=Generation Limit
