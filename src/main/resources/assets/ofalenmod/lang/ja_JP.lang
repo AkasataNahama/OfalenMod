@@ -5,13 +5,13 @@ mod.ofalen.name=オファレンMOD
 config.ofalen.category.general=全般
 config.ofalen.category.general.tooltip=オファレンMODのすべての設定。
 // システム
-config.ofalen.category.system=システム
-config.ofalen.category.system.tooltip=MODのシステムに関する設定。
+config.ofalen.category.general.system=システム
+config.ofalen.category.general.system.tooltip=MODのシステムに関する設定。
 config.ofalen.prop.enableUpdateCheck=アップデートチェックの有効化
 config.ofalen.prop.enableUpdateCheck.tooltip=trueなら新しいバージョンがリリースされているか確認し、通知します。
 // レシピ
-config.ofalen.category.recipe=レシピ
-config.ofalen.category.recipe.tooltip=クラフトレシピとオファレン製錬レシピに関する設定。
+config.ofalen.category.general.recipe=レシピ
+config.ofalen.category.general.recipe.tooltip=クラフトレシピとオファレン製錬レシピに関する設定。
 config.ofalen.prop.amountProtectingIngotCrafting=プロテクトインゴットのクラフト数
 config.ofalen.prop.amountProtectingIngotCrafting.tooltip=通常のレシピを使用した時のオファレンプロテクトインゴットのクラフト数。
 config.ofalen.prop.amountTeleportingPearlCrafting=テレポートパールのクラフト数
@@ -25,13 +25,13 @@ config.ofalen.prop.baseOfalenSmeltingAmount.tooltip=オファレン製錬機を�
 config.ofalen.prop.positionStoneLumpRecipeBlank=石の塊レシピの空白箇所
 config.ofalen.prop.positionStoneLumpRecipeBlank.tooltip=石の塊のレシピの空白箇所。[0 1 2] / [3 4 5] / [6 7 8]
 // 鉱石
-config.ofalen.category.ore=鉱石
-config.ofalen.category.ore.tooltip=オファレン鉱石とその生成に関する設定。
+config.ofalen.category.general.ore=鉱石
+config.ofalen.category.general.ore.tooltip=オファレン鉱石とその生成に関する設定。
 config.ofalen.prop.amountDrop=ドロップ数
 config.ofalen.prop.amountDrop.tooltip=オファレン鉱石が採掘された時のオファレンの欠片のドロップ数。
 // 鉱石.生成
-config.ofalen.category.generate=生成
-config.ofalen.category.generate.tooltip=オファレン鉱石の生成に関する設定。
+config.ofalen.category.general.ore.generate=生成
+config.ofalen.category.general.ore.generate.tooltip=オファレン鉱石の生成に関する設定。
 config.ofalen.prop.enableGenerator=生成の有効化
 config.ofalen.prop.enableGenerator.tooltip=trueなら新規生成チャンクにオファレン鉱石を生成します。
 config.ofalen.prop.frequencyGeneration=生成頻度
@@ -41,24 +41,24 @@ config.ofalen.prop.limitGeneration.tooltip=オファレン鉱石の生成一回�
 config.ofalen.prop.probLodeGeneration=鉱脈生成確率
 config.ofalen.prop.probLodeGeneration.tooltip=オファレンの巨大鉱脈の生成確率。確率計算はチャンク毎に行われる。(x/10000)
 // 道具
-config.ofalen.category.tool=道具
-config.ofalen.category.tool.tooltip=オファレンの道具に関する設定。
+config.ofalen.category.general.tool=道具
+config.ofalen.category.general.tool.tooltip=オファレンの道具に関する設定。
 // 道具.万能ツール
-config.ofalen.category.toolPerfect=万能ツール
-config.ofalen.category.toolPerfect.tooltip=オファレンの万能ツールに関する設定。
+config.ofalen.category.general.tool.perfect=万能ツール
+config.ofalen.category.general.tool.perfect.tooltip=オファレンの万能ツールに関する設定。
 config.ofalen.prop.rangeMax=最大範囲
 config.ofalen.prop.rangeMax.tooltip=オファレンの万能ツールの範囲破壊モードの最大範囲。
 // 玉
-config.ofalen.category.ball=玉
-config.ofalen.category.ball.tooltip=オファレンの玉に関する設定。
+config.ofalen.category.general.ball=玉
+config.ofalen.category.general.ball.tooltip=オファレンの玉に関する設定。
 // 玉.爆発玉
-config.ofalen.category.ballExplosion=爆発玉
-config.ofalen.category.ballExplosion.tooltip=オファレンの爆発玉に関する設定。
+config.ofalen.category.general.ball.explosion=爆発玉
+config.ofalen.category.general.ball.explosion.tooltip=オファレンの爆発玉に関する設定。
 config.ofalen.prop.sizeExplosion=爆発の大きさ
 config.ofalen.prop.sizeExplosion.tooltip=爆発玉の爆発の大きさ。
 // 機械
-config.ofalen.category.machine=機械
-config.ofalen.category.machine.tooltip=製錬機・変換機・修繕機・融合機に関する設定。
+config.ofalen.category.general.machine=機械
+config.ofalen.category.general.machine.tooltip=製錬機・変換機・修繕機・融合機に関する設定。
 config.ofalen.prop.divisorBurningTime=燃焼時間の除数
 config.ofalen.prop.divisorBurningTime.tooltip=かまど燃料を機械に使用した時の燃焼時間の除数。
 config.ofalen.prop.timeTDiamondBurning=匠魔石の燃焼時間
@@ -66,48 +66,48 @@ config.ofalen.prop.timeTDiamondBurning.tooltip=匠Craftが追加する匠魔石�
 config.ofalen.prop.timeWhiteFuelBurning=白色燃料の燃焼時間
 config.ofalen.prop.timeWhiteFuelBurning.tooltip=白色オファレン燃料の燃焼時間。(tick)
 // 機械.製錬
-config.ofalen.category.smelting=製錬機
-config.ofalen.category.smelting.tooltip=オファレン製錬機に関する設定。
+config.ofalen.category.general.machine.smelting=製錬機
+config.ofalen.category.general.machine.smelting.tooltip=オファレン製錬機に関する設定。
 config.ofalen.prop.timeSmelting=製錬時間
 config.ofalen.prop.timeSmelting.tooltip=オファレン製錬機の製錬一回にかかる時間。(tick)
 // 機械.変換
-config.ofalen.category.converting=変換機
-config.ofalen.category.converting.tooltip=オファレン変換機に関する設定。
+config.ofalen.category.general.machine.converting=変換機
+config.ofalen.category.general.machine.converting.tooltip=オファレン変換機に関する設定。
 config.ofalen.prop.timeConverting=変換時間
 config.ofalen.prop.timeConverting.tooltip=オファレン変換機の変換一回にかかる時間。(tick)
 // 機械.修繕
-config.ofalen.category.repairing=修繕機
-config.ofalen.category.repairing.tooltip=オファレン修繕機に関する設定。
+config.ofalen.category.general.machine.repairing=修繕機
+config.ofalen.category.general.machine.repairing.tooltip=オファレン修繕機に関する設定。
 config.ofalen.prop.timeRepairing=修繕時間
 config.ofalen.prop.timeRepairing.tooltip=オファレン修繕機の修繕一回にかかる時間。1耐久値あたり。(tick)
 // 機械.融合
-config.ofalen.category.fusing=融合機
-config.ofalen.category.fusing.tooltip=オファレン融合機に関する設定。
+config.ofalen.category.general.machine.fusing=融合機
+config.ofalen.category.general.machine.fusing.tooltip=オファレン融合機に関する設定。
 config.ofalen.prop.timeFusing=融合時間
 config.ofalen.prop.timeFusing.tooltip=オファレン融合機の融合一回にかかる時間。(tick)
 // 未来
-config.ofalen.category.future=未来
-config.ofalen.category.future.tooltip=プロテクター・テレポーター・フローター・コレクターに関する設定。
+config.ofalen.category.general.future=未来
+config.ofalen.category.general.future.tooltip=プロテクター・テレポーター・フローター・コレクターに関する設定。
 // 未来.プロテクター
-config.ofalen.category.protector=プロテクター
-config.ofalen.category.protector.tooltip=オファレンプロテクターに関する設定。
+config.ofalen.category.general.future.protector=プロテクター
+config.ofalen.category.general.future.protector.tooltip=オファレンプロテクターに関する設定。
 config.ofalen.prop.amountProtectorDamage=プロテクターのダメージ量
 config.ofalen.prop.amountProtectorDamage.tooltip=プレイヤーを保護した時のオファレンプロテクターのダメージ量。1プレイヤーダメージあたり。
 // 未来.テレポーター
-config.ofalen.category.teleporter=テレポーター
-config.ofalen.category.teleporter.tooltip=オファレンテレポーターに関する設定。
+config.ofalen.category.general.future.teleporter=テレポーター
+config.ofalen.category.general.future.teleporter.tooltip=オファレンテレポーターに関する設定。
 config.ofalen.prop.amountTeleporterDamage=テレポーターのダメージ量
 config.ofalen.prop.amountTeleporterDamage.tooltip=プレイヤーを移動させた時のオファレンテレポーターのダメージ量。
 // 未来.フローター
-config.ofalen.category.floater=フローター
-config.ofalen.category.floater.tooltip=オファレンフローターに関する設定。
+config.ofalen.category.general.future.floater=フローター
+config.ofalen.category.general.future.floater.tooltip=オファレンフローターに関する設定。
 config.ofalen.prop.amountFloaterDamage=フローターのダメージ量
 config.ofalen.prop.amountFloaterDamage.tooltip=プレイヤーを飛行させたときのオファレンフローターのダメージ量。
 config.ofalen.prop.intervalFloaterDamage=フローターのダメージ間隔
 config.ofalen.prop.intervalFloaterDamage.tooltip=オファレンフローターのダメージ間隔。(tick)
 // 未来.コレクター
-config.ofalen.category.collector=コレクター
-config.ofalen.category.collector.tooltip=オファレンコレクターに関する設定。
+config.ofalen.category.general.future.collector=コレクター
+config.ofalen.category.general.future.collector.tooltip=オファレンコレクターに関する設定。
 config.ofalen.prop.amountCollectorDamageItem=コレクターのダメージ量(アイテム)
 config.ofalen.prop.amountCollectorDamageItem.tooltip=アイテムを収集した時のコレクターのダメージ量。アイテム1個あたり。
 config.ofalen.prop.amountCollectorDamageExp=コレクターのダメージ量(経験値)

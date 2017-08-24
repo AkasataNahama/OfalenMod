@@ -8,25 +8,25 @@ import java.io.File;
 
 public class OfalenModConfigCore {
 	// カテゴリー名
-	public static final String GENERAL = "General";
-	private static final String SYSTEM = GENERAL + Configuration.CATEGORY_SPLITTER + "System";
-	private static final String RECIPE = GENERAL + Configuration.CATEGORY_SPLITTER + "Recipe";
-	private static final String ORE = GENERAL + Configuration.CATEGORY_SPLITTER + "Ore";
-	private static final String GENERATE = ORE + Configuration.CATEGORY_SPLITTER + "Generate";
-	private static final String TOOL = GENERAL + Configuration.CATEGORY_SPLITTER + "Tool";
-	private static final String PERFECT_TOOL = TOOL + Configuration.CATEGORY_SPLITTER + "PerfectTool";
-	private static final String BALL = GENERAL + Configuration.CATEGORY_SPLITTER + "Ball";
-	private static final String EXPLOSION_BALL = BALL + Configuration.CATEGORY_SPLITTER + "ExplosionBall";
-	private static final String MACHINE = GENERAL + Configuration.CATEGORY_SPLITTER + "Machine";
-	private static final String SMELTING = MACHINE + Configuration.CATEGORY_SPLITTER + "Smelting";
-	private static final String CONVERTING = MACHINE + Configuration.CATEGORY_SPLITTER + "Converting";
-	private static final String REPAIRING = MACHINE + Configuration.CATEGORY_SPLITTER + "Repairing";
-	private static final String FUSING = MACHINE + Configuration.CATEGORY_SPLITTER + "Fusing";
-	private static final String FUTURE = GENERAL + Configuration.CATEGORY_SPLITTER + "Future";
-	private static final String PROTECTOR = FUTURE + Configuration.CATEGORY_SPLITTER + "Protector";
-	private static final String TELEPORTER = FUTURE + Configuration.CATEGORY_SPLITTER + "Teleporter";
-	private static final String FLOATER = FUTURE + Configuration.CATEGORY_SPLITTER + "Floater";
-	private static final String COLLECTOR = FUTURE + Configuration.CATEGORY_SPLITTER + "Collector";
+	public static final String GENERAL = "general";
+	private static final String SYSTEM = GENERAL + Configuration.CATEGORY_SPLITTER + "system";
+	private static final String RECIPE = GENERAL + Configuration.CATEGORY_SPLITTER + "recipe";
+	private static final String ORE = GENERAL + Configuration.CATEGORY_SPLITTER + "ore";
+	private static final String GENERATE = ORE + Configuration.CATEGORY_SPLITTER + "generate";
+	private static final String TOOL = GENERAL + Configuration.CATEGORY_SPLITTER + "tool";
+	private static final String PERFECT = TOOL + Configuration.CATEGORY_SPLITTER + "perfect";
+	private static final String BALL = GENERAL + Configuration.CATEGORY_SPLITTER + "ball";
+	private static final String EXPLOSION = BALL + Configuration.CATEGORY_SPLITTER + "explosion";
+	private static final String MACHINE = GENERAL + Configuration.CATEGORY_SPLITTER + "machine";
+	private static final String SMELTING = MACHINE + Configuration.CATEGORY_SPLITTER + "smelting";
+	private static final String CONVERTING = MACHINE + Configuration.CATEGORY_SPLITTER + "converting";
+	private static final String REPAIRING = MACHINE + Configuration.CATEGORY_SPLITTER + "repairing";
+	private static final String FUSING = MACHINE + Configuration.CATEGORY_SPLITTER + "fusing";
+	private static final String FUTURE = GENERAL + Configuration.CATEGORY_SPLITTER + "future";
+	private static final String PROTECTOR = FUTURE + Configuration.CATEGORY_SPLITTER + "protector";
+	private static final String TELEPORTER = FUTURE + Configuration.CATEGORY_SPLITTER + "teleporter";
+	private static final String FLOATER = FUTURE + Configuration.CATEGORY_SPLITTER + "floater";
+	private static final String COLLECTOR = FUTURE + Configuration.CATEGORY_SPLITTER + "collector";
 	public static Configuration cfg;
 	// General
 	public static boolean isUpdateCheckEnabled = true;
@@ -73,7 +73,7 @@ public class OfalenModConfigCore {
 
 	/** Configを読み込む。 */
 	public static void loadConfig(File fileConfig) {
-		cfg = new Configuration(fileConfig, OfalenModCore.VERSION, true);
+		cfg = new Configuration(fileConfig, OfalenModCore.VERSION);
 		// TODO [1.7.10]2.0.0へのアップデート時、Configリセットを勧告する？
 		//		if (VersionUtil.compareVersion(new VersionUtil.VersionString(OfalenModCore.MOD_ID, cfg.getLoadedConfigVersion()), OfalenModCore.VERSION_STRING))
 		syncConfig();
@@ -88,9 +88,9 @@ public class OfalenModConfigCore {
 		String keyProp = "config.ofalen.prop.";
 		Property prop;
 		// General
-		cfg.setCategoryLanguageKey(GENERAL, keyCategory + "general");
+		cfg.setCategoryLanguageKey(GENERAL, keyCategory + GENERAL);
 		// System
-		cfg.setCategoryLanguageKey(SYSTEM, keyCategory + "system");
+		cfg.setCategoryLanguageKey(SYSTEM, keyCategory + SYSTEM);
 		cfg.setCategoryRequiresMcRestart(SYSTEM, true);
 		//
 		prop = cfg.get(SYSTEM, "enableUpdateCheck", isUpdateCheckEnabled);
@@ -98,7 +98,7 @@ public class OfalenModConfigCore {
 		prop.setLanguageKey(keyProp + prop.getName());
 		isUpdateCheckEnabled = prop.getBoolean();
 		// Recipe
-		cfg.setCategoryLanguageKey(RECIPE, keyCategory + "recipe");
+		cfg.setCategoryLanguageKey(RECIPE, keyCategory + RECIPE);
 		cfg.setCategoryRequiresMcRestart(RECIPE, true);
 		//
 		prop = cfg.get(RECIPE, "amountProtectingIngotCrafting", amountProtectingIngotCrafting, null, 1, 64);
@@ -132,14 +132,14 @@ public class OfalenModConfigCore {
 		prop.setLanguageKey(keyProp + prop.getName());
 		positionStoneLumpRecipeBlank = (byte) prop.getInt();
 		// Ore
-		cfg.setCategoryLanguageKey(ORE, keyCategory + "ore");
+		cfg.setCategoryLanguageKey(ORE, keyCategory + ORE);
 		//
 		prop = cfg.get(ORE, "amountDrop", amountDrop, null, 1, Byte.MAX_VALUE);
 		prop.comment = "Drop amount of Ofalen Fragment when Ofalen Ore is mined." + getIntGuide(prop);
 		prop.setLanguageKey(keyProp + prop.getName());
 		amountDrop = (byte) prop.getInt();
 		// Ore.Generate
-		cfg.setCategoryLanguageKey(GENERATE, keyCategory + "generate");
+		cfg.setCategoryLanguageKey(GENERATE, keyCategory + GENERATE);
 		//
 		prop = cfg.get(GENERATE, "enableGenerator", isGeneratorEnabled);
 		prop.comment = "Set this to true to generate Ofalen Ore into newly generated chunk." + getBoolGuide(prop);
@@ -161,25 +161,25 @@ public class OfalenModConfigCore {
 		prop.setLanguageKey(keyProp + prop.getName());
 		probLodeGeneration = (short) prop.getInt();
 		// Tool
-		cfg.setCategoryLanguageKey(TOOL, keyCategory + "tool");
+		cfg.setCategoryLanguageKey(TOOL, keyCategory + TOOL);
 		// Tool.PerfectTool
-		cfg.setCategoryLanguageKey(PERFECT_TOOL, keyCategory + "toolPerfect");
+		cfg.setCategoryLanguageKey(PERFECT, keyCategory + PERFECT);
 		//
-		prop = cfg.get(PERFECT_TOOL, "rangeMax", rangeMax, null, 0, Byte.MAX_VALUE);
+		prop = cfg.get(PERFECT, "rangeMax", rangeMax, null, 0, Byte.MAX_VALUE);
 		prop.comment = "Maximum range of Range Breaking Mode of Ofalen Perfect Tool." + getIntGuide(prop);
 		prop.setLanguageKey(keyProp + prop.getName());
 		rangeMax = (byte) prop.getInt();
 		// Ball
-		cfg.setCategoryLanguageKey(BALL, keyCategory + "ball");
+		cfg.setCategoryLanguageKey(BALL, keyCategory + BALL);
 		// Ball.ExplosionBall
-		cfg.setCategoryLanguageKey(EXPLOSION_BALL, keyCategory + "ballExplosion");
+		cfg.setCategoryLanguageKey(EXPLOSION, keyCategory + EXPLOSION);
 		//
-		prop = cfg.get(EXPLOSION_BALL, "sizeExplosion", sizeExplosion, null, 0, Byte.MAX_VALUE);
+		prop = cfg.get(EXPLOSION, "sizeExplosion", sizeExplosion, null, 0, Byte.MAX_VALUE);
 		prop.comment = "Explosion size of Explosion Ball." + getIntGuide(prop);
 		prop.setLanguageKey(keyProp + prop.getName());
 		sizeExplosion = (byte) prop.getInt();
 		// Machine
-		cfg.setCategoryLanguageKey(MACHINE, keyCategory + "machine");
+		cfg.setCategoryLanguageKey(MACHINE, keyCategory + MACHINE);
 		//
 		prop = cfg.get(MACHINE, "divisorBurningTime", divisorBurningTime, null, 1, Short.MAX_VALUE);
 		prop.comment = "Divisor of burning time when using furnace fuel for machines." + getIntGuide(prop);
@@ -196,51 +196,51 @@ public class OfalenModConfigCore {
 		prop.setLanguageKey(keyProp + prop.getName());
 		timeWhiteFuelBurning = (short) prop.getInt();
 		// Machine.Smelting
-		cfg.setCategoryLanguageKey(SMELTING, keyCategory + "smelting");
+		cfg.setCategoryLanguageKey(SMELTING, keyCategory + SMELTING);
 		//
 		prop = cfg.get(SMELTING, "timeSmelting", timeSmelting, null, 1, Short.MAX_VALUE);
 		prop.comment = "The time Ofalen Smelting Machine requires for every smelting." + unitTick + getIntGuide(prop);
 		prop.setLanguageKey(keyProp + prop.getName());
 		timeSmelting = (short) prop.getInt();
 		// Machine.Converting
-		cfg.setCategoryLanguageKey(CONVERTING, keyCategory + "converting");
+		cfg.setCategoryLanguageKey(CONVERTING, keyCategory + CONVERTING);
 		//
 		prop = cfg.get(CONVERTING, "timeConverting", timeConverting, null, 1, Short.MAX_VALUE);
 		prop.comment = "The time Ofalen Converting Machine requires for every converting." + unitTick + getIntGuide(prop);
 		prop.setLanguageKey(keyProp + prop.getName());
 		timeConverting = (short) prop.getInt();
 		// Machine.Repairing
-		cfg.setCategoryLanguageKey(REPAIRING, keyCategory + "repairing");
+		cfg.setCategoryLanguageKey(REPAIRING, keyCategory + REPAIRING);
 		//
 		prop = cfg.get(REPAIRING, "timeRepairing", timeRepairing, null, 1, Short.MAX_VALUE);
 		prop.comment = "The time Ofalen Repairing Machine requires for every repairing." + separator + "Per 1 durability." + unitTick + getIntGuide(prop);
 		prop.setLanguageKey(keyProp + prop.getName());
 		timeRepairing = (short) prop.getInt();
 		// Machine.Fusing
-		cfg.setCategoryLanguageKey(FUSING, keyCategory + "fusing");
+		cfg.setCategoryLanguageKey(FUSING, keyCategory + FUSING);
 		//
 		prop = cfg.get(FUSING, "timeFusing", timeFusing, null, 1, Short.MAX_VALUE);
 		prop.comment = "The time Ofalen Fusing Machine requires for every fusing." + unitTick + getIntGuide(prop);
 		prop.setLanguageKey(keyProp + prop.getName());
 		timeFusing = (short) prop.getInt();
 		// Future
-		cfg.setCategoryLanguageKey(FUTURE, keyCategory + "future");
+		cfg.setCategoryLanguageKey(FUTURE, keyCategory + FUTURE);
 		// Future.Protector
-		cfg.setCategoryLanguageKey(PROTECTOR, keyCategory + "protector");
+		cfg.setCategoryLanguageKey(PROTECTOR, keyCategory + PROTECTOR);
 		//
 		prop = cfg.get(PROTECTOR, "amountProtectorDamage", amountProtectorDamage, null, 0, 64 * 9);
 		prop.comment = "Damage amount of Ofalen Protector when the player is protected." + separator + "Per 1 damage of player." + getIntGuide(prop);
 		prop.setLanguageKey(keyProp + prop.getName());
 		amountProtectorDamage = (short) prop.getInt();
 		// Future.Teleporter
-		cfg.setCategoryLanguageKey(TELEPORTER, keyCategory + "teleporter");
+		cfg.setCategoryLanguageKey(TELEPORTER, keyCategory + TELEPORTER);
 		//
 		prop = cfg.get(TELEPORTER, "amountTeleporterDamage", amountTeleporterDamage, null, 0, 64);
 		prop.comment = "Damage amount of Ofalen Teleporter when the player teleport." + getIntGuide(prop);
 		prop.setLanguageKey(keyProp + prop.getName());
 		amountTeleporterDamage = (short) prop.getInt();
 		// Future.Floater
-		cfg.setCategoryLanguageKey(FLOATER, keyCategory + "floater");
+		cfg.setCategoryLanguageKey(FLOATER, keyCategory + FLOATER);
 		//
 		prop = cfg.get(FLOATER, "amountFloaterDamage", amountFloaterDamage, null, 0, 64 * 9);
 		prop.comment = "Damage amount of Ofalen Floater when the player float." + getIntGuide(prop);
@@ -252,7 +252,7 @@ public class OfalenModConfigCore {
 		prop.setLanguageKey(keyProp + prop.getName());
 		intervalFloaterDamage = (byte) prop.getInt();
 		// Future.Collector
-		cfg.setCategoryLanguageKey(COLLECTOR, keyCategory + "collector");
+		cfg.setCategoryLanguageKey(COLLECTOR, keyCategory + COLLECTOR);
 		//
 		prop = cfg.get(COLLECTOR, "amountCollectorDamageItem", amountCollectorDamageItem, null, 0, 64 * 9);
 		prop.comment = "Damage amount of Ofalen Collector when item is collected." + separator + "Per 1 item." + getIntGuide(prop);
