@@ -32,7 +32,7 @@ public class OfalenModConfigCore {
 	public static Configuration cfg;
 	// General
 	public static boolean isUpdateCheckEnabled = true;
-	// Recipe
+	// Material
 	public static byte positionStoneLumpRecipeBlank = 7;
 	// Ore
 	public static byte amountDrop = 3;
@@ -41,9 +41,9 @@ public class OfalenModConfigCore {
 	public static byte frequencyGeneration = 3;
 	public static byte limitGeneration = 8;
 	public static short probLodeGeneration = 10;
-	// Tool.PerfectTool
+	// Tool.Perfect
 	public static byte rangeMax = 7;
-	// Ball.ExplosionBall
+	// Ball.Explosion
 	public static byte sizeExplosion = 2;
 	// Machine
 	public static short divisorBurningTime = 256;
@@ -154,7 +154,7 @@ public class OfalenModConfigCore {
 		// Tool
 		category = TOOL;
 		cfg.setCategoryLanguageKey(category, keyCategory + category);
-		// Tool.PerfectTool
+		// Tool.Perfect
 		category = PERFECT;
 		cfg.setCategoryLanguageKey(category, keyCategory + category);
 		//
@@ -165,7 +165,7 @@ public class OfalenModConfigCore {
 		// Ball
 		category = BALL;
 		cfg.setCategoryLanguageKey(category, keyCategory + category);
-		// Ball.ExplosionBall
+		// Ball.Explosion
 		category = EXPLOSION;
 		cfg.setCategoryLanguageKey(category, keyCategory + category);
 		//
