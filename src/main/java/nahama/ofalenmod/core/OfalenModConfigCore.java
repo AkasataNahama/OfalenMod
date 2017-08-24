@@ -102,7 +102,7 @@ public class OfalenModConfigCore {
 		prop = cfg.get(category, "enableUpdateCheck", isUpdateCheckEnabled);
 		prop.comment = "Set this to true to enable update check of Ofalen Mod." + restart + getBoolGuide(prop);
 		prop.setLanguageKey(keyProp + prop.getName());
-		prop.requiresMcRestart();
+		prop.setRequiresMcRestart(true);
 		isUpdateCheckEnabled = prop.getBoolean();
 		// Material
 		category = MATERIAL;
@@ -112,7 +112,7 @@ public class OfalenModConfigCore {
 		prop = cfg.get(category, "positionStoneLumpRecipeBlank", positionStoneLumpRecipeBlank, null, 0, 8);
 		prop.comment = "The number is position of space on recipe of \"Lump of Stone\"." + diagram + restart + getIntGuide(prop);
 		prop.setLanguageKey(keyProp + prop.getName());
-		prop.requiresMcRestart();
+		prop.setRequiresMcRestart(true);
 		positionStoneLumpRecipeBlank = (byte) prop.getInt();
 		// Ore
 		category = ORE;
@@ -210,7 +210,7 @@ public class OfalenModConfigCore {
 		prop = cfg.get(category, "baseOfalenSmeltingAmount", baseOfalenSmeltingAmount, null, 1, 16);
 		prop.comment = "Smelting amount of Ofalen from Ofalen Ore using Ofalen Smelting Machine." + separator + "When don't use Ofalen Machine Processor." + restart + getIntGuide(prop);
 		prop.setLanguageKey(keyProp + prop.getName());
-		prop.requiresMcRestart();
+		prop.setRequiresMcRestart(true);
 		baseOfalenSmeltingAmount = (byte) prop.getInt();
 		propOrder.add(prop.getName());
 		cfg.setCategoryPropertyOrder(category, propOrder);
@@ -249,7 +249,7 @@ public class OfalenModConfigCore {
 		prop = cfg.get(category, "amountProtectingIngotCrafting", amountProtectingIngotCrafting, null, 1, 64);
 		prop.comment = "Crafting amount of \"Ingot of Ofalen Protecting\" when using normal recipe." + restart + getIntGuide(prop);
 		prop.setLanguageKey(keyProp + prop.getName());
-		prop.requiresMcRestart();
+		prop.setRequiresMcRestart(true);
 		amountProtectingIngotCrafting = (byte) prop.getInt();
 		propOrder.add(prop.getName());
 		//
@@ -267,7 +267,7 @@ public class OfalenModConfigCore {
 		prop = cfg.get(category, "amountTeleportingPearlCrafting", amountTeleportingPearlCrafting, null, 1, 64);
 		prop.comment = "Crafting amount of \"Pearl of Ofalen Teleporting\" when using normal recipe." + restart + getIntGuide(prop);
 		prop.setLanguageKey(keyProp + prop.getName());
-		prop.requiresMcRestart();
+		prop.setRequiresMcRestart(true);
 		amountTeleportingPearlCrafting = (byte) prop.getInt();
 		propOrder.add(prop.getName());
 		//
@@ -285,7 +285,7 @@ public class OfalenModConfigCore {
 		prop = cfg.get(category, "amountFloatingDustCrafting", amountFloatingDustCrafting, null, 1, 64);
 		prop.comment = "Crafting amount of \"Dust of Ofalen Floating\" when using normal recipe." + restart + getIntGuide(prop);
 		prop.setLanguageKey(keyProp + prop.getName());
-		prop.requiresMcRestart();
+		prop.setRequiresMcRestart(true);
 		amountFloatingDustCrafting = (byte) prop.getInt();
 		propOrder.add(prop.getName());
 		//
@@ -309,7 +309,7 @@ public class OfalenModConfigCore {
 		prop = cfg.get(category, "amountCollectingLumpCrafting", amountCollectingLumpCrafting, null, 1, 64);
 		prop.comment = "Crafting amount of \"Lump of Ofalen Collecting\" when using normal recipe." + restart + getIntGuide(prop);
 		prop.setLanguageKey(keyProp + prop.getName());
-		prop.requiresMcRestart();
+		prop.setRequiresMcRestart(true);
 		amountCollectingLumpCrafting = (byte) prop.getInt();
 		propOrder.add(prop.getName());
 		//
