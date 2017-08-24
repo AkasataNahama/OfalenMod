@@ -67,7 +67,7 @@ public class ItemFuture extends Item {
 	protected void setMaterialAmount(ItemStack itemStack, int amount) {
 		if (!itemStack.hasTagCompound())
 			itemStack.setTagCompound(new NBTTagCompound());
-		itemStack.getTagCompound().setShort(OfalenNBTUtil.MATERIAL, (short) Math.max(0, amount));
+		itemStack.getTagCompound().setShort(OfalenNBTUtil.MATERIAL, (short) Math.max(0, Math.min(Short.MAX_VALUE, amount)));
 	}
 
 	/** 素材数を返す。 */
