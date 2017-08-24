@@ -33,11 +33,6 @@ public class OfalenModConfigCore {
 	// General
 	public static boolean isUpdateCheckEnabled = true;
 	// Recipe
-	public static byte amountProtectingIngotCrafting = 4;
-	public static byte amountTeleportingPearlCrafting = 4;
-	public static byte amountFloatingDustCrafting = 4;
-	public static byte amountCollectingLumpCrafting = 64;
-	public static byte baseOfalenSmeltingAmount = 1;
 	public static byte positionStoneLumpRecipeBlank = 7;
 	// Ore
 	public static byte amountDrop = 3;
@@ -56,6 +51,7 @@ public class OfalenModConfigCore {
 	public static short timeWhiteFuelBurning = 1600;
 	// Machine.Smelting
 	public static short timeSmelting = 1600;
+	public static byte baseOfalenSmeltingAmount = 1;
 	// Machine.Converting
 	public static short timeConverting = 1600;
 	// Machine.Repairing
@@ -63,13 +59,17 @@ public class OfalenModConfigCore {
 	// Machine.Fusing
 	public static short timeFusing = 1600;
 	// Future.Protector
+	public static byte amountProtectingIngotCrafting = 4;
 	public static short amountProtectorDamage = 1;
 	// Future.Teleporter
+	public static byte amountTeleportingPearlCrafting = 4;
 	public static short amountTeleporterDamage = 1;
 	// Future.Floater
+	public static byte amountFloatingDustCrafting = 4;
 	public static short amountFloaterDamage = 1;
 	public static byte intervalFloaterDamage = 20;
 	// Future.Collector
+	public static byte amountCollectingLumpCrafting = 64;
 	public static short amountCollectorDamageItem = 1;
 	public static short amountCollectorDamageExp = 1;
 
