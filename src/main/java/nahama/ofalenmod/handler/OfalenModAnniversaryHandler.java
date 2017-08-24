@@ -2,6 +2,7 @@ package nahama.ofalenmod.handler;
 
 import cpw.mods.fml.common.registry.GameRegistry;
 import nahama.ofalenmod.core.OfalenModBlockCore;
+import nahama.ofalenmod.core.OfalenModConfigCore;
 import nahama.ofalenmod.util.OfalenLog;
 import nahama.ofalenmod.util.OfalenTimer;
 import nahama.ofalenmod.util.OfalenUtil;
@@ -9,7 +10,12 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Calendar;
@@ -18,6 +24,8 @@ import java.util.Map.Entry;
 
 public class OfalenModAnniversaryHandler {
 	private static final String URL_ANNIVERSARY_LIST = "https://dl.dropboxusercontent.com/s/wmx074ypp4yhv7c/OfalenModAnniversary.txt";
+	/** テクスチャが特別かどうか。 */
+	public static boolean isTextureSpecial;
 	/**
 	 * マルチプレイの場合は、プレイヤー名と最後にプレゼントを渡した日付のマップ。
 	 * シングルプレイの場合は、ワールド名と最後にプレゼントを渡した日付のマップ。
@@ -29,13 +37,13 @@ public class OfalenModAnniversaryHandler {
 	private static String[] dates;
 	/** プレゼントの配列。 */
 	private static ItemStack[][] presents;
-	/** テクスチャが特別かどうか。 */
-	public static boolean isTextureSpecial;
 	/** 二回開けられる記念日かどうか。 */
 	private static boolean isTwice;
 
 	/** 初期化処理。 */
 	public static void init() {
+		if (!OfalenModConfigCore.isPresentBoxEnabled)
+			return;
 		OfalenTimer.start("OfalenModAnniversaryHandler.init");
 		presentedDate.clear();
 		// 日付を取得する。
@@ -182,6 +190,8 @@ public class OfalenModAnniversaryHandler {
 
 	/** プレイヤーにプレゼントボックスを渡していたかどうかを確認し、渡していなければプレゼントボックスをドロップする。 */
 	public static void checkPlayer(EntityPlayer player) {
+		if (!OfalenModConfigCore.isPresentBoxEnabled)
+			return;
 		String name = player.getCommandSenderName();
 		if (OfalenUtil.isClient())
 			name = player.worldObj.getSaveHandler().getWorldDirectoryName();
@@ -195,6 +205,8 @@ public class OfalenModAnniversaryHandler {
 
 	/** プレゼントの配列をコピーして返す。 */
 	public static ItemStack[] getPresents(EntityPlayer player) {
+		if (!OfalenModConfigCore.isPresentBoxEnabled)
+			return null;
 		String name = player.getCommandSenderName();
 		if (OfalenUtil.isClient())
 			name = player.worldObj.getSaveHandler().getWorldDirectoryName();

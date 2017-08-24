@@ -9,6 +9,8 @@ config.ofalen.category.general.system=System
 config.ofalen.category.general.system.tooltip=The settings of mod system.
 config.ofalen.prop.enableUpdateCheck=Enable Update Check
 config.ofalen.prop.enableUpdateCheck.tooltip=Set this to true to enable update check of Ofalen Mod.
+config.ofalen.prop.enablePresentBox=Enable Present Box
+config.ofalen.prop.enablePresentBox.tooltip=Set this to true to enable Present Box.
 // Material
 config.ofalen.category.general.material=Material
 config.ofalen.category.general.material.tooltip=The settings of material.

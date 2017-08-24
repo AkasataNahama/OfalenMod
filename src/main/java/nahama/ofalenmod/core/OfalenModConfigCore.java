@@ -32,6 +32,7 @@ public class OfalenModConfigCore {
 	public static Configuration cfg;
 	// General
 	public static boolean isUpdateCheckEnabled = true;
+	public static boolean isPresentBoxEnabled = true;
 	// Material
 	public static byte positionStoneLumpRecipeBlank = 7;
 	// Ore
@@ -85,6 +86,7 @@ public class OfalenModConfigCore {
 	public static void syncConfig() {
 		String separator = Configuration.NEW_LINE;
 		String restart = separator + " [Minecraft Restart Required]";
+		String restartWorld = separator + " [World Restart Required]";
 		String unitTick = separator + " (tick)";
 		String keyCategory = "config.ofalen.category.";
 		String keyProp = "config.ofalen.prop.";
@@ -97,13 +99,22 @@ public class OfalenModConfigCore {
 		// System
 		category = SYSTEM;
 		cfg.setCategoryLanguageKey(category, keyCategory + category);
-		cfg.setCategoryRequiresMcRestart(category, true);
+		propOrder = new ArrayList<String>();
 		//
 		prop = cfg.get(category, "enableUpdateCheck", isUpdateCheckEnabled);
 		prop.comment = "Set this to true to enable update check of Ofalen Mod." + restart + getBoolGuide(prop);
 		prop.setLanguageKey(keyProp + prop.getName());
 		prop.setRequiresMcRestart(true);
 		isUpdateCheckEnabled = prop.getBoolean();
+		propOrder.add(prop.getName());
+		//
+		prop = cfg.get(category, "enablePresentBox", isPresentBoxEnabled);
+		prop.comment = "Set this to true to enable Present Box." + restartWorld + getBoolGuide(prop);
+		prop.setLanguageKey(keyProp + prop.getName());
+		prop.setRequiresWorldRestart(true);
+		isPresentBoxEnabled = prop.getBoolean();
+		propOrder.add(prop.getName());
+		cfg.setCategoryPropertyOrder(category, propOrder);
 		// Material
 		category = MATERIAL;
 		cfg.setCategoryLanguageKey(category, keyCategory + category);

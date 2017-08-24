@@ -9,6 +9,8 @@ config.ofalen.category.general.system=システム
 config.ofalen.category.general.system.tooltip=MODのシステムに関する設定。
 config.ofalen.prop.enableUpdateCheck=アップデートチェックの有効化
 config.ofalen.prop.enableUpdateCheck.tooltip=trueなら新しいバージョンがリリースされているか確認し、通知します。
+config.ofalen.prop.enablePresentBox=プレゼントボックスの有効化
+config.ofalen.prop.enablePresentBox.tooltip=trueなら日付に応じ、プレゼントをプレゼントボックスの中に生成します。
 // 素材
 config.ofalen.category.general.material=素材
 config.ofalen.category.general.material.tooltip=素材に関する設定。
