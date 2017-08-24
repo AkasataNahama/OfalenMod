@@ -12,16 +12,6 @@ config.ofalen.prop.enableUpdateCheck.tooltip=trueなら新しいバージョン�
 // 素材
 config.ofalen.category.general.material=素材
 config.ofalen.category.general.material.tooltip=素材に関する設定。
-config.ofalen.prop.amountProtectingIngotCrafting=プロテクトインゴットのクラフト数
-config.ofalen.prop.amountProtectingIngotCrafting.tooltip=通常のレシピを使用した時のオファレンプロテクトインゴットのクラフト数。
-config.ofalen.prop.amountTeleportingPearlCrafting=テレポートパールのクラフト数
-config.ofalen.prop.amountTeleportingPearlCrafting.tooltip=通常のレシピを使用した時のオファレンテレポートパールのクラフト数。
-config.ofalen.prop.amountFloatingDustCrafting=フロートダストのクラフト数
-config.ofalen.prop.amountFloatingDustCrafting.tooltip=通常のレシピを使用した時のオファレンフロートダストのクラフト数。
-config.ofalen.prop.amountCollectingLumpCrafting=コレクトランプのクラフト数
-config.ofalen.prop.amountCollectingLumpCrafting.tooltip=通常のレシピを使用した時のオファレンコレクトランプのクラフト数。
-config.ofalen.prop.baseOfalenSmeltingAmount=オファレン製錬量の基準値
-config.ofalen.prop.baseOfalenSmeltingAmount.tooltip=オファレン製錬機を使った時の、オファレン鉱石からオファレンへの製錬数。オファレン処理装置不使用時。
 config.ofalen.prop.positionStoneLumpRecipeBlank=石の塊レシピの空白箇所
 config.ofalen.prop.positionStoneLumpRecipeBlank.tooltip=石の塊のレシピの空白箇所。[0 1 2] / [3 4 5] / [6 7 8]
 // 鉱石
@@ -70,6 +60,8 @@ config.ofalen.category.general.machine.smelting=製錬機
 config.ofalen.category.general.machine.smelting.tooltip=オファレン製錬機に関する設定。
 config.ofalen.prop.timeSmelting=製錬時間
 config.ofalen.prop.timeSmelting.tooltip=オファレン製錬機の製錬一回にかかる時間。(tick)
+config.ofalen.prop.baseOfalenSmeltingAmount=オファレン製錬量の基準値
+config.ofalen.prop.baseOfalenSmeltingAmount.tooltip=オファレン製錬機を使った時の、オファレン鉱石からオファレンへの製錬数。オファレン処理装置不使用時。
 // 機械.変換
 config.ofalen.category.general.machine.converting=変換機
 config.ofalen.category.general.machine.converting.tooltip=オファレン変換機に関する設定。
@@ -91,16 +83,22 @@ config.ofalen.category.general.future.tooltip=プロテクター・テレポー�
 // 未来.プロテクター
 config.ofalen.category.general.future.protector=プロテクター
 config.ofalen.category.general.future.protector.tooltip=オファレンプロテクターに関する設定。
+config.ofalen.prop.amountProtectingIngotCrafting=プロテクトインゴットのクラフト数
+config.ofalen.prop.amountProtectingIngotCrafting.tooltip=通常のレシピを使用した時のオファレンプロテクトインゴットのクラフト数。
 config.ofalen.prop.amountProtectorDamage=プロテクターのダメージ量
 config.ofalen.prop.amountProtectorDamage.tooltip=プレイヤーを保護した時のオファレンプロテクターのダメージ量。1プレイヤーダメージあたり。
 // 未来.テレポーター
 config.ofalen.category.general.future.teleporter=テレポーター
 config.ofalen.category.general.future.teleporter.tooltip=オファレンテレポーターに関する設定。
+config.ofalen.prop.amountTeleportingPearlCrafting=テレポートパールのクラフト数
+config.ofalen.prop.amountTeleportingPearlCrafting.tooltip=通常のレシピを使用した時のオファレンテレポートパールのクラフト数。
 config.ofalen.prop.amountTeleporterDamage=テレポーターのダメージ量
 config.ofalen.prop.amountTeleporterDamage.tooltip=プレイヤーを移動させた時のオファレンテレポーターのダメージ量。
 // 未来.フローター
 config.ofalen.category.general.future.floater=フローター
 config.ofalen.category.general.future.floater.tooltip=オファレンフローターに関する設定。
+config.ofalen.prop.amountFloatingDustCrafting=フロートダストのクラフト数
+config.ofalen.prop.amountFloatingDustCrafting.tooltip=通常のレシピを使用した時のオファレンフロートダストのクラフト数。
 config.ofalen.prop.amountFloaterDamage=フローターのダメージ量
 config.ofalen.prop.amountFloaterDamage.tooltip=プレイヤーを飛行させたときのオファレンフローターのダメージ量。
 config.ofalen.prop.intervalFloaterDamage=フローターのダメージ間隔
@@ -108,6 +106,8 @@ config.ofalen.prop.intervalFloaterDamage.tooltip=オファレンフローター�
 // 未来.コレクター
 config.ofalen.category.general.future.collector=コレクター
 config.ofalen.category.general.future.collector.tooltip=オファレンコレクターに関する設定。
+config.ofalen.prop.amountCollectingLumpCrafting=コレクトランプのクラフト数
+config.ofalen.prop.amountCollectingLumpCrafting.tooltip=通常のレシピを使用した時のオファレンコレクトランプのクラフト数。
 config.ofalen.prop.amountCollectorDamageItem=コレクターのダメージ量(アイテム)
 config.ofalen.prop.amountCollectorDamageItem.tooltip=アイテムを収集した時のコレクターのダメージ量。アイテム1個あたり。
 config.ofalen.prop.amountCollectorDamageExp=コレクターのダメージ量(経験値)
