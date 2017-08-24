@@ -42,8 +42,7 @@ public class ItemFloater extends ItemFuture implements IItemOfalenSettable {
 	@Override
 	public void getSubItems(Item item, CreativeTabs tab, List list) {
 		ItemStack itemStack = new ItemStack(item);
-		// TODO 標準量を使用
-		this.setMaterialAmount(itemStack, 64 * 9 * 6);
+		this.setMaterialAmount(itemStack, OfalenModConfigCore.amountFloaterDamage * 64 * 9 * 6);
 		OfalenUtil.add(list, itemStack);
 	}
 

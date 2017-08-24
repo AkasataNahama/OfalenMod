@@ -37,8 +37,7 @@ public class ItemTeleporter extends ItemFuture {
 	@Override
 	public void getSubItems(Item item, CreativeTabs creativeTab, List list) {
 		ItemStack itemStack = new ItemStack(item);
-		// TODO 標準量を使用
-		this.setMaterialAmount(itemStack, 64 * 9 * 6);
+		this.setMaterialAmount(itemStack, OfalenModConfigCore.amountTeleporterDamage * 64 * 9 * 6);
 		OfalenUtil.add(list, itemStack);
 	}
 
