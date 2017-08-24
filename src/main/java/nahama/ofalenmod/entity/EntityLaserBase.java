@@ -195,15 +195,8 @@ public abstract class EntityLaserBase extends Entity {
 				worldObj.spawnParticle("bubble", posX - motionX * f4, posY - motionY * f4, posZ - motionZ * f4, motionX, motionY, motionZ);
 			}
 		}
-		if (Math.abs(startX - posX) > 200) {
+		if (this.getDistanceSq(startX, startY, startZ) > 256 * 256)
 			this.setDead();
-		} else if (Math.abs(startY - posY) > 200) {
-			this.setDead();
-		} else if (Math.abs(startZ - posZ) > 200) {
-			this.setDead();
-		} else if (posY < 0 || posY > 255) {
-			this.setDead();
-		}
 		motionX *= 1.2D;
 		motionY *= 1.2D;
 		motionZ *= 1.2D;
