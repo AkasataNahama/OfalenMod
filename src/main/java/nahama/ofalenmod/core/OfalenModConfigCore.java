@@ -10,21 +10,20 @@ import java.util.List;
 
 public class OfalenModConfigCore {
 	// カテゴリー名
-	public static final String GENERAL = "general";
-	private static final String SYSTEM = GENERAL + Configuration.CATEGORY_SPLITTER + "system";
-	private static final String MATERIAL = GENERAL + Configuration.CATEGORY_SPLITTER + "material";
-	private static final String ORE = GENERAL + Configuration.CATEGORY_SPLITTER + "ore";
+	private static final String SYSTEM = Configuration.CATEGORY_GENERAL + Configuration.CATEGORY_SPLITTER + "system";
+	private static final String MATERIAL = Configuration.CATEGORY_GENERAL + Configuration.CATEGORY_SPLITTER + "material";
+	private static final String ORE = Configuration.CATEGORY_GENERAL + Configuration.CATEGORY_SPLITTER + "ore";
 	private static final String GENERATE = ORE + Configuration.CATEGORY_SPLITTER + "generate";
-	private static final String TOOL = GENERAL + Configuration.CATEGORY_SPLITTER + "tool";
+	private static final String TOOL = Configuration.CATEGORY_GENERAL + Configuration.CATEGORY_SPLITTER + "tool";
 	private static final String PERFECT = TOOL + Configuration.CATEGORY_SPLITTER + "perfect";
-	private static final String BALL = GENERAL + Configuration.CATEGORY_SPLITTER + "ball";
+	private static final String BALL = Configuration.CATEGORY_GENERAL + Configuration.CATEGORY_SPLITTER + "ball";
 	private static final String EXPLOSION = BALL + Configuration.CATEGORY_SPLITTER + "explosion";
-	private static final String MACHINE = GENERAL + Configuration.CATEGORY_SPLITTER + "machine";
+	private static final String MACHINE = Configuration.CATEGORY_GENERAL + Configuration.CATEGORY_SPLITTER + "machine";
 	private static final String SMELTING = MACHINE + Configuration.CATEGORY_SPLITTER + "smelting";
 	private static final String CONVERTING = MACHINE + Configuration.CATEGORY_SPLITTER + "converting";
 	private static final String REPAIRING = MACHINE + Configuration.CATEGORY_SPLITTER + "repairing";
 	private static final String FUSING = MACHINE + Configuration.CATEGORY_SPLITTER + "fusing";
-	private static final String FUTURE = GENERAL + Configuration.CATEGORY_SPLITTER + "future";
+	private static final String FUTURE = Configuration.CATEGORY_GENERAL + Configuration.CATEGORY_SPLITTER + "future";
 	private static final String PROTECTOR = FUTURE + Configuration.CATEGORY_SPLITTER + "protector";
 	private static final String TELEPORTER = FUTURE + Configuration.CATEGORY_SPLITTER + "teleporter";
 	private static final String FLOATER = FUTURE + Configuration.CATEGORY_SPLITTER + "floater";
@@ -98,7 +97,7 @@ public class OfalenModConfigCore {
 		String category;
 		Property prop;
 		// General
-		category = GENERAL;
+		category = Configuration.CATEGORY_GENERAL;
 		cfg.setCategoryLanguageKey(category, keyCategory + category);
 		// System
 		category = SYSTEM;
