@@ -11,6 +11,7 @@ import nahama.ofalenmod.setting.OfalenSettingBoolean;
 import nahama.ofalenmod.setting.OfalenSettingCategory;
 import nahama.ofalenmod.setting.OfalenSettingCategoryOrigin;
 import nahama.ofalenmod.setting.OfalenSettingInteger;
+import nahama.ofalenmod.util.BlockPos;
 import nahama.ofalenmod.util.BlockRange;
 import nahama.ofalenmod.util.OfalenNBTUtil;
 import nahama.ofalenmod.util.OfalenNBTUtil.FilterUtil;
@@ -27,10 +28,12 @@ import net.minecraft.init.Items;
 import net.minecraft.item.EnumAction;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemTool;
+import net.minecraft.util.MathHelper;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.event.entity.player.UseHoeEvent;
 import net.minecraftforge.oredict.OreDictionary;
 
@@ -100,7 +103,7 @@ public class ItemOfalenPerfectTool extends ItemTool implements IItemOfalenSettab
 				itemStack.getTagCompound().setByte(OfalenNBTUtil.INTERVAL, (byte) 10);
 				if (world.isRemote) {
 					MovingObjectPosition pos = Minecraft.getMinecraft().objectMouseOver;
-					OfalenParticleUtil.spawnParticleWithBlockRange(player.worldObj, this.getRange(itemStack, pos.blockX, pos.blockY, pos.blockZ), 2);
+					OfalenParticleUtil.spawnParticleWithBlockRange(player.worldObj, this.getRange(player, itemStack, pos.blockX, pos.blockY, pos.blockZ), 2);
 				}
 			}
 		} else {
@@ -153,7 +156,7 @@ public class ItemOfalenPerfectTool extends ItemTool implements IItemOfalenSettab
 		case 1:
 			// 右クリック時効果が範囲破壊の時。
 			boolean isFilterEnabled = ((OfalenSettingBoolean) this.getSetting().getChildCategory("RangeBreaking").getChildSetting("ItemFilter")).getValueByStack(itemStack);
-			BlockRange range = this.getRange(itemStack, x, y, z);
+			BlockRange range = this.getRange(player, itemStack, x, y, z);
 			for (int ix = range.posMin.x; ix <= range.posMax.x; ix++) {
 				for (int iy = range.posMax.y; iy >= range.posMin.y; iy--) {
 					for (int iz = range.posMin.z; iz <= range.posMax.z; iz++) {
@@ -210,6 +213,34 @@ public class ItemOfalenPerfectTool extends ItemTool implements IItemOfalenSettab
 		range.posMin.y -= this.getValidLength(this.getLengthSetting(itemStack, categoryDefaultRange, "Y-") + this.getLengthSetting(itemStack, categoryStrength, "Y-") * addition);
 		range.posMin.z -= this.getValidLength(this.getLengthSetting(itemStack, categoryDefaultRange, "Z-") + this.getLengthSetting(itemStack, categoryStrength, "Z-") * addition);
 		return range;
+	}
+
+	/** 詳細設定とNBTから範囲を算出し、プレイヤーの向きにより回転させて返す。 */
+	private BlockRange getRange(Entity entity, ItemStack itemStack, int x, int y, int z) {
+		BlockRange range = this.getRange(itemStack, x, y, z);
+		// 詳細設定で視線応答が無効化されていたら終了。
+		if (!((OfalenSettingBoolean) this.getSetting().getChildCategory("RangeBreaking").getChildSetting("EyeResponse")).getValueByStack(itemStack))
+			return range;
+		ForgeDirection direction = ForgeDirection.EAST;
+		if (entity.rotationPitch > 45) {
+			direction = ForgeDirection.DOWN;
+		} else if (entity.rotationPitch < -45) {
+			direction = ForgeDirection.UP;
+		}
+		range = range.rotate(new BlockPos(x, y, z), direction);
+		direction = ForgeDirection.EAST;
+		switch (MathHelper.floor_double((double) (entity.rotationYaw * 4.0F / 360.0F) + 0.5D) & 3) {
+		case 0:
+			direction = ForgeDirection.SOUTH;
+			break;
+		case 1:
+			direction = ForgeDirection.WEST;
+			break;
+		case 2:
+			direction = ForgeDirection.NORTH;
+			break;
+		}
+		return range.rotate(new BlockPos(x, y, z), direction);
 	}
 
 	/** 詳細設定から長さを取得する。 */

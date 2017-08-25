@@ -2,6 +2,7 @@ package nahama.ofalenmod.util;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraftforge.common.util.ForgeDirection;
 
 public class BlockRange {
 	public BlockPos posMin;
@@ -11,9 +12,16 @@ public class BlockRange {
 		this(new BlockPos(minX, minY, minZ), new BlockPos(maxX, maxY, maxZ));
 	}
 
+	@SuppressWarnings("WeakerAccess")
 	public BlockRange(BlockPos min, BlockPos max) {
 		posMin = min;
 		posMax = max;
+	}
+
+	public static BlockRange loadFromNBT(NBTTagCompound nbt) {
+		if (nbt == null || !nbt.hasKey(OfalenNBTUtil.MIN_POS) || !nbt.hasKey(OfalenNBTUtil.MAX_POS))
+			return null;
+		return new BlockRange(BlockPos.loadFromNBT(nbt.getCompoundTag(OfalenNBTUtil.MIN_POS)), BlockPos.loadFromNBT(nbt.getCompoundTag(OfalenNBTUtil.MAX_POS)));
 	}
 
 	public boolean isInRange(BlockPos pos) {
@@ -49,24 +57,19 @@ public class BlockRange {
 		return nbt;
 	}
 
-	public static BlockRange loadFromNBT(NBTTagCompound nbt) {
-		if (nbt == null || !nbt.hasKey(OfalenNBTUtil.MIN_POS) || !nbt.hasKey(OfalenNBTUtil.MAX_POS))
-			return null;
-		return new BlockRange(BlockPos.loadFromNBT(nbt.getCompoundTag(OfalenNBTUtil.MIN_POS)), BlockPos.loadFromNBT(nbt.getCompoundTag(OfalenNBTUtil.MAX_POS)));
-	}
-
 	public BlockRange copy() {
 		return new BlockRange(posMin.copy(), posMax.copy());
 	}
 
-	public BlockRange copyWithOffset(int x, int y, int z) {
-		return this.copyWithOffset(x, y, z, false);
-	}
-
+	@SuppressWarnings("WeakerAccess")
 	public BlockRange copyWithOffset(int x, int y, int z, boolean isMinus) {
 		BlockRange ret = this.copy();
 		ret.applyOffset(x, y, z, isMinus);
 		return ret;
+	}
+
+	private BlockRange copyWithOffset(BlockPos pos, boolean isMinus) {
+		return this.copyWithOffset(pos.x, pos.y, pos.z, isMinus);
 	}
 
 	@Override
@@ -82,5 +85,53 @@ public class BlockRange {
 	/** "Min(x, y, z), Max(x, y, z)" */
 	public String toStringRange() {
 		return "Min(" + posMin.toStringCoord() + "), Max(" + posMax.toStringCoord() + ")";
+	}
+
+	/**
+	 * 範囲を回転させる。
+	 * @param directionTo デフォルトをEASTとした時の回転方向。
+	 */
+	@SuppressWarnings("SuspiciousNameCombination")
+	public BlockRange rotate(BlockPos standard, ForgeDirection directionTo) {
+		BlockRange range = this.copyWithOffset(standard, true);
+		BlockRange tmp = range.copy();
+		switch (directionTo) {
+		// 左を向く
+		case NORTH:
+			range.posMin.z = -tmp.posMax.x;
+			range.posMax.z = -tmp.posMin.x;
+			range.posMax.x = tmp.posMax.z;
+			range.posMin.x = tmp.posMin.z;
+			break;
+		// 後を向く
+		case WEST:
+			range.posMin.x = -tmp.posMax.x;
+			range.posMax.x = -tmp.posMin.x;
+			range.posMin.z = -tmp.posMax.z;
+			range.posMax.z = -tmp.posMin.z;
+			break;
+		// 右を向く
+		case SOUTH:
+			range.posMax.z = tmp.posMax.x;
+			range.posMin.z = tmp.posMin.x;
+			range.posMin.x = -tmp.posMax.z;
+			range.posMax.x = -tmp.posMin.z;
+			break;
+		// 上を向く
+		case UP:
+			range.posMin.x = -tmp.posMax.y;
+			range.posMax.x = -tmp.posMin.y;
+			range.posMax.y = tmp.posMax.x;
+			range.posMin.y = tmp.posMin.x;
+			break;
+		// 下を向く
+		case DOWN:
+			range.posMax.x = tmp.posMax.y;
+			range.posMin.x = tmp.posMin.y;
+			range.posMin.y = -tmp.posMax.x;
+			range.posMax.y = -tmp.posMin.x;
+			break;
+		}
+		return range.copyWithOffset(standard, false);
 	}
 }
