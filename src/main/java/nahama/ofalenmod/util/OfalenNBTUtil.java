@@ -63,6 +63,9 @@ public class OfalenNBTUtil {
 	public static final String IS_SURVEYING = "IsSurveying";
 	public static final String REMAINING_ENERGY = "RemainingEnergy";
 	// 移動機
+	public static final String IS_REMOVING_DISABLED = "IsRemovingDisabled";
+	public static final String IS_PLACING_DISABLED = "IsPlacingDisabled";
+	public static final String CAN_REMOVE_LIQUID = "CanRemoveLiquid";
 	public static final String CAN_MOVE_TILE_ENTITY = "CanMoveTileEntity";
 	public static final String MOVING_BLOCKS = "MovingBlocks";
 	public static final String BLOCK_POS = "BlockPos";
@@ -71,6 +74,7 @@ public class OfalenNBTUtil {
 	public static final String TILE_ENTITY = "TileEntity";
 	// 破壊機
 	public static final String CAN_DELETE_BROKEN_BLOCK = "CanDeleteBrokenBlock";
+	public static final String CAN_DELETE_LIQUID = "CanDeleteLiquid";
 	// 収集機
 	public static final String CAN_DELETE_ITEM = "CanDeleteItem";
 	public static final String CAN_DELETE_EXP = "CanDeleteExp";

@@ -3,12 +3,15 @@ package nahama.ofalenmod.tileentity;
 import nahama.ofalenmod.util.OfalenLog;
 import nahama.ofalenmod.util.OfalenNBTUtil;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockLiquid;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 
 public class TileEntityBreaker extends TileEntityWorldEditorBase {
 	/** ブロックを削除するかどうか。 */
 	private boolean canDeleteBrokenBlock;
+	/** 液体を破壊するか。 */
+	private boolean canDeleteLiquid;
 
 	@Override
 	protected boolean canWork() {
@@ -23,6 +26,9 @@ public class TileEntityBreaker extends TileEntityWorldEditorBase {
 			return false;
 		// 空気ブロックならfalse。
 		if (block.isAir(worldObj, x, y, z))
+			return false;
+		// 設定により液体ブロックを無視する。
+		if (!canDeleteLiquid && block instanceof BlockLiquid)
 			return false;
 		// フィルターで許可されていればtrue。
 		return OfalenNBTUtil.FilterUtil.canItemFilterThrough(tagItemFilter, new ItemStack(block, 1, worldObj.getBlockMetadata(x, y, z)));
@@ -54,27 +60,41 @@ public class TileEntityBreaker extends TileEntityWorldEditorBase {
 
 	@Override
 	public byte getAmountSettingID() {
-		return (byte) (super.getAmountSettingID() + 1);
+		return (byte) (super.getAmountSettingID() + 2);
 	}
 
 	@Override
 	public short getWithID(int id) {
-		if (id == super.getAmountSettingID())
+		switch (id - super.getAmountSettingID()) {
+		case 0:
 			return (short) (canDeleteBrokenBlock ? 1 : 0);
+		case 1:
+			return (short) (canDeleteLiquid ? 1 : 0);
+		}
 		return super.getWithID(id);
 	}
 
 	@Override
 	public void setWithID(int id, int value) {
 		super.setWithID(id, value);
-		if (id == super.getAmountSettingID())
+		switch (id - super.getAmountSettingID()) {
+		case 0:
 			canDeleteBrokenBlock = (value != 0);
+			break;
+		case 1:
+			canDeleteLiquid = (value != 0);
+			break;
+		}
 	}
 
 	@Override
 	public String getSettingNameWithID(int id) {
-		if (id == super.getAmountSettingID())
+		switch (id - super.getAmountSettingID()) {
+		case 0:
 			return "info.ofalen.setting.breaker.canDeleteBrokenBlock";
+		case 1:
+			return "info.ofalen.setting.breaker.canDeleteLiquid";
+		}
 		return super.getSettingNameWithID(id);
 	}
 
@@ -87,12 +107,14 @@ public class TileEntityBreaker extends TileEntityWorldEditorBase {
 	public void writeToNBT(NBTTagCompound nbt) {
 		super.writeToNBT(nbt);
 		nbt.setBoolean(OfalenNBTUtil.CAN_DELETE_BROKEN_BLOCK, canDeleteBrokenBlock);
+		nbt.setBoolean(OfalenNBTUtil.CAN_DELETE_LIQUID, canDeleteLiquid);
 	}
 
 	@Override
 	public void readFromNBT(NBTTagCompound nbt) {
 		super.readFromNBT(nbt);
 		canDeleteBrokenBlock = nbt.getBoolean(OfalenNBTUtil.CAN_DELETE_BROKEN_BLOCK);
+		canDeleteLiquid = nbt.getBoolean(OfalenNBTUtil.CAN_DELETE_LIQUID);
 	}
 
 	@Override
