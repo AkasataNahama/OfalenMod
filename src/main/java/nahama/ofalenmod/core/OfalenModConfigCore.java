@@ -135,7 +135,7 @@ public class OfalenModConfigCore {
 		category = ORE;
 		cfg.setCategoryLanguageKey(category, keyCategory + category);
 		//
-		prop = cfg.get(category, "amountDrop", amountDrop, null, 1, Byte.MAX_VALUE);
+		prop = cfg.get(category, "amountDrop", amountDrop, null, 0, Byte.MAX_VALUE);
 		prop.comment = "Drop amount of Ofalen Fragment when Ofalen Ore is mined." + getIntGuide(prop);
 		prop.setLanguageKey(keyProp + prop.getName());
 		amountDrop = (byte) prop.getInt();
@@ -150,7 +150,7 @@ public class OfalenModConfigCore {
 		isGeneratorEnabled = prop.getBoolean();
 		propOrder.add(prop.getName());
 		//
-		prop = cfg.get(category, "frequencyGeneration", frequencyGeneration, null, 1, Byte.MAX_VALUE);
+		prop = cfg.get(category, "frequencyGeneration", frequencyGeneration, null, 0, Byte.MAX_VALUE);
 		prop.comment = "The number of Ofalen Ore generation of each color for each chunk." + getIntGuide(prop);
 		prop.setLanguageKey(keyProp + prop.getName());
 		frequencyGeneration = (byte) prop.getInt();
@@ -201,13 +201,13 @@ public class OfalenModConfigCore {
 		divisorBurningTime = (short) prop.getInt();
 		propOrder.add(prop.getName());
 		//
-		prop = cfg.get(category, "timeTDiamondBurning", timeTDiamondBurning, null, 1, Short.MAX_VALUE);
+		prop = cfg.get(category, "timeTDiamondBurning", timeTDiamondBurning, null, 0, Short.MAX_VALUE);
 		prop.comment = "Burning time of Creeper Magic Stone by Takumi Craft." + unitTick + getIntGuide(prop);
 		prop.setLanguageKey(keyProp + prop.getName());
 		timeTDiamondBurning = (short) prop.getInt();
 		propOrder.add(prop.getName());
 		//
-		prop = cfg.get(category, "timeWhiteFuelBurning", timeWhiteFuelBurning, null, 1, Short.MAX_VALUE);
+		prop = cfg.get(category, "timeWhiteFuelBurning", timeWhiteFuelBurning, null, 0, Short.MAX_VALUE);
 		prop.comment = "Burning time of White Ofalen Fuel." + unitTick + getIntGuide(prop);
 		prop.setLanguageKey(keyProp + prop.getName());
 		timeWhiteFuelBurning = (short) prop.getInt();
@@ -218,7 +218,7 @@ public class OfalenModConfigCore {
 		cfg.setCategoryLanguageKey(category, keyCategory + category);
 		propOrder = new ArrayList<String>();
 		//
-		prop = cfg.get(category, "timeSmelting", timeSmelting, null, 1, Short.MAX_VALUE);
+		prop = cfg.get(category, "timeSmelting", timeSmelting, null, 0, Short.MAX_VALUE);
 		prop.comment = "The time Ofalen Smelting Machine requires for every smelting." + unitTick + getIntGuide(prop);
 		prop.setLanguageKey(keyProp + prop.getName());
 		timeSmelting = (short) prop.getInt();
@@ -235,7 +235,7 @@ public class OfalenModConfigCore {
 		category = CONVERTING;
 		cfg.setCategoryLanguageKey(category, keyCategory + category);
 		//
-		prop = cfg.get(category, "timeConverting", timeConverting, null, 1, Short.MAX_VALUE);
+		prop = cfg.get(category, "timeConverting", timeConverting, null, 0, Short.MAX_VALUE);
 		prop.comment = "The time Ofalen Converting Machine requires for every converting." + unitTick + getIntGuide(prop);
 		prop.setLanguageKey(keyProp + prop.getName());
 		timeConverting = (short) prop.getInt();
@@ -243,7 +243,7 @@ public class OfalenModConfigCore {
 		category = REPAIRING;
 		cfg.setCategoryLanguageKey(category, keyCategory + category);
 		//
-		prop = cfg.get(category, "timeRepairing", timeRepairing, null, 1, Short.MAX_VALUE);
+		prop = cfg.get(category, "timeRepairing", timeRepairing, null, 0, Short.MAX_VALUE);
 		prop.comment = "The time Ofalen Repairing Machine requires for every repairing." + separator + "Per 1 durability." + unitTick + getIntGuide(prop);
 		prop.setLanguageKey(keyProp + prop.getName());
 		timeRepairing = (short) prop.getInt();
@@ -251,7 +251,7 @@ public class OfalenModConfigCore {
 		category = FUSING;
 		cfg.setCategoryLanguageKey(category, keyCategory + category);
 		//
-		prop = cfg.get(category, "timeFusing", timeFusing, null, 1, Short.MAX_VALUE);
+		prop = cfg.get(category, "timeFusing", timeFusing, null, 0, Short.MAX_VALUE);
 		prop.comment = "The time Ofalen Fusing Machine requires for every fusing." + unitTick + getIntGuide(prop);
 		prop.setLanguageKey(keyProp + prop.getName());
 		timeFusing = (short) prop.getInt();
@@ -276,7 +276,7 @@ public class OfalenModConfigCore {
 		amountProtectingIngotReference = (short) prop.getInt();
 		propOrder.add(prop.getName());
 		//
-		prop = cfg.get(category, "amountProtectorDamage", amountProtectorDamage, null, 0, 64 * 9);
+		prop = cfg.get(category, "amountProtectorDamage", amountProtectorDamage, null, 0, Short.MAX_VALUE);
 		prop.comment = "Damage amount of Ofalen Protector when the player is protected." + separator + "Per 1 damage of player." + getIntGuide(prop);
 		prop.setLanguageKey(keyProp + prop.getName());
 		amountProtectorDamage = (short) prop.getInt();
@@ -300,7 +300,7 @@ public class OfalenModConfigCore {
 		amountTeleportingPearlReference = (short) prop.getInt();
 		propOrder.add(prop.getName());
 		//
-		prop = cfg.get(category, "amountTeleporterDamage", amountTeleporterDamage, null, 0, 64);
+		prop = cfg.get(category, "amountTeleporterDamage", amountTeleporterDamage, null, 0, Short.MAX_VALUE);
 		prop.comment = "Damage amount of Ofalen Teleporter when the player teleport." + getIntGuide(prop);
 		prop.setLanguageKey(keyProp + prop.getName());
 		amountTeleporterDamage = (short) prop.getInt();
@@ -324,7 +324,7 @@ public class OfalenModConfigCore {
 		amountFloatingDustReference = (short) prop.getInt();
 		propOrder.add(prop.getName());
 		//
-		prop = cfg.get(category, "amountFloaterDamage", amountFloaterDamage, null, 0, 64 * 9);
+		prop = cfg.get(category, "amountFloaterDamage", amountFloaterDamage, null, 0, Short.MAX_VALUE);
 		prop.comment = "Damage amount of Ofalen Floater when the player float." + getIntGuide(prop);
 		prop.setLanguageKey(keyProp + prop.getName());
 		amountFloaterDamage = (short) prop.getInt();
@@ -354,13 +354,13 @@ public class OfalenModConfigCore {
 		amountCollectingLumpReference = (short) prop.getInt();
 		propOrder.add(prop.getName());
 		//
-		prop = cfg.get(category, "amountCollectorDamageItem", amountCollectorDamageItem, null, 0, 64 * 9);
+		prop = cfg.get(category, "amountCollectorDamageItem", amountCollectorDamageItem, null, 0, Short.MAX_VALUE);
 		prop.comment = "Damage amount of Ofalen Collector when item is collected." + separator + "Per 1 item." + getIntGuide(prop);
 		prop.setLanguageKey(keyProp + prop.getName());
 		amountCollectorDamageItem = (short) prop.getInt();
 		propOrder.add(prop.getName());
 		//
-		prop = cfg.get(category, "amountCollectorDamageExp", amountCollectorDamageExp, null, 0, 64 * 9);
+		prop = cfg.get(category, "amountCollectorDamageExp", amountCollectorDamageExp, null, 0, Short.MAX_VALUE);
 		prop.comment = "Damage amount of Ofalen Collector when experience orb is collected." + separator + "Per 1 exp." + getIntGuide(prop);
 		prop.setLanguageKey(keyProp + prop.getName());
 		amountCollectorDamageExp = (short) prop.getInt();
@@ -370,7 +370,7 @@ public class OfalenModConfigCore {
 		category = WORLD_EDITOR;
 		cfg.setCategoryLanguageKey(WORLD_EDITOR, keyCategory + WORLD_EDITOR);
 		//
-		prop = cfg.get(category, "energyDarkFuel", energyDarkFuel, null, 1, Short.MAX_VALUE);
+		prop = cfg.get(category, "energyDarkFuel", energyDarkFuel, null, 0, Short.MAX_VALUE);
 		prop.comment = "Number of operations per Dark Fuel." + getIntGuide(prop);
 		prop.setLanguageKey(keyProp + prop.getName());
 		energyDarkFuel = (short) prop.getInt();

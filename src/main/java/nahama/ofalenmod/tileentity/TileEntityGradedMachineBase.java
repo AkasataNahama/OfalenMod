@@ -198,7 +198,10 @@ public abstract class TileEntityGradedMachineBase extends TileEntity implements 
 
 	/** 作業の完了率を0~scaleで返す。Gui表示用。 */
 	public int getWorkProgressScaled(int scale) {
-		return timeWorking * scale / this.getMaxWorkingTimeWithGrade();
+		int max = this.getMaxWorkingTimeWithGrade();
+		if (max < 1)
+			return this.isBurning() ? scale : 0;
+		return timeWorking * scale / max;
 	}
 
 	/** 燃料の残り燃焼時間の割合を0~scaleで返す。Gui表示用。 */
