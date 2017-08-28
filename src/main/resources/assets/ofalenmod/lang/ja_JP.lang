@@ -31,7 +31,7 @@ config.ofalen.prop.frequencyGeneration.tooltip=チャンクごとの各色鉱石
 config.ofalen.prop.limitGeneration=生成限界
 config.ofalen.prop.limitGeneration.tooltip=オファレン鉱石の生成一回あたりの最大個数。
 config.ofalen.prop.probLodeGeneration=鉱脈生成確率
-config.ofalen.prop.probLodeGeneration.tooltip=オファレンの巨大鉱脈の生成確率。確率計算はチャンク毎に行われる。(x/10000)
+config.ofalen.prop.probLodeGeneration.tooltip=オファレンの巨大鉱脈の生成確率。確率計算はチャンク毎に行われる。
 // 道具
 config.ofalen.category.general.tool=道具
 config.ofalen.category.general.tool.tooltip=オファレンの道具に関する設定。

@@ -12,6 +12,10 @@ import net.minecraft.world.gen.feature.WorldGenMinable;
 import java.util.Random;
 
 public class WorldGenOfalenOre implements IWorldGenerator {
+	private static void generateOfalenOre(int color, int limit, World world, Random random, int genX, int genY, int genZ) {
+		new WorldGenMinable(OfalenModBlockCore.oreOfalen, color, limit, Blocks.stone).generate(world, random, genX, genY, genZ);
+	}
+
 	@Override
 	public void generate(Random random, int chunkX, int chunkZ, World world, IChunkProvider chunkGenerator, IChunkProvider chunkProvider) {
 		if (OfalenModConfigCore.isGeneratorEnabled) {
@@ -34,8 +38,7 @@ public class WorldGenOfalenOre implements IWorldGenerator {
 	}
 
 	private void generateLoad(World world, Random random, int x, int z) {
-		int i = random.nextInt(10000);
-		if (i < OfalenModConfigCore.probLodeGeneration) {
+		if (random.nextDouble() < OfalenModConfigCore.probLodeGeneration) {
 			int genX = x + random.nextInt(16);
 			int genY = 1 + random.nextInt(15);
 			int genZ = z + random.nextInt(16);
@@ -76,9 +79,5 @@ public class WorldGenOfalenOre implements IWorldGenerator {
 			}
 			generateOfalenOre(3, 40, world, random, genX, genY, genZ);
 		}
-	}
-
-	private static void generateOfalenOre(int color, int limit, World world, Random random, int genX, int genY, int genZ) {
-		new WorldGenMinable(OfalenModBlockCore.oreOfalen, color, limit, Blocks.stone).generate(world, random, genX, genY, genZ);
 	}
 }

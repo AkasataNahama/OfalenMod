@@ -31,7 +31,7 @@ config.ofalen.prop.frequencyGeneration.tooltip=The number of Ofalen Ore generati
 config.ofalen.prop.limitGeneration=Generation Limit
 config.ofalen.prop.limitGeneration.tooltip=Maximum size of Ofalen Ore per generation.
 config.ofalen.prop.probLodeGeneration=Load Generation Probability
-config.ofalen.prop.probLodeGeneration.tooltip=Generation probability of Huge Ofalen Ore Lode. Calculation of probability is performed on each chunk. (x/10000)
+config.ofalen.prop.probLodeGeneration.tooltip=Generation probability of Huge Ofalen Ore Lode. Calculation of probability is performed on each chunk.
 // Tool
 config.ofalen.category.general.tool=Tool
 config.ofalen.category.general.tool.tooltip=The settings of Ofalen Tool.

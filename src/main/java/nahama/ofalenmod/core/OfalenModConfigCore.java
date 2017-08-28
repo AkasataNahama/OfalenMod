@@ -41,7 +41,7 @@ public class OfalenModConfigCore {
 	public static boolean isGeneratorEnabled = true;
 	public static byte frequencyGeneration = 3;
 	public static byte limitGeneration = 8;
-	public static short probLodeGeneration = 10;
+	public static double probLodeGeneration = 0.001;
 	// Tool.Perfect
 	public static byte rangeMax = 7;
 	// Ball.Explosion
@@ -162,10 +162,10 @@ public class OfalenModConfigCore {
 		limitGeneration = (byte) prop.getInt();
 		propOrder.add(prop.getName());
 		//
-		prop = cfg.get(category, "probLodeGeneration", probLodeGeneration, null, 1, 10000);
-		prop.comment = "Generation probability of Huge Ofalen Ore Lode." + separator + "Calculation of probability is performed on each chunk." + separator + " (x/10000)" + getIntGuide(prop);
+		prop = cfg.get(category, "probLodeGeneration", probLodeGeneration, null, 0.0, 1.0);
+		prop.comment = "Generation probability of Huge Ofalen Ore Lode." + separator + "Calculation of probability is performed on each chunk." + getIntGuide(prop);
 		prop.setLanguageKey(keyProp + prop.getName());
-		probLodeGeneration = (short) prop.getInt();
+		probLodeGeneration = prop.getDouble();
 		propOrder.add(prop.getName());
 		cfg.setCategoryPropertyOrder(category, propOrder);
 		// Tool
