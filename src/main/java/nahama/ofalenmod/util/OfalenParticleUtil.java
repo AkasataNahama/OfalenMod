@@ -5,6 +5,10 @@ import net.minecraft.world.World;
 import static nahama.ofalenmod.util.OfalenUtil.random;
 
 public class OfalenParticleUtil {
+	private static final double COLOR_1 = 1.0;
+	private static final double COLOR_2 = 0.578;
+	private static final double COLOR_3 = 0.127;
+
 	public static void spawnParticleWithBlockRange(World world, BlockRange range, int type) {
 		double[] color = getColorWithTypeForParticle(type);
 		spawnParticleWithBlockRange(world, range, color[0], color[1], color[2]);
@@ -66,38 +70,48 @@ public class OfalenParticleUtil {
 		}
 	}
 
-	private static double[] getColorWithTypeForParticle(int type) {
+	public static double[] getColorWithTypeForParticle(int type) {
 		double[] color = new double[3];
 		switch (type) {
+		case 0:
+			color[0] = COLOR_1;
+			color[1] = COLOR_3;
+			color[2] = COLOR_2;
+			break;
+		case 1:
+			color[0] = COLOR_2;
+			color[1] = COLOR_1;
+			color[2] = COLOR_3;
+			break;
 		case 2:
-			color[0] = 0.127D;
-			color[1] = 0.578D;
-			color[2] = 1.0D;
+			color[0] = COLOR_3;
+			color[1] = COLOR_2;
+			color[2] = COLOR_1;
 			break;
 		case 4:
-			color[0] = 1.0D;
-			color[1] = 0.578D;
-			color[2] = 0.127D;
+			color[0] = COLOR_1;
+			color[1] = COLOR_2;
+			color[2] = COLOR_3;
 			break;
 		case 5:
-			color[0] = 0.127D;
-			color[1] = 1.0D;
-			color[2] = 0.578D;
+			color[0] = COLOR_3;
+			color[1] = COLOR_1;
+			color[2] = COLOR_2;
 			break;
 		case 6:
-			color[0] = 0.578D;
-			color[1] = 0.127D;
-			color[2] = 1.0D;
+			color[0] = COLOR_2;
+			color[1] = COLOR_3;
+			color[2] = COLOR_1;
 			break;
 		case 7:
-			color[0] = 0.127D;
-			color[1] = 0.127D;
-			color[2] = 0.127D;
+			color[0] = COLOR_3;
+			color[1] = COLOR_3;
+			color[2] = COLOR_3;
 			break;
 		default:
-			color[0] = 1.0D;
-			color[1] = 1.0D;
-			color[2] = 1.0D;
+			color[0] = COLOR_1;
+			color[1] = COLOR_1;
+			color[2] = COLOR_1;
 		}
 		return color;
 	}

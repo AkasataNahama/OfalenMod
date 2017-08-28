@@ -76,7 +76,7 @@ public class ItemFloater extends ItemFuture implements IItemOfalenSettable {
 			this.consumeMaterial(itemStack, OfalenModConfigCore.amountFloaterDamage);
 		// サーバー側なら全クライアントにパーティクルを生成するようパケットを送信。
 		if (!world.isRemote)
-			OfalenModPacketCore.WRAPPER.sendToAll(new MSpawnParticle(entity.worldObj.provider.dimensionId, entity.posX, entity.posY - 1.6D, entity.posZ, (byte) 2));
+			OfalenModPacketCore.WRAPPER.sendToAll(new MSpawnParticle(entity.worldObj.provider.dimensionId, entity.posX, entity.posY, entity.posZ, (byte) 2));
 		if (this.getMaterialAmount(itemStack) < OfalenModConfigCore.amountFloaterDamage) {
 			// 材料が尽きたならチャットに出力し、調査する。
 			OfalenUtil.addChatTranslationMessage(player, "info.ofalen.future.lackingMaterial", new ItemStack(OfalenModItemCore.floaterOfalen).getDisplayName(), new ItemStack(OfalenModItemCore.partsOfalen, 1, 8).getDisplayName());

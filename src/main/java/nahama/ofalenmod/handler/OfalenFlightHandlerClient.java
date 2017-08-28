@@ -1,6 +1,7 @@
 package nahama.ofalenmod.handler;
 
 import nahama.ofalenmod.util.FloaterMode;
+import nahama.ofalenmod.util.OfalenParticleUtil;
 import nahama.ofalenmod.util.OfalenUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
@@ -58,8 +59,10 @@ public class OfalenFlightHandlerClient {
 			// 空中移動係数を変更する。
 			player.jumpMovementFactor *= mode.getFactor();
 			// プレイヤーが空中にいるならパーティクルを表示する。
-			if (!player.onGround)
-				Minecraft.getMinecraft().theWorld.spawnParticle("reddust", player.posX, player.posY - 1.6D - (OfalenUtil.random.nextDouble() / 2), player.posZ, 0.4D, 0.8D, 1.0D);
+			if (!player.onGround) {
+				double[] color = OfalenParticleUtil.getColorWithTypeForParticle(2);
+				Minecraft.getMinecraft().theWorld.spawnParticle("reddust", player.posX, player.posY - 1.62 - (OfalenUtil.random.nextDouble() / 2), player.posZ, color[0], color[1], color[2]);
+			}
 		}
 	}
 
