@@ -143,7 +143,7 @@ public class OfalenModCore {
 		// 各種ハンドラを初期化する。
 		OfalenTeleportHandler.init();
 		if (OfalenUtil.isClient())
-			OfalenFlightHandlerClient.setMode(null);
+			OfalenFlightHandlerClient.init();
 		OfalenFlightHandlerServer.init();
 		OfalenModAnniversaryHandler.init();
 		OfalenKeyHandler.onServerStarting();

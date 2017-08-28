@@ -9,11 +9,22 @@ import net.minecraft.entity.Entity;
 public class OfalenFlightHandlerClient {
 	/** フローターのモード。 */
 	private static FloaterMode mode;
+	/** 二連続ジャンプ判定の残り時間。 */
+	private static byte timeRemaining;
+	/** フローターの機能で飛行しているか。 */
+	private static boolean isFlightEnabled;
 
-	/** フローターのモードを設定する。 */
-	public static void setMode(FloaterMode newMode) {
+	/** 初期化処理。 */
+	public static void init() {
+		isFlightEnabled = true;
+	}
+
+	/** フローターのモードを設定する。ワールド起動直後なら有効判定を上書きする。 */
+	public static void setMode(FloaterMode newMode, boolean onGround) {
 		// モードを設定する。
 		mode = newMode;
+		if (Minecraft.getMinecraft().thePlayer.onGround != onGround)
+			isFlightEnabled = !onGround;
 	}
 
 	/** 浮遊が許可されているかどうか。 */
@@ -43,15 +54,18 @@ public class OfalenFlightHandlerClient {
 			floatFlight(player, mode);
 			break;
 		}
-		// 空中移動係数を変更する。
-		player.jumpMovementFactor *= mode.getFactor();
-		// プレイヤーが空中にいるならパーティクルを表示する。
-		if (!player.onGround)
-			Minecraft.getMinecraft().theWorld.spawnParticle("reddust", player.posX, player.posY - 1.6D - (OfalenUtil.random.nextDouble() / 2), player.posZ, 0.4D, 0.8D, 1.0D);
+		if (isFlightEnabled) {
+			// 空中移動係数を変更する。
+			player.jumpMovementFactor *= mode.getFactor();
+			// プレイヤーが空中にいるならパーティクルを表示する。
+			if (!player.onGround)
+				Minecraft.getMinecraft().theWorld.spawnParticle("reddust", player.posX, player.posY - 1.6D - (OfalenUtil.random.nextDouble() / 2), player.posZ, 0.4D, 0.8D, 1.0D);
+		}
 	}
 
 	/** ジェットモードで浮遊させる。 */
 	private static void jetFlight(EntityPlayerSP player, FloaterMode mode) {
+		isFlightEnabled = true;
 		// 入力情報を更新。
 		player.movementInput.updatePlayerMoveState();
 		// ジャンプキーに入力があれば上昇。
@@ -69,6 +83,7 @@ public class OfalenFlightHandlerClient {
 
 	/** ジャンプモードで浮遊させる。 */
 	private static void jumpFlight(EntityPlayerSP player, FloaterMode mode) {
+		isFlightEnabled = true;
 		// ジャンプキーに入力があったかどうかを保持。
 		boolean jump = player.movementInput.jump;
 		// 入力情報を更新。
@@ -82,15 +97,31 @@ public class OfalenFlightHandlerClient {
 
 	/** フロートモードで浮遊させる。 */
 	private static void floatFlight(EntityPlayerSP player, FloaterMode mode) {
+		// ジャンプキーに入力があったかどうかを保持。
+		boolean jump = player.movementInput.jump;
 		// 入力情報を更新。
 		player.movementInput.updatePlayerMoveState();
-		// 上下移動をキャンセル。
-		player.motionY = 0.0D;
-		// スニークキーに入力があれば下降。
-		if (player.movementInput.sneak)
-			player.motionY -= mode.getParam(0);
-		// ジャンプキーに入力があれば上昇。
-		if (player.movementInput.jump)
-			player.motionY += mode.getParam(1);
+		if (!jump && player.movementInput.jump) {
+			if (timeRemaining > 0) {
+				isFlightEnabled = !isFlightEnabled;
+				timeRemaining = 0;
+			} else {
+				timeRemaining = 7;
+			}
+		}
+		if (timeRemaining > 0)
+			timeRemaining--;
+		if (player.onGround && isFlightEnabled)
+			isFlightEnabled = false;
+		if (isFlightEnabled) {
+			// 上下移動をキャンセル。
+			player.motionY = 0.0D;
+			// スニークキーに入力があれば下降。
+			if (player.movementInput.sneak)
+				player.motionY -= mode.getParam(0);
+			// ジャンプキーに入力があれば上昇。
+			if (player.movementInput.jump)
+				player.motionY += mode.getParam(1);
+		}
 	}
 }

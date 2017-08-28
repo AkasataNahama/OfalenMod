@@ -76,7 +76,7 @@ public class OfalenFlightHandlerServer {
 		if (state.mode != null && state.mode.equals(modeFloater))
 			return;
 		// モード変更をClientHandlerに通知する。
-		OfalenModPacketCore.WRAPPER.sendTo(new MFloaterMode(modeFloater), (EntityPlayerMP) player);
+		OfalenModPacketCore.WRAPPER.sendTo(new MFloaterMode(modeFloater, player.onGround), (EntityPlayerMP) player);
 		if (modeSelected < 1 || modeFloater.getFlightForm() < 1) {
 			// モードが1未満（無効）なら削除する。
 			if (playersFloating.containsKey(player.getCommandSenderName())) {

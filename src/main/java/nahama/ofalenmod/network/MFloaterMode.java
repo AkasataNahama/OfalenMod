@@ -9,13 +9,15 @@ import nahama.ofalenmod.util.FloaterMode;
 
 public class MFloaterMode implements IMessage {
 	public FloaterMode mode;
+	public boolean onGround;
 
 	@SuppressWarnings("unused")
 	public MFloaterMode() {
 	}
 
-	public MFloaterMode(FloaterMode mode) {
+	public MFloaterMode(FloaterMode mode, boolean onGround) {
 		this.mode = mode;
+		this.onGround = onGround;
 	}
 
 	@Override
@@ -29,6 +31,7 @@ public class MFloaterMode implements IMessage {
 			params[i] = buf.readFloat();
 		}
 		mode = new FloaterMode(null, formFlight, factor, params);
+		onGround = buf.readBoolean();
 	}
 
 	@Override
@@ -39,12 +42,13 @@ public class MFloaterMode implements IMessage {
 		for (int i = 0; i < FloaterMode.getRequiredParamAmount(mode.getFlightForm()); i++) {
 			buf.writeFloat(mode.getParam(i));
 		}
+		buf.writeBoolean(onGround);
 	}
 
 	public static class Handler implements IMessageHandler<MFloaterMode, IMessage> {
 		@Override
 		public IMessage onMessage(MFloaterMode message, MessageContext ctx) {
-			OfalenFlightHandlerClient.setMode(message.mode);
+			OfalenFlightHandlerClient.setMode(message.mode, message.onGround);
 			return null;
 		}
 	}
