@@ -39,8 +39,9 @@ public class ContainerItemFilter extends ContainerItemBase {
 				ItemStack itemStack2 = new ItemStack(itemStack1.getItem(), 1, itemStack1.getItemDamage());
 				inventory.setInventorySlotContents(slotNumber, itemStack2);
 			}
+			return null;
 		}
-		return null;
+		return itemStack;
 	}
 
 	@Override
