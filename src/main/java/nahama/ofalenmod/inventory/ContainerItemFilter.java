@@ -46,6 +46,22 @@ public class ContainerItemFilter extends ContainerItemBase {
 
 	@Override
 	protected boolean isItemStackEnabled(ItemStack itemStack) {
+		return true;
+	}
+
+	@Override
+	protected boolean transferStackInItemSlot(ItemStack itemStack, int slotNumber) {
+		for (int i = 0; i < index1; i++) {
+			ItemStack stackInInventory = inventory.getStackInSlot(i);
+			if (stackInInventory == null) {
+				stackInInventory = itemStack.copy();
+				stackInInventory.stackSize = 1;
+				inventory.setInventorySlotContents(i, stackInInventory);
+				return true;
+			} else if (stackInInventory.isItemEqual(itemStack)) {
+				return false;
+			}
+		}
 		return false;
 	}
 
