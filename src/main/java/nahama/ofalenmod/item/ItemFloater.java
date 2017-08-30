@@ -75,7 +75,7 @@ public class ItemFloater extends ItemFuture implements IItemOfalenSettable {
 		if (!player.capabilities.isCreativeMode)
 			this.consumeMaterial(itemStack, OfalenModConfigCore.amountFloaterDamage);
 		// サーバー側なら全クライアントにパーティクルを生成するようパケットを送信。
-		if (!world.isRemote)
+		if (!world.isRemote && OfalenModConfigCore.isFloaterParticleEnabled)
 			OfalenModPacketCore.WRAPPER.sendToAll(new MSpawnParticle(entity.worldObj.provider.dimensionId, entity.posX, entity.posY, entity.posZ, (byte) 2));
 		if (this.getMaterialAmount(itemStack) < OfalenModConfigCore.amountFloaterDamage) {
 			// 材料が尽きたならチャットに出力し、調査する。

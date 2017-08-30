@@ -64,20 +64,27 @@ public class OfalenModConfigCore {
 	public static byte amountProtectingIngotCrafting = 4;
 	public static short amountProtectingIngotReference = 64;
 	public static short amountProtectorDamage = 1;
+	public static boolean isProtectorParticleEnabled = true;
+	public static byte typeProtectorParticle = 2;
 	// Future.Teleporter
 	public static byte amountTeleportingPearlCrafting = 4;
 	public static short amountTeleportingPearlReference = 64;
 	public static short amountTeleporterDamage = 1;
+	public static boolean isTeleporterParticleEnabled = true;
+	public static byte typeTeleporterParticle = 2;
 	// Future.Floater
 	public static byte amountFloatingDustCrafting = 4;
 	public static short amountFloatingDustReference = 64;
 	public static short amountFloaterDamage = 1;
 	public static byte intervalFloaterDamage = 20;
+	public static boolean isFloaterParticleEnabled = true;
+	public static byte typeFloaterParticle = 2;
 	// Future.Collector
 	public static byte amountCollectingLumpCrafting = 64;
 	public static short amountCollectingLumpReference = 64;
 	public static short amountCollectorDamageItem = 1;
 	public static short amountCollectorDamageExp = 1;
+	public static boolean isCollectorParticleEnabled = true;
 	// WorldEditor
 	public static short energyDarkFuel = 20;
 
@@ -282,6 +289,18 @@ public class OfalenModConfigCore {
 		prop.setLanguageKey(keyProp + prop.getName());
 		amountProtectorDamage = (short) getInt(prop);
 		propOrder.add(prop.getName());
+		//
+		prop = cfg.get(category, "enableProtectorParticle", isProtectorParticleEnabled);
+		prop.comment = "Set this to true to enable particle spawning of Ofalen Protector." + getBoolGuide(prop);
+		prop.setLanguageKey(keyProp + prop.getName());
+		isProtectorParticleEnabled = prop.getBoolean();
+		propOrder.add(prop.getName());
+		//
+		prop = cfg.get(category, "typeProtectorParticle", typeProtectorParticle, null, 1, 2);
+		prop.comment = "Type of particle spawning for Ofalen Protector." + separator + "1: circle, 2: cylinder" + getNumGuide(prop);
+		prop.setLanguageKey(keyProp + prop.getName());
+		typeProtectorParticle = (byte) getInt(prop);
+		propOrder.add(prop.getName());
 		cfg.setCategoryPropertyOrder(category, propOrder);
 		// Future.Teleporter
 		category = TELEPORTER;
@@ -305,6 +324,18 @@ public class OfalenModConfigCore {
 		prop.comment = "Damage amount of Ofalen Teleporter when the player teleport." + getNumGuide(prop);
 		prop.setLanguageKey(keyProp + prop.getName());
 		amountTeleporterDamage = (short) getInt(prop);
+		propOrder.add(prop.getName());
+		//
+		prop = cfg.get(category, "enableTeleporterParticle", isTeleporterParticleEnabled);
+		prop.comment = "Set this to true to enable particle spawning of Ofalen Teleporter." + getBoolGuide(prop);
+		prop.setLanguageKey(keyProp + prop.getName());
+		isTeleporterParticleEnabled = prop.getBoolean();
+		propOrder.add(prop.getName());
+		//
+		prop = cfg.get(category, "typeTeleporterParticle", typeTeleporterParticle, null, 1, 2);
+		prop.comment = "Type of particle spawning for Ofalen Teleporter." + separator + "1: circle, 2: cylinder" + getNumGuide(prop);
+		prop.setLanguageKey(keyProp + prop.getName());
+		typeTeleporterParticle = (byte) getInt(prop);
 		propOrder.add(prop.getName());
 		cfg.setCategoryPropertyOrder(category, propOrder);
 		// Future.Floater
@@ -336,6 +367,18 @@ public class OfalenModConfigCore {
 		prop.setLanguageKey(keyProp + prop.getName());
 		intervalFloaterDamage = (byte) getInt(prop);
 		propOrder.add(prop.getName());
+		//
+		prop = cfg.get(category, "enableFloaterParticle", isFloaterParticleEnabled);
+		prop.comment = "Set this to true to enable particle spawning of Ofalen Floater." + getBoolGuide(prop);
+		prop.setLanguageKey(keyProp + prop.getName());
+		isFloaterParticleEnabled = prop.getBoolean();
+		propOrder.add(prop.getName());
+		//
+		prop = cfg.get(category, "typeFloaterParticle", typeFloaterParticle, null, 1, 2);
+		prop.comment = "Type of particle spawning for Ofalen Floater." + separator + "1: circle, 2: cylinder" + getNumGuide(prop);
+		prop.setLanguageKey(keyProp + prop.getName());
+		typeFloaterParticle = (byte) getInt(prop);
+		propOrder.add(prop.getName());
 		cfg.setCategoryPropertyOrder(category, propOrder);
 		// Future.Collector
 		category = COLLECTOR;
@@ -365,6 +408,12 @@ public class OfalenModConfigCore {
 		prop.comment = "Damage amount of Ofalen Collector when experience orb is collected." + separator + "Per 1 exp." + getNumGuide(prop);
 		prop.setLanguageKey(keyProp + prop.getName());
 		amountCollectorDamageExp = (short) getInt(prop);
+		propOrder.add(prop.getName());
+		//
+		prop = cfg.get(category, "enableCollectorParticle", isCollectorParticleEnabled);
+		prop.comment = "Set this to true to enable particle spawning of Ofalen Collector." + getBoolGuide(prop);
+		prop.setLanguageKey(keyProp + prop.getName());
+		isCollectorParticleEnabled = prop.getBoolean();
 		propOrder.add(prop.getName());
 		cfg.setCategoryPropertyOrder(category, propOrder);
 		// WorldEditor

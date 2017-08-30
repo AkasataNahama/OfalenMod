@@ -43,10 +43,9 @@ public class OfalenProtectHandler {
 			if (amount < 1)
 				break;
 		}
-		if (flag) {
-			// パーティクルを表示させるようパケットを送る。
+		// パーティクルを表示させるようパケットを送る。
+		if (flag && OfalenModConfigCore.isProtectorParticleEnabled)
 			OfalenModPacketCore.WRAPPER.sendToAll(new MSpawnParticle(player.worldObj.provider.dimensionId, player.posX, player.posY, player.posZ, (byte) 0));
-		}
 		return remainingDamage + amount;
 	}
 }

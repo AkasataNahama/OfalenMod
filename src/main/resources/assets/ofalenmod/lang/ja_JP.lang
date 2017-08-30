@@ -91,6 +91,10 @@ config.ofalen.prop.amountProtectingIngotReference=プロテクトインゴット
 config.ofalen.prop.amountProtectingIngotReference.tooltip=アイコンの描画で参照されるオファレンプロテクトインゴットの基準量。
 config.ofalen.prop.amountProtectorDamage=プロテクターのダメージ量
 config.ofalen.prop.amountProtectorDamage.tooltip=プレイヤーを保護した時のオファレンプロテクターのダメージ量。1プレイヤーダメージあたり。
+config.ofalen.prop.enableProtectorParticle=プロテクターのパーティクルの有効化
+config.ofalen.prop.enableProtectorParticle.tooltip=trueならプロテクターが発動した時にパーティクルを発生させます。
+config.ofalen.prop.typeProtectorParticle=プロテクターのパーティクルの形
+config.ofalen.prop.typeProtectorParticle.tooltip=プロテクターのパーティクル生成の形状。1 : 円、2 : 円柱
 // 未来.テレポーター
 config.ofalen.category.general.future.teleporter=テレポーター
 config.ofalen.category.general.future.teleporter.tooltip=オファレンテレポーターに関する設定。
@@ -100,6 +104,10 @@ config.ofalen.prop.amountTeleportingPearlReference=テレポートパールの�
 config.ofalen.prop.amountTeleportingPearlReference.tooltip=アイコンの描画で参照されるオファレンテレポートパールの基準量。
 config.ofalen.prop.amountTeleporterDamage=テレポーターのダメージ量
 config.ofalen.prop.amountTeleporterDamage.tooltip=プレイヤーを移動させた時のオファレンテレポーターのダメージ量。
+config.ofalen.prop.enableTeleporterParticle=テレポーターのパーティクルの有効化
+config.ofalen.prop.enableTeleporterParticle.tooltip=trueならテレポーターが発動した時にパーティクルを発生させます
+config.ofalen.prop.typeTeleporterParticle=テレポーターのパーティクルの形
+config.ofalen.prop.typeTeleporterParticle.tooltip=テレポーターのパーティクル生成の形状。1 : 円、2 : 円柱
 // 未来.フローター
 config.ofalen.category.general.future.floater=フローター
 config.ofalen.category.general.future.floater.tooltip=オファレンフローターに関する設定。
@@ -111,6 +119,10 @@ config.ofalen.prop.amountFloaterDamage=フローターのダメージ量
 config.ofalen.prop.amountFloaterDamage.tooltip=プレイヤーを飛行させたときのオファレンフローターのダメージ量。
 config.ofalen.prop.intervalFloaterDamage=フローターのダメージ間隔
 config.ofalen.prop.intervalFloaterDamage.tooltip=オファレンフローターのダメージ間隔。(tick)
+config.ofalen.prop.enableFloaterParticle=フローターのパーティクルの有効化
+config.ofalen.prop.enableFloaterParticle.tooltip=trueならフローターが発動した時にパーティクルを発生させます。
+config.ofalen.prop.typeFloaterParticle=フローターのパーティクルの形
+config.ofalen.prop.typeFloaterParticle.tooltip=フローターのパーティクル生成の形状。1 : 円、2 : 円柱
 // 未来.コレクター
 config.ofalen.category.general.future.collector=コレクター
 config.ofalen.category.general.future.collector.tooltip=オファレンコレクターに関する設定。
@@ -122,6 +134,8 @@ config.ofalen.prop.amountCollectorDamageItem=コレクターのダメージ量(�
 config.ofalen.prop.amountCollectorDamageItem.tooltip=アイテムを収集した時のコレクターのダメージ量。アイテム1個あたり。
 config.ofalen.prop.amountCollectorDamageExp=コレクターのダメージ量(経験値)
 config.ofalen.prop.amountCollectorDamageExp.tooltip=経験値オーブを収集した時のコレクターのダメージ量。1経験値あたり。
+config.ofalen.prop.enableCollectorParticle=コレクターのパーティクルの有効化
+config.ofalen.prop.enableCollectorParticle.tooltip=trueならコレクターが発動した時にパーティクルを発生させます。
 // 世界
 config.ofalen.category.general.world_editor=世界
 config.ofalen.category.general.world_editor.tooltip=プレーサー・ムーバー・ブレーカー・コレクターブロックに関する設定。

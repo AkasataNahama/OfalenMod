@@ -91,6 +91,10 @@ config.ofalen.prop.amountProtectingIngotReference=Protecting Ingot Reference Amo
 config.ofalen.prop.amountProtectingIngotReference.tooltip=The amount of "Ingot of Ofalen Protecting" referred for rendering icon.
 config.ofalen.prop.amountProtectorDamage=Protector Damage Amount
 config.ofalen.prop.amountProtectorDamage.tooltip=Damage amount of Ofalen Protector when the player is protected. Per 1 damage of player.
+config.ofalen.prop.enableProtectorParticle=Enable Protector Particle
+config.ofalen.prop.enableProtectorParticle.tooltip=Set this to true to enable particle spawning of Ofalen Protector.
+config.ofalen.prop.typeProtectorParticle=Protector Particle Type
+config.ofalen.prop.typeProtectorParticle.tooltip=Type of particle spawning for Ofalen Protector. 1: circle, 2: cylinder
 // Future.Teleporter
 config.ofalen.category.general.future.teleporter=Teleporter
 config.ofalen.category.general.future.teleporter.tooltip=The settings of Ofalen Teleporter.
@@ -100,6 +104,10 @@ config.ofalen.prop.amountTeleportingPearlReference=Teleporting Pearl Reference A
 config.ofalen.prop.amountTeleportingPearlReference.tooltip=The amount of "Pearl of Ofalen Teleporting" referred for rendering icon.
 config.ofalen.prop.amountTeleporterDamage=Teleporter Damage Amount
 config.ofalen.prop.amountTeleporterDamage.tooltip=Damage amount of Ofalen Teleporter when the player teleport.
+config.ofalen.prop.enableTeleporterParticle=Enable Teleporter Particle
+config.ofalen.prop.enableTeleporterParticle.tooltip=Set this to true to enable particle spawning of Ofalen Teleporter.
+config.ofalen.prop.typeTeleporterParticle=Teleporter Particle Type
+config.ofalen.prop.typeTeleporterParticle.tooltip=Type of particle spawning for Ofalen Teleporter. 1: circle, 2: cylinder
 // Future.Floater
 config.ofalen.category.general.future.floater=Floater
 config.ofalen.category.general.future.floater.tooltip=The settings of Ofalen Floater.
@@ -111,6 +119,10 @@ config.ofalen.prop.amountFloaterDamage=Floater Damage Amount
 config.ofalen.prop.amountFloaterDamage.tooltip=Damage amount of Ofalen Floater when the player float.
 config.ofalen.prop.intervalFloaterDamage=Floater Damage Interval
 config.ofalen.prop.intervalFloaterDamage.tooltip=Damage interval of Ofalen Floater. (tick)
+config.ofalen.prop.enableFloaterParticle=Enable Floater Particle
+config.ofalen.prop.enableFloaterParticle.tooltip=Set this to true to enable particle spawning of Ofalen Floater.
+config.ofalen.prop.typeFloaterParticle=Floater Particle Type
+config.ofalen.prop.typeFloaterParticle.tooltip=Type of particle spawning for Ofalen Floater. 1: circle, 2: cylinder
 // Future.Collector
 config.ofalen.category.general.future.collector=Collector
 config.ofalen.category.general.future.collector.tooltip=The settings of Ofalen Collector.
@@ -122,6 +134,8 @@ config.ofalen.prop.amountCollectorDamageItem=Collector Damage Amount (Item)
 config.ofalen.prop.amountCollectorDamageItem.tooltip=Damage amount of Ofalen Collector when item is collected. Per 1 item.
 config.ofalen.prop.amountCollectorDamageExp=Collector Damage Amount (Exp)
 config.ofalen.prop.amountCollectorDamageExp.tooltip=Damage amount of Ofalen Collector when experience orb is collected. Per 1 exp.
+config.ofalen.prop.enableCollectorParticle=Enable Collector Particle
+config.ofalen.prop.enableCollectorParticle.tooltip=Set this to true to enable particle spawning of Ofalen Collector.
 // WorldEditor
 config.ofalen.category.general.world_editor=World Editor
 config.ofalen.category.general.world_editor.tooltip=The settings of Placer, Mover, Breaker and Collector Block.
