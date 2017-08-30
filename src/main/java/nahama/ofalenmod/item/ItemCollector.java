@@ -115,7 +115,7 @@ public class ItemCollector extends ItemFuture implements IItemOfalenSettable {
 		byte intervalMax = settingInterval.getValueByStack(itemStack);
 		itemStack.getTagCompound().setByte(OfalenNBTUtil.INTERVAL, intervalMax);
 		// アイテムの範囲を設定する。
-		EntityRange rangeItemMin = EntityRange.getRangeByType(player, 0, 2);
+		EntityRange rangeItemMin = EntityRange.getRangeByType(player, 0, 1);
 		double[] lengths = new double[] { this.getLengthByNumber(itemStack, categoryItemRange, 0), this.getLengthByNumber(itemStack, categoryItemRange, 1), this.getLengthByNumber(itemStack, categoryItemRange, 2) };
 		EntityRange rangeItem = EntityRange.getRangeByType(player, ((OfalenSettingDesignationMode) categoryItemRange.getChildSetting("DesignationMode")).getValueByStack(itemStack), lengths);
 		// 経験値の範囲を設定する。
