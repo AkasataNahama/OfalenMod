@@ -229,8 +229,8 @@ info.ofalen.setting.collector.canDelete.exp.1=消去
 // 経験値の結晶
 info.ofalen.crystalExp.size=経験値量 :
 // 測量杖
-info.ofalen.wandSurveying.standard.a=基準点 (白) :
-info.ofalen.wandSurveying.standard.b=基準点 (黒) :
+info.ofalen.wandSurveying.standard.a=基準点 (灰色) :
+info.ofalen.wandSurveying.standard.b=基準点 (黒色) :
 info.ofalen.wandSurveying.range=範囲:
 // 詳細設定
 info.ofalen.settingDetailed.message.invalid=無効

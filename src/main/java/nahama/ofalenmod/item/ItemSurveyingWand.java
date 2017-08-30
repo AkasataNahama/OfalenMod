@@ -39,9 +39,14 @@ public class ItemSurveyingWand extends Item {
 		BlockRangeWithStandard range = BlockRangeWithStandard.loadFromNBT(nbt.getCompoundTag(OfalenNBTUtil.RANGE));
 		if (range == null)
 			return;
-		OfalenParticleUtil.spawnParticleWithBlockRange(world, range.convertToNormal(), 0.498, 0.498, 0.498);
-		OfalenParticleUtil.spawnParticleAroundBlock(world, range.posA, 1, 1, 1);
-		OfalenParticleUtil.spawnParticleAroundBlock(world, range.posB, 0, 0, 0);
+		// 橙の色を取得。大きい数値から順に並ぶ。
+		double[] color = OfalenParticleUtil.getColorWithTypeForParticle(4);
+		// 範囲全体に白色のパーティクルを出す。
+		OfalenParticleUtil.spawnParticleWithBlockRange(world, range.convertToNormal(), color[0], color[0], color[0]);
+		// 基準座標Aに灰色のパーティクルを出す。
+		OfalenParticleUtil.spawnParticleAroundBlock(world, range.posA, color[1], color[1], color[1]);
+		// 基準座標Bに黒色のパーティクルを出す。
+		OfalenParticleUtil.spawnParticleAroundBlock(world, range.posB, color[2], color[2], color[2]);
 	}
 
 	@Override

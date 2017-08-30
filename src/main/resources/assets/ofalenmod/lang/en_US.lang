@@ -229,7 +229,7 @@ info.ofalen.setting.collector.canDelete.exp.1=Delete
 // Experience Crystal
 info.ofalen.crystalExp.size=Experience Amount:
 // Surveying Wand
-info.ofalen.wandSurveying.standard.a=Standard Point (White):
+info.ofalen.wandSurveying.standard.a=Standard Point (Gray):
 info.ofalen.wandSurveying.standard.b=Standard Point (Black):
 info.ofalen.wandSurveying.range=Range:
 // Detailed Setting
