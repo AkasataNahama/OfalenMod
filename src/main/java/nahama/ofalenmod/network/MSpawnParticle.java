@@ -68,7 +68,9 @@ public class MSpawnParticle implements IMessage {
 				typeParticle = OfalenModConfigCore.typeFloaterParticle;
 				break;
 			}
-			if (typeParticle == 1) {
+			if (typeParticle == 0) {
+				Minecraft.getMinecraft().theWorld.spawnParticle("reddust", message.x, message.y, message.z, color[0], color[1], color[2]);
+			} else if (typeParticle == 1) {
 				// 円形でパーティクルを生成する。
 				int i = 0;
 				while (i < 40) {

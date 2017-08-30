@@ -3,7 +3,9 @@ package nahama.ofalenmod.item;
 import nahama.ofalenmod.core.OfalenModBlockCore;
 import nahama.ofalenmod.core.OfalenModConfigCore;
 import nahama.ofalenmod.core.OfalenModItemCore;
+import nahama.ofalenmod.core.OfalenModPacketCore;
 import nahama.ofalenmod.handler.OfalenKeyHandler;
+import nahama.ofalenmod.network.MSpawnParticle;
 import nahama.ofalenmod.setting.IItemOfalenSettable;
 import nahama.ofalenmod.setting.OfalenSettingBoolean;
 import nahama.ofalenmod.setting.OfalenSettingByte;
@@ -152,6 +154,8 @@ public class ItemCollector extends ItemFuture implements IItemOfalenSettable {
 				// 一個も移動できないなら次のEntityへ。
 				if (limit < 1)
 					continue;
+				if (OfalenModConfigCore.isCollectorParticleEnabled)
+					OfalenModPacketCore.WRAPPER.sendToAll(new MSpawnParticle(world.provider.dimensionId, entityItem.posX, entityItem.posY, entityItem.posZ, (byte) 7));
 				// スタック数が限界以下ならそのまま移動。
 				if (eItemStack.stackSize <= limit) {
 					entityItem.setPosition(player.posX, player.posY, player.posZ);
@@ -183,6 +187,8 @@ public class ItemCollector extends ItemFuture implements IItemOfalenSettable {
 				// 全く運べない（材料がない）なら次へ。
 				if (limit < 1)
 					continue;
+				if (OfalenModConfigCore.isCollectorParticleEnabled)
+					OfalenModPacketCore.WRAPPER.sendToAll(new MSpawnParticle(world.provider.dimensionId, entityXPOrb.posX, entityXPOrb.posY, entityXPOrb.posZ, (byte) 7));
 				// 経験値量が限界以下ならそのまま移動。
 				if (entityXPOrb.xpValue <= limit) {
 					entityXPOrb.setPosition(player.posX, player.posY, player.posZ);
