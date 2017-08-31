@@ -44,6 +44,7 @@ public class ItemFloater extends ItemFuture implements IItemOfalenSettable {
 	public void getSubItems(Item item, CreativeTabs tab, List list) {
 		ItemStack itemStack = new ItemStack(item);
 		this.setMaterialAmount(itemStack, OfalenModConfigCore.amountFloaterDamage * 64 * 9 * 6);
+		itemStack.getTagCompound().setByte(OfalenNBTUtil.MODE, (byte) 1);
 		OfalenUtil.add(list, itemStack);
 	}
 
