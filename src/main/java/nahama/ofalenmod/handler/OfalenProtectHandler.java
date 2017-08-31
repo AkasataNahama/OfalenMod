@@ -17,7 +17,7 @@ public class OfalenProtectHandler {
 		if (!OfalenModConfigCore.isProtectingEnabled)
 			return amountDamage;
 		int amount = (int) (amountDamage * OfalenModConfigCore.amountProtectorDamage);
-		float remainingDamage = amountDamage - amount;
+		float remainingDamage = amountDamage - (int) amountDamage;
 		// プレイヤーのインベントリを調査し、有効になっているプロテクターがあれば耐久値を減らす。
 		boolean flag = false;
 		IInventory inventory = player.inventory;
