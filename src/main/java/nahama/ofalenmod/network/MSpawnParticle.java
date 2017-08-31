@@ -11,7 +11,6 @@ import net.minecraft.client.Minecraft;
 import static nahama.ofalenmod.util.OfalenUtil.random;
 
 public class MSpawnParticle implements IMessage {
-	public byte dimensionId;
 	public float x, y, z;
 	public byte type;
 
@@ -19,22 +18,15 @@ public class MSpawnParticle implements IMessage {
 	public MSpawnParticle() {
 	}
 
-	public MSpawnParticle(byte dimensionId, double x, double y, double z, byte type) {
-		this.dimensionId = dimensionId;
+	public MSpawnParticle(double x, double y, double z, byte type) {
 		this.x = (float) x;
 		this.y = (float) y;
 		this.z = (float) z;
 		this.type = type;
 	}
 
-	/** dimensionIdはbyteにキャストされる。 */
-	public MSpawnParticle(int dimensionId, double x, double y, double z, byte type) {
-		this((byte) dimensionId, x, y, z, type);
-	}
-
 	@Override
 	public void fromBytes(ByteBuf buf) {
-		dimensionId = buf.readByte();
 		x = buf.readFloat();
 		y = buf.readFloat();
 		z = buf.readFloat();
@@ -43,7 +35,6 @@ public class MSpawnParticle implements IMessage {
 
 	@Override
 	public void toBytes(ByteBuf buf) {
-		buf.writeByte(dimensionId);
 		buf.writeFloat(x);
 		buf.writeFloat(y);
 		buf.writeFloat(z);
@@ -53,8 +44,6 @@ public class MSpawnParticle implements IMessage {
 	public static class Handler implements IMessageHandler<MSpawnParticle, IMessage> {
 		@Override
 		public IMessage onMessage(MSpawnParticle message, MessageContext ctx) {
-			if (Minecraft.getMinecraft().theWorld.provider.dimensionId != message.dimensionId)
-				return null;
 			double[] color = OfalenParticleUtil.getColorWithTypeForParticle(message.type);
 			byte typeParticle = 0;
 			switch (message.type) {

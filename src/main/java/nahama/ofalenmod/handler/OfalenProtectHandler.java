@@ -1,5 +1,6 @@
 package nahama.ofalenmod.handler;
 
+import cpw.mods.fml.common.network.NetworkRegistry;
 import nahama.ofalenmod.core.OfalenModConfigCore;
 import nahama.ofalenmod.core.OfalenModPacketCore;
 import nahama.ofalenmod.item.ItemProtector;
@@ -45,7 +46,7 @@ public class OfalenProtectHandler {
 		}
 		// パーティクルを表示させるようパケットを送る。
 		if (flag && OfalenModConfigCore.isProtectorParticleEnabled)
-			OfalenModPacketCore.WRAPPER.sendToAll(new MSpawnParticle(player.worldObj.provider.dimensionId, player.posX, player.posY, player.posZ, (byte) 0));
+			OfalenModPacketCore.WRAPPER.sendToAllAround(new MSpawnParticle(player.posX, player.posY, player.posZ, (byte) 0), new NetworkRegistry.TargetPoint(player.worldObj.provider.dimensionId, player.posX, player.posY, player.posZ, 32.0));
 		return remainingDamage + amount;
 	}
 }

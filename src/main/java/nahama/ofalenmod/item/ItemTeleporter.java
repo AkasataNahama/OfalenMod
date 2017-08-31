@@ -1,6 +1,7 @@
 package nahama.ofalenmod.item;
 
 import cpw.mods.fml.common.FMLCommonHandler;
+import cpw.mods.fml.common.network.NetworkRegistry;
 import nahama.ofalenmod.OfalenModCore;
 import nahama.ofalenmod.core.OfalenModConfigCore;
 import nahama.ofalenmod.core.OfalenModItemCore;
@@ -96,7 +97,7 @@ public class ItemTeleporter extends ItemFuture {
 				player.setPositionAndUpdate(pos.getX() + 0.5, pos.getY() + 1.1, pos.getZ() + 0.5);
 				player.setSneaking(false);
 				if (OfalenModConfigCore.isTeleporterParticleEnabled)
-					OfalenModPacketCore.WRAPPER.sendToAll(new MSpawnParticle(toId, pos.getX() + 0.5, pos.getY() + 1.0, pos.getZ() + 0.5, (byte) 1));
+					OfalenModPacketCore.WRAPPER.sendToAllAround(new MSpawnParticle(pos.getX() + 0.5, pos.getY() + 1.0, pos.getZ() + 0.5, (byte) 1), new NetworkRegistry.TargetPoint(toId, pos.getX() + 0.5, pos.getY() + 1.0, pos.getZ() + 0.5, 32.0));
 			}
 		} else {
 			// 時間がたっていないなら終了。
