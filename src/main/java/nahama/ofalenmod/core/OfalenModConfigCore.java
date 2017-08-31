@@ -68,6 +68,7 @@ public class OfalenModConfigCore {
 	public static short amountProtectingIngotReference;
 	public static short amountProtectorDamage;
 	public static boolean isProtectingEnabled;
+	public static boolean canConsumeMaterialPerDamage;
 	public static boolean isProtectorParticleEnabled;
 	public static byte typeProtectorParticle;
 	// Future.Teleporter
@@ -306,6 +307,12 @@ public class OfalenModConfigCore {
 		prop.comment = "Set this to true to enable searching inventory and protecting player." + getBoolGuide(prop);
 		prop.setLanguageKey(keyProp + prop.getName());
 		isProtectingEnabled = prop.getBoolean();
+		propOrder.add(prop.getName());
+		//
+		prop = cfg.get(category, "consumeMaterialPerDamage", true);
+		prop.comment = "Set this to true to consume material according to damage amount." + getBoolGuide(prop);
+		prop.setLanguageKey(keyProp + prop.getName());
+		canConsumeMaterialPerDamage = prop.getBoolean();
 		propOrder.add(prop.getName());
 		//
 		prop = cfg.get(category, "enableProtectorParticle", true);

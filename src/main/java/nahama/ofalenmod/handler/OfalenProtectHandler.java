@@ -35,9 +35,16 @@ public class OfalenProtectHandler {
 			// クリエイティブなら材料を消費しない。
 			if (player.capabilities.isCreativeMode)
 				break;
-			int limit = Math.min(amount, item.getMaterialAmount(itemStack));
-			item.consumeMaterial(itemStack, limit);
-			amount -= limit;
+			if (!OfalenModConfigCore.canConsumeMaterialPerDamage) {
+				// ダメージ量に関わらず素材消費が一定の時。
+				item.consumeMaterial(itemStack, OfalenModConfigCore.amountProtectorDamage);
+				amount = 0;
+			} else {
+				// ダメージ量に応じて消費量を変更する時。
+				int limit = Math.min(amount, item.getMaterialAmount(itemStack));
+				item.consumeMaterial(itemStack, limit);
+				amount -= limit;
+			}
 			if (item.getMaterialAmount(itemStack) < OfalenModConfigCore.amountProtectorDamage) {
 				// ダメージが最大になったら、チャットに通知する。
 				OfalenUtil.addChatTranslationMessage(player, "info.ofalen.protector.brokenProtector");
@@ -49,6 +56,9 @@ public class OfalenProtectHandler {
 		// パーティクルを表示させるようパケットを送る。
 		if (flag && OfalenModConfigCore.isProtectorParticleEnabled)
 			OfalenModPacketCore.WRAPPER.sendToAllAround(new MSpawnParticle(player.posX, player.posY, player.posZ, (byte) 0), new NetworkRegistry.TargetPoint(player.worldObj.provider.dimensionId, player.posX, player.posY, player.posZ, 32.0));
+		// ダメージ量に関わらず素材消費が一定の時は、端数も消す。
+		if (flag && OfalenModConfigCore.canConsumeMaterialPerDamage)
+			return 0;
 		return remainingDamage + amount;
 	}
 }
