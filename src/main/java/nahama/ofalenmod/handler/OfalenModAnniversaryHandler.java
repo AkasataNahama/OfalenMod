@@ -172,7 +172,7 @@ public class OfalenModAnniversaryHandler {
 			File file = new File(new File(".\\").getParentFile(), "config\\OfalenModPresentedDate.txt");
 			if (!file.exists() || !file.isFile() || !file.canWrite()) {
 				if (!file.createNewFile()) {
-					OfalenLog.error("Failed to create new file : OfalenModPresentedDate.txt", "OfalenModAnniversaryHandler");
+					OfalenLog.error("Failed to create new file: OfalenModPresentedDate.txt", "OfalenModAnniversaryHandler");
 					return;
 				}
 			}

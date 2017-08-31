@@ -55,7 +55,7 @@ public class ItemLaserMagazine extends Item {
 	/** 説明欄の内容を追加する。 */
 	@Override
 	public void addInformation(ItemStack itemStack, EntityPlayer player, List list, boolean flag) {
-		OfalenUtil.add(list, StatCollector.translateToLocal("info.ofalen.crystal") + " : " + (32 - (itemStack.getItemDamage() / 32)));
+		OfalenUtil.add(list, StatCollector.translateToLocal("info.ofalen.crystal") + OfalenUtil.getColon() + (32 - (itemStack.getItemDamage() / 32)));
 	}
 
 	/** アイテムスタックの最大スタック数を返す。 */

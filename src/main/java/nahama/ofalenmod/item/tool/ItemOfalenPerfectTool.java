@@ -312,9 +312,9 @@ public class ItemOfalenPerfectTool extends ItemTool implements IItemOfalenSettab
 			return;
 		int mode = itemStack.getTagCompound().getByte(OfalenNBTUtil.MODE);
 		List<String> stringList = OfalenUtil.getAs(list);
-		stringList.add(StatCollector.translateToLocal("info.ofalen.toolPerfect.mode") + " : " + StatCollector.translateToLocal("info.ofalen.toolPerfect.mode." + mode));
+		stringList.add(StatCollector.translateToLocal("info.ofalen.toolPerfect.mode") + OfalenUtil.getColon() + StatCollector.translateToLocal("info.ofalen.toolPerfect.mode." + mode));
 		if (mode == 1) {
-			stringList.add(StatCollector.translateToLocal("info.ofalen.toolPerfect.mode.1.range") + " : " + this.getRange(itemStack, 0, 0, 0).toStringRange() + " (" + itemStack.getTagCompound().getByte(OfalenNBTUtil.RANGE_LENGTH_ADDITION) + ")");
+			stringList.add(StatCollector.translateToLocal("info.ofalen.toolPerfect.mode.1.range") + OfalenUtil.getColon() + this.getRange(itemStack, 0, 0, 0).toStringRange() + " (" + itemStack.getTagCompound().getByte(OfalenNBTUtil.RANGE_LENGTH_ADDITION) + ")");
 		}
 		stringList.addAll(FilterUtil.getFilterInformation(itemStack));
 	}

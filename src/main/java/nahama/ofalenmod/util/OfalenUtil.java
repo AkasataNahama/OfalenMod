@@ -203,4 +203,8 @@ public class OfalenUtil {
 			return max;
 		return value;
 	}
+
+	public static String getColon() {
+		return StatCollector.translateToLocal("mark.ofalen.colon") + " ";
+	}
 }

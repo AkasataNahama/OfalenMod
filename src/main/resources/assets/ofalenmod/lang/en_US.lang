@@ -1,5 +1,9 @@
 // ModName
 mod.ofalen.name=Ofalen Mod
+
+// Mark
+mark.ofalen.colon=:
+
 // Config
 // General
 config.ofalen.category.general=General

@@ -71,7 +71,7 @@ public class ItemTeleporter extends ItemFuture {
 				OfalenTeleportHandler.MarkerPos pos = OfalenTeleportHandler.getCoord(channel);
 				if (pos == null) {
 					// 座標が取得できなかったらログに出力して終了。
-					OfalenLog.error("Error on getting marker coord. channel : " + channel, "ItemTeleporter.onItemRightClick");
+					OfalenLog.error("Error on getting marker coord. channel: " + channel, "ItemTeleporter.onItemRightClick");
 					return itemStack;
 				}
 				player.mountEntity(null);

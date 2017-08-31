@@ -17,7 +17,7 @@ public class OfalenModUpdateCheckHandler {
 	/** 新しいバージョンがリリースされているか。 */
 	public static boolean isNewVersionAvailable;
 	/** 最新版のバージョン番号。 */
-	public static String versionLatest = "";
+	private static String versionLatest = "";
 	/** 告知済みのプレイヤーの名前。 */
 	public static ArrayList<String> namesNotified = new ArrayList<String>();
 
@@ -60,6 +60,7 @@ public class OfalenModUpdateCheckHandler {
 	public static String getMessage() {
 		String s1 = StatCollector.translateToLocal("info.ofalen.using");
 		String s2 = StatCollector.translateToLocal("info.ofalen.latest");
-		return "  " + s1 + " : " + OfalenModCore.VERSION + "    " + s2 + " : " + versionLatest;
+		String colon = OfalenUtil.getColon();
+		return "  " + s1 + colon + OfalenModCore.VERSION + "    " + s2 + colon + versionLatest;
 	}
 }

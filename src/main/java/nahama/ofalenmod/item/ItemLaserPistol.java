@@ -191,7 +191,7 @@ public class ItemLaserPistol extends Item {
 		String color = nbt.getString(OfalenNBTUtil.LASER_COLOR);
 		if (color.length() < 1)
 			return;
-		OfalenUtil.add(list, StatCollector.translateToLocal("info.ofalen.color:" + color.toLowerCase()) + " " + StatCollector.translateToLocal("info.ofalen.crystal") + " : " + (32 - (itemStack.getItemDamage() / 32)));
+		OfalenUtil.add(list, StatCollector.translateToLocal("info.ofalen.color:" + color.toLowerCase()) + " " + StatCollector.translateToLocal("info.ofalen.crystal") + OfalenUtil.getColon() + (32 - (itemStack.getItemDamage() / 32)));
 	}
 
 	/** ダメージを受けられるかどうか。 */

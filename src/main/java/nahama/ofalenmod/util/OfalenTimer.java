@@ -33,16 +33,17 @@ public class OfalenTimer {
 		double time = ((double) getTime(name)) / 1000000;
 		if (time < min)
 			return;
-		OfalenLog.debuggingInfo(name + " ... " + time + " ms. Current Time : " + System.currentTimeMillis(), "OfalenTimer");
+		OfalenLog.debuggingInfo(name + " ... " + time + " ms. Current Time: " + System.currentTimeMillis(), "OfalenTimer");
 	}
 
 	public static void watchAndLogNano(String name) {
 		watchAndLogNano(name, 0);
 	}
 
+	@SuppressWarnings("WeakerAccess")
 	public static void watchAndLogNano(String name, long min) {
 		long time = getTime(name);
 		if (time >= min)
-			OfalenLog.debuggingInfo(name + " ... " + time + " ns. Current Time : " + System.currentTimeMillis(), "OfalenTimer");
+			OfalenLog.debuggingInfo(name + " ... " + time + " ns. Current Time: " + System.currentTimeMillis(), "OfalenTimer");
 	}
 }

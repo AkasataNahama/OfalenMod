@@ -1,5 +1,9 @@
 // MOD名
 mod.ofalen.name=オファレンMOD
+
+// 記号
+mark.ofalen.colon= :
+
 // 設定
 // 全般
 config.ofalen.category.general=全般
