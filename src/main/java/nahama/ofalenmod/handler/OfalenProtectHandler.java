@@ -14,6 +14,8 @@ import net.minecraft.item.ItemStack;
 public class OfalenProtectHandler {
 	/** ダメージを無効にした時の処理。 */
 	public static float onProtect(EntityPlayer player, float amountDamage) {
+		if (!OfalenModConfigCore.isProtectingEnabled)
+			return amountDamage;
 		int amount = (int) (amountDamage * OfalenModConfigCore.amountProtectorDamage);
 		float remainingDamage = amountDamage - amount;
 		// プレイヤーのインベントリを調査し、有効になっているプロテクターがあれば耐久値を減らす。
