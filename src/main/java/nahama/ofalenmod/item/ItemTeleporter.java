@@ -96,7 +96,7 @@ public class ItemTeleporter extends ItemFuture {
 				player.setPositionAndUpdate(pos.getX() + 0.5, pos.getY() + 1.1, pos.getZ() + 0.5);
 				player.setSneaking(false);
 				if (OfalenModConfigCore.isTeleporterParticleEnabled)
-					OfalenModPacketCore.WRAPPER.sendToAll(new MSpawnParticle(toId, pos.getX() + 0.5, pos.getY() + 1.5, pos.getZ() + 0.5, (byte) 1));
+					OfalenModPacketCore.WRAPPER.sendToAll(new MSpawnParticle(toId, pos.getX() + 0.5, pos.getY() + 1.0, pos.getZ() + 0.5, (byte) 1));
 			}
 		} else {
 			// 時間がたっていないなら終了。
