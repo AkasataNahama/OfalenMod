@@ -1,6 +1,7 @@
 package nahama.ofalenmod.item;
 
 import nahama.ofalenmod.OfalenModCore;
+import nahama.ofalenmod.core.OfalenModConfigCore;
 import nahama.ofalenmod.core.OfalenModItemCore;
 import nahama.ofalenmod.entity.EntityLaserBlue;
 import nahama.ofalenmod.entity.EntityLaserGreen;
@@ -78,7 +79,7 @@ public class ItemLaserPistol extends Item {
 				// 連続発射を防止するため、インターバルを設定する。
 				itemStack.getTagCompound().setByte(OfalenNBTUtil.INTERVAL, (byte) 10);
 				// 発射音を鳴らす。
-				if (!world.isRemote) {
+				if (!world.isRemote && OfalenModConfigCore.isLaserSoundEnabled) {
 					//					world.playSoundAtEntity(player, "mob.irongolem.hit", 2.0F, 100000000000000000.0F);
 					world.playSoundAtEntity(player, "ofalenmod:laser", 0.5F, 0.8F - 0.05F + world.rand.nextFloat() * 0.1F);
 				}

@@ -19,6 +19,7 @@ public class OfalenModConfigCore {
 	private static final String PERFECT = TOOL + Configuration.CATEGORY_SPLITTER + "perfect";
 	private static final String BALL = Configuration.CATEGORY_GENERAL + Configuration.CATEGORY_SPLITTER + "ball";
 	private static final String EXPLOSION = BALL + Configuration.CATEGORY_SPLITTER + "explosion";
+	private static final String LASER = Configuration.CATEGORY_GENERAL + Configuration.CATEGORY_SPLITTER + "laser";
 	private static final String MACHINE = Configuration.CATEGORY_GENERAL + Configuration.CATEGORY_SPLITTER + "machine";
 	private static final String SMELTING = MACHINE + Configuration.CATEGORY_SPLITTER + "smelting";
 	private static final String CONVERTING = MACHINE + Configuration.CATEGORY_SPLITTER + "converting";
@@ -47,6 +48,8 @@ public class OfalenModConfigCore {
 	public static byte rangeMax;
 	// Ball.Explosion
 	public static byte sizeExplosion;
+	// Laser
+	public static boolean isLaserSoundEnabled;
 	// Machine
 	public static short divisorBurningTime;
 	public static short timeTDiamondBurning;
@@ -198,6 +201,14 @@ public class OfalenModConfigCore {
 		prop.comment = "Explosion size of Explosion Ball." + getNumGuide(prop);
 		prop.setLanguageKey(keyProp + prop.getName());
 		sizeExplosion = (byte) getInt(prop);
+		// Laser
+		category = LASER;
+		cfg.setCategoryLanguageKey(category, keyCategory + category);
+		//
+		prop = cfg.get(category, "enableLaserSound", true);
+		prop.comment = "Set this to true to enable sound of Ofalen Laser Pistol." + getBoolGuide(prop);
+		prop.setLanguageKey(keyProp + prop.getName());
+		isLaserSoundEnabled = prop.getBoolean();
 		// Machine
 		category = MACHINE;
 		cfg.setCategoryLanguageKey(category, keyCategory + category);

@@ -48,6 +48,11 @@ config.ofalen.category.general.ball.explosion=Explosion Ball
 config.ofalen.category.general.ball.explosion.tooltip=The settings of Ofalen Explosion Ball.
 config.ofalen.prop.sizeExplosion=Explosion Size
 config.ofalen.prop.sizeExplosion.tooltip=Explosion size of Explosion Ball.
+// Laser
+config.ofalen.category.general.laser=Laser
+config.ofalen.category.general.laser.tooltip=The settings of Ofalen Laser Pistol.
+config.ofalen.prop.enableLaserSound=Enable Laser Sound
+config.ofalen.prop.enableLaserSound.tooltip=Set this to true to enable sound of Ofalen Laser Pistol.
 // Machine
 config.ofalen.category.general.machine=Machine
 config.ofalen.category.general.machine.tooltip=The settings of Smelting Machine, Converting Machine, Repairing Machine and Fusing Machine.

@@ -48,6 +48,11 @@ config.ofalen.category.general.ball.explosion=爆発玉
 config.ofalen.category.general.ball.explosion.tooltip=オファレンの爆発玉に関する設定。
 config.ofalen.prop.sizeExplosion=爆発の大きさ
 config.ofalen.prop.sizeExplosion.tooltip=爆発玉の爆発の大きさ。
+// レーザー
+config.ofalen.category.general.laser=レーザー
+config.ofalen.category.general.laser.tooltip=オファレンレーザーピストルに関する設定。
+config.ofalen.prop.enableLaserSound=レーザー音の有効化
+config.ofalen.prop.enableLaserSound.tooltip=trueならレーザー発射時に音が出ます。
 // 機械
 config.ofalen.category.general.machine=機械
 config.ofalen.category.general.machine.tooltip=製錬機・変換機・修繕機・融合機に関する設定。
