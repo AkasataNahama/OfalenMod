@@ -41,6 +41,8 @@ public class OfalenFlightHandlerClient {
 	/** プレイヤーを浮遊させる。 */
 	public static void floatPlayer() {
 		EntityPlayerSP player = Minecraft.getMinecraft().thePlayer;
+		if (player.ridingEntity != null)
+			return;
 		// モードごとに更新時の移動処理を行う。
 		switch (mode.getFlightForm()) {
 		default:
