@@ -33,6 +33,8 @@ public class OfalenFlightHandlerServer {
 		FloaterState state = playersFloating.get(player.getCommandSenderName());
 		if (state == null)
 			return;
+		// 落下速度の計算はサーバーでも行われているため、クライアントとずれるのを防止する。
+		player.motionY = 0.0;
 		if (state.interval > 0)
 			state.interval--;
 		if (state.interval < 1) {
@@ -116,18 +118,6 @@ public class OfalenFlightHandlerServer {
 	public static boolean canFlightPlayer(EntityPlayer player) {
 		// マップに登録されていたらtrue。
 		return playersFloating.get(player.getCommandSenderName()) != null;
-	}
-
-	/** プレイヤーがダメージを受けた時の処理。 */
-	public static void onPlayerHurt(EntityPlayer player) {
-		/*
-		 * 速度は基本的にクライアントで管理しているが、ダメージ時にはサーバーの速度で上書きされる。
-		 * クライアントからサーバーへの同期はしていないので、フローターで変更したY軸速度が反映されず、滞空時間に応じた落下速度が代入されてしまう。
-		 * これを防ぐため、フローター使用中のプレイヤーがダメージを受けた時にY軸速度を消している。
-		 */
-		// フローターが有効なら速度を0にする。
-		if (canFlightPlayer(player))
-			player.motionY = 0;
 	}
 
 	/** フローター使用中のプレイヤーの状態。 */

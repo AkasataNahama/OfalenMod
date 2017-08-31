@@ -48,7 +48,6 @@ public class OfalenModEventHandler {
 		EntityPlayer player = (EntityPlayer) event.entityLiving;
 		// プロテクターがダメージを軽減する。
 		event.ammount = OfalenProtectHandler.onProtect(player, event.ammount);
-		OfalenFlightHandlerServer.onPlayerHurt(player);
 	}
 
 	/** EntityLivingBaseのアップデート時の処理。 */
