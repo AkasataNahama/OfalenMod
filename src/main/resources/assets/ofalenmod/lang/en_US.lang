@@ -21,6 +21,10 @@ config.ofalen.category.general.ore=Ore
 config.ofalen.category.general.ore.tooltip=The settings of Ofalen Ore and generator.
 config.ofalen.prop.amountDrop=Drop Amount
 config.ofalen.prop.amountDrop.tooltip=Drop amount of Ofalen Fragment when Ofalen Ore is mined.
+config.ofalen.prop.amountExpMin=Minimum Experience Amount
+config.ofalen.prop.amountExpMin.tooltip=Minimum amount of experience when Ofalen Ore is mined.
+config.ofalen.prop.amountExpMax=Maximum Experience Amount
+config.ofalen.prop.amountExpMax.tooltip=Maximum amount of experience when Ofalen Ore is mined.
 // Ore.Generate
 config.ofalen.category.general.ore.generate=Generate
 config.ofalen.category.general.ore.generate.tooltip=The settings of generating Ofalen Ore.

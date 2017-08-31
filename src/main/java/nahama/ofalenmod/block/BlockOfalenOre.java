@@ -61,7 +61,7 @@ public class BlockOfalenOre extends Block {
 	@Override
 	public int getExpDrop(IBlockAccess iBlockAccess, int meta, int fortune) {
 		// ダイヤモンドと同様。
-		return MathHelper.getRandomIntegerInRange(OfalenUtil.random, 3, 7);
+		return MathHelper.getRandomIntegerInRange(OfalenUtil.random, OfalenModConfigCore.amountExpMin, OfalenModConfigCore.amountExpMax);
 	}
 
 	/** クリエイティブタブにブロックを登録する処理。 */

@@ -21,6 +21,10 @@ config.ofalen.category.general.ore=鉱石
 config.ofalen.category.general.ore.tooltip=オファレン鉱石とその生成に関する設定。
 config.ofalen.prop.amountDrop=ドロップ数
 config.ofalen.prop.amountDrop.tooltip=オファレン鉱石が採掘された時のオファレンの欠片のドロップ数。
+config.ofalen.prop.amountExpMin=最小経験値量
+config.ofalen.prop.amountExpMin.tooltip=オファレン鉱石が採掘された時にドロップする経験値の最小値。
+config.ofalen.prop.amountExpMax=最大経験値量
+config.ofalen.prop.amountExpMax.tooltip=オファレン鉱石が採掘された時にドロップする経験値の最大値。
 // 鉱石.生成
 config.ofalen.category.general.ore.generate=生成
 config.ofalen.category.general.ore.generate.tooltip=オファレン鉱石の生成に関する設定。

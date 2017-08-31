@@ -39,6 +39,8 @@ public class OfalenModConfigCore {
 	public static byte positionStoneLumpRecipeBlank;
 	// Ore
 	public static byte amountDrop;
+	public static int amountExpMin;
+	public static int amountExpMax;
 	// Ore.Generate
 	public static boolean isGeneratorEnabled;
 	public static byte frequencyGeneration;
@@ -147,11 +149,26 @@ public class OfalenModConfigCore {
 		// Ore
 		category = ORE;
 		cfg.setCategoryLanguageKey(category, keyCategory + category);
+		propOrder = new ArrayList<String>();
 		//
 		prop = cfg.get(category, "amountDrop", 3, null, 0, Byte.MAX_VALUE);
 		prop.comment = "Drop amount of Ofalen Fragment when Ofalen Ore is mined." + getNumGuide(prop);
 		prop.setLanguageKey(keyProp + prop.getName());
 		amountDrop = (byte) getInt(prop);
+		propOrder.add(prop.getName());
+		//
+		prop = cfg.get(category, "amountExpMin", 3, null, 0, Integer.MAX_VALUE);
+		prop.comment = "Minimum amount of experience when Ofalen Ore is mined." + getNumGuide(prop);
+		prop.setLanguageKey(keyProp + prop.getName());
+		amountExpMin = getInt(prop);
+		propOrder.add(prop.getName());
+		//
+		prop = cfg.get(category, "amountExpMax", 7, null, 0, Integer.MAX_VALUE);
+		prop.comment = "Maximum amount of experience when Ofalen Ore is mined." + getNumGuide(prop);
+		prop.setLanguageKey(keyProp + prop.getName());
+		amountExpMax = getInt(prop);
+		propOrder.add(prop.getName());
+		cfg.setCategoryPropertyOrder(category, propOrder);
 		// Ore.Generate
 		category = GENERATE;
 		cfg.setCategoryLanguageKey(category, keyCategory + category);
