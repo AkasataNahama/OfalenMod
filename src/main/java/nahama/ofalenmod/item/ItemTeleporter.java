@@ -95,7 +95,6 @@ public class ItemTeleporter extends ItemFuture {
 					playerMP.addExperienceLevel(0);
 				}
 				player.setPositionAndUpdate(pos.getX() + 0.5, pos.getY() + 1.1, pos.getZ() + 0.5);
-				player.setSneaking(false);
 				if (OfalenModConfigCore.isTeleporterParticleEnabled)
 					OfalenModPacketCore.WRAPPER.sendToAllAround(new MSpawnParticle(pos.getX() + 0.5, pos.getY() + 1.0, pos.getZ() + 0.5, (byte) 1), new NetworkRegistry.TargetPoint(toId, pos.getX() + 0.5, pos.getY() + 1.0, pos.getZ() + 0.5, 32.0));
 			}
