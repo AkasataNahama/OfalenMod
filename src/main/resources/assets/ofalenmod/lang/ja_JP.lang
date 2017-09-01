@@ -168,6 +168,7 @@ itemGroup.ofalen.tabOfalenMod=オファレンMOD
 
 # インフォーメーション
 info.ofalen.metaMod.description=このMODは、新しい鉱石「オファレン」を追加し、防具・玉・道具などのアイテムを作れるようにします。
+info.ofalen.metaMod.credits=Tom Kate様、小森平様
 info.ofalen.notificationVersion=オファレンMOD : 新しいバージョンがリリースされています。
 info.ofalen.using=現在
 info.ofalen.latest=最新
