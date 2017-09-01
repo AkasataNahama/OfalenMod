@@ -39,7 +39,7 @@ config.ofalen.prop.frequencyGeneration.tooltip=チャンクごとの各色鉱石
 config.ofalen.prop.limitGeneration=生成限界
 config.ofalen.prop.limitGeneration.tooltip=オファレン鉱石の生成一回あたりの最大個数。
 config.ofalen.prop.probLodeGeneration=鉱脈生成確率
-config.ofalen.prop.probLodeGeneration.tooltip=オファレンの巨大鉱脈の生成確率。確率計算はチャンク毎に行われる。
+config.ofalen.prop.probLodeGeneration.tooltip=オファレンの巨大鉱脈の生成確率。確率計算はチャンク毎に行われます。
 // 道具
 config.ofalen.category.general.tool=道具
 config.ofalen.category.general.tool.tooltip=オファレンの道具に関する設定。
@@ -122,7 +122,7 @@ config.ofalen.prop.amountTeleportingPearlReference.tooltip=アイコンの描画
 config.ofalen.prop.amountTeleporterDamage=テレポーターのダメージ量
 config.ofalen.prop.amountTeleporterDamage.tooltip=プレイヤーを移動させた時のオファレンテレポーターのダメージ量。
 config.ofalen.prop.enableTeleporterParticle=テレポーターのパーティクルの有効化
-config.ofalen.prop.enableTeleporterParticle.tooltip=trueならテレポーターが発動した時にパーティクルを発生させます
+config.ofalen.prop.enableTeleporterParticle.tooltip=trueならテレポーターが発動した時にパーティクルを発生させます。
 config.ofalen.prop.typeTeleporterParticle=テレポーターのパーティクルの形
 config.ofalen.prop.typeTeleporterParticle.tooltip=テレポーターのパーティクル生成の形状。1 : 円、2 : 円柱
 // 未来.フローター
