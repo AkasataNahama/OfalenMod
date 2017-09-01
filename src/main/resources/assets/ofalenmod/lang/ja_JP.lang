@@ -1,26 +1,26 @@
-// MOD名
+# MOD名
 mod.ofalen.name=オファレンMOD
 
-// 記号
+# 記号
 mark.ofalen.colon= :
 
-// 設定
-// 全般
+# 設定
+# 全般
 config.ofalen.category.general=全般
 config.ofalen.category.general.tooltip=オファレンMODのすべての設定。
-// システム
+# システム
 config.ofalen.category.general.system=システム
 config.ofalen.category.general.system.tooltip=MODのシステムに関する設定。
 config.ofalen.prop.enableUpdateCheck=アップデートチェックの有効化
 config.ofalen.prop.enableUpdateCheck.tooltip=trueなら新しいバージョンがリリースされているか確認し、通知します。
 config.ofalen.prop.enablePresentBox=プレゼントボックスの有効化
 config.ofalen.prop.enablePresentBox.tooltip=trueなら日付に応じ、プレゼントをプレゼントボックスの中に生成します。
-// 素材
+# 素材
 config.ofalen.category.general.material=素材
 config.ofalen.category.general.material.tooltip=素材に関する設定。
 config.ofalen.prop.positionStoneLumpRecipeBlank=石の塊レシピの空白箇所
 config.ofalen.prop.positionStoneLumpRecipeBlank.tooltip=石の塊のレシピの空白箇所。[0 1 2] / [3 4 5] / [6 7 8]
-// 鉱石
+# 鉱石
 config.ofalen.category.general.ore=鉱石
 config.ofalen.category.general.ore.tooltip=オファレン鉱石とその生成に関する設定。
 config.ofalen.prop.amountDrop=ドロップ数
@@ -29,7 +29,7 @@ config.ofalen.prop.amountExpMin=最小経験値量
 config.ofalen.prop.amountExpMin.tooltip=オファレン鉱石が採掘された時にドロップする経験値の最小値。
 config.ofalen.prop.amountExpMax=最大経験値量
 config.ofalen.prop.amountExpMax.tooltip=オファレン鉱石が採掘された時にドロップする経験値の最大値。
-// 鉱石.生成
+# 鉱石.生成
 config.ofalen.category.general.ore.generate=生成
 config.ofalen.category.general.ore.generate.tooltip=オファレン鉱石の生成に関する設定。
 config.ofalen.prop.enableGenerator=生成の有効化
@@ -40,28 +40,28 @@ config.ofalen.prop.limitGeneration=生成限界
 config.ofalen.prop.limitGeneration.tooltip=オファレン鉱石の生成一回あたりの最大個数。
 config.ofalen.prop.probLodeGeneration=鉱脈生成確率
 config.ofalen.prop.probLodeGeneration.tooltip=オファレンの巨大鉱脈の生成確率。確率計算はチャンク毎に行われます。
-// 道具
+# 道具
 config.ofalen.category.general.tool=道具
 config.ofalen.category.general.tool.tooltip=オファレンの道具に関する設定。
-// 道具.万能ツール
+# 道具.万能ツール
 config.ofalen.category.general.tool.perfect=万能ツール
 config.ofalen.category.general.tool.perfect.tooltip=オファレンの万能ツールに関する設定。
 config.ofalen.prop.rangeMax=最大範囲
 config.ofalen.prop.rangeMax.tooltip=オファレンの万能ツールの範囲破壊モードの最大範囲。
-// 玉
+# 玉
 config.ofalen.category.general.ball=玉
 config.ofalen.category.general.ball.tooltip=オファレンの玉に関する設定。
-// 玉.爆発玉
+# 玉.爆発玉
 config.ofalen.category.general.ball.explosion=爆発玉
 config.ofalen.category.general.ball.explosion.tooltip=オファレンの爆発玉に関する設定。
 config.ofalen.prop.sizeExplosion=爆発の大きさ
 config.ofalen.prop.sizeExplosion.tooltip=爆発玉の爆発の大きさ。
-// レーザー
+# レーザー
 config.ofalen.category.general.laser=レーザー
 config.ofalen.category.general.laser.tooltip=オファレンレーザーピストルに関する設定。
 config.ofalen.prop.enableLaserSound=レーザー音の有効化
 config.ofalen.prop.enableLaserSound.tooltip=trueならレーザー発射時に音が出ます。
-// 機械
+# 機械
 config.ofalen.category.general.machine=機械
 config.ofalen.category.general.machine.tooltip=製錬機・変換機・修繕機・融合機に関する設定。
 config.ofalen.prop.divisorBurningTime=燃焼時間の除数
@@ -70,32 +70,32 @@ config.ofalen.prop.timeTDiamondBurning=匠魔石の燃焼時間
 config.ofalen.prop.timeTDiamondBurning.tooltip=匠Craftが追加する匠魔石の燃焼時間。(tick)
 config.ofalen.prop.timeWhiteFuelBurning=白色燃料の燃焼時間
 config.ofalen.prop.timeWhiteFuelBurning.tooltip=白色オファレン燃料の燃焼時間。(tick)
-// 機械.製錬
+# 機械.製錬
 config.ofalen.category.general.machine.smelting=製錬機
 config.ofalen.category.general.machine.smelting.tooltip=オファレン製錬機に関する設定。
 config.ofalen.prop.timeSmelting=製錬時間
 config.ofalen.prop.timeSmelting.tooltip=オファレン製錬機の製錬一回にかかる時間。(tick)
 config.ofalen.prop.baseOfalenSmeltingAmount=オファレン製錬量の基準値
 config.ofalen.prop.baseOfalenSmeltingAmount.tooltip=オファレン製錬機を使った時の、オファレン鉱石からオファレンへの製錬数。オファレン処理装置不使用時。
-// 機械.変換
+# 機械.変換
 config.ofalen.category.general.machine.converting=変換機
 config.ofalen.category.general.machine.converting.tooltip=オファレン変換機に関する設定。
 config.ofalen.prop.timeConverting=変換時間
 config.ofalen.prop.timeConverting.tooltip=オファレン変換機の変換一回にかかる時間。(tick)
-// 機械.修繕
+# 機械.修繕
 config.ofalen.category.general.machine.repairing=修繕機
 config.ofalen.category.general.machine.repairing.tooltip=オファレン修繕機に関する設定。
 config.ofalen.prop.timeRepairing=修繕時間
 config.ofalen.prop.timeRepairing.tooltip=オファレン修繕機の修繕一回にかかる時間。1耐久値あたり。(tick)
-// 機械.融合
+# 機械.融合
 config.ofalen.category.general.machine.fusing=融合機
 config.ofalen.category.general.machine.fusing.tooltip=オファレン融合機に関する設定。
 config.ofalen.prop.timeFusing=融合時間
 config.ofalen.prop.timeFusing.tooltip=オファレン融合機の融合一回にかかる時間。(tick)
-// 未来
+# 未来
 config.ofalen.category.general.future=未来
 config.ofalen.category.general.future.tooltip=プロテクター・テレポーター・フローター・コレクターに関する設定。
-// 未来.プロテクター
+# 未来.プロテクター
 config.ofalen.category.general.future.protector=プロテクター
 config.ofalen.category.general.future.protector.tooltip=オファレンプロテクターに関する設定。
 config.ofalen.prop.amountProtectingIngotCrafting=プロテクトインゴットのクラフト数
@@ -112,7 +112,7 @@ config.ofalen.prop.enableProtectorParticle=プロテクターのパーティク�
 config.ofalen.prop.enableProtectorParticle.tooltip=trueならプロテクターが発動した時にパーティクルを発生させます。
 config.ofalen.prop.typeProtectorParticle=プロテクターのパーティクルの形
 config.ofalen.prop.typeProtectorParticle.tooltip=プロテクターのパーティクル生成の形状。1 : 円、2 : 円柱
-// 未来.テレポーター
+# 未来.テレポーター
 config.ofalen.category.general.future.teleporter=テレポーター
 config.ofalen.category.general.future.teleporter.tooltip=オファレンテレポーターに関する設定。
 config.ofalen.prop.amountTeleportingPearlCrafting=テレポートパールのクラフト数
@@ -125,7 +125,7 @@ config.ofalen.prop.enableTeleporterParticle=テレポーターのパーティク
 config.ofalen.prop.enableTeleporterParticle.tooltip=trueならテレポーターが発動した時にパーティクルを発生させます。
 config.ofalen.prop.typeTeleporterParticle=テレポーターのパーティクルの形
 config.ofalen.prop.typeTeleporterParticle.tooltip=テレポーターのパーティクル生成の形状。1 : 円、2 : 円柱
-// 未来.フローター
+# 未来.フローター
 config.ofalen.category.general.future.floater=フローター
 config.ofalen.category.general.future.floater.tooltip=オファレンフローターに関する設定。
 config.ofalen.prop.amountFloatingDustCrafting=フロートダストのクラフト数
@@ -140,7 +140,7 @@ config.ofalen.prop.enableFloaterParticle=フローターのパーティクルの
 config.ofalen.prop.enableFloaterParticle.tooltip=trueならフローターが発動した時にパーティクルを発生させます。
 config.ofalen.prop.typeFloaterParticle=フローターのパーティクルの形
 config.ofalen.prop.typeFloaterParticle.tooltip=フローターのパーティクル生成の形状。1 : 円、2 : 円柱
-// 未来.コレクター
+# 未来.コレクター
 config.ofalen.category.general.future.collector=コレクター
 config.ofalen.category.general.future.collector.tooltip=オファレンコレクターに関する設定。
 config.ofalen.prop.amountCollectingLumpCrafting=コレクトランプのクラフト数
@@ -153,29 +153,29 @@ config.ofalen.prop.amountCollectorDamageExp=コレクターのダメージ量(�
 config.ofalen.prop.amountCollectorDamageExp.tooltip=経験値オーブを収集した時のコレクターのダメージ量。1経験値あたり。
 config.ofalen.prop.enableCollectorParticle=コレクターのパーティクルの有効化
 config.ofalen.prop.enableCollectorParticle.tooltip=trueならコレクターが発動した時にパーティクルを発生させます。
-// 世界
+# 世界
 config.ofalen.category.general.world_editor=世界
 config.ofalen.category.general.world_editor.tooltip=プレーサー・ムーバー・ブレーカー・コレクターブロックに関する設定。
 config.ofalen.prop.energyDarkFuel=黒燃料のエネルギー
 config.ofalen.prop.energyDarkFuel.tooltip=黒燃料1個あたりの作業回数。
 
-// キーバインディング
+# キーバインディング
 key.ofalen.category=オファレンMOD
 key.ofalen.description.keySetting=設定キー
 
-// クリエイティブタブ
+# クリエイティブタブ
 itemGroup.ofalen.tabOfalenMod=オファレンMOD
 
-// インフォーメーション
+# インフォーメーション
 info.ofalen.metaMod.description=このMODは、新しい鉱石「オファレン」を追加し、防具・玉・道具などのアイテムを作れるようにします。
 info.ofalen.notificationVersion=オファレンMOD : 新しいバージョンがリリースされています。
 info.ofalen.using=現在
 info.ofalen.latest=最新
 info.ofalen.util.stack=スタック
 info.ofalen.util.item=アイテム
-// 製錬機
+# 製錬機
 info.ofalen.recipeSmelting=オファレン製錬機
-// 万能ツール
+# 万能ツール
 info.ofalen.toolPerfect.mode=右クリック効果
 info.ofalen.toolPerfect.mode.changed=右クリック効果が「%s」に変更されました。
 info.ofalen.toolPerfect.mode.-1=無効
@@ -184,13 +184,13 @@ info.ofalen.toolPerfect.mode.1=範囲破壊
 info.ofalen.toolPerfect.mode.1.range=    範囲
 info.ofalen.toolPerfect.mode.2=クワ
 info.ofalen.toolPerfect.mode.3=防御
-// レーザー
+# レーザー
 info.ofalen.crystal=クリスタル
 info.ofalen.color:red=赤
 info.ofalen.color:green=緑
 info.ofalen.color:blue=青
 info.ofalen.color:white=白
-// 未来系
+# 未来系
 info.ofalen.future.lackingMaterial=%s : %sが不足しています。
 info.ofalen.future.isValid.false=無効
 info.ofalen.future.isValid.true=有効
@@ -206,12 +206,12 @@ info.ofalen.floater.modeChanged.handler=オファレンフローター : 現在�
 info.ofalen.floater.modeChanged.handler.0=オファレンフローター : フローターが効力を失いました。
 info.ofalen.collector.item=アイテム :
 info.ofalen.collector.exp=経験値 :
-// フィルター
+# フィルター
 info.ofalen.filter.tooltip=フィルター情報 : %s
 info.ofalen.filter.item.installed=アイテムフィルター
 info.ofalen.filter.black=ブラックリスト
 info.ofalen.filter.white=ホワイトリスト
-// World Editor
+# World Editor
 info.ofalen.editor.hasNBT=設定のデータが保存されています
 info.ofalen.setting.editor.range.isAbsolute=座標記録
 info.ofalen.setting.editor.range.isAbsolute.0=相対値
@@ -257,18 +257,18 @@ info.ofalen.setting.collector.canDelete.item.1=消去
 info.ofalen.setting.collector.canDelete.exp=収集した経験値
 info.ofalen.setting.collector.canDelete.exp.0=格納
 info.ofalen.setting.collector.canDelete.exp.1=消去
-// 経験値の結晶
+# 経験値の結晶
 info.ofalen.crystalExp.size=経験値量 :
-// 測量杖
+# 測量杖
 info.ofalen.wandSurveying.standard.a=基準点 (灰色) :
 info.ofalen.wandSurveying.standard.b=基準点 (黒色) :
 info.ofalen.wandSurveying.range=範囲:
-// 詳細設定
+# 詳細設定
 info.ofalen.settingDetailed.message.invalid=不正
 info.ofalen.settingDetailed.message.noChange=(変化なし)
 info.ofalen.settingDetailed.boolean.true=有効
 info.ofalen.settingDetailed.boolean.false=無効
-// 万能ツール
+# 万能ツール
 info.ofalen.settingDetailed.OfalenPerfectTool.ModeChangeNotification=効果変更通知
 info.ofalen.settingDetailed.OfalenPerfectTool.ModeChange=右クリック効果
 info.ofalen.settingDetailed.OfalenPerfectTool.ModeChange.Mode-0=単一破壊
@@ -297,7 +297,7 @@ info.ofalen.settingDetailed.OfalenPerfectTool.RangeBreaking.Strength.Length-Z+=�
 info.ofalen.settingDetailed.OfalenPerfectTool.RangeBreaking.Strength.Length-X-=距離 : X- (後/西)
 info.ofalen.settingDetailed.OfalenPerfectTool.RangeBreaking.Strength.Length-Y-=距離 : Y- (下)
 info.ofalen.settingDetailed.OfalenPerfectTool.RangeBreaking.Strength.Length-Z-=距離 : Z- (左/北)
-// フローター
+# フローター
 info.ofalen.settingDetailed.OfalenFloater.Mode-1=モード設定 : 1
 info.ofalen.settingDetailed.OfalenFloater.Mode-1.Name=名前
 info.ofalen.settingDetailed.OfalenFloater.Mode-1.FlightForm=飛行形態
@@ -344,7 +344,7 @@ info.ofalen.settingDetailed.floater.disabled=無効
 info.ofalen.settingDetailed.floater.jet=ジェット
 info.ofalen.settingDetailed.floater.jump=ジャンプ
 info.ofalen.settingDetailed.floater.float=フロート
-// コレクター
+# コレクター
 info.ofalen.settingDetailed.OfalenCollector.AutoStopping=自動停止
 info.ofalen.settingDetailed.OfalenCollector.Interval=動作間隔 [tick]
 info.ofalen.settingDetailed.OfalenCollector.Item=アイテム
@@ -363,7 +363,7 @@ info.ofalen.settingDetailed.collector.sphere=球
 info.ofalen.settingDetailed.collector.cylinder=円柱
 info.ofalen.settingDetailed.collector.cuboid=直方体
 
-// GUI
+# GUI
 container.ofalen.machine.smelting-0=オファレン製錬機
 container.ofalen.machine.smelting-1=オファレン製錬機 (1)
 container.ofalen.machine.smelting-2=オファレン製錬機 (2)
@@ -394,7 +394,7 @@ container.ofalen.blockCollector=オファレンコレクターブロック
 container.ofalen.boxPresent=オファレンプレゼントボックス
 container.ofalen.setterDetailed=オファレン詳細設定器
 
-// アイテム
+# アイテム
 item.ofalen.gem.0.name=赤色オファレン
 item.ofalen.gem.1.name=緑色オファレン
 item.ofalen.gem.2.name=青色オファレン
@@ -431,7 +431,7 @@ item.ofalen.parts.8.name=オファレンフロートダスト
 item.ofalen.parts.9.name=オファレンコレクトランプ
 item.ofalen.parts3D.0.name=白色オファレンの棒
 
-// 防具
+# 防具
 item.ofalen.armor.G1.0.name=オファレンのヘルメット Grade 1
 item.ofalen.armor.G1.1.name=オファレンのチェストプレート Grade 1
 item.ofalen.armor.G1.2.name=オファレンのレギンス Grade 1
@@ -452,7 +452,7 @@ item.ofalen.armor.P.1.name=オファレンの万能チェストプレート
 item.ofalen.armor.P.2.name=オファレンの万能レギンス
 item.ofalen.armor.P.3.name=オファレンの万能ブーツ
 
-// 玉
+# 玉
 item.ofalen.ball.empty.0.name=オファレンの空の玉 Grade 1
 item.ofalen.ball.empty.1.name=オファレンの空の玉 Grade 2
 item.ofalen.ball.empty.2.name=オファレンの空の玉 Grade 3
@@ -497,7 +497,7 @@ item.ofalen.ball.hungry.name=オファレンの空腹玉
 item.ofalen.ball.perfect.name=オファレンの合成玉
 item.ofalen.ball.perfect.2.name=オファレンの万能玉
 
-// 道具
+# 道具
 item.ofalen.sword.1.name=オファレンの剣 Grade 1
 item.ofalen.shovel.1.name=オファレンのシャベル Grade 1
 item.ofalen.pickaxe.1.name=オファレンのツルハシ Grade 1
@@ -519,7 +519,7 @@ item.ofalen.hoe.3.name=オファレンのクワ Grade 3
 item.ofalen.tool.P.name=オファレンの万能ツール
 item.ofalen.sword.creative.name=クリエイティブソード
 
-// レーザー
+# レーザー
 item.ofalen.pistolLaser.name=オファレンレーザーピストル
 item.ofalen.crystalLaserEnergy.0.name=オファレンレーザーエネルギークリスタル [赤]
 item.ofalen.crystalLaserEnergy.1.name=オファレンレーザーエネルギークリスタル [緑]
@@ -530,30 +530,30 @@ item.ofalen.magazineLaserGreen.name=オファレンレーザーマガジン [緑
 item.ofalen.magazineLaserBlue.name=オファレンレーザーマガジン [青]
 item.ofalen.magazineLaserWhite.name=オファレンレーザーマガジン [白]
 
-// 未来系
+# 未来系
 item.ofalen.protector.name=オファレンプロテクター
 item.ofalen.teleporter.name=オファレンテレポーター
 item.ofalen.floater.name=オファレンフローター
 item.ofalen.collector.name=オファレンコレクター
 
-// フィルター
+# フィルター
 item.ofalen.filterItem.0.name=アイテムフィルター
 item.ofalen.filterItem.1.name=アイテムフィルター(ブロック)
 item.ofalen.installerFilter.name=フィルターインストーラー
 
-// オファレン草
+# オファレン草
 item.ofalen.seeds.0.name=赤色オファレン草の種
 item.ofalen.seeds.1.name=緑色オファレン草の種
 item.ofalen.seeds.2.name=青色オファレン草の種
 item.ofalen.seeds.3.name=白色オファレン草の種
 
-// 測量杖
+# 測量杖
 item.ofalen.wandSurveying.name=測量杖
 
-// 経験値結晶
+# 経験値結晶
 item.ofalen.crystalExp.name=経験値の結晶
 
-// ブロック
+# ブロック
 tile.ofalen.ore.0.name=赤色オファレン鉱石
 tile.ofalen.ore.1.name=緑色オファレン鉱石
 tile.ofalen.ore.2.name=青色オファレン鉱石
@@ -570,7 +570,7 @@ tile.ofalen.markerTeleporting.name=オファレンテレポートマーカー
 tile.ofalen.boxPresent.name=オファレンプレゼントボックス
 tile.ofalen.setterDetailed.name=オファレン詳細設定器
 
-// 機械
+# 機械
 tile.ofalen.machineSmelting.name=オファレン製錬機
 tile.ofalen.machineConverting.name=オファレン変換機
 tile.ofalen.machineRepairing.name=オファレン修繕機
@@ -585,12 +585,12 @@ tile.ofalen.casingProcessor.4.name=処理装置筐体固定ブロック Grade 1
 tile.ofalen.casingProcessor.5.name=処理装置筐体固定ブロック Grade 2
 tile.ofalen.casingProcessor.6.name=処理装置筐体固定ブロック Grade 3
 
-// World Editor
+# World Editor
 tile.ofalen.placer.name=オファレンブロックプレイサー
 tile.ofalen.mover.name=オファレンブロックムーバー
 tile.ofalen.breaker.name=オファレンブロックブレイカー
 tile.ofalen.collector.name=オファレンコレクターブロック
 tile.ofalen.surveyor.name=オファレン測量器
 
-// オファレン草
+# オファレン草
 tile.ofalen.grass.name=オファレン草

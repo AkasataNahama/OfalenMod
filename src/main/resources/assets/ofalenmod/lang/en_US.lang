@@ -1,26 +1,26 @@
-// ModName
+# ModName
 mod.ofalen.name=Ofalen Mod
 
-// Mark
+# Mark
 mark.ofalen.colon=:
 
-// Config
-// General
+# Config
+# General
 config.ofalen.category.general=General
 config.ofalen.category.general.tooltip=All settings of Ofalen Mod.
-// System
+# System
 config.ofalen.category.general.system=System
 config.ofalen.category.general.system.tooltip=The settings of mod system.
 config.ofalen.prop.enableUpdateCheck=Enable Update Check
 config.ofalen.prop.enableUpdateCheck.tooltip=Set this to true to enable update check of Ofalen Mod.
 config.ofalen.prop.enablePresentBox=Enable Present Box
 config.ofalen.prop.enablePresentBox.tooltip=Set this to true to enable Present Box.
-// Material
+# Material
 config.ofalen.category.general.material=Material
 config.ofalen.category.general.material.tooltip=The settings of material.
 config.ofalen.prop.positionStoneLumpRecipeBlank=Lump of Stone Recipe Blank Position
 config.ofalen.prop.positionStoneLumpRecipeBlank.tooltip=Position of space on recipe of "Lump of Stone". [0 1 2] / [3 4 5] / [6 7 8]
-// Ore
+# Ore
 config.ofalen.category.general.ore=Ore
 config.ofalen.category.general.ore.tooltip=The settings of Ofalen Ore and generator.
 config.ofalen.prop.amountDrop=Drop Amount
@@ -29,7 +29,7 @@ config.ofalen.prop.amountExpMin=Minimum Experience Amount
 config.ofalen.prop.amountExpMin.tooltip=Minimum amount of experience when Ofalen Ore is mined.
 config.ofalen.prop.amountExpMax=Maximum Experience Amount
 config.ofalen.prop.amountExpMax.tooltip=Maximum amount of experience when Ofalen Ore is mined.
-// Ore.Generate
+# Ore.Generate
 config.ofalen.category.general.ore.generate=Generate
 config.ofalen.category.general.ore.generate.tooltip=The settings of generating Ofalen Ore.
 config.ofalen.prop.enableGenerator=Enable Generator
@@ -40,28 +40,28 @@ config.ofalen.prop.limitGeneration=Generation Limit
 config.ofalen.prop.limitGeneration.tooltip=Maximum size of Ofalen Ore per generation.
 config.ofalen.prop.probLodeGeneration=Load Generation Probability
 config.ofalen.prop.probLodeGeneration.tooltip=Generation probability of Huge Ofalen Ore Lode. Calculation of probability is performed on each chunk.
-// Tool
+# Tool
 config.ofalen.category.general.tool=Tool
 config.ofalen.category.general.tool.tooltip=The settings of Ofalen Tool.
-// Tool.Perfect
+# Tool.Perfect
 config.ofalen.category.general.tool.perfect=Perfect Tool
 config.ofalen.category.general.tool.perfect.tooltip=The settings of Ofalen Perfect Tool.
 config.ofalen.prop.rangeMax=Max Range
 config.ofalen.prop.rangeMax.tooltip=Maximum range of Range Breaking Mode of Ofalen Perfect Tool.
-// Ball
+# Ball
 config.ofalen.category.general.ball=Ball
 config.ofalen.category.general.ball.tooltip=The settings of Ofalen Ball.
-// Ball.Explosion
+# Ball.Explosion
 config.ofalen.category.general.ball.explosion=Explosion Ball
 config.ofalen.category.general.ball.explosion.tooltip=The settings of Ofalen Explosion Ball.
 config.ofalen.prop.sizeExplosion=Explosion Size
 config.ofalen.prop.sizeExplosion.tooltip=Explosion size of Explosion Ball.
-// Laser
+# Laser
 config.ofalen.category.general.laser=Laser
 config.ofalen.category.general.laser.tooltip=The settings of Ofalen Laser Pistol.
 config.ofalen.prop.enableLaserSound=Enable Laser Sound
 config.ofalen.prop.enableLaserSound.tooltip=Set this to true to enable sound of Ofalen Laser Pistol.
-// Machine
+# Machine
 config.ofalen.category.general.machine=Machine
 config.ofalen.category.general.machine.tooltip=The settings of Smelting Machine, Converting Machine, Repairing Machine and Fusing Machine.
 config.ofalen.prop.divisorBurningTime=Burning Time Divisor
@@ -70,32 +70,32 @@ config.ofalen.prop.timeTDiamondBurning=Creeper Magic Stone Burning Time
 config.ofalen.prop.timeTDiamondBurning.tooltip=Burning time of Creeper Magic Stone by Takumi Craft. (tick)
 config.ofalen.prop.timeWhiteFuelBurning=White Fuel Burning Time
 config.ofalen.prop.timeWhiteFuelBurning.tooltip=Burning time of White Ofalen Fuel. (tick)
-// Machine.Smelting
+# Machine.Smelting
 config.ofalen.category.general.machine.smelting=Smelting Machine
 config.ofalen.category.general.machine.smelting.tooltip=The settings of Ofalen Smelting Machine.
 config.ofalen.prop.baseOfalenSmeltingAmount=Ofalen Smelting Amount Base
 config.ofalen.prop.baseOfalenSmeltingAmount.tooltip=Smelting amount of Ofalen from Ofalen Ore using Ofalen Smelting Machine. When don't use Ofalen Machine Processor.
 config.ofalen.prop.timeSmelting=Smelting Time
 config.ofalen.prop.timeSmelting.tooltip=The time Ofalen Smelting Machine requires for every smelting. (tick)
-// Machine.Converting
+# Machine.Converting
 config.ofalen.category.general.machine.converting=Converting Machine
 config.ofalen.category.general.machine.converting.tooltip=The settings of Ofalen Converting Machine.
 config.ofalen.prop.timeConverting=Converting Time
 config.ofalen.prop.timeConverting.tooltip=The time Ofalen Converting Machine requires for every converting. (tick)
-// Machine.Repairing
+# Machine.Repairing
 config.ofalen.category.general.machine.repairing=Repairing Machine
 config.ofalen.category.general.machine.repairing.tooltip=The settings of Ofalen Repairing Machine.
 config.ofalen.prop.timeRepairing=Repairing Time
 config.ofalen.prop.timeRepairing.tooltip=The time Ofalen Repairing Machine requires for every repairing. Per 1 durability. (tick)
-// Machine.Fusing
+# Machine.Fusing
 config.ofalen.category.general.machine.fusing=Fusing Machine
 config.ofalen.category.general.machine.fusing.tooltip=The settings of Ofalen Fusing Machine.
 config.ofalen.prop.timeFusing=Fusing Time
 config.ofalen.prop.timeFusing.tooltip=The time Ofalen Fusing Machine requires for every fusing. (tick)
-// Future
+# Future
 config.ofalen.category.general.future=Future
 config.ofalen.category.general.future.tooltip=The settings of Protector, Teleporter, Floater and Collector.
-// Future.Protector
+# Future.Protector
 config.ofalen.category.general.future.protector=Protector
 config.ofalen.category.general.future.protector.tooltip=The settings of Ofalen Protector.
 config.ofalen.prop.amountProtectingIngotCrafting=Protecting Ingot Crafting Amount
@@ -112,7 +112,7 @@ config.ofalen.prop.enableProtectorParticle=Enable Protector Particle
 config.ofalen.prop.enableProtectorParticle.tooltip=Set this to true to enable particle spawning of Ofalen Protector.
 config.ofalen.prop.typeProtectorParticle=Protector Particle Type
 config.ofalen.prop.typeProtectorParticle.tooltip=Type of particle spawning for Ofalen Protector. 1: circle, 2: cylinder
-// Future.Teleporter
+# Future.Teleporter
 config.ofalen.category.general.future.teleporter=Teleporter
 config.ofalen.category.general.future.teleporter.tooltip=The settings of Ofalen Teleporter.
 config.ofalen.prop.amountTeleportingPearlCrafting=Teleporting Pearl Crafting Amount
@@ -125,7 +125,7 @@ config.ofalen.prop.enableTeleporterParticle=Enable Teleporter Particle
 config.ofalen.prop.enableTeleporterParticle.tooltip=Set this to true to enable particle spawning of Ofalen Teleporter.
 config.ofalen.prop.typeTeleporterParticle=Teleporter Particle Type
 config.ofalen.prop.typeTeleporterParticle.tooltip=Type of particle spawning for Ofalen Teleporter. 1: circle, 2: cylinder
-// Future.Floater
+# Future.Floater
 config.ofalen.category.general.future.floater=Floater
 config.ofalen.category.general.future.floater.tooltip=The settings of Ofalen Floater.
 config.ofalen.prop.amountFloatingDustCrafting=Floating Dust Crafting Amount
@@ -140,7 +140,7 @@ config.ofalen.prop.enableFloaterParticle=Enable Floater Particle
 config.ofalen.prop.enableFloaterParticle.tooltip=Set this to true to enable particle spawning of Ofalen Floater.
 config.ofalen.prop.typeFloaterParticle=Floater Particle Type
 config.ofalen.prop.typeFloaterParticle.tooltip=Type of particle spawning for Ofalen Floater. 1: circle, 2: cylinder
-// Future.Collector
+# Future.Collector
 config.ofalen.category.general.future.collector=Collector
 config.ofalen.category.general.future.collector.tooltip=The settings of Ofalen Collector.
 config.ofalen.prop.amountCollectingLumpCrafting=Collecting Lump Crafting Amount
@@ -153,29 +153,29 @@ config.ofalen.prop.amountCollectorDamageExp=Collector Damage Amount (Exp)
 config.ofalen.prop.amountCollectorDamageExp.tooltip=Damage amount of Ofalen Collector when experience orb is collected. Per 1 exp.
 config.ofalen.prop.enableCollectorParticle=Enable Collector Particle
 config.ofalen.prop.enableCollectorParticle.tooltip=Set this to true to enable particle spawning of Ofalen Collector.
-// WorldEditor
+# WorldEditor
 config.ofalen.category.general.world_editor=World Editor
 config.ofalen.category.general.world_editor.tooltip=The settings of Placer, Mover, Breaker and Collector Block.
 config.ofalen.prop.energyDarkFuel=Dark Fuel Energy
 config.ofalen.prop.energyDarkFuel.tooltip=Number of operations per Dark Fuel.
 
-// Key Binding
+# Key Binding
 key.ofalen.category=Ofalen Mod
 key.ofalen.description.keySetting=Setting Key
 
-// Creative Tab
+# Creative Tab
 itemGroup.ofalen.tabOfalenMod=Ofalen Mod
 
-// Information
+# Information
 info.ofalen.metaMod.description=This mod adds a new ore "Ofalen", to add a new such as armors, balls, tools using it.
 info.ofalen.notificationVersion=Ofalen Mod : New version is available.
 info.ofalen.using=Using
 info.ofalen.latest=Latest
 info.ofalen.util.stack=Stack
 info.ofalen.util.item=Item
-// Smelting Machine
+# Smelting Machine
 info.ofalen.recipeSmelting=Ofalen Smelting
-// Perfect Tool
+# Perfect Tool
 info.ofalen.toolPerfect.mode=Right Click Effect
 info.ofalen.toolPerfect.mode.changed=Right Click Effect is changed to %s.
 info.ofalen.toolPerfect.mode.-1=Disabled
@@ -184,13 +184,13 @@ info.ofalen.toolPerfect.mode.1=Range Breaking
 info.ofalen.toolPerfect.mode.1.range=    Range
 info.ofalen.toolPerfect.mode.2=Hoe
 info.ofalen.toolPerfect.mode.3=Guard
-// Laser
+# Laser
 info.ofalen.crystal=Crystal
 info.ofalen.color:red=Red
 info.ofalen.color:green=Green
 info.ofalen.color:blue=Blue
 info.ofalen.color:white=White
-// Future
+# Future
 info.ofalen.future.lackingMaterial=%s: %s is lacking.
 info.ofalen.future.isValid.false=Disabled
 info.ofalen.future.isValid.true=Enabled
@@ -206,12 +206,12 @@ info.ofalen.floater.modeChanged.handler=Ofalen Floater: Your current mode is %s.
 info.ofalen.floater.modeChanged.handler.0=Ofalen Floater: You have lost the floater's effect.
 info.ofalen.collector.item=Item:
 info.ofalen.collector.exp=Exp:
-// Filter
+# Filter
 info.ofalen.filter.tooltip=Filter Info: %s
 info.ofalen.filter.item.installed=Item Filter
 info.ofalen.filter.black=Black List
 info.ofalen.filter.white=White List
-// World Editor
+# World Editor
 info.ofalen.editor.hasNBT=Containing setting data
 info.ofalen.setting.editor.range.isAbsolute=Coord Saving
 info.ofalen.setting.editor.range.isAbsolute.0=Relative
@@ -257,18 +257,18 @@ info.ofalen.setting.collector.canDelete.item.1=Delete
 info.ofalen.setting.collector.canDelete.exp=Collected Exp
 info.ofalen.setting.collector.canDelete.exp.0=Store
 info.ofalen.setting.collector.canDelete.exp.1=Delete
-// Experience Crystal
+# Experience Crystal
 info.ofalen.crystalExp.size=Experience Amount:
-// Surveying Wand
+# Surveying Wand
 info.ofalen.wandSurveying.standard.a=Standard Point (Gray):
 info.ofalen.wandSurveying.standard.b=Standard Point (Black):
 info.ofalen.wandSurveying.range=Range:
-// Detailed Setting
+# Detailed Setting
 info.ofalen.settingDetailed.message.invalid=Invalid
 info.ofalen.settingDetailed.message.noChange=(No Change)
 info.ofalen.settingDetailed.boolean.true=Enabled
 info.ofalen.settingDetailed.boolean.false=Disabled
-// Perfect Tool
+# Perfect Tool
 info.ofalen.settingDetailed.OfalenPerfectTool.ModeChangeNotification=Change Notification
 info.ofalen.settingDetailed.OfalenPerfectTool.ModeChange=Right Click Effect
 info.ofalen.settingDetailed.OfalenPerfectTool.ModeChange.Mode-0=Single Breaking
@@ -297,7 +297,7 @@ info.ofalen.settingDetailed.OfalenPerfectTool.RangeBreaking.Strength.Length-Z+=L
 info.ofalen.settingDetailed.OfalenPerfectTool.RangeBreaking.Strength.Length-X-=Length: X- (Back/West)
 info.ofalen.settingDetailed.OfalenPerfectTool.RangeBreaking.Strength.Length-Y-=Length: Y- (Down)
 info.ofalen.settingDetailed.OfalenPerfectTool.RangeBreaking.Strength.Length-Z-=Length: Z- (Left/North)
-// Floater
+# Floater
 info.ofalen.settingDetailed.OfalenFloater.Mode-1=Mode Setting: 1
 info.ofalen.settingDetailed.OfalenFloater.Mode-1.Name=Name
 info.ofalen.settingDetailed.OfalenFloater.Mode-1.FlightForm=Flight Form
@@ -344,7 +344,7 @@ info.ofalen.settingDetailed.floater.disabled=Disabled
 info.ofalen.settingDetailed.floater.jet=Jet
 info.ofalen.settingDetailed.floater.jump=Jump
 info.ofalen.settingDetailed.floater.float=Float
-// Collector
+# Collector
 info.ofalen.settingDetailed.OfalenCollector.AutoStopping=Auto Stopping
 info.ofalen.settingDetailed.OfalenCollector.Interval=Interval [tick]
 info.ofalen.settingDetailed.OfalenCollector.Item=Item
@@ -363,7 +363,7 @@ info.ofalen.settingDetailed.collector.sphere=Sphere
 info.ofalen.settingDetailed.collector.cylinder=Cylinder
 info.ofalen.settingDetailed.collector.cuboid=Cuboid
 
-// GUI
+# GUI
 container.ofalen.machine.smelting-0=Ofalen Smelting Machine
 container.ofalen.machine.smelting-1=Ofalen Smelting Machine (1)
 container.ofalen.machine.smelting-2=Ofalen Smelting Machine (2)
@@ -394,7 +394,7 @@ container.ofalen.blockCollector=Ofalen Collector Block
 container.ofalen.boxPresent=Ofalen Present Box
 container.ofalen.setterDetailed=Ofalen Detailed Setter
 
-// Item
+# Item
 item.ofalen.gem.0.name=Red Ofalen
 item.ofalen.gem.1.name=Green Ofalen
 item.ofalen.gem.2.name=Blue Ofalen
@@ -431,7 +431,7 @@ item.ofalen.parts.8.name=Dust of Ofalen Floating
 item.ofalen.parts.9.name=Lump of Ofalen Collecting
 item.ofalen.parts3D.0.name=White Ofalen Stick
 
-// Armor
+# Armor
 item.ofalen.armor.G1.0.name=Ofalen Helmet Grade 1
 item.ofalen.armor.G1.1.name=Ofalen Chestplate Grade 1
 item.ofalen.armor.G1.2.name=Ofalen Leggings Grade 1
@@ -452,7 +452,7 @@ item.ofalen.armor.P.1.name=Ofalen Perfect Chestplate
 item.ofalen.armor.P.2.name=Ofalen Perfect Leggings
 item.ofalen.armor.P.3.name=Ofalen Perfect Boots
 
-// Ball
+# Ball
 item.ofalen.ball.empty.0.name=Ofalen Empty Ball Grade 1
 item.ofalen.ball.empty.1.name=Ofalen Empty Ball Grade 2
 item.ofalen.ball.empty.2.name=Ofalen Empty Ball Grade 3
@@ -497,7 +497,7 @@ item.ofalen.ball.hungry.name=Ofalen Hungry Ball
 item.ofalen.ball.perfect.name=Ofalen Synthesized Ball
 item.ofalen.ball.perfect.2.name=Ofalen Perfect Ball
 
-// Tool
+# Tool
 item.ofalen.sword.1.name=Ofalen Sword Grade 1
 item.ofalen.shovel.1.name=Ofalen Shovel Grade 1
 item.ofalen.pickaxe.1.name=Ofalen Pickaxe Grade 1
@@ -519,7 +519,7 @@ item.ofalen.hoe.3.name=Ofalen Hoe Grade 3
 item.ofalen.tool.P.name=Ofalen Perfect Tool
 item.ofalen.sword.creative.name=Creative Sword
 
-// Laser
+# Laser
 item.ofalen.pistolLaser.name=Ofalen Laser Pistol
 item.ofalen.crystalLaserEnergy.0.name=Ofalen Laser Energy Crystal [Red]
 item.ofalen.crystalLaserEnergy.1.name=Ofalen Laser Energy Crystal [Green]
@@ -530,30 +530,30 @@ item.ofalen.magazineLaserGreen.name=Ofalen Laser Magazine [Green]
 item.ofalen.magazineLaserBlue.name=Ofalen Laser Magazine [Blue]
 item.ofalen.magazineLaserWhite.name=Ofalen Laser Magazine [White]
 
-// Future
+# Future
 item.ofalen.protector.name=Ofalen Protector
 item.ofalen.teleporter.name=Ofalen Teleporter
 item.ofalen.floater.name=Ofalen Floater
 item.ofalen.collector.name=Ofalen Collector
 
-// Filter
+# Filter
 item.ofalen.filterItem.0.name=Item Filter
 item.ofalen.filterItem.1.name=Item Filter (Block)
 item.ofalen.installerFilter.name=Filter Installer
 
-// Ofalen Grass
+# Ofalen Grass
 item.ofalen.seeds.0.name=Red Ofalen Grass Seeds
 item.ofalen.seeds.1.name=Green Ofalen Grass Seeds
 item.ofalen.seeds.2.name=Blue Ofalen Grass Seeds
 item.ofalen.seeds.3.name=White Ofalen Grass Seeds
 
-// 測量杖
+# 測量杖
 item.ofalen.wandSurveying.name=Wand of Surveying
 
-// 経験値結晶
+# 経験値結晶
 item.ofalen.crystalExp.name=Experience Crystal
 
-// Block
+# Block
 tile.ofalen.ore.0.name=Red Ofalen Ore
 tile.ofalen.ore.1.name=Green Ofalen Ore
 tile.ofalen.ore.2.name=Blue Ofalen Ore
@@ -570,7 +570,7 @@ tile.ofalen.markerTeleporting.name=Ofalen Teleporting Marker
 tile.ofalen.boxPresent.name=Ofalen Present Box
 tile.ofalen.setterDetailed.name=Ofalen Detailed Setter
 
-// Machine
+# Machine
 tile.ofalen.machineSmelting.name=Ofalen Smelting Machine
 tile.ofalen.machineConverting.name=Ofalen Converting Machine
 tile.ofalen.machineRepairing.name=Ofalen Repairing Machine
@@ -585,12 +585,12 @@ tile.ofalen.casingProcessor.4.name=Processor Casing Fixing Block Grade 1
 tile.ofalen.casingProcessor.5.name=Processor Casing Fixing Block Grade 2
 tile.ofalen.casingProcessor.6.name=Processor Casing Fixing Block Grade 3
 
-// World Editor
+# World Editor
 tile.ofalen.placer.name=Ofalen Block Placer
 tile.ofalen.mover.name=Ofalen Block Mover
 tile.ofalen.breaker.name=Ofalen Block Breaker
 tile.ofalen.collector.name=Ofalen Collector Block
 tile.ofalen.surveyor.name=Ofalen Surveyor
 
-// Ofalen Grass
+# Ofalen Grass
 tile.ofalen.grass.name=Ofalen Grass
