@@ -61,8 +61,10 @@ public class OfalenModCore {
 	public static final String MOD_ID = "OfalenMod";
 	public static final String MOD_NAME = "Ofalen Mod";
 	public static final String UNLOCALIZED_MOD_NAME = "mod.ofalen.name";
-	private static final String MINECRAFT_VERSION = "1.7.10";
-	private static final String MOD_VERSION = "2.0.0";
+	@SuppressWarnings("WeakerAccess")
+	public static final String MINECRAFT_VERSION = "1.7.10";
+	@SuppressWarnings("WeakerAccess")
+	public static final String MOD_VERSION = "2.0.0";
 	public static final String VERSION = "[" + MINECRAFT_VERSION + "]" + MOD_VERSION;
 	public static final VersionUtil.VersionString VERSION_STRING = new VersionUtil.VersionString(OfalenModCore.MOD_ID, OfalenModCore.VERSION);
 	// TODO リリース時に変更
