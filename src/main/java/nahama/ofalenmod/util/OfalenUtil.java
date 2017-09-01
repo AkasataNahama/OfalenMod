@@ -207,4 +207,8 @@ public class OfalenUtil {
 	public static String getColon() {
 		return StatCollector.translateToLocal("mark.ofalen.colon") + " ";
 	}
+
+	public static String translate(String arg, Object... objects) {
+		return String.format(StatCollector.translateToLocal(arg), objects);
+	}
 }

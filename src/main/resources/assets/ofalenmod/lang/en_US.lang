@@ -207,7 +207,7 @@ info.ofalen.floater.modeChanged.handler.0=Ofalen Floater: You have lost the floa
 info.ofalen.collector.item=Item:
 info.ofalen.collector.exp=Exp:
 // Filter
-info.ofalen.filter.toolTip=Press Shift
+info.ofalen.filter.tooltip=Filter Info: %s
 info.ofalen.filter.item.installed=Item Filter
 info.ofalen.filter.black=Black List
 info.ofalen.filter.white=White List

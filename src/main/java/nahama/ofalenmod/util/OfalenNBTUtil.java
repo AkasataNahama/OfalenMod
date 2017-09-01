@@ -1,6 +1,7 @@
 package nahama.ofalenmod.util;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.settings.GameSettings;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -191,14 +192,14 @@ public class OfalenNBTUtil {
 			ArrayList<String> ret = new ArrayList<String>();
 			// Shiftが押されていなければフィルターに対応していることを表示。
 			if (!OfalenUtil.isKeyPressed(Minecraft.getMinecraft().gameSettings.keyBindSneak)) {
-				ret.add(StatCollector.translateToLocal("info.ofalen.filter.toolTip"));
+				ret.add(OfalenUtil.translate("info.ofalen.filter.tooltip", GameSettings.getKeyDisplayString(Minecraft.getMinecraft().gameSettings.keyBindSneak.getKeyCode())));
 				return ret;
 			}
+			ret.add(StatCollector.translateToLocal("info.ofalen.filter.item.installed"));
 			// フィルターが無効なら終了。
 			if (!isAvailableFilterTag(itemStack))
 				return ret;
 			NBTTagCompound nbtFilter = FilterUtil.getFilterTag(itemStack);
-			ret.add(StatCollector.translateToLocal("info.ofalen.filter.item.installed"));
 			ret.add("  " + StatCollector.translateToLocal("info.ofalen.filter." + (FilterUtil.isWhiteList(nbtFilter) ? "white" : "black")));
 			NBTTagList nbtTagList = FilterUtil.getSelectingItemList(nbtFilter);
 			for (int i = 0; i < 27 && i < nbtTagList.tagCount(); i++) {
