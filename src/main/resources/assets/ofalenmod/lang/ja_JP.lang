@@ -168,7 +168,7 @@ itemGroup.ofalen.tabOfalenMod=オファレンMOD
 
 // インフォーメーション
 info.ofalen.metaMod.description=このMODは、新しい鉱石「オファレン」を追加し、防具・玉・道具などのアイテムを作れるようにします。
-info.ofalen.notificationVersion=オファレンMOD : 新しいバージョンがリリースされています!
+info.ofalen.notificationVersion=オファレンMOD : 新しいバージョンがリリースされています。
 info.ofalen.using=現在
 info.ofalen.latest=最新
 info.ofalen.util.stack=スタック
@@ -191,13 +191,13 @@ info.ofalen.color:green=緑
 info.ofalen.color:blue=青
 info.ofalen.color:white=白
 // 未来系
-info.ofalen.future.lackingMaterial=%s : %sが不足しています!
+info.ofalen.future.lackingMaterial=%s : %sが不足しています。
 info.ofalen.future.isValid.false=無効
 info.ofalen.future.isValid.true=有効
 info.ofalen.future.lack=(材料不足)
-info.ofalen.protector.brokenProtector=オファレンプロテクター : プロテクターが無効になりました!
+info.ofalen.protector.brokenProtector=オファレンプロテクター : プロテクターが無効になりました。
 info.ofalen.teleporter.channel=チャンネル :
-info.ofalen.teleporter.channelInvalid=オファレンテレポーター : このチャンネルは無効です!
+info.ofalen.teleporter.channelInvalid=オファレンテレポーター : このチャンネルは無効です。
 info.ofalen.floater.mode=モード :
 info.ofalen.floater.mode.disabled=オファレンフローター : フローターの現在のモード(%s)は無効です。
 info.ofalen.floater.mode.disabled.all=オファレンフローター : フローターの全てのモードが無効です。

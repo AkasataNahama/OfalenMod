@@ -168,7 +168,7 @@ itemGroup.ofalen.tabOfalenMod=Ofalen Mod
 
 // Information
 info.ofalen.metaMod.description=This mod adds a new ore "Ofalen", to add a new such as armors, balls, tools using it.
-info.ofalen.notificationVersion=Ofalen Mod : New version is available!
+info.ofalen.notificationVersion=Ofalen Mod : New version is available.
 info.ofalen.using=Using
 info.ofalen.latest=Latest
 info.ofalen.util.stack=Stack
@@ -191,13 +191,13 @@ info.ofalen.color:green=Green
 info.ofalen.color:blue=Blue
 info.ofalen.color:white=White
 // Future
-info.ofalen.future.lackingMaterial=%s: %s is lacking!
+info.ofalen.future.lackingMaterial=%s: %s is lacking.
 info.ofalen.future.isValid.false=Disabled
 info.ofalen.future.isValid.true=Enabled
 info.ofalen.future.lack=(Lack of Material)
-info.ofalen.protector.brokenProtector=Ofalen Protector: Protector expired!
+info.ofalen.protector.brokenProtector=Ofalen Protector: Protector expired.
 info.ofalen.teleporter.channel=Channel:
-info.ofalen.teleporter.channelInvalid=Ofalen Teleporter: This channel is Invalid!
+info.ofalen.teleporter.channelInvalid=Ofalen Teleporter: This channel is Invalid.
 info.ofalen.floater.mode=Mode:
 info.ofalen.floater.mode.disabled=Ofalen Floater: The current mode (%s) is disabled.
 info.ofalen.floater.mode.disabled.all=Ofalen Floater: All modes of the floater are disabled.
