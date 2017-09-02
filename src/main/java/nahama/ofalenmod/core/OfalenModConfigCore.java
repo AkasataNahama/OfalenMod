@@ -77,6 +77,7 @@ public class OfalenModConfigCore {
 	public static byte amountTeleportingPearlCrafting;
 	public static short amountTeleportingPearlReference;
 	public static short amountTeleporterDamage;
+	public static boolean canTeleportFromEnd;
 	public static boolean isTeleporterParticleEnabled;
 	public static byte typeTeleporterParticle;
 	// Future.Floater
@@ -366,6 +367,12 @@ public class OfalenModConfigCore {
 		prop.comment = "Damage amount of Ofalen Teleporter when the player teleport." + getNumGuide(prop);
 		prop.setLanguageKey(keyProp + prop.getName());
 		amountTeleporterDamage = (short) getInt(prop);
+		propOrder.add(prop.getName());
+		//
+		prop = cfg.get(category, "canTeleportFromEnd", true);
+		prop.comment = "Set this to true to permit teleporting from The End." + getBoolGuide(prop);
+		prop.setLanguageKey(keyProp + prop.getName());
+		canTeleportFromEnd = prop.getBoolean();
 		propOrder.add(prop.getName());
 		//
 		prop = cfg.get(category, "enableTeleporterParticle", true);
