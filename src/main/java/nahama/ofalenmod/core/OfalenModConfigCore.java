@@ -316,7 +316,7 @@ public class OfalenModConfigCore {
 		propOrder.add(prop.getName());
 		//
 		prop = cfg.get(category, "amountProtectorDamage", 1, null, 0, Short.MAX_VALUE);
-		prop.comment = "Damage amount of Ofalen Protector when the player is protected." + separator + "Per 1 damage of player." + getNumGuide(prop);
+		prop.comment = "The amount of material consuming when Protector is activated." + separator + "If \"consumeMaterialPerDamage\" is true, per half a heart." + getNumGuide(prop);
 		prop.setLanguageKey(keyProp + prop.getName());
 		amountProtectorDamage = (short) getInt(prop);
 		propOrder.add(prop.getName());
