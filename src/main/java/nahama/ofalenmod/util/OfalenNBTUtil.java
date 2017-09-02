@@ -46,6 +46,7 @@ public class OfalenNBTUtil {
 	public static final String CHANNEL = "Channel";
 	// フローター
 	public static final String MODE = "Mode";
+	public static final String IS_BEING_USED = "IsBeingUsed";
 	// コレクター
 	public static final String IS_ITEM_DISABLED = "IsItemDisabled";
 	public static final String IS_EXP_DISABLED = "IsExpDisabled";

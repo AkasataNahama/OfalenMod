@@ -47,6 +47,7 @@ public class OfalenFlightHandlerServer {
 	public static void checkPlayer(EntityPlayer player) {
 		byte modeSelected = 0;
 		ItemStack stackFloater = null;
+		boolean isSearching = true;
 		// プレイヤーのインベントリを調査する。
 		IInventory inventory = player.inventory;
 		for (int i = 0; i < inventory.getSizeInventory(); i++) {
@@ -54,13 +55,21 @@ public class OfalenFlightHandlerServer {
 			// フローターでないか、NBTを持っていないなら無視。
 			if (itemStack == null || !(itemStack.getItem() instanceof ItemFloater) || !itemStack.hasTagCompound())
 				continue;
+			if (!isSearching) {
+				// 調査が終了しているなら、使用中でないことを記録し、次へ。
+				itemStack.getTagCompound().setBoolean(OfalenNBTUtil.IS_BEING_USED, false);
+				continue;
+			}
 			// フローターが無効なら無視。
 			if (!((ItemFloater) itemStack.getItem()).isValidFloater(itemStack))
 				continue;
-			// 有効なフローターを見つけたら調査を終了する。
+			// 使用中であることを記録。
+			itemStack.getTagCompound().setBoolean(OfalenNBTUtil.IS_BEING_USED, true);
+			// 有効なフローターを見つけたら保持する。
 			modeSelected = itemStack.getTagCompound().getByte(OfalenNBTUtil.MODE);
 			stackFloater = itemStack;
-			break;
+			// 調査を終了する。
+			isSearching = false;
 		}
 		// モード変更を適用する。
 		setPlayerFloaterMode(player, modeSelected, stackFloater);
