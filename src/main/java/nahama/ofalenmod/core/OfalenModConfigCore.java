@@ -86,6 +86,7 @@ public class OfalenModConfigCore {
 	public static short amountFloaterDamage;
 	public static byte intervalFloaterDamage;
 	public static byte intervalInventorySearch;
+	public static boolean canSwitchFloatForm;
 	public static boolean isFloaterParticleEnabled;
 	public static byte typeFloaterParticle;
 	// Future.Collector
@@ -422,6 +423,12 @@ public class OfalenModConfigCore {
 		prop.comment = "The search interval of inventory whose player using Ofalen Floater." + unitTick + getNumGuide(prop);
 		prop.setLanguageKey(keyProp + prop.getName());
 		intervalInventorySearch = (byte) getInt(prop);
+		propOrder.add(prop.getName());
+		//
+		prop = cfg.get(category, "canSwitchFloatForm", true);
+		prop.comment = "Set this to true to control Float Form by pressing the jump key twice." + getBoolGuide(prop);
+		prop.setLanguageKey(keyProp + prop.getName());
+		canSwitchFloatForm = prop.getBoolean();
 		propOrder.add(prop.getName());
 		//
 		prop = cfg.get(category, "enableFloaterParticle", true);

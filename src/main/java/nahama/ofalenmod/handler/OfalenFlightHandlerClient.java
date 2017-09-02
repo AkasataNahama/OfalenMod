@@ -1,5 +1,6 @@
 package nahama.ofalenmod.handler;
 
+import nahama.ofalenmod.core.OfalenModConfigCore;
 import nahama.ofalenmod.util.FloaterMode;
 import nahama.ofalenmod.util.OfalenParticleUtil;
 import nahama.ofalenmod.util.OfalenUtil;
@@ -106,18 +107,22 @@ public class OfalenFlightHandlerClient {
 		boolean jump = player.movementInput.jump;
 		// 入力情報を更新。
 		player.movementInput.updatePlayerMoveState();
-		if (!jump && player.movementInput.jump) {
-			if (timeRemaining > 0) {
-				isFlightEnabled = !isFlightEnabled;
-				timeRemaining = 0;
-			} else {
-				timeRemaining = 7;
+		if (OfalenModConfigCore.canSwitchFloatForm) {
+			if (!jump && player.movementInput.jump) {
+				if (timeRemaining > 0) {
+					isFlightEnabled = !isFlightEnabled;
+					timeRemaining = 0;
+				} else {
+					timeRemaining = 7;
+				}
 			}
+			if (timeRemaining > 0)
+				timeRemaining--;
+			if (player.onGround && isFlightEnabled)
+				isFlightEnabled = false;
+		} else {
+			isFlightEnabled = true;
 		}
-		if (timeRemaining > 0)
-			timeRemaining--;
-		if (player.onGround && isFlightEnabled)
-			isFlightEnabled = false;
 		if (isFlightEnabled) {
 			// 上下移動をキャンセル。
 			player.motionY = 0.0D;
