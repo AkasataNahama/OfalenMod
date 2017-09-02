@@ -1,5 +1,6 @@
 package nahama.ofalenmod.handler;
 
+import nahama.ofalenmod.core.OfalenModConfigCore;
 import nahama.ofalenmod.core.OfalenModPacketCore;
 import nahama.ofalenmod.item.ItemFloater;
 import nahama.ofalenmod.network.MFloaterMode;
@@ -38,7 +39,7 @@ public class OfalenFlightHandlerServer {
 		if (state.interval > 0)
 			state.interval--;
 		if (state.interval < 1) {
-			state.interval = 20;
+			state.interval = OfalenModConfigCore.intervalInventorySearch;
 			checkPlayer(player);
 		}
 	}

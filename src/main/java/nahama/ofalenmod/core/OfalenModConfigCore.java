@@ -85,6 +85,7 @@ public class OfalenModConfigCore {
 	public static short amountFloatingDustReference;
 	public static short amountFloaterDamage;
 	public static byte intervalFloaterDamage;
+	public static byte intervalInventorySearch;
 	public static boolean isFloaterParticleEnabled;
 	public static byte typeFloaterParticle;
 	// Future.Collector
@@ -415,6 +416,12 @@ public class OfalenModConfigCore {
 		prop.comment = "Damage interval of Ofalen Floater." + unitTick + getNumGuide(prop);
 		prop.setLanguageKey(keyProp + prop.getName());
 		intervalFloaterDamage = (byte) getInt(prop);
+		propOrder.add(prop.getName());
+		//
+		prop = cfg.get(category, "intervalInventorySearch", 20, null, 0, Byte.MAX_VALUE);
+		prop.comment = "The search interval of inventory whose player using Ofalen Floater." + unitTick + getNumGuide(prop);
+		prop.setLanguageKey(keyProp + prop.getName());
+		intervalInventorySearch = (byte) getInt(prop);
 		propOrder.add(prop.getName());
 		//
 		prop = cfg.get(category, "enableFloaterParticle", true);
