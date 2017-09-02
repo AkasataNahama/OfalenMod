@@ -101,8 +101,6 @@ public class OfalenModConfigCore {
 	/** Configを読み込む。 */
 	public static void loadConfig(File fileConfig) {
 		cfg = new Configuration(fileConfig, OfalenModCore.VERSION);
-		// TODO [1.7.10]2.0.0へのアップデート時、Configリセットを勧告する？
-		//		if (VersionUtil.compareVersion(new VersionUtil.VersionString(OfalenModCore.MOD_ID, cfg.getLoadedConfigVersion()), OfalenModCore.VERSION_STRING))
 		syncConfig();
 	}
 
