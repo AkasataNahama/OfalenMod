@@ -48,11 +48,10 @@ public class OfalenModAnniversaryHandler {
 		presentedDate.clear();
 		// 日付を取得する。
 		Calendar cal = Calendar.getInstance();
-		int year = cal.get(Calendar.YEAR);
 		int month = cal.get(Calendar.MONTH);
 		int date = cal.get(Calendar.DATE);
-		String now = year + "/" + (month + 1) + "/" + date;
-		//		now = "2017/3/3";
+		String now = (month + 1) + "/" + date;
+		//		now = "3/3";
 		loadPresentedDates();
 		if (today == null || !today.equals(now)) {
 			today = now;
