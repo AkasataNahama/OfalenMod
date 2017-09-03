@@ -176,8 +176,8 @@ config.ofalen.category.general.world_editor=世界
 config.ofalen.category.general.world_editor.tooltip=プレーサー・ムーバー・ブレーカー・コレクターブロックに関する設定。
 config.ofalen.prop.amountDarkFuelCrafting=黒色燃料のクラフト数
 config.ofalen.prop.amountDarkFuelCrafting.tooltip=通常のレシピを使用した時の黒色オファレン燃料のクラフト数。
-config.ofalen.prop.energyDarkFuel=黒燃料のエネルギー
-config.ofalen.prop.energyDarkFuel.tooltip=黒燃料1個あたりの作業回数。
+config.ofalen.prop.energyDarkFuel=黒色燃料のエネルギー
+config.ofalen.prop.energyDarkFuel.tooltip=黒色オファレン燃料1個あたりの作業回数。
 
 # キーバインディング
 key.ofalen.category=オファレンMOD
