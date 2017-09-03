@@ -20,6 +20,12 @@ config.ofalen.category.general.material=素材
 config.ofalen.category.general.material.tooltip=素材に関する設定。
 config.ofalen.prop.positionStoneLumpRecipeBlank=石の塊レシピの空白箇所
 config.ofalen.prop.positionStoneLumpRecipeBlank.tooltip=石の塊のレシピの空白箇所。[0 1 2] / [3 4 5] / [6 7 8]
+config.ofalen.prop.amountCoverPlateCrafting=カバープレートのクラフト数
+config.ofalen.prop.amountCoverPlateCrafting.tooltip=通常のレシピを使用した時の機械用カバープレートのクラフト数。
+config.ofalen.prop.amountGrade3PartsCrafting=Grade 3の部品のクラフト数
+config.ofalen.prop.amountGrade3PartsCrafting.tooltip=通常のレシピを使用した時のGrade 3の部品のクラフト数。
+config.ofalen.prop.amountOfalenStickCrafting=オファレンの棒のクラフト数
+config.ofalen.prop.amountOfalenStickCrafting.tooltip=通常のレシピを使用した時の白色オファレンの棒のクラフト数。
 # 鉱石
 config.ofalen.category.general.ore=鉱石
 config.ofalen.category.general.ore.tooltip=オファレン鉱石とその生成に関する設定。
@@ -59,11 +65,17 @@ config.ofalen.prop.sizeExplosion.tooltip=爆発玉の爆発の大きさ。
 # レーザー
 config.ofalen.category.general.laser=レーザー
 config.ofalen.category.general.laser.tooltip=オファレンレーザーピストルに関する設定。
+config.ofalen.prop.amountLaserCrafting=レーザーのクラフト数
+config.ofalen.prop.amountLaserCrafting.tooltip=通常のレシピを使用した時のオファレンレーザーエネルギークリスタル [赤/緑/青] のクラフト数。
+config.ofalen.prop.amountWhiteLaserCrafting=白色レーザーのクラフト数
+config.ofalen.prop.amountWhiteLaserCrafting.tooltip=通常のレシピを使用した時のオファレンレーザーエネルギークリスタル [白] のクラフト数。
 config.ofalen.prop.enableLaserSound=レーザー音の有効化
 config.ofalen.prop.enableLaserSound.tooltip=trueならレーザー発射時に音が出ます。
 # 機械
 config.ofalen.category.general.machine=機械
 config.ofalen.category.general.machine.tooltip=製錬機・変換機・修繕機・融合機に関する設定。
+config.ofalen.prop.amountWhiteFuelCrafting=白色燃料のクラフト数
+config.ofalen.prop.amountWhiteFuelCrafting.tooltip=通常のレシピを使用した時の白色オファレン燃料のクラフト数。
 config.ofalen.prop.divisorBurningTime=燃焼時間の除数
 config.ofalen.prop.divisorBurningTime.tooltip=かまど燃料を機械に使用した時の燃焼時間の除数。
 config.ofalen.prop.timeTDiamondBurning=匠魔石の燃焼時間
@@ -162,6 +174,8 @@ config.ofalen.prop.enableCollectorParticle.tooltip=trueならコレクターが�
 # 世界
 config.ofalen.category.general.world_editor=世界
 config.ofalen.category.general.world_editor.tooltip=プレーサー・ムーバー・ブレーカー・コレクターブロックに関する設定。
+config.ofalen.prop.amountDarkFuelCrafting=黒色燃料のクラフト数
+config.ofalen.prop.amountDarkFuelCrafting.tooltip=通常のレシピを使用した時の黒色オファレン燃料のクラフト数。
 config.ofalen.prop.energyDarkFuel=黒燃料のエネルギー
 config.ofalen.prop.energyDarkFuel.tooltip=黒燃料1個あたりの作業回数。
 

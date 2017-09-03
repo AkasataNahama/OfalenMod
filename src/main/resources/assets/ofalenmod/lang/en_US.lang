@@ -20,6 +20,12 @@ config.ofalen.category.general.material=Material
 config.ofalen.category.general.material.tooltip=The settings of material.
 config.ofalen.prop.positionStoneLumpRecipeBlank=Lump of Stone Recipe Blank Position
 config.ofalen.prop.positionStoneLumpRecipeBlank.tooltip=Position of space on recipe of "Lump of Stone". [0 1 2] / [3 4 5] / [6 7 8]
+config.ofalen.prop.amountCoverPlateCrafting=Cover Plate Crafting Amount
+config.ofalen.prop.amountCoverPlateCrafting.tooltip=Crafting amount of "Machine Cover Plate" when using normal recipe.
+config.ofalen.prop.amountGrade3PartsCrafting=Grade 3 Parts Crafting Amount
+config.ofalen.prop.amountGrade3PartsCrafting.tooltip=Crafting amount of "Grade 3 Parts" when using normal recipe.
+config.ofalen.prop.amountOfalenStickCrafting=Ofalen Stick Crafting Amount
+config.ofalen.prop.amountOfalenStickCrafting.tooltip=Crafting amount of "White Ofalen Stick" when using normal recipe.
 # Ore
 config.ofalen.category.general.ore=Ore
 config.ofalen.category.general.ore.tooltip=The settings of Ofalen Ore and generator.
@@ -59,11 +65,17 @@ config.ofalen.prop.sizeExplosion.tooltip=Explosion size of Explosion Ball.
 # Laser
 config.ofalen.category.general.laser=Laser
 config.ofalen.category.general.laser.tooltip=The settings of Ofalen Laser Pistol.
+config.ofalen.prop.amountLaserCrafting=Laser Crafting Amount
+config.ofalen.prop.amountLaserCrafting.tooltip=Crafting amount of "Ofalen Laser Energy Crystal [Red, Green, Blue]" when using normal recipe.
+config.ofalen.prop.amountWhiteLaserCrafting=White Laser Crafting Amount
+config.ofalen.prop.amountWhiteLaserCrafting.tooltip=Crafting amount of "Ofalen Laser Energy Crystal [White]" when using normal recipe.
 config.ofalen.prop.enableLaserSound=Enable Laser Sound
 config.ofalen.prop.enableLaserSound.tooltip=Set this to true to enable sound of Ofalen Laser Pistol.
 # Machine
 config.ofalen.category.general.machine=Machine
 config.ofalen.category.general.machine.tooltip=The settings of Smelting Machine, Converting Machine, Repairing Machine and Fusing Machine.
+config.ofalen.prop.amountWhiteFuelCrafting=White Fuel Crafting Amount
+config.ofalen.prop.amountWhiteFuelCrafting.tooltip=Crafting amount of "White Ofalen Fuel" when using normal recipe.
 config.ofalen.prop.divisorBurningTime=Burning Time Divisor
 config.ofalen.prop.divisorBurningTime.tooltip=Divisor of burning time when using furnace fuel for machines.
 config.ofalen.prop.timeTDiamondBurning=Creeper Magic Stone Burning Time
@@ -162,6 +174,8 @@ config.ofalen.prop.enableCollectorParticle.tooltip=Set this to true to enable pa
 # WorldEditor
 config.ofalen.category.general.world_editor=World Editor
 config.ofalen.category.general.world_editor.tooltip=The settings of Placer, Mover, Breaker and Collector Block.
+config.ofalen.prop.amountDarkFuelCrafting=Dark Fuel Crafting Amount
+config.ofalen.prop.amountDarkFuelCrafting.tooltip=Crafting amount of "Dark Ofalen Fuel" when using normal recipe.
 config.ofalen.prop.energyDarkFuel=Dark Fuel Energy
 config.ofalen.prop.energyDarkFuel.tooltip=Number of operations per Dark Fuel.
 

@@ -37,6 +37,9 @@ public class OfalenModConfigCore {
 	public static boolean isPresentBoxEnabled;
 	// Material
 	public static byte positionStoneLumpRecipeBlank;
+	public static byte amountCoverPlateCrafting;
+	public static byte amountGrade3PartsCrafting;
+	public static byte amountOfalenStickCrafting;
 	// Ore
 	public static byte amountDrop;
 	public static int amountExpMin;
@@ -51,8 +54,11 @@ public class OfalenModConfigCore {
 	// Ball.Explosion
 	public static byte sizeExplosion;
 	// Laser
+	public static byte amountLaserCrafting;
+	public static byte amountWhiteLaserCrafting;
 	public static boolean isLaserSoundEnabled;
 	// Machine
+	public static byte amountWhiteFuelCrafting;
 	public static short divisorBurningTime;
 	public static short timeTDiamondBurning;
 	public static short timeWhiteFuelBurning;
@@ -96,6 +102,7 @@ public class OfalenModConfigCore {
 	public static short amountCollectorDamageExp;
 	public static boolean isCollectorParticleEnabled;
 	// WorldEditor
+	public static byte amountDarkFuelCrafting;
 	public static short energyDarkFuel;
 
 	/** Configを読み込む。 */
@@ -140,6 +147,7 @@ public class OfalenModConfigCore {
 		// Material
 		category = MATERIAL;
 		cfg.setCategoryLanguageKey(category, keyCategory + category);
+		propOrder = new ArrayList<String>();
 		//
 		String diagram = separator + " -------" + separator + " |0 1 2|" + separator + " |3 4 5|" + separator + " |6 7 8|" + separator + " -------";
 		prop = cfg.get(category, "positionStoneLumpRecipeBlank", 7, null, 0, 8);
@@ -147,6 +155,29 @@ public class OfalenModConfigCore {
 		prop.setLanguageKey(keyProp + prop.getName());
 		prop.setRequiresMcRestart(true);
 		positionStoneLumpRecipeBlank = (byte) getInt(prop);
+		propOrder.add(prop.getName());
+		//
+		prop = cfg.get(category, "amountCoverPlateCrafting", 6, null, 1, 64);
+		prop.comment = "Crafting amount of \"Machine Cover Plate\" when using normal recipe." + restart + getNumGuide(prop);
+		prop.setLanguageKey(keyProp + prop.getName());
+		prop.setRequiresMcRestart(true);
+		amountCoverPlateCrafting = (byte) getInt(prop);
+		propOrder.add(prop.getName());
+		//
+		prop = cfg.get(category, "amountGrade3PartsCrafting", 1, null, 1, 64);
+		prop.comment = "Crafting amount of \"Grade 3 Parts\" when using normal recipe." + restart + getNumGuide(prop);
+		prop.setLanguageKey(keyProp + prop.getName());
+		prop.setRequiresMcRestart(true);
+		amountGrade3PartsCrafting = (byte) getInt(prop);
+		propOrder.add(prop.getName());
+		//
+		prop = cfg.get(category, "amountOfalenStickCrafting", 1, null, 1, 64);
+		prop.comment = "Crafting amount of \"White Ofalen Stick\" when using normal recipe." + restart + getNumGuide(prop);
+		prop.setLanguageKey(keyProp + prop.getName());
+		prop.setRequiresMcRestart(true);
+		amountOfalenStickCrafting = (byte) getInt(prop);
+		propOrder.add(prop.getName());
+		cfg.setCategoryPropertyOrder(category, propOrder);
 		// Ore
 		category = ORE;
 		cfg.setCategoryLanguageKey(category, keyCategory + category);
@@ -224,15 +255,39 @@ public class OfalenModConfigCore {
 		// Laser
 		category = LASER;
 		cfg.setCategoryLanguageKey(category, keyCategory + category);
+		propOrder = new ArrayList<String>();
+		//
+		prop = cfg.get(category, "amountLaserCrafting", 4, null, 1, 64);
+		prop.comment = "Crafting amount of \"Ofalen Laser Energy Crystal [Red, Green, Blue]\" when using normal recipe." + restart + getNumGuide(prop);
+		prop.setLanguageKey(keyProp + prop.getName());
+		prop.setRequiresMcRestart(true);
+		amountLaserCrafting = (byte) getInt(prop);
+		propOrder.add(prop.getName());
+		//
+		prop = cfg.get(category, "amountWhiteLaserCrafting", 3, null, 1, 64);
+		prop.comment = "Crafting amount of \"Ofalen Laser Energy Crystal [White]\" when using normal recipe." + restart + getNumGuide(prop);
+		prop.setLanguageKey(keyProp + prop.getName());
+		prop.setRequiresMcRestart(true);
+		amountWhiteLaserCrafting = (byte) getInt(prop);
+		propOrder.add(prop.getName());
 		//
 		prop = cfg.get(category, "enableLaserSound", true);
 		prop.comment = "Set this to true to enable sound of Ofalen Laser Pistol." + getBoolGuide(prop);
 		prop.setLanguageKey(keyProp + prop.getName());
 		isLaserSoundEnabled = prop.getBoolean();
+		propOrder.add(prop.getName());
+		cfg.setCategoryPropertyOrder(category, propOrder);
 		// Machine
 		category = MACHINE;
 		cfg.setCategoryLanguageKey(category, keyCategory + category);
 		propOrder = new ArrayList<String>();
+		//
+		prop = cfg.get(category, "amountWhiteFuelCrafting", 32, null, 1, 64);
+		prop.comment = "Crafting amount of \"White Ofalen Fuel\" when using normal recipe." + restart + getNumGuide(prop);
+		prop.setLanguageKey(keyProp + prop.getName());
+		prop.setRequiresMcRestart(true);
+		amountWhiteFuelCrafting = (byte) getInt(prop);
+		propOrder.add(prop.getName());
 		//
 		prop = cfg.get(category, "divisorBurningTime", 256, null, 1, Short.MAX_VALUE);
 		prop.comment = "Divisor of burning time when using furnace fuel for machines." + getNumGuide(prop);
@@ -480,11 +535,20 @@ public class OfalenModConfigCore {
 		// WorldEditor
 		category = WORLD_EDITOR;
 		cfg.setCategoryLanguageKey(WORLD_EDITOR, keyCategory + WORLD_EDITOR);
+		propOrder = new ArrayList<String>();
+		//
+		prop = cfg.get(category, "amountDarkFuelCrafting", 32, null, 1, 64);
+		prop.comment = "Crafting amount of \"Dark Ofalen Fuel\" when using normal recipe." + restart + getNumGuide(prop);
+		prop.setLanguageKey(keyProp + prop.getName());
+		prop.setRequiresMcRestart(true);
+		amountDarkFuelCrafting = (byte) getInt(prop);
+		propOrder.add(prop.getName());
 		//
 		prop = cfg.get(category, "energyDarkFuel", 20, null, 0, Short.MAX_VALUE);
 		prop.comment = "Number of operations per Dark Fuel." + getNumGuide(prop);
 		prop.setLanguageKey(keyProp + prop.getName());
 		energyDarkFuel = (short) getInt(prop);
+		cfg.setCategoryPropertyOrder(category, propOrder);
 		cfg.save();
 	}
 

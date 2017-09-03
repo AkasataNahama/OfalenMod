@@ -52,11 +52,11 @@ public class OfalenModRecipeCore {
 		addShapeless(new ItemStack(blockOfalen, 1, 3), BLOCK[0], BLOCK[1], BLOCK[2]);
 		// 中間素材・機械類
 		// オファレンの棒
-		addShaped(new ItemStack(partsOfalen3D, 1, 0), "W", "W", 'W', GEM[3]);
+		addShaped(new ItemStack(partsOfalen3D, OfalenModConfigCore.amountOfalenStickCrafting, 0), "W", "W", 'W', GEM[3]);
 		// 機械用カバープレート
-		addShaped(new ItemStack(partsOfalen, 6, 0), "LOL", "OQO", "LOL", 'L', getParts(2), 'Q', GEM_QUARTZ, 'O', FRAG[3]);
+		addShaped(new ItemStack(partsOfalen, OfalenModConfigCore.amountCoverPlateCrafting, 0), "LOL", "OQO", "LOL", 'L', getParts(2), 'Q', GEM_QUARTZ, 'O', FRAG[3]);
 		// Grade 3の部品
-		addShaped(getParts(1), "DWD", "WIW", "DID", 'W', GEM[3], 'D', GEM_DIAMOND, 'I', INGOT_IRON);
+		addShaped(new ItemStack(partsOfalen, OfalenModConfigCore.amountGrade3PartsCrafting, 1), "DWD", "WIW", "DID", 'W', GEM[3], 'D', GEM_DIAMOND, 'I', INGOT_IRON);
 		// 製錬機
 		addShaped(machineSmelting, "XYX", "XZX", "XYX", 'X', getParts(0), 'Y', GEM[0], 'Z', Blocks.furnace);
 		// 変換機
@@ -82,8 +82,8 @@ public class OfalenModRecipeCore {
 		addShaped(getParts(2), recipeArray, 'X', STONE);
 		addShaped(new ItemStack(Blocks.cobblestone, 8), "X", 'X', getParts(2));
 		// オファレン燃料
-		addShaped(new ItemStack(partsOfalen, 32, 3), "OLO", "LQL", "OLO", 'L', getParts(2), 'O', GEM[3], 'Q', GEM_QUARTZ);
-		addShaped(new ItemStack(partsOfalen, 32, 4), "OLO", "LQL", "OLO", 'L', getParts(2), 'O', GEM[7], 'Q', GEM_QUARTZ);
+		addShaped(new ItemStack(partsOfalen, OfalenModConfigCore.amountWhiteFuelCrafting, 3), "OLO", "LQL", "OLO", 'L', getParts(2), 'O', GEM[3], 'Q', GEM_QUARTZ);
+		addShaped(new ItemStack(partsOfalen, OfalenModConfigCore.amountDarkFuelCrafting, 4), "OLO", "LQL", "OLO", 'L', getParts(2), 'O', GEM[7], 'Q', GEM_QUARTZ);
 		// 防具
 		addShaped(helmetOfalenG1, "RRR", "R R", 'R', GEM[0]);
 		addShaped(chestplateOfalenG1, "R R", "RRR", "RRR", 'R', GEM[0]);
@@ -143,10 +143,10 @@ public class OfalenModRecipeCore {
 		addShapeless(new ItemStack(magazineLaserBlue, 1, 1024), getParts(5), GEM[2]);
 		addShapeless(new ItemStack(magazineLaserWhite, 1, 1024), getParts(5), GEM[3]);
 		for (int i = 0; i < 3; i++) {
-			addShaped(new ItemStack(crystalLaserEnergy, 4, i), "XYY", 'X', NUGGET_GOLD, 'Y', FRAG[i]);
+			addShaped(new ItemStack(crystalLaserEnergy, OfalenModConfigCore.amountLaserCrafting, i), "XYY", 'X', NUGGET_GOLD, 'Y', FRAG[i]);
 		}
 		final ItemStack[] CRYSTAL = { new ItemStack(crystalLaserEnergy, 1, 0), new ItemStack(crystalLaserEnergy, 1, 1), new ItemStack(crystalLaserEnergy, 1, 2), new ItemStack(crystalLaserEnergy, 1, 3) };
-		GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(crystalLaserEnergy, 3, 3), CRYSTAL[0], CRYSTAL[1], CRYSTAL[2], GEM[3]));
+		GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(crystalLaserEnergy, OfalenModConfigCore.amountWhiteLaserCrafting, 3), CRYSTAL[0], CRYSTAL[1], CRYSTAL[2], GEM[3]));
 		addShaped(new ItemStack(pistolLaser, 1, 1024), "OOO", "OII", "GC ", 'O', GEM[3], 'I', INGOT_IRON, 'G', INGOT_GOLD, 'C', CORE[3]);
 		// マガジンへのクリスタル格納レシピ
 		RecipeSorter.register("ofalenmod:magazine", MagazineRecipe.class, RecipeSorter.Category.SHAPELESS, "after:minecraft:shapeless");
