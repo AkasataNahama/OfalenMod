@@ -113,458 +113,424 @@ public class OfalenModConfigCore {
 
 	/** Configを同期する。 */
 	public static void syncConfig() {
+		ConfigRegister register = new ConfigRegister();
 		String separator = Configuration.NEW_LINE;
-		String restart = separator + " [Minecraft Restart Required]";
-		String restartWorld = separator + " [World Restart Required]";
 		String unitTick = separator + " (tick)";
-		String keyCategory = "config.ofalen.category.";
-		String keyProp = "config.ofalen.prop.";
-		List<String> propOrder;
-		String category;
-		Property prop;
 		// General
-		category = Configuration.CATEGORY_GENERAL;
-		cfg.setCategoryLanguageKey(category, keyCategory + category);
+		register.setCategory(Configuration.CATEGORY_GENERAL);
 		// System
-		category = SYSTEM;
-		cfg.setCategoryLanguageKey(category, keyCategory + category);
-		propOrder = new ArrayList<String>();
+		register.setCategory(SYSTEM);
 		//
-		prop = cfg.get(category, "enableUpdateCheck", true);
-		prop.comment = "Set this to true to enable update check of Ofalen Mod." + restart + getBoolGuide(prop);
-		prop.setLanguageKey(keyProp + prop.getName());
-		prop.setRequiresMcRestart(true);
-		isUpdateCheckEnabled = prop.getBoolean();
-		propOrder.add(prop.getName());
+		register.setProperty("enableUpdateCheck", true);
+		register.setComment("Set this to true to enable update check of Ofalen Mod.");
+		register.setRequiresMcRestart();
+		isUpdateCheckEnabled = register.getBoolean();
 		//
-		prop = cfg.get(category, "enablePresentBox", true);
-		prop.comment = "Set this to true to enable Present Box." + restartWorld + getBoolGuide(prop);
-		prop.setLanguageKey(keyProp + prop.getName());
-		prop.setRequiresWorldRestart(true);
-		isPresentBoxEnabled = prop.getBoolean();
-		propOrder.add(prop.getName());
-		cfg.setCategoryPropertyOrder(category, propOrder);
+		register.setProperty("enablePresentBox", true);
+		register.setComment("Set this to true to enable Present Box.");
+		register.setRequiresWorldRestart();
+		isPresentBoxEnabled = register.getBoolean();
 		// Material
-		category = MATERIAL;
-		cfg.setCategoryLanguageKey(category, keyCategory + category);
-		propOrder = new ArrayList<String>();
+		register.setCategory(MATERIAL);
 		//
+		register.setProperty("positionStoneLumpRecipeBlank", 7, 0, 8);
 		String diagram = separator + " -------" + separator + " |0 1 2|" + separator + " |3 4 5|" + separator + " |6 7 8|" + separator + " -------";
-		prop = cfg.get(category, "positionStoneLumpRecipeBlank", 7, null, 0, 8);
-		prop.comment = "The number is position of space on recipe of \"Lump of Stone\"." + diagram + restart + getNumGuide(prop);
-		prop.setLanguageKey(keyProp + prop.getName());
-		prop.setRequiresMcRestart(true);
-		positionStoneLumpRecipeBlank = (byte) getInt(prop);
-		propOrder.add(prop.getName());
+		register.setComment("The number is position of space on recipe of \"Lump of Stone\"." + diagram);
+		register.setRequiresMcRestart();
+		positionStoneLumpRecipeBlank = (byte) register.getInt();
 		//
-		prop = cfg.get(category, "amountCoverPlateCrafting", 6, null, 1, 64);
-		prop.comment = "Crafting amount of \"Machine Cover Plate\" when using normal recipe." + restart + getNumGuide(prop);
-		prop.setLanguageKey(keyProp + prop.getName());
-		prop.setRequiresMcRestart(true);
-		amountCoverPlateCrafting = (byte) getInt(prop);
-		propOrder.add(prop.getName());
+		register.setProperty("amountCoverPlateCrafting", 6, 1, 64);
+		register.setComment("Crafting amount of \"Machine Cover Plate\" when using normal recipe.");
+		register.setRequiresMcRestart();
+		amountCoverPlateCrafting = (byte) register.getInt();
 		//
-		prop = cfg.get(category, "amountGrade3PartsCrafting", 1, null, 1, 64);
-		prop.comment = "Crafting amount of \"Grade 3 Parts\" when using normal recipe." + restart + getNumGuide(prop);
-		prop.setLanguageKey(keyProp + prop.getName());
-		prop.setRequiresMcRestart(true);
-		amountGrade3PartsCrafting = (byte) getInt(prop);
-		propOrder.add(prop.getName());
+		register.setProperty("amountGrade3PartsCrafting", 1, 1, 64);
+		register.setComment("Crafting amount of \"Grade 3 Parts\" when using normal recipe.");
+		register.setRequiresMcRestart();
+		amountGrade3PartsCrafting = (byte) register.getInt();
 		//
-		prop = cfg.get(category, "amountOfalenStickCrafting", 1, null, 1, 64);
-		prop.comment = "Crafting amount of \"White Ofalen Stick\" when using normal recipe." + restart + getNumGuide(prop);
-		prop.setLanguageKey(keyProp + prop.getName());
-		prop.setRequiresMcRestart(true);
-		amountOfalenStickCrafting = (byte) getInt(prop);
-		propOrder.add(prop.getName());
-		cfg.setCategoryPropertyOrder(category, propOrder);
+		register.setProperty("amountOfalenStickCrafting", 1, 1, 64);
+		register.setComment("Crafting amount of \"White Ofalen Stick\" when using normal recipe.");
+		register.setRequiresMcRestart();
+		amountOfalenStickCrafting = (byte) register.getInt();
 		// Ore
-		category = ORE;
-		cfg.setCategoryLanguageKey(category, keyCategory + category);
-		propOrder = new ArrayList<String>();
+		register.setCategory(ORE);
 		//
-		prop = cfg.get(category, "amountDrop", 3, null, 0, Byte.MAX_VALUE);
-		prop.comment = "Drop amount of Ofalen Fragment when Ofalen Ore is mined." + getNumGuide(prop);
-		prop.setLanguageKey(keyProp + prop.getName());
-		amountDrop = (byte) getInt(prop);
-		propOrder.add(prop.getName());
+		register.setProperty("amountDrop", 3, 0, Byte.MAX_VALUE);
+		register.setComment("Drop amount of Ofalen Fragment when Ofalen Ore is mined.");
+		amountDrop = (byte) register.getInt();
 		//
-		prop = cfg.get(category, "amountExpMin", 3, null, 0, Integer.MAX_VALUE);
-		prop.comment = "Minimum amount of experience when Ofalen Ore is mined." + getNumGuide(prop);
-		prop.setLanguageKey(keyProp + prop.getName());
-		amountExpMin = getInt(prop);
-		propOrder.add(prop.getName());
+		register.setProperty("amountExpMin", 3, 0, Integer.MAX_VALUE);
+		register.setComment("Minimum amount of experience when Ofalen Ore is mined.");
+		amountExpMin = register.getInt();
 		//
-		prop = cfg.get(category, "amountExpMax", 7, null, 0, Integer.MAX_VALUE);
-		prop.comment = "Maximum amount of experience when Ofalen Ore is mined." + getNumGuide(prop);
-		prop.setLanguageKey(keyProp + prop.getName());
-		amountExpMax = getInt(prop);
-		propOrder.add(prop.getName());
-		cfg.setCategoryPropertyOrder(category, propOrder);
+		register.setProperty("amountExpMax", 7, 0, Integer.MAX_VALUE);
+		register.setComment("Maximum amount of experience when Ofalen Ore is mined.");
+		amountExpMax = register.getInt();
 		// Ore.Generate
-		category = GENERATE;
-		cfg.setCategoryLanguageKey(category, keyCategory + category);
-		propOrder = new ArrayList<String>();
+		register.setCategory(GENERATE);
 		//
-		prop = cfg.get(category, "enableGenerator", true);
-		prop.comment = "Set this to true to generate Ofalen Ore into newly generated chunk." + getBoolGuide(prop);
-		prop.setLanguageKey(keyProp + prop.getName());
-		isGeneratorEnabled = prop.getBoolean();
-		propOrder.add(prop.getName());
+		register.setProperty("enableGenerator", true);
+		register.setComment("Set this to true to generate Ofalen Ore into newly generated chunk.");
+		isGeneratorEnabled = register.getBoolean();
 		//
-		prop = cfg.get(category, "frequencyGeneration", 3, null, 0, Byte.MAX_VALUE);
-		prop.comment = "The number of Ofalen Ore generation of each color for each chunk." + getNumGuide(prop);
-		prop.setLanguageKey(keyProp + prop.getName());
-		frequencyGeneration = (byte) getInt(prop);
-		propOrder.add(prop.getName());
+		register.setProperty("frequencyGeneration", 3, 0, Byte.MAX_VALUE);
+		register.setComment("The number of Ofalen Ore generation of each color for each chunk.");
+		frequencyGeneration = (byte) register.getInt();
 		//
-		prop = cfg.get(category, "limitGeneration", 8, null, 1, Byte.MAX_VALUE);
-		prop.comment = "Maximum size of Ofalen Ore per generation." + getNumGuide(prop);
-		prop.setLanguageKey(keyProp + prop.getName());
-		limitGeneration = (byte) getInt(prop);
-		propOrder.add(prop.getName());
+		register.setProperty("limitGeneration", 8, 1, Byte.MAX_VALUE);
+		register.setComment("Maximum size of Ofalen Ore per generation.");
+		limitGeneration = (byte) register.getInt();
 		//
-		prop = cfg.get(category, "probLodeGeneration", 0.001, null, 0.0, 1.0);
-		prop.comment = "Generation probability of Huge Ofalen Ore Lode." + separator + "Calculation of probability is performed on each chunk." + getNumGuide(prop);
-		prop.setLanguageKey(keyProp + prop.getName());
-		probLodeGeneration = getDouble(prop);
-		propOrder.add(prop.getName());
-		cfg.setCategoryPropertyOrder(category, propOrder);
+		register.setProperty("probLodeGeneration", 0.001, 0.0, 1.0);
+		register.setComment("Generation probability of Huge Ofalen Ore Lode." + separator + "Calculation of probability is performed on each chunk.");
+		probLodeGeneration = register.getDouble();
 		// Tool
-		category = TOOL;
-		cfg.setCategoryLanguageKey(category, keyCategory + category);
+		register.setCategory(TOOL);
 		// Tool.Perfect
-		category = PERFECT;
-		cfg.setCategoryLanguageKey(category, keyCategory + category);
+		register.setCategory(PERFECT);
 		//
-		prop = cfg.get(category, "rangeMax", 7, null, 0, Byte.MAX_VALUE);
-		prop.comment = "Maximum range of Range Breaking Mode of Ofalen Perfect Tool." + getNumGuide(prop);
-		prop.setLanguageKey(keyProp + prop.getName());
-		rangeMax = (byte) getInt(prop);
+		register.setProperty("rangeMax", 7, 0, Byte.MAX_VALUE);
+		register.setComment("Maximum range of Range Breaking Mode of Ofalen Perfect Tool.");
+		rangeMax = (byte) register.getInt();
 		// Ball
-		category = BALL;
-		cfg.setCategoryLanguageKey(category, keyCategory + category);
+		register.setCategory(BALL);
 		// Ball.Explosion
-		category = EXPLOSION;
-		cfg.setCategoryLanguageKey(category, keyCategory + category);
+		register.setCategory(EXPLOSION);
 		//
-		prop = cfg.get(category, "sizeExplosion", 2, null, 0, Byte.MAX_VALUE);
-		prop.comment = "Explosion size of Explosion Ball." + getNumGuide(prop);
-		prop.setLanguageKey(keyProp + prop.getName());
-		sizeExplosion = (byte) getInt(prop);
+		register.setProperty("sizeExplosion", 2, 0, Byte.MAX_VALUE);
+		register.setComment("Explosion size of Explosion Ball.");
+		sizeExplosion = (byte) register.getInt();
 		// Laser
-		category = LASER;
-		cfg.setCategoryLanguageKey(category, keyCategory + category);
-		propOrder = new ArrayList<String>();
+		register.setCategory(LASER);
 		//
-		prop = cfg.get(category, "amountLaserCrafting", 4, null, 1, 64);
-		prop.comment = "Crafting amount of \"Ofalen Laser Energy Crystal [Red, Green, Blue]\" when using normal recipe." + restart + getNumGuide(prop);
-		prop.setLanguageKey(keyProp + prop.getName());
-		prop.setRequiresMcRestart(true);
-		amountLaserCrafting = (byte) getInt(prop);
-		propOrder.add(prop.getName());
+		register.setProperty("amountLaserCrafting", 4, 1, 64);
+		register.setComment("Crafting amount of \"Ofalen Laser Energy Crystal [Red, Green, Blue]\" when using normal recipe.");
+		register.setRequiresMcRestart();
+		amountLaserCrafting = (byte) register.getInt();
 		//
-		prop = cfg.get(category, "amountWhiteLaserCrafting", 3, null, 1, 64);
-		prop.comment = "Crafting amount of \"Ofalen Laser Energy Crystal [White]\" when using normal recipe." + restart + getNumGuide(prop);
-		prop.setLanguageKey(keyProp + prop.getName());
-		prop.setRequiresMcRestart(true);
-		amountWhiteLaserCrafting = (byte) getInt(prop);
-		propOrder.add(prop.getName());
+		register.setProperty("amountWhiteLaserCrafting", 3, 1, 64);
+		register.setComment("Crafting amount of \"Ofalen Laser Energy Crystal [White]\" when using normal recipe.");
+		register.setRequiresMcRestart();
+		amountWhiteLaserCrafting = (byte) register.getInt();
 		//
-		prop = cfg.get(category, "enableLaserSound", true);
-		prop.comment = "Set this to true to enable sound of Ofalen Laser Pistol." + getBoolGuide(prop);
-		prop.setLanguageKey(keyProp + prop.getName());
-		isLaserSoundEnabled = prop.getBoolean();
-		propOrder.add(prop.getName());
-		cfg.setCategoryPropertyOrder(category, propOrder);
+		register.setProperty("enableLaserSound", true);
+		register.setComment("Set this to true to enable sound of Ofalen Laser Pistol.");
+		isLaserSoundEnabled = register.getBoolean();
 		// Machine
-		category = MACHINE;
-		cfg.setCategoryLanguageKey(category, keyCategory + category);
-		propOrder = new ArrayList<String>();
+		register.setCategory(MACHINE);
 		//
-		prop = cfg.get(category, "amountWhiteFuelCrafting", 32, null, 1, 64);
-		prop.comment = "Crafting amount of \"White Ofalen Fuel\" when using normal recipe." + restart + getNumGuide(prop);
-		prop.setLanguageKey(keyProp + prop.getName());
-		prop.setRequiresMcRestart(true);
-		amountWhiteFuelCrafting = (byte) getInt(prop);
-		propOrder.add(prop.getName());
+		register.setProperty("amountWhiteFuelCrafting", 32, 1, 64);
+		register.setComment("Crafting amount of \"White Ofalen Fuel\" when using normal recipe.");
+		register.setRequiresMcRestart();
+		amountWhiteFuelCrafting = (byte) register.getInt();
 		//
-		prop = cfg.get(category, "divisorBurningTime", 256, null, 1, Short.MAX_VALUE);
-		prop.comment = "Divisor of burning time when using furnace fuel for machines." + getNumGuide(prop);
-		prop.setLanguageKey(keyProp + prop.getName());
-		divisorBurningTime = (short) getInt(prop);
-		propOrder.add(prop.getName());
+		register.setProperty("divisorBurningTime", 256, 1, Short.MAX_VALUE);
+		register.setComment("Divisor of burning time when using furnace fuel for machines.");
+		divisorBurningTime = (short) register.getInt();
 		//
-		prop = cfg.get(category, "timeTDiamondBurning", 400, null, 0, Short.MAX_VALUE);
-		prop.comment = "Burning time of Creeper Magic Stone by Takumi Craft." + unitTick + getNumGuide(prop);
-		prop.setLanguageKey(keyProp + prop.getName());
-		timeTDiamondBurning = (short) getInt(prop);
-		propOrder.add(prop.getName());
+		register.setProperty("timeTDiamondBurning", 400, 0, Short.MAX_VALUE);
+		register.setComment("Burning time of Creeper Magic Stone by Takumi Craft." + unitTick);
+		timeTDiamondBurning = (short) register.getInt();
 		//
-		prop = cfg.get(category, "timeWhiteFuelBurning", 1600, null, 0, Short.MAX_VALUE);
-		prop.comment = "Burning time of White Ofalen Fuel." + unitTick + getNumGuide(prop);
-		prop.setLanguageKey(keyProp + prop.getName());
-		timeWhiteFuelBurning = (short) getInt(prop);
-		propOrder.add(prop.getName());
-		cfg.setCategoryPropertyOrder(category, propOrder);
+		register.setProperty("timeWhiteFuelBurning", 1600, 0, Short.MAX_VALUE);
+		register.setComment("Burning time of White Ofalen Fuel." + unitTick);
+		timeWhiteFuelBurning = (short) register.getInt();
 		// Machine.Smelting
-		category = SMELTING;
-		cfg.setCategoryLanguageKey(category, keyCategory + category);
-		propOrder = new ArrayList<String>();
+		register.setCategory(SMELTING);
 		//
-		prop = cfg.get(category, "timeSmelting", 1600, null, 0, Short.MAX_VALUE);
-		prop.comment = "The time Ofalen Smelting Machine requires for every smelting." + unitTick + getNumGuide(prop);
-		prop.setLanguageKey(keyProp + prop.getName());
-		timeSmelting = (short) getInt(prop);
-		propOrder.add(prop.getName());
+		register.setProperty("timeSmelting", 1600, 0, Short.MAX_VALUE);
+		register.setComment("The time Ofalen Smelting Machine requires for every smelting." + unitTick);
+		timeSmelting = (short) register.getInt();
 		//
-		prop = cfg.get(category, "baseOfalenSmeltingAmount", 1, null, 1, 16);
-		prop.comment = "Smelting amount of Ofalen from Ofalen Ore using Ofalen Smelting Machine." + separator + "When don't use Ofalen Machine Processor." + restart + getNumGuide(prop);
-		prop.setLanguageKey(keyProp + prop.getName());
-		prop.setRequiresMcRestart(true);
-		baseOfalenSmeltingAmount = (byte) getInt(prop);
-		propOrder.add(prop.getName());
-		cfg.setCategoryPropertyOrder(category, propOrder);
+		register.setProperty("baseOfalenSmeltingAmount", 1, 1, 16);
+		register.setComment("Smelting amount of Ofalen from Ofalen Ore using Ofalen Smelting Machine." + separator + "When don't use Ofalen Machine Processor.");
+		register.setRequiresMcRestart();
+		baseOfalenSmeltingAmount = (byte) register.getInt();
 		// Machine.Converting
-		category = CONVERTING;
-		cfg.setCategoryLanguageKey(category, keyCategory + category);
+		register.setCategory(CONVERTING);
 		//
-		prop = cfg.get(category, "timeConverting", 1600, null, 0, Short.MAX_VALUE);
-		prop.comment = "The time Ofalen Converting Machine requires for every converting." + unitTick + getNumGuide(prop);
-		prop.setLanguageKey(keyProp + prop.getName());
-		timeConverting = (short) getInt(prop);
+		register.setProperty("timeConverting", 1600, 0, Short.MAX_VALUE);
+		register.setComment("The time Ofalen Converting Machine requires for every converting." + unitTick);
+		timeConverting = (short) register.getInt();
 		// Machine.Repairing
-		category = REPAIRING;
-		cfg.setCategoryLanguageKey(category, keyCategory + category);
+		register.setCategory(REPAIRING);
 		//
-		prop = cfg.get(category, "timeRepairing", 40, null, 0, Short.MAX_VALUE);
-		prop.comment = "The time Ofalen Repairing Machine requires for every repairing." + separator + "Per 1 durability." + unitTick + getNumGuide(prop);
-		prop.setLanguageKey(keyProp + prop.getName());
-		timeRepairing = (short) getInt(prop);
+		register.setProperty("timeRepairing", 40, 0, Short.MAX_VALUE);
+		register.setComment("The time Ofalen Repairing Machine requires for every repairing." + separator + "Per 1 durability." + unitTick);
+		timeRepairing = (short) register.getInt();
 		// Machine.Fusing
-		category = FUSING;
-		cfg.setCategoryLanguageKey(category, keyCategory + category);
+		register.setCategory(FUSING);
 		//
-		prop = cfg.get(category, "timeFusing", 1600, null, 0, Short.MAX_VALUE);
-		prop.comment = "The time Ofalen Fusing Machine requires for every fusing." + unitTick + getNumGuide(prop);
-		prop.setLanguageKey(keyProp + prop.getName());
-		timeFusing = (short) getInt(prop);
+		register.setProperty("timeFusing", 1600, 0, Short.MAX_VALUE);
+		register.setComment("The time Ofalen Fusing Machine requires for every fusing." + unitTick);
+		timeFusing = (short) register.getInt();
 		// Future
-		category = FUTURE;
-		cfg.setCategoryLanguageKey(category, keyCategory + category);
+		register.setCategory(FUTURE);
 		// Future.Protector
-		category = PROTECTOR;
-		cfg.setCategoryLanguageKey(category, keyCategory + category);
-		propOrder = new ArrayList<String>();
+		register.setCategory(PROTECTOR);
 		//
-		prop = cfg.get(category, "amountProtectingIngotCrafting", 4, null, 1, 64);
-		prop.comment = "Crafting amount of \"Ingot of Ofalen Protecting\" when using normal recipe." + restart + getNumGuide(prop);
-		prop.setLanguageKey(keyProp + prop.getName());
-		prop.setRequiresMcRestart(true);
-		amountProtectingIngotCrafting = (byte) getInt(prop);
-		propOrder.add(prop.getName());
+		register.setProperty("amountProtectingIngotCrafting", 4, 1, 64);
+		register.setComment("Crafting amount of \"Ingot of Ofalen Protecting\" when using normal recipe.");
+		register.setRequiresMcRestart();
+		amountProtectingIngotCrafting = (byte) register.getInt();
 		//
-		prop = cfg.get(category, "amountProtectingIngotReference", 64, null, 0, Short.MAX_VALUE);
-		prop.comment = "The amount of \"Ingot of Ofalen Protecting\" referred for rendering icon." + getNumGuide(prop);
-		prop.setLanguageKey(keyProp + prop.getName());
-		amountProtectingIngotReference = (short) getInt(prop);
-		propOrder.add(prop.getName());
+		register.setProperty("amountProtectingIngotReference", 64, 0, Short.MAX_VALUE);
+		register.setComment("The amount of \"Ingot of Ofalen Protecting\" referred for rendering icon.");
+		amountProtectingIngotReference = (short) register.getInt();
 		//
-		prop = cfg.get(category, "amountProtectorDamage", 1, null, 0, Short.MAX_VALUE);
-		prop.comment = "The amount of material consuming when Protector is activated." + separator + "If \"consumeMaterialPerDamage\" is true, per half a heart." + getNumGuide(prop);
-		prop.setLanguageKey(keyProp + prop.getName());
-		amountProtectorDamage = (short) getInt(prop);
-		propOrder.add(prop.getName());
+		register.setProperty("amountProtectorDamage", 1, 0, Short.MAX_VALUE);
+		register.setComment("The amount of material consuming when Protector is activated." + separator + "If \"consumeMaterialPerDamage\" is true, per half a heart.");
+		amountProtectorDamage = (short) register.getInt();
 		//
-		prop = cfg.get(category, "enableProtecting", true);
-		prop.comment = "Set this to true to enable searching inventory and protecting player." + getBoolGuide(prop);
-		prop.setLanguageKey(keyProp + prop.getName());
-		isProtectingEnabled = prop.getBoolean();
-		propOrder.add(prop.getName());
+		register.setProperty("enableProtecting", true);
+		register.setComment("Set this to true to enable searching inventory and protecting player.");
+		isProtectingEnabled = register.getBoolean();
 		//
-		prop = cfg.get(category, "consumeMaterialPerDamage", true);
-		prop.comment = "Set this to true to consume material according to damage amount." + getBoolGuide(prop);
-		prop.setLanguageKey(keyProp + prop.getName());
-		canConsumeMaterialPerDamage = prop.getBoolean();
-		propOrder.add(prop.getName());
+		register.setProperty("consumeMaterialPerDamage", true);
+		register.setComment("Set this to true to consume material according to damage amount.");
+		canConsumeMaterialPerDamage = register.getBoolean();
 		//
-		prop = cfg.get(category, "enableProtectorParticle", true);
-		prop.comment = "Set this to true to enable particle spawning of Ofalen Protector." + getBoolGuide(prop);
-		prop.setLanguageKey(keyProp + prop.getName());
-		isProtectorParticleEnabled = prop.getBoolean();
-		propOrder.add(prop.getName());
+		register.setProperty("enableProtectorParticle", true);
+		register.setComment("Set this to true to enable particle spawning of Ofalen Protector.");
+		isProtectorParticleEnabled = register.getBoolean();
 		//
-		prop = cfg.get(category, "typeProtectorParticle", 2, null, 1, 2);
-		prop.comment = "Type of particle spawning for Ofalen Protector." + separator + "1: circle, 2: cylinder" + getNumGuide(prop);
-		prop.setLanguageKey(keyProp + prop.getName());
-		typeProtectorParticle = (byte) getInt(prop);
-		propOrder.add(prop.getName());
-		cfg.setCategoryPropertyOrder(category, propOrder);
+		register.setProperty("typeProtectorParticle", 2, 1, 2);
+		register.setComment("Type of particle spawning for Ofalen Protector." + separator + "1: circle, 2: cylinder");
+		typeProtectorParticle = (byte) register.getInt();
 		// Future.Teleporter
-		category = TELEPORTER;
-		cfg.setCategoryLanguageKey(category, keyCategory + category);
-		propOrder = new ArrayList<String>();
+		register.setCategory(TELEPORTER);
 		//
-		prop = cfg.get(category, "amountTeleportingPearlCrafting", 4, null, 1, 64);
-		prop.comment = "Crafting amount of \"Pearl of Ofalen Teleporting\" when using normal recipe." + restart + getNumGuide(prop);
-		prop.setLanguageKey(keyProp + prop.getName());
-		prop.setRequiresMcRestart(true);
-		amountTeleportingPearlCrafting = (byte) getInt(prop);
-		propOrder.add(prop.getName());
+		register.setProperty("amountTeleportingPearlCrafting", 4, 1, 64);
+		register.setComment("Crafting amount of \"Pearl of Ofalen Teleporting\" when using normal recipe.");
+		register.setRequiresMcRestart();
+		amountTeleportingPearlCrafting = (byte) register.getInt();
 		//
-		prop = cfg.get(category, "amountTeleportingPearlReference", 64, null, 0, Short.MAX_VALUE);
-		prop.comment = "The amount of \"Pearl of Ofalen Teleporting\" referred for rendering icon." + getNumGuide(prop);
-		prop.setLanguageKey(keyProp + prop.getName());
-		amountTeleportingPearlReference = (short) getInt(prop);
-		propOrder.add(prop.getName());
+		register.setProperty("amountTeleportingPearlReference", 64, 0, Short.MAX_VALUE);
+		register.setComment("The amount of \"Pearl of Ofalen Teleporting\" referred for rendering icon.");
+		amountTeleportingPearlReference = (short) register.getInt();
 		//
-		prop = cfg.get(category, "amountTeleporterDamage", 1, null, 0, Short.MAX_VALUE);
-		prop.comment = "Damage amount of Ofalen Teleporter when the player teleport." + getNumGuide(prop);
-		prop.setLanguageKey(keyProp + prop.getName());
-		amountTeleporterDamage = (short) getInt(prop);
-		propOrder.add(prop.getName());
+		register.setProperty("amountTeleporterDamage", 1, 0, Short.MAX_VALUE);
+		register.setComment("Damage amount of Ofalen Teleporter when the player teleport.");
+		amountTeleporterDamage = (short) register.getInt();
 		//
-		prop = cfg.get(category, "canTeleportFromEnd", true);
-		prop.comment = "Set this to true to permit teleporting from The End." + getBoolGuide(prop);
-		prop.setLanguageKey(keyProp + prop.getName());
-		canTeleportFromEnd = prop.getBoolean();
-		propOrder.add(prop.getName());
+		register.setProperty("canTeleportFromEnd", true);
+		register.setComment("Set this to true to permit teleporting from The End.");
+		canTeleportFromEnd = register.getBoolean();
 		//
-		prop = cfg.get(category, "enableTeleporterParticle", true);
-		prop.comment = "Set this to true to enable particle spawning of Ofalen Teleporter." + getBoolGuide(prop);
-		prop.setLanguageKey(keyProp + prop.getName());
-		isTeleporterParticleEnabled = prop.getBoolean();
-		propOrder.add(prop.getName());
+		register.setProperty("enableTeleporterParticle", true);
+		register.setComment("Set this to true to enable particle spawning of Ofalen Teleporter.");
+		isTeleporterParticleEnabled = register.getBoolean();
 		//
-		prop = cfg.get(category, "typeTeleporterParticle", 2, null, 1, 2);
-		prop.comment = "Type of particle spawning for Ofalen Teleporter." + separator + "1: circle, 2: cylinder" + getNumGuide(prop);
-		prop.setLanguageKey(keyProp + prop.getName());
-		typeTeleporterParticle = (byte) getInt(prop);
-		propOrder.add(prop.getName());
-		cfg.setCategoryPropertyOrder(category, propOrder);
+		register.setProperty("typeTeleporterParticle", 2, 1, 2);
+		register.setComment("Type of particle spawning for Ofalen Teleporter." + separator + "1: circle, 2: cylinder");
+		typeTeleporterParticle = (byte) register.getInt();
 		// Future.Floater
-		category = FLOATER;
-		cfg.setCategoryLanguageKey(category, keyCategory + category);
-		propOrder = new ArrayList<String>();
+		register.setCategory(FLOATER);
 		//
-		prop = cfg.get(category, "amountFloatingDustCrafting", 4, null, 1, 64);
-		prop.comment = "Crafting amount of \"Dust of Ofalen Floating\" when using normal recipe." + restart + getNumGuide(prop);
-		prop.setLanguageKey(keyProp + prop.getName());
-		prop.setRequiresMcRestart(true);
-		amountFloatingDustCrafting = (byte) getInt(prop);
-		propOrder.add(prop.getName());
+		register.setProperty("amountFloatingDustCrafting", 4, 1, 64);
+		register.setComment("Crafting amount of \"Dust of Ofalen Floating\" when using normal recipe.");
+		register.setRequiresMcRestart();
+		amountFloatingDustCrafting = (byte) register.getInt();
 		//
-		prop = cfg.get(category, "amountFloatingDustReference", 64, null, 0, Short.MAX_VALUE);
-		prop.comment = "The amount of \"Dust of Ofalen Floating\" referred for rendering icon." + getNumGuide(prop);
-		prop.setLanguageKey(keyProp + prop.getName());
-		amountFloatingDustReference = (short) getInt(prop);
-		propOrder.add(prop.getName());
+		register.setProperty("amountFloatingDustReference", 64, 0, Short.MAX_VALUE);
+		register.setComment("The amount of \"Dust of Ofalen Floating\" referred for rendering icon.");
+		amountFloatingDustReference = (short) register.getInt();
 		//
-		prop = cfg.get(category, "amountFloaterDamage", 1, null, 0, Short.MAX_VALUE);
-		prop.comment = "Damage amount of Ofalen Floater when the player float." + getNumGuide(prop);
-		prop.setLanguageKey(keyProp + prop.getName());
-		amountFloaterDamage = (short) getInt(prop);
-		propOrder.add(prop.getName());
+		register.setProperty("amountFloaterDamage", 1, 0, Short.MAX_VALUE);
+		register.setComment("Damage amount of Ofalen Floater when the player float.");
+		amountFloaterDamage = (short) register.getInt();
 		//
-		prop = cfg.get(category, "intervalFloaterDamage", 20, null, 0, Byte.MAX_VALUE);
-		prop.comment = "Damage interval of Ofalen Floater." + unitTick + getNumGuide(prop);
-		prop.setLanguageKey(keyProp + prop.getName());
-		intervalFloaterDamage = (byte) getInt(prop);
-		propOrder.add(prop.getName());
+		register.setProperty("intervalFloaterDamage", 20, 0, Byte.MAX_VALUE);
+		register.setComment("Damage interval of Ofalen Floater." + unitTick);
+		intervalFloaterDamage = (byte) register.getInt();
 		//
-		prop = cfg.get(category, "intervalInventorySearch", 20, null, 0, Byte.MAX_VALUE);
-		prop.comment = "The search interval of inventory whose player using Ofalen Floater." + unitTick + getNumGuide(prop);
-		prop.setLanguageKey(keyProp + prop.getName());
-		intervalInventorySearch = (byte) getInt(prop);
-		propOrder.add(prop.getName());
+		register.setProperty("intervalInventorySearch", 20, 0, Byte.MAX_VALUE);
+		register.setComment("The search interval of inventory whose player using Ofalen Floater." + unitTick);
+		intervalInventorySearch = (byte) register.getInt();
 		//
-		prop = cfg.get(category, "canSwitchFloatForm", true);
-		prop.comment = "Set this to true to control Float Form by pressing the jump key twice." + getBoolGuide(prop);
-		prop.setLanguageKey(keyProp + prop.getName());
-		canSwitchFloatForm = prop.getBoolean();
-		propOrder.add(prop.getName());
+		register.setProperty("canSwitchFloatForm", true);
+		register.setComment("Set this to true to control Float Form by pressing the jump key twice.");
+		canSwitchFloatForm = register.getBoolean();
 		//
-		prop = cfg.get(category, "enableFloaterParticle", true);
-		prop.comment = "Set this to true to enable particle spawning of Ofalen Floater." + getBoolGuide(prop);
-		prop.setLanguageKey(keyProp + prop.getName());
-		isFloaterParticleEnabled = prop.getBoolean();
-		propOrder.add(prop.getName());
+		register.setProperty("enableFloaterParticle", true);
+		register.setComment("Set this to true to enable particle spawning of Ofalen Floater.");
+		isFloaterParticleEnabled = register.getBoolean();
 		//
-		prop = cfg.get(category, "typeFloaterParticle", 2, null, 1, 2);
-		prop.comment = "Type of particle spawning for Ofalen Floater." + separator + "1: circle, 2: cylinder" + getNumGuide(prop);
-		prop.setLanguageKey(keyProp + prop.getName());
-		typeFloaterParticle = (byte) getInt(prop);
-		propOrder.add(prop.getName());
-		cfg.setCategoryPropertyOrder(category, propOrder);
+		register.setProperty("typeFloaterParticle", 2, 1, 2);
+		register.setComment("Type of particle spawning for Ofalen Floater." + separator + "1: circle, 2: cylinder");
+		typeFloaterParticle = (byte) register.getInt();
 		// Future.Collector
-		category = COLLECTOR;
-		cfg.setCategoryLanguageKey(category, keyCategory + category);
-		propOrder = new ArrayList<String>();
+		register.setCategory(COLLECTOR);
 		//
-		prop = cfg.get(category, "amountCollectingLumpCrafting", 64, null, 1, 64);
-		prop.comment = "Crafting amount of \"Lump of Ofalen Collecting\" when using normal recipe." + restart + getNumGuide(prop);
-		prop.setLanguageKey(keyProp + prop.getName());
-		prop.setRequiresMcRestart(true);
-		amountCollectingLumpCrafting = (byte) getInt(prop);
-		propOrder.add(prop.getName());
+		register.setProperty("amountCollectingLumpCrafting", 64, 1, 64);
+		register.setComment("Crafting amount of \"Lump of Ofalen Collecting\" when using normal recipe.");
+		register.setRequiresMcRestart();
+		amountCollectingLumpCrafting = (byte) register.getInt();
 		//
-		prop = cfg.get(category, "amountCollectingLumpReference", 64, null, 0, Short.MAX_VALUE);
-		prop.comment = "The amount of \"Lump of Ofalen Collecting\" referred for rendering icon." + getNumGuide(prop);
-		prop.setLanguageKey(keyProp + prop.getName());
-		amountCollectingLumpReference = (short) getInt(prop);
-		propOrder.add(prop.getName());
+		register.setProperty("amountCollectingLumpReference", 64, 0, Short.MAX_VALUE);
+		register.setComment("The amount of \"Lump of Ofalen Collecting\" referred for rendering icon.");
+		amountCollectingLumpReference = (short) register.getInt();
 		//
-		prop = cfg.get(category, "amountCollectorDamageItem", 1, null, 0, Short.MAX_VALUE);
-		prop.comment = "Damage amount of Ofalen Collector when item is collected." + separator + "Per 1 item." + getNumGuide(prop);
-		prop.setLanguageKey(keyProp + prop.getName());
-		amountCollectorDamageItem = (short) getInt(prop);
-		propOrder.add(prop.getName());
+		register.setProperty("amountCollectorDamageItem", 1, 0, Short.MAX_VALUE);
+		register.setComment("Damage amount of Ofalen Collector when item is collected." + separator + "Per 1 item.");
+		amountCollectorDamageItem = (short) register.getInt();
 		//
-		prop = cfg.get(category, "amountCollectorDamageExp", 1, null, 0, Short.MAX_VALUE);
-		prop.comment = "Damage amount of Ofalen Collector when experience orb is collected." + separator + "Per 1 exp." + getNumGuide(prop);
-		prop.setLanguageKey(keyProp + prop.getName());
-		amountCollectorDamageExp = (short) getInt(prop);
-		propOrder.add(prop.getName());
+		register.setProperty("amountCollectorDamageExp", 1, 0, Short.MAX_VALUE);
+		register.setComment("Damage amount of Ofalen Collector when experience orb is collected." + separator + "Per 1 exp.");
+		amountCollectorDamageExp = (short) register.getInt();
 		//
-		prop = cfg.get(category, "enableCollectorParticle", true);
-		prop.comment = "Set this to true to enable particle spawning of Ofalen Collector." + getBoolGuide(prop);
-		prop.setLanguageKey(keyProp + prop.getName());
-		isCollectorParticleEnabled = prop.getBoolean();
-		propOrder.add(prop.getName());
-		cfg.setCategoryPropertyOrder(category, propOrder);
+		register.setProperty("enableCollectorParticle", true);
+		register.setComment("Set this to true to enable particle spawning of Ofalen Collector.");
+		isCollectorParticleEnabled = register.getBoolean();
 		// WorldEditor
-		category = WORLD_EDITOR;
-		cfg.setCategoryLanguageKey(WORLD_EDITOR, keyCategory + WORLD_EDITOR);
-		propOrder = new ArrayList<String>();
+		register.setCategory(WORLD_EDITOR);
 		//
-		prop = cfg.get(category, "amountDarkFuelCrafting", 32, null, 1, 64);
-		prop.comment = "Crafting amount of \"Dark Ofalen Fuel\" when using normal recipe." + restart + getNumGuide(prop);
-		prop.setLanguageKey(keyProp + prop.getName());
-		prop.setRequiresMcRestart(true);
-		amountDarkFuelCrafting = (byte) getInt(prop);
-		propOrder.add(prop.getName());
+		register.setProperty("amountDarkFuelCrafting", 32, 1, 64);
+		register.setComment("Crafting amount of \"Dark Ofalen Fuel\" when using normal recipe.");
+		register.setRequiresMcRestart();
+		amountDarkFuelCrafting = (byte) register.getInt();
 		//
-		prop = cfg.get(category, "energyDarkFuel", 20, null, 0, Short.MAX_VALUE);
-		prop.comment = "Number of operations per Dark Fuel." + getNumGuide(prop);
-		prop.setLanguageKey(keyProp + prop.getName());
-		energyDarkFuel = (short) getInt(prop);
-		cfg.setCategoryPropertyOrder(category, propOrder);
+		register.setProperty("energyDarkFuel", 20, 0, Short.MAX_VALUE);
+		register.setComment("Number of operations per Dark Fuel.");
+		energyDarkFuel = (short) register.getInt();
+		register.finishCategory();
 		cfg.save();
 	}
 
-	private static String getBoolGuide(Property prop) {
-		return Configuration.NEW_LINE + " [default: " + prop.getDefault() + "]";
-	}
+	private static class ConfigRegister {
+		/** 現在の登録先カテゴリの名前。 */
+		String category;
+		/** 現在の登録先カテゴリの項目順序。 */
+		List<String> propOrder;
+		/** 現在登録している項目。 */
+		Property property;
+		/** 現在登録している項目の種類。 */
+		Property.Type type;
 
-	private static String getNumGuide(Property prop) {
-		return Configuration.NEW_LINE + " [range: " + prop.getMinValue() + " ~ " + prop.getMaxValue() + ", default: " + prop.getDefault() + "]";
-	}
+		/** 登録先のカテゴリを設定する。 */
+		public void setCategory(String name) {
+			// 前のカテゴリの終了処理を行う。
+			if (category != null)
+				this.finishCategory();
+			// カテゴリ名を代入する。
+			category = name;
+			// カテゴリの翻訳指定文字列を設定する。
+			cfg.setCategoryLanguageKey(category, "config.ofalen.category." + category);
+			// カテゴリの項目順序を初期化する。
+			propOrder = new ArrayList<String>();
+		}
 
-	private static int getInt(Property prop) {
-		return OfalenUtil.getValidValue(prop.getInt(), Integer.parseInt(prop.getMinValue()), Integer.parseInt(prop.getMaxValue()));
-	}
+		/** カテゴリへの登録を終了する。 */
+		public void finishCategory() {
+			// カテゴリの項目順序を設定する。
+			cfg.setCategoryPropertyOrder(category, propOrder);
+			// このインスタンスを初期化する。
+			category = null;
+			propOrder = null;
+			property = null;
+			type = null;
+		}
 
-	private static double getDouble(Property prop) {
-		return OfalenUtil.getValidValue(prop.getDouble(), Double.parseDouble(prop.getMinValue()), Double.parseDouble(prop.getMaxValue()));
+		/** 真理値の項目を登録する。 */
+		public void setProperty(String name, boolean valueDefault) {
+			// 項目を登録し、取得する。
+			property = cfg.get(category, name, valueDefault);
+			// 項目の種類を真理値に設定する。
+			type = Property.Type.BOOLEAN;
+			// 項目を初期化する。
+			this.initProperty();
+		}
+
+		/** 整数値の項目を登録する。 */
+		public void setProperty(String name, int valueDefault, int valueMin, int valueMax) {
+			// 項目を登録し、取得する。
+			property = cfg.get(category, name, valueDefault, null, valueMin, valueMax);
+			// 項目の種類を整数値に設定する。
+			type = Property.Type.INTEGER;
+			// 項目を初期化する。
+			this.initProperty();
+		}
+
+		/** 浮動小数点数値の項目を登録する。 */
+		public void setProperty(String name, double valueDefault, double valueMin, double valueMax) {
+			// 項目を登録し、取得する。
+			property = cfg.get(category, name, valueDefault, null, valueMin, valueMax);
+			// 項目の種類を浮動小数点数値に設定する。
+			type = Property.Type.DOUBLE;
+			// 項目を初期化する。
+			this.initProperty();
+		}
+
+		/** 現在登録している項目を初期化する。 */
+		private void initProperty() {
+			// 項目の翻訳指定文字列を設定する。
+			property.setLanguageKey("config.ofalen.prop." + property.getName());
+			// カテゴリの項目順序に登録する。
+			propOrder.add(property.getName());
+		}
+
+		/** 項目の説明を設定する。 */
+		public void setComment(String comment) {
+			// 説明に設定値の案内文章を付加して登録する。
+			property.comment = comment + this.getGuide();
+		}
+
+		/** 項目の案内文章を取得する。 */
+		private String getGuide() {
+			switch (type) {
+			default:
+			case BOOLEAN:
+				// 真理値、その他は初期値の表示を行う。
+				return Configuration.NEW_LINE + " [default: " + property.getDefault() + "]";
+			case INTEGER:
+			case DOUBLE:
+				// 数値は範囲と初期値の表示を行う。
+				return Configuration.NEW_LINE + " [range: " + property.getMinValue() + " ~ " + property.getMaxValue() + ", default: " + property.getDefault() + "]";
+			}
+		}
+
+		/** ワールドの再起動が必要な項目に設定する。 */
+		public void setRequiresWorldRestart() {
+			// 項目の設定を行う。
+			property.setRequiresWorldRestart(true);
+			// 項目の説明に案内を付加する。
+			property.comment += Configuration.NEW_LINE + " [World Restart Required]";
+		}
+
+		/** Minecraftの再起動が必要な項目に設定する。 */
+		public void setRequiresMcRestart() {
+			// 項目の設定を行う。
+			property.setRequiresMcRestart(true);
+			// 項目の説明に案内を付加する。
+			property.comment += Configuration.NEW_LINE + " [Minecraft Restart Required]";
+		}
+
+		/** 項目から設定を真理値として取得する。 */
+		public boolean getBoolean() {
+			// 違う型として登録されていたら例外を投げる。
+			if (type != Property.Type.BOOLEAN)
+				throw new IllegalStateException("The current registering property is not a boolean type.");
+			// 真理値を取得して返す。
+			return property.getBoolean();
+		}
+
+		/** 項目から設定を整数値として取得する。 */
+		public int getInt() {
+			// 違う型として登録されていたら例外を投げる。
+			if (type != Property.Type.INTEGER)
+				throw new IllegalStateException("The current registering property is not an integer type.");
+			// 整数値を取得し、最小値と最大値を適用して返す。
+			return OfalenUtil.getValidValue(property.getInt(), Integer.parseInt(property.getMinValue()), Integer.parseInt(property.getMaxValue()));
+		}
+
+		/** 項目から設定を浮動小数点数値として取得する。 */
+		public double getDouble() {
+			// 違う型として登録されていたら例外を投げる。
+			if (type != Property.Type.DOUBLE)
+				throw new IllegalStateException("The current registering property is not a double type.");
+			// 浮動小数点数値を取得し、最小値と最大値を適用して返す。
+			return OfalenUtil.getValidValue(property.getDouble(), Double.parseDouble(property.getMinValue()), Double.parseDouble(property.getMaxValue()));
+		}
 	}
 }
