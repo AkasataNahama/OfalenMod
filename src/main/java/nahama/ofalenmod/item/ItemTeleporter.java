@@ -68,7 +68,7 @@ public class ItemTeleporter extends ItemFuture {
 				short channel = (short) itemStack.getItemDamage();
 				if (!OfalenTeleportHandler.isChannelValid(channel)) {
 					// チャンネルが無効ならチャットに出力して終了。
-					OfalenUtil.addChatTranslationMessage(player, "info.ofalen.teleporter.channelInvalid");
+					OfalenUtil.addChatTranslationMessage(player, "info.ofalen.teleporter.channelInvalid", OfalenUtil.getTripleFiguresNum(channel));
 					return itemStack;
 				}
 				OfalenTeleportHandler.MarkerPos pos = OfalenTeleportHandler.getCoord(channel);
