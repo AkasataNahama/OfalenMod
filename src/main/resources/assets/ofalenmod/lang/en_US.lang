@@ -85,10 +85,10 @@ config.ofalen.prop.timeWhiteFuelBurning.tooltip=This is the burning time of a wh
 # Machine.Smelting
 config.ofalen.category.general.machine.smelting=Smelting Machine
 config.ofalen.category.general.machine.smelting.tooltip=This is where you can edit the settings about ofalen smelting machines.
-config.ofalen.prop.baseOfalenSmeltingAmount=Ofalen Smelting Amount Base
-config.ofalen.prop.baseOfalenSmeltingAmount.tooltip=This is the smelting number of ofalens from an ofalen ore using an ofalen smelting machine and not using an ofalen machine processor.
 config.ofalen.prop.timeSmelting=Smelting Time
 config.ofalen.prop.timeSmelting.tooltip=This is the time ofalen smelting machines require for every smelting. (tick)
+config.ofalen.prop.baseOfalenSmeltingAmount=Ofalen Smelting Amount Base
+config.ofalen.prop.baseOfalenSmeltingAmount.tooltip=This is the smelting number of ofalens from an ofalen ore using an ofalen smelting machine and not using an ofalen machine processor.
 # Machine.Converting
 config.ofalen.category.general.machine.converting=Converting Machine
 config.ofalen.category.general.machine.converting.tooltip=This is where you can edit the settings about ofalen converting machines.
