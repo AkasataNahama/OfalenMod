@@ -7,7 +7,7 @@ mark.ofalen.colon= :
 # 設定
 # 全般
 config.ofalen.category.general=全般
-config.ofalen.category.general.tooltip=OfalenMod.cfgに記載されている設定です。
+config.ofalen.category.general.tooltip=オファレンMDOに関する全ての設定です。
 # システム
 config.ofalen.category.general.system=システム
 config.ofalen.category.general.system.tooltip=このMODのシステムに関する設定です。
@@ -19,7 +19,7 @@ config.ofalen.prop.enablePresentBox.tooltip=trueなら日付に応じ、プレ�
 config.ofalen.category.general.material=素材
 config.ofalen.category.general.material.tooltip=素材に関する設定です。
 config.ofalen.prop.positionStoneLumpRecipeBlank=石の塊レシピの空白箇所
-config.ofalen.prop.positionStoneLumpRecipeBlank.tooltip=石の塊レシピにおける空白箇所の番号です。[0 1 2] / [3 4 5] / [6 7 8]
+config.ofalen.prop.positionStoneLumpRecipeBlank.tooltip=石の塊レシピにおける空白箇所の番号です。\n |0 1 2|\n |3 4 5|\n |6 7 8|
 config.ofalen.prop.amountCoverPlateCrafting=カバープレートのクラフト数
 config.ofalen.prop.amountCoverPlateCrafting.tooltip=機械用カバープレートのクラフト数です。
 config.ofalen.prop.amountGrade3PartsCrafting=Grade 3の部品のクラフト数
@@ -123,7 +123,7 @@ config.ofalen.prop.consumeMaterialPerDamage.tooltip=trueなら軽減したダメ
 config.ofalen.prop.enableProtectorParticle=プロテクターのパーティクルの有効化
 config.ofalen.prop.enableProtectorParticle.tooltip=trueならプロテクターが発動した時にパーティクルを発生させます。
 config.ofalen.prop.typeProtectorParticle=プロテクターのパーティクルの形
-config.ofalen.prop.typeProtectorParticle.tooltip=プロテクターのパーティクル生成の形状です。1 : 円、2 : 円柱
+config.ofalen.prop.typeProtectorParticle.tooltip=プロテクターのパーティクル生成の形状です。(1 : 円、2 : 円柱)
 # 未来/テレポーター
 config.ofalen.category.general.future.teleporter=テレポーター
 config.ofalen.category.general.future.teleporter.tooltip=オファレンテレポーターに関する設定です。
@@ -138,7 +138,7 @@ config.ofalen.prop.canTeleportFromEnd.tooltip=trueならエンドからのテレ
 config.ofalen.prop.enableTeleporterParticle=テレポーターのパーティクルの有効化
 config.ofalen.prop.enableTeleporterParticle.tooltip=trueならテレポーターが発動した時にパーティクルを発生させます。
 config.ofalen.prop.typeTeleporterParticle=テレポーターのパーティクルの形
-config.ofalen.prop.typeTeleporterParticle.tooltip=テレポーターのパーティクル生成の形状です。1 : 円、2 : 円柱
+config.ofalen.prop.typeTeleporterParticle.tooltip=テレポーターのパーティクル生成の形状です。(1 : 円、2 : 円柱)
 # 未来/フローター
 config.ofalen.category.general.future.floater=フローター
 config.ofalen.category.general.future.floater.tooltip=オファレンフローターに関する設定です。
@@ -157,7 +157,7 @@ config.ofalen.prop.canSwitchFloatForm.tooltip=trueならジャンプキーを2�
 config.ofalen.prop.enableFloaterParticle=フローターのパーティクルの有効化
 config.ofalen.prop.enableFloaterParticle.tooltip=trueならフローターが発動した時にパーティクルを発生させます。
 config.ofalen.prop.typeFloaterParticle=フローターのパーティクルの形
-config.ofalen.prop.typeFloaterParticle.tooltip=フローターのパーティクル生成の形状です。1 : 円、2 : 円柱
+config.ofalen.prop.typeFloaterParticle.tooltip=フローターのパーティクル生成の形状です。(1 : 円、2 : 円柱)
 # 未来/コレクター
 config.ofalen.category.general.future.collector=コレクター
 config.ofalen.category.general.future.collector.tooltip=オファレンコレクターに関する設定です。

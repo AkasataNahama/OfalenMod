@@ -2,12 +2,15 @@ package nahama.ofalenmod.core;
 
 import nahama.ofalenmod.OfalenModCore;
 import nahama.ofalenmod.util.OfalenUtil;
+import net.minecraft.util.StringTranslate;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.config.Property;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class OfalenModConfigCore {
 	// カテゴリー名
@@ -114,76 +117,60 @@ public class OfalenModConfigCore {
 	/** Configを同期する。 */
 	public static void syncConfig() {
 		ConfigRegister register = new ConfigRegister();
-		String separator = Configuration.NEW_LINE;
-		String unitTick = separator + " (tick)";
 		// General
 		register.setCategory(Configuration.CATEGORY_GENERAL);
 		// System
 		register.setCategory(SYSTEM);
 		//
 		register.setProperty("enableUpdateCheck", true);
-		register.setComment("Set this to true to enable update check of Ofalen Mod.");
 		register.setRequiresMcRestart();
 		isUpdateCheckEnabled = register.getBoolean();
 		//
 		register.setProperty("enablePresentBox", true);
-		register.setComment("Set this to true to enable Present Box.");
 		register.setRequiresWorldRestart();
 		isPresentBoxEnabled = register.getBoolean();
 		// Material
 		register.setCategory(MATERIAL);
 		//
 		register.setProperty("positionStoneLumpRecipeBlank", 7, 0, 8);
-		String diagram = separator + " -------" + separator + " |0 1 2|" + separator + " |3 4 5|" + separator + " |6 7 8|" + separator + " -------";
-		register.setComment("The number is position of space on recipe of \"Lump of Stone\"." + diagram);
 		register.setRequiresMcRestart();
 		positionStoneLumpRecipeBlank = (byte) register.getInt();
 		//
 		register.setProperty("amountCoverPlateCrafting", 6, 1, 64);
-		register.setComment("Crafting amount of \"Machine Cover Plate\" when using normal recipe.");
 		register.setRequiresMcRestart();
 		amountCoverPlateCrafting = (byte) register.getInt();
 		//
 		register.setProperty("amountGrade3PartsCrafting", 1, 1, 64);
-		register.setComment("Crafting amount of \"Grade 3 Parts\" when using normal recipe.");
 		register.setRequiresMcRestart();
 		amountGrade3PartsCrafting = (byte) register.getInt();
 		//
 		register.setProperty("amountOfalenStickCrafting", 1, 1, 64);
-		register.setComment("Crafting amount of \"White Ofalen Stick\" when using normal recipe.");
 		register.setRequiresMcRestart();
 		amountOfalenStickCrafting = (byte) register.getInt();
 		// Ore
 		register.setCategory(ORE);
 		//
 		register.setProperty("amountDrop", 3, 0, Byte.MAX_VALUE);
-		register.setComment("Drop amount of Ofalen Fragment when Ofalen Ore is mined.");
 		amountDrop = (byte) register.getInt();
 		//
 		register.setProperty("amountExpMin", 3, 0, Integer.MAX_VALUE);
-		register.setComment("Minimum amount of experience when Ofalen Ore is mined.");
 		amountExpMin = register.getInt();
 		//
 		register.setProperty("amountExpMax", 7, 0, Integer.MAX_VALUE);
-		register.setComment("Maximum amount of experience when Ofalen Ore is mined.");
 		amountExpMax = register.getInt();
 		// Ore.Generate
 		register.setCategory(GENERATE);
 		//
 		register.setProperty("enableGenerator", true);
-		register.setComment("Set this to true to generate Ofalen Ore into newly generated chunk.");
 		isGeneratorEnabled = register.getBoolean();
 		//
 		register.setProperty("frequencyGeneration", 3, 0, Byte.MAX_VALUE);
-		register.setComment("The number of Ofalen Ore generation of each color for each chunk.");
 		frequencyGeneration = (byte) register.getInt();
 		//
 		register.setProperty("limitGeneration", 8, 1, Byte.MAX_VALUE);
-		register.setComment("Maximum size of Ofalen Ore per generation.");
 		limitGeneration = (byte) register.getInt();
 		//
 		register.setProperty("probLodeGeneration", 0.001, 0.0, 1.0);
-		register.setComment("Generation probability of Huge Ofalen Ore Lode." + separator + "Calculation of probability is performed on each chunk.");
 		probLodeGeneration = register.getDouble();
 		// Tool
 		register.setCategory(TOOL);
@@ -191,7 +178,6 @@ public class OfalenModConfigCore {
 		register.setCategory(PERFECT);
 		//
 		register.setProperty("rangeMax", 7, 0, Byte.MAX_VALUE);
-		register.setComment("Maximum range of Range Breaking Mode of Ofalen Perfect Tool.");
 		rangeMax = (byte) register.getInt();
 		// Ball
 		register.setCategory(BALL);
@@ -199,71 +185,58 @@ public class OfalenModConfigCore {
 		register.setCategory(EXPLOSION);
 		//
 		register.setProperty("sizeExplosion", 2, 0, Byte.MAX_VALUE);
-		register.setComment("Explosion size of Explosion Ball.");
 		sizeExplosion = (byte) register.getInt();
 		// Laser
 		register.setCategory(LASER);
 		//
 		register.setProperty("amountLaserCrafting", 4, 1, 64);
-		register.setComment("Crafting amount of \"Ofalen Laser Energy Crystal [Red, Green, Blue]\" when using normal recipe.");
 		register.setRequiresMcRestart();
 		amountLaserCrafting = (byte) register.getInt();
 		//
 		register.setProperty("amountWhiteLaserCrafting", 3, 1, 64);
-		register.setComment("Crafting amount of \"Ofalen Laser Energy Crystal [White]\" when using normal recipe.");
 		register.setRequiresMcRestart();
 		amountWhiteLaserCrafting = (byte) register.getInt();
 		//
 		register.setProperty("enableLaserSound", true);
-		register.setComment("Set this to true to enable sound of Ofalen Laser Pistol.");
 		isLaserSoundEnabled = register.getBoolean();
 		// Machine
 		register.setCategory(MACHINE);
 		//
 		register.setProperty("amountWhiteFuelCrafting", 32, 1, 64);
-		register.setComment("Crafting amount of \"White Ofalen Fuel\" when using normal recipe.");
 		register.setRequiresMcRestart();
 		amountWhiteFuelCrafting = (byte) register.getInt();
 		//
 		register.setProperty("divisorBurningTime", 256, 1, Short.MAX_VALUE);
-		register.setComment("Divisor of burning time when using furnace fuel for machines.");
 		divisorBurningTime = (short) register.getInt();
 		//
 		register.setProperty("timeTDiamondBurning", 400, 0, Short.MAX_VALUE);
-		register.setComment("Burning time of Creeper Magic Stone by Takumi Craft." + unitTick);
 		timeTDiamondBurning = (short) register.getInt();
 		//
 		register.setProperty("timeWhiteFuelBurning", 1600, 0, Short.MAX_VALUE);
-		register.setComment("Burning time of White Ofalen Fuel." + unitTick);
 		timeWhiteFuelBurning = (short) register.getInt();
 		// Machine.Smelting
 		register.setCategory(SMELTING);
 		//
 		register.setProperty("timeSmelting", 1600, 0, Short.MAX_VALUE);
-		register.setComment("The time Ofalen Smelting Machine requires for every smelting." + unitTick);
 		timeSmelting = (short) register.getInt();
 		//
 		register.setProperty("baseOfalenSmeltingAmount", 1, 1, 16);
-		register.setComment("Smelting amount of Ofalen from Ofalen Ore using Ofalen Smelting Machine." + separator + "When don't use Ofalen Machine Processor.");
 		register.setRequiresMcRestart();
 		baseOfalenSmeltingAmount = (byte) register.getInt();
 		// Machine.Converting
 		register.setCategory(CONVERTING);
 		//
 		register.setProperty("timeConverting", 1600, 0, Short.MAX_VALUE);
-		register.setComment("The time Ofalen Converting Machine requires for every converting." + unitTick);
 		timeConverting = (short) register.getInt();
 		// Machine.Repairing
 		register.setCategory(REPAIRING);
 		//
 		register.setProperty("timeRepairing", 40, 0, Short.MAX_VALUE);
-		register.setComment("The time Ofalen Repairing Machine requires for every repairing." + separator + "Per 1 durability." + unitTick);
 		timeRepairing = (short) register.getInt();
 		// Machine.Fusing
 		register.setCategory(FUSING);
 		//
 		register.setProperty("timeFusing", 1600, 0, Short.MAX_VALUE);
-		register.setComment("The time Ofalen Fusing Machine requires for every fusing." + unitTick);
 		timeFusing = (short) register.getInt();
 		// Future
 		register.setCategory(FUTURE);
@@ -271,142 +244,121 @@ public class OfalenModConfigCore {
 		register.setCategory(PROTECTOR);
 		//
 		register.setProperty("amountProtectingIngotCrafting", 4, 1, 64);
-		register.setComment("Crafting amount of \"Ingot of Ofalen Protecting\" when using normal recipe.");
 		register.setRequiresMcRestart();
 		amountProtectingIngotCrafting = (byte) register.getInt();
 		//
 		register.setProperty("amountProtectingIngotReference", 64, 0, Short.MAX_VALUE);
-		register.setComment("The amount of \"Ingot of Ofalen Protecting\" referred for rendering icon.");
 		amountProtectingIngotReference = (short) register.getInt();
 		//
 		register.setProperty("amountProtectorDamage", 1, 0, Short.MAX_VALUE);
-		register.setComment("The amount of material consuming when Protector is activated." + separator + "If \"consumeMaterialPerDamage\" is true, per half a heart.");
 		amountProtectorDamage = (short) register.getInt();
 		//
 		register.setProperty("enableProtecting", true);
-		register.setComment("Set this to true to enable searching inventory and protecting player.");
 		isProtectingEnabled = register.getBoolean();
 		//
 		register.setProperty("consumeMaterialPerDamage", true);
-		register.setComment("Set this to true to consume material according to damage amount.");
 		canConsumeMaterialPerDamage = register.getBoolean();
 		//
 		register.setProperty("enableProtectorParticle", true);
-		register.setComment("Set this to true to enable particle spawning of Ofalen Protector.");
 		isProtectorParticleEnabled = register.getBoolean();
 		//
 		register.setProperty("typeProtectorParticle", 2, 1, 2);
-		register.setComment("Type of particle spawning for Ofalen Protector." + separator + "1: circle, 2: cylinder");
 		typeProtectorParticle = (byte) register.getInt();
 		// Future.Teleporter
 		register.setCategory(TELEPORTER);
 		//
 		register.setProperty("amountTeleportingPearlCrafting", 4, 1, 64);
-		register.setComment("Crafting amount of \"Pearl of Ofalen Teleporting\" when using normal recipe.");
 		register.setRequiresMcRestart();
 		amountTeleportingPearlCrafting = (byte) register.getInt();
 		//
 		register.setProperty("amountTeleportingPearlReference", 64, 0, Short.MAX_VALUE);
-		register.setComment("The amount of \"Pearl of Ofalen Teleporting\" referred for rendering icon.");
 		amountTeleportingPearlReference = (short) register.getInt();
 		//
 		register.setProperty("amountTeleporterDamage", 1, 0, Short.MAX_VALUE);
-		register.setComment("Damage amount of Ofalen Teleporter when the player teleport.");
 		amountTeleporterDamage = (short) register.getInt();
 		//
 		register.setProperty("canTeleportFromEnd", true);
-		register.setComment("Set this to true to permit teleporting from The End.");
 		canTeleportFromEnd = register.getBoolean();
 		//
 		register.setProperty("enableTeleporterParticle", true);
-		register.setComment("Set this to true to enable particle spawning of Ofalen Teleporter.");
 		isTeleporterParticleEnabled = register.getBoolean();
 		//
 		register.setProperty("typeTeleporterParticle", 2, 1, 2);
-		register.setComment("Type of particle spawning for Ofalen Teleporter." + separator + "1: circle, 2: cylinder");
 		typeTeleporterParticle = (byte) register.getInt();
 		// Future.Floater
 		register.setCategory(FLOATER);
 		//
 		register.setProperty("amountFloatingDustCrafting", 4, 1, 64);
-		register.setComment("Crafting amount of \"Dust of Ofalen Floating\" when using normal recipe.");
 		register.setRequiresMcRestart();
 		amountFloatingDustCrafting = (byte) register.getInt();
 		//
 		register.setProperty("amountFloatingDustReference", 64, 0, Short.MAX_VALUE);
-		register.setComment("The amount of \"Dust of Ofalen Floating\" referred for rendering icon.");
 		amountFloatingDustReference = (short) register.getInt();
 		//
 		register.setProperty("amountFloaterDamage", 1, 0, Short.MAX_VALUE);
-		register.setComment("Damage amount of Ofalen Floater when the player float.");
 		amountFloaterDamage = (short) register.getInt();
 		//
 		register.setProperty("intervalFloaterDamage", 20, 0, Byte.MAX_VALUE);
-		register.setComment("Damage interval of Ofalen Floater." + unitTick);
 		intervalFloaterDamage = (byte) register.getInt();
 		//
 		register.setProperty("intervalInventorySearch", 20, 0, Byte.MAX_VALUE);
-		register.setComment("The search interval of inventory whose player using Ofalen Floater." + unitTick);
 		intervalInventorySearch = (byte) register.getInt();
 		//
 		register.setProperty("canSwitchFloatForm", true);
-		register.setComment("Set this to true to control Float Form by pressing the jump key twice.");
 		canSwitchFloatForm = register.getBoolean();
 		//
 		register.setProperty("enableFloaterParticle", true);
-		register.setComment("Set this to true to enable particle spawning of Ofalen Floater.");
 		isFloaterParticleEnabled = register.getBoolean();
 		//
 		register.setProperty("typeFloaterParticle", 2, 1, 2);
-		register.setComment("Type of particle spawning for Ofalen Floater." + separator + "1: circle, 2: cylinder");
 		typeFloaterParticle = (byte) register.getInt();
 		// Future.Collector
 		register.setCategory(COLLECTOR);
 		//
 		register.setProperty("amountCollectingLumpCrafting", 64, 1, 64);
-		register.setComment("Crafting amount of \"Lump of Ofalen Collecting\" when using normal recipe.");
 		register.setRequiresMcRestart();
 		amountCollectingLumpCrafting = (byte) register.getInt();
 		//
 		register.setProperty("amountCollectingLumpReference", 64, 0, Short.MAX_VALUE);
-		register.setComment("The amount of \"Lump of Ofalen Collecting\" referred for rendering icon.");
 		amountCollectingLumpReference = (short) register.getInt();
 		//
 		register.setProperty("amountCollectorDamageItem", 1, 0, Short.MAX_VALUE);
-		register.setComment("Damage amount of Ofalen Collector when item is collected." + separator + "Per 1 item.");
 		amountCollectorDamageItem = (short) register.getInt();
 		//
 		register.setProperty("amountCollectorDamageExp", 1, 0, Short.MAX_VALUE);
-		register.setComment("Damage amount of Ofalen Collector when experience orb is collected." + separator + "Per 1 exp.");
 		amountCollectorDamageExp = (short) register.getInt();
 		//
 		register.setProperty("enableCollectorParticle", true);
-		register.setComment("Set this to true to enable particle spawning of Ofalen Collector.");
 		isCollectorParticleEnabled = register.getBoolean();
 		// WorldEditor
 		register.setCategory(WORLD_EDITOR);
 		//
 		register.setProperty("amountDarkFuelCrafting", 32, 1, 64);
-		register.setComment("Crafting amount of \"Dark Ofalen Fuel\" when using normal recipe.");
 		register.setRequiresMcRestart();
 		amountDarkFuelCrafting = (byte) register.getInt();
 		//
 		register.setProperty("energyDarkFuel", 20, 0, Short.MAX_VALUE);
-		register.setComment("Number of operations per Dark Fuel.");
 		energyDarkFuel = (short) register.getInt();
 		register.finishCategory();
 		cfg.save();
 	}
 
 	private static class ConfigRegister {
+		private static Map<String, String> englishName;
+
+		static {
+			englishName = new HashMap<String, String>();
+			englishName.putAll(StringTranslate.parseLangFile(OfalenModCore.class.getResourceAsStream("/assets/ofalenmod/lang/en_US.lang")));
+		}
+
 		/** 現在の登録先カテゴリの名前。 */
-		String category;
+		private String category;
 		/** 現在の登録先カテゴリの項目順序。 */
-		List<String> propOrder;
+		private List<String> propOrder;
 		/** 現在登録している項目。 */
-		Property property;
+		private Property property;
 		/** 現在登録している項目の種類。 */
-		Property.Type type;
+		private Property.Type type;
 
 		/** 登録先のカテゴリを設定する。 */
 		public void setCategory(String name) {
@@ -417,6 +369,9 @@ public class OfalenModConfigCore {
 			category = name;
 			// カテゴリの翻訳指定文字列を設定する。
 			cfg.setCategoryLanguageKey(category, "config.ofalen.category." + category);
+			// カテゴリの説明文を設定する。
+			String key = "config.ofalen.category." + category;
+			cfg.setCategoryComment(category, this.translate(key) + Configuration.NEW_LINE + this.translate(key + ".tooltip"));
 			// カテゴリの項目順序を初期化する。
 			propOrder = new ArrayList<String>();
 		}
@@ -466,14 +421,15 @@ public class OfalenModConfigCore {
 		private void initProperty() {
 			// 項目の翻訳指定文字列を設定する。
 			property.setLanguageKey("config.ofalen.prop." + property.getName());
+			// 項目の説明文を設定する。
+			property.comment = this.translate(property.getLanguageKey()) + Configuration.NEW_LINE + this.translate(property.getLanguageKey() + ".tooltip") + this.getGuide();
 			// カテゴリの項目順序に登録する。
 			propOrder.add(property.getName());
 		}
 
-		/** 項目の説明を設定する。 */
-		public void setComment(String comment) {
-			// 説明に設定値の案内文章を付加して登録する。
-			property.comment = comment + this.getGuide();
+		/** 英語へと翻訳し、改行処理をしてから返す。 */
+		private String translate(String key) {
+			return englishName.get(key).replace("\\n", Configuration.NEW_LINE).replace(". (", "." + Configuration.NEW_LINE + " (").replace(". ", "." + Configuration.NEW_LINE);
 		}
 
 		/** 項目の案内文章を取得する。 */

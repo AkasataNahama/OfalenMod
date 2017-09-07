@@ -7,7 +7,7 @@ mark.ofalen.colon=:
 # Config
 # General
 config.ofalen.category.general=General
-config.ofalen.category.general.tooltip=This is where you can edit the settings contained in OfalenMod.cfg.
+config.ofalen.category.general.tooltip=This is where you can edit all the settings about Ofalen Mod.
 # System
 config.ofalen.category.general.system=System
 config.ofalen.category.general.system.tooltip=This is where you can edit the settings about the system of this mod.
@@ -19,7 +19,7 @@ config.ofalen.prop.enablePresentBox.tooltip=Set this to true to generate gifts r
 config.ofalen.category.general.material=Material
 config.ofalen.category.general.material.tooltip=This is where you can edit the settings about material items.
 config.ofalen.prop.positionStoneLumpRecipeBlank=Lump of Stone Recipe Blank Position
-config.ofalen.prop.positionStoneLumpRecipeBlank.tooltip=This is the position number of the space on the recipe of lumps of stone. [0 1 2] / [3 4 5] / [6 7 8]
+config.ofalen.prop.positionStoneLumpRecipeBlank.tooltip=This is the position number of the space on the recipe of lumps of stone.\n |0 1 2|\n |3 4 5|\n |6 7 8|
 config.ofalen.prop.amountCoverPlateCrafting=Cover Plate Crafting Amount
 config.ofalen.prop.amountCoverPlateCrafting.tooltip=This is the crafting number of machine cover plates.
 config.ofalen.prop.amountGrade3PartsCrafting=Grade 3 Parts Crafting Amount
@@ -123,7 +123,7 @@ config.ofalen.prop.consumeMaterialPerDamage.tooltip=Set this to true to consume 
 config.ofalen.prop.enableProtectorParticle=Enable Protector Particle
 config.ofalen.prop.enableProtectorParticle.tooltip=Set this to true to spawn particles when an ofalen protector is activated.
 config.ofalen.prop.typeProtectorParticle=Protector Particle Type
-config.ofalen.prop.typeProtectorParticle.tooltip=This is the type of particle spawning of ofalen protectors. 1: circle, 2: cylinder
+config.ofalen.prop.typeProtectorParticle.tooltip=This is the type of particle spawning of ofalen protectors. (1: circle, 2: cylinder)
 # Future.Teleporter
 config.ofalen.category.general.future.teleporter=Teleporter
 config.ofalen.category.general.future.teleporter.tooltip=This is where you can edit the settings about ofalen teleporters.
@@ -138,7 +138,7 @@ config.ofalen.prop.canTeleportFromEnd.tooltip=Set this to true to permit telepor
 config.ofalen.prop.enableTeleporterParticle=Enable Teleporter Particle
 config.ofalen.prop.enableTeleporterParticle.tooltip=Set this to true to spawn particles when an ofalen teleporter is activated.
 config.ofalen.prop.typeTeleporterParticle=Teleporter Particle Type
-config.ofalen.prop.typeTeleporterParticle.tooltip=This is the type of particle spawning of ofalen teleporters. 1: circle, 2: cylinder
+config.ofalen.prop.typeTeleporterParticle.tooltip=This is the type of particle spawning of ofalen teleporters. (1: circle, 2: cylinder)
 # Future.Floater
 config.ofalen.category.general.future.floater=Floater
 config.ofalen.category.general.future.floater.tooltip=This is where you can edit the settings about ofalen floaters.
@@ -157,7 +157,7 @@ config.ofalen.prop.canSwitchFloatForm.tooltip=Set this to true to switch the eff
 config.ofalen.prop.enableFloaterParticle=Enable Floater Particle
 config.ofalen.prop.enableFloaterParticle.tooltip=Set this to true to spawn particles when an ofalen floater is activated.
 config.ofalen.prop.typeFloaterParticle=Floater Particle Type
-config.ofalen.prop.typeFloaterParticle.tooltip=This is the type of particle spawning of ofalen floaters. 1: circle, 2: cylinder
+config.ofalen.prop.typeFloaterParticle.tooltip=This is the type of particle spawning of ofalen floaters. (1: circle, 2: cylinder)
 # Future.Collector
 config.ofalen.category.general.future.collector=Collector
 config.ofalen.category.general.future.collector.tooltip=This is where you can edit the settings about ofalen collectors.
