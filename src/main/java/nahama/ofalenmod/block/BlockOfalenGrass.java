@@ -1,5 +1,6 @@
 package nahama.ofalenmod.block;
 
+import nahama.ofalenmod.core.OfalenModConfigCore;
 import nahama.ofalenmod.core.OfalenModItemCore;
 import net.minecraft.block.Block;
 import net.minecraft.block.IGrowable;
@@ -36,11 +37,11 @@ public class BlockOfalenGrass extends Block implements IPlantable, IGrowable {
 		this.disableStats();
 	}
 
-	protected Item getSeeds() {
+	private Item getSeeds() {
 		return OfalenModItemCore.seedsOfalen;
 	}
 
-	protected Item getCrop() {
+	private Item getCrop() {
 		return OfalenModItemCore.fragmentOfalen;
 	}
 
@@ -56,8 +57,8 @@ public class BlockOfalenGrass extends Block implements IPlantable, IGrowable {
 		// 成長しきっているなら終了。
 		if (meta > 11)
 			return;
-		// 1/10の確率で一段階成長させる。
-		if (random.nextInt(10) == 0) {
+		// 任意の確率で一段階成長させる。初期値は1/10。
+		if (random.nextDouble() < OfalenModConfigCore.probNaturalGrowing) {
 			meta += 4;
 			world.setBlockMetadataWithNotify(x, y, z, meta, 2);
 		}
@@ -102,7 +103,7 @@ public class BlockOfalenGrass extends Block implements IPlantable, IGrowable {
 	}
 
 	/** 留まれる場所かどうかを判定し、留まれないならドロップする。 */
-	protected void checkAndDropBlock(World world, int x, int y, int z) {
+	private void checkAndDropBlock(World world, int x, int y, int z) {
 		if (!this.canBlockStay(world, x, y, z)) {
 			this.dropBlockAsItem(world, x, y, z, world.getBlockMetadata(x, y, z), 0);
 			world.setBlockToAir(x, y, z);

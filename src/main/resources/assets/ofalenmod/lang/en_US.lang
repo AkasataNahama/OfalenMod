@@ -178,6 +178,11 @@ config.ofalen.prop.amountDarkFuelCrafting=Dark Fuel Crafting Amount
 config.ofalen.prop.amountDarkFuelCrafting.tooltip=This is the crafting number of dark ofalen fuels.
 config.ofalen.prop.energyDarkFuel=Dark Fuel Energy
 config.ofalen.prop.energyDarkFuel.tooltip=This is the number of operations per a dark ofalen fuel.
+# Grass
+config.ofalen.category.general.grass=Grass
+config.ofalen.category.general.grass.tooltip=This is where you can edit the settings about ofalen grass.
+config.ofalen.prop.probNaturalGrowing=Natural Growing Probability
+config.ofalen.prop.probNaturalGrowing.tooltip=This is the probability that ofalen grass grows naturally. Calculation of the probability is performed at random update.
 
 # Key Binding
 key.ofalen.category=Ofalen Mod

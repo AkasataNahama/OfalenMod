@@ -178,6 +178,11 @@ config.ofalen.prop.amountDarkFuelCrafting=黒色燃料のクラフト数
 config.ofalen.prop.amountDarkFuelCrafting.tooltip=黒色オファレン燃料のクラフト数です。
 config.ofalen.prop.energyDarkFuel=黒色燃料のエネルギー
 config.ofalen.prop.energyDarkFuel.tooltip=黒色オファレン燃料1個あたりの作業回数です。
+# 草
+config.ofalen.category.general.grass=草
+config.ofalen.category.general.grass.tooltip=オファレン草に関する設定です。
+config.ofalen.prop.probNaturalGrowing=自然成長確率
+config.ofalen.prop.probNaturalGrowing.tooltip=オファレン草が自然に成長する確率です。確率の計算はランダムな更新時に行われます。
 
 # キーバインディング
 key.ofalen.category=オファレンMOD

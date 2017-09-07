@@ -36,6 +36,7 @@ public class OfalenModConfigCore {
 	private static final String FLOATER = FUTURE + Configuration.CATEGORY_SPLITTER + "floater";
 	private static final String COLLECTOR = FUTURE + Configuration.CATEGORY_SPLITTER + "collector";
 	private static final String WORLD_EDITOR = Configuration.CATEGORY_GENERAL + Configuration.CATEGORY_SPLITTER + "world_editor";
+	private static final String GRASS = Configuration.CATEGORY_GENERAL + Configuration.CATEGORY_SPLITTER + "grass";
 	public static Configuration cfg;
 	// General
 	public static boolean isUpdateCheckEnabled;
@@ -109,6 +110,8 @@ public class OfalenModConfigCore {
 	// WorldEditor
 	public static byte amountDarkFuelCrafting;
 	public static short energyDarkFuel;
+	// Grass
+	public static double probNaturalGrowing;
 
 	/** Configを読み込む。 */
 	public static void loadConfig(File fileConfig) {
@@ -341,6 +344,11 @@ public class OfalenModConfigCore {
 		//
 		register.setProperty("energyDarkFuel", 20, 0, Short.MAX_VALUE);
 		energyDarkFuel = (short) register.getInt();
+		// Grass
+		register.setCategory(GRASS);
+		//
+		register.setProperty("probNaturalGrowing", 0.1, 0.0, 1.0);
+		probNaturalGrowing = register.getDouble();
 		register.finishCategory();
 		cfg.save();
 	}
