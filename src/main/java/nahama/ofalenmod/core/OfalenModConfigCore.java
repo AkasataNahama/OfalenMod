@@ -48,8 +48,8 @@ public class OfalenModConfigCore {
 	public static byte amountOfalenStickCrafting;
 	// Ore
 	public static byte amountDrop;
-	public static int amountExpMin;
-	public static int amountExpMax;
+	public static short amountExpMin;
+	public static short amountExpMax;
 	// Ore.Generate
 	public static boolean isGeneratorEnabled;
 	public static byte frequencyGeneration;
@@ -158,11 +158,11 @@ public class OfalenModConfigCore {
 		register.setProperty("amountDrop", 3, 0, Byte.MAX_VALUE);
 		amountDrop = (byte) register.getInt();
 		//
-		register.setProperty("amountExpMin", 3, 0, Integer.MAX_VALUE);
-		amountExpMin = register.getInt();
+		register.setProperty("amountExpMin", 3, 0, Short.MAX_VALUE);
+		amountExpMin = (short) register.getInt();
 		//
-		register.setProperty("amountExpMax", 7, 0, Integer.MAX_VALUE);
-		amountExpMax = register.getInt();
+		register.setProperty("amountExpMax", 7, 0, Short.MAX_VALUE);
+		amountExpMax = (short) register.getInt();
 		// Ore.Generate
 		register.setCategory(GENERATE);
 		//
