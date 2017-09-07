@@ -12,6 +12,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static net.minecraftforge.common.config.Configuration.NEW_LINE;
+
 public class OfalenModConfigCore {
 	// カテゴリー名
 	private static final String SYSTEM = Configuration.CATEGORY_GENERAL + Configuration.CATEGORY_SPLITTER + "system";
@@ -371,7 +373,7 @@ public class OfalenModConfigCore {
 			cfg.setCategoryLanguageKey(category, "config.ofalen.category." + category);
 			// カテゴリの説明文を設定する。
 			String key = "config.ofalen.category." + category;
-			cfg.setCategoryComment(category, this.translate(key) + Configuration.NEW_LINE + this.translate(key + ".tooltip"));
+			cfg.setCategoryComment(category, this.translate(key) + NEW_LINE + this.translate(key + ".tooltip"));
 			// カテゴリの項目順序を初期化する。
 			propOrder = new ArrayList<String>();
 		}
@@ -422,14 +424,14 @@ public class OfalenModConfigCore {
 			// 項目の翻訳指定文字列を設定する。
 			property.setLanguageKey("config.ofalen.prop." + property.getName());
 			// 項目の説明文を設定する。
-			property.comment = this.translate(property.getLanguageKey()) + Configuration.NEW_LINE + this.translate(property.getLanguageKey() + ".tooltip") + this.getGuide();
+			property.comment = this.translate(property.getLanguageKey()) + NEW_LINE + this.translate(property.getLanguageKey() + ".tooltip") + this.getGuide();
 			// カテゴリの項目順序に登録する。
 			propOrder.add(property.getName());
 		}
 
 		/** 英語へと翻訳し、改行処理をしてから返す。 */
 		private String translate(String key) {
-			return englishName.get(key).replace("\\n", Configuration.NEW_LINE).replace(". (", "." + Configuration.NEW_LINE + " (").replace(". ", "." + Configuration.NEW_LINE);
+			return englishName.get(key).replace("\\n", NEW_LINE).replace(". (", "." + NEW_LINE + " (").replace(". ", "." + NEW_LINE);
 		}
 
 		/** 項目の案内文章を取得する。 */
@@ -438,11 +440,11 @@ public class OfalenModConfigCore {
 			default:
 			case BOOLEAN:
 				// 真理値、その他は初期値の表示を行う。
-				return Configuration.NEW_LINE + " [default: " + property.getDefault() + "]";
+				return NEW_LINE + " [default: " + property.getDefault() + "]";
 			case INTEGER:
 			case DOUBLE:
 				// 数値は範囲と初期値の表示を行う。
-				return Configuration.NEW_LINE + " [range: " + property.getMinValue() + " ~ " + property.getMaxValue() + ", default: " + property.getDefault() + "]";
+				return NEW_LINE + " [range: " + property.getMinValue() + " ~ " + property.getMaxValue() + ", default: " + property.getDefault() + "]";
 			}
 		}
 
@@ -451,7 +453,7 @@ public class OfalenModConfigCore {
 			// 項目の設定を行う。
 			property.setRequiresWorldRestart(true);
 			// 項目の説明に案内を付加する。
-			property.comment += Configuration.NEW_LINE + " [World Restart Required]";
+			property.comment += NEW_LINE + " [World Restart Required]";
 		}
 
 		/** Minecraftの再起動が必要な項目に設定する。 */
@@ -459,7 +461,7 @@ public class OfalenModConfigCore {
 			// 項目の設定を行う。
 			property.setRequiresMcRestart(true);
 			// 項目の説明に案内を付加する。
-			property.comment += Configuration.NEW_LINE + " [Minecraft Restart Required]";
+			property.comment += NEW_LINE + " [Minecraft Restart Required]";
 		}
 
 		/** 項目から設定を真理値として取得する。 */
