@@ -190,9 +190,9 @@ public class TileEntityCollector extends TileEntityWorldEditorBase {
 		if (id == super.getAmountSettingID() + 1)
 			return "info.ofalen.setting.collector.isDisabled.exp";
 		if (id == super.getAmountSettingID() + 2)
-			return "info.ofalen.setting.collector.isDisabled.item";
+			return "info.ofalen.setting.collector.canDelete.item";
 		if (id == super.getAmountSettingID() + 3)
-			return "info.ofalen.setting.collector.isDisabled.exp";
+			return "info.ofalen.setting.collector.canDelete.exp";
 		return super.getSettingNameWithID(id);
 	}
 
