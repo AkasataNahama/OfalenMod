@@ -46,7 +46,7 @@ public class BlockRangeWithStandard {
 
 	/** "x * y * z" */
 	public String toStringRange() {
-		return Math.abs(posA.x - posB.x) + " * " + Math.abs(posA.y - posB.y) + " * " + Math.abs(posA.z - posB.z);
+		return (Math.abs(posA.x - posB.x) + 1) + " * " + (Math.abs(posA.y - posB.y) + 1) + " * " + (Math.abs(posA.z - posB.z) + 1);
 	}
 }
 
