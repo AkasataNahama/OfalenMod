@@ -89,7 +89,7 @@ public class OfalenModConfigCore {
 	public static byte amountTeleportingPearlCrafting;
 	public static short amountTeleportingPearlReference;
 	public static short amountTeleporterDamage;
-	public static boolean canTeleportFromEnd;
+	public static boolean isTeleportFromEndPermitted;
 	public static boolean isTeleporterParticleEnabled;
 	public static byte typeTeleporterParticle;
 	// Future.Floater
@@ -282,8 +282,8 @@ public class OfalenModConfigCore {
 		register.setProperty("amountTeleporterDamage", 1, 0, Short.MAX_VALUE);
 		amountTeleporterDamage = (short) register.getInt();
 		//
-		register.setProperty("canTeleportFromEnd", true);
-		canTeleportFromEnd = register.getBoolean();
+		register.setProperty("permitTeleportFromEnd", true);
+		isTeleportFromEndPermitted = register.getBoolean();
 		//
 		register.setProperty("enableTeleporterParticle", true);
 		isTeleporterParticleEnabled = register.getBoolean();

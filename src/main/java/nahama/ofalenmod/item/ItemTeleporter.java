@@ -56,7 +56,7 @@ public class ItemTeleporter extends ItemFuture {
 				if (world.isRemote || itemStack.getTagCompound().getByte(OfalenNBTUtil.INTERVAL_RIGHT_CLICK) > 0)
 					return itemStack;
 				// エンドからのテレポートが許可されていないなら終了。
-				if (player.dimension == 1 && !OfalenModConfigCore.canTeleportFromEnd)
+				if (player.dimension == 1 && !OfalenModConfigCore.isTeleportFromEndPermitted)
 					return itemStack;
 				itemStack.getTagCompound().setByte(OfalenNBTUtil.INTERVAL_RIGHT_CLICK, (byte) 10);
 				// スニークしていたらテレポートする。
