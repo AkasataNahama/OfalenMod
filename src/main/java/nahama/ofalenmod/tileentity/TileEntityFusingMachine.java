@@ -11,6 +11,16 @@ import net.minecraft.item.ItemStack;
 
 public class TileEntityFusingMachine extends TileEntityGradedMachineBase {
 	@Override
+	protected ItemStack getFuelStack() {
+		return itemStacks[3];
+	}
+
+	@Override
+	protected void setFuelStack(ItemStack stack) {
+		itemStacks[3] = stack;
+	}
+
+	@Override
 	protected boolean hasMaterialOrFuel() {
 		byte numEmptySlot = 0;
 		for (int i = 0; i < 3; i++) {

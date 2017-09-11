@@ -52,12 +52,12 @@ public abstract class TileEntityGradedMachineBase extends TileEntity implements 
 		}
 		// 燃焼中でなく作業可能なら、新たに燃料を消費し、燃焼させる。
 		if (timeBurning <= 0 && this.canWork()) {
-			timeMaxBurning = timeBurning = this.getItemBurnTime(itemStacks[1]);
+			timeMaxBurning = timeBurning = this.getItemBurnTime(this.getFuelStack());
 			if (timeBurning > 0) {
-				if (itemStacks[1] != null) {
-					--itemStacks[1].stackSize;
-					if (itemStacks[1].stackSize == 0) {
-						itemStacks[1] = itemStacks[1].getItem().getContainerItem(itemStacks[1]);
+				if (this.getFuelStack() != null) {
+					this.getFuelStack().stackSize--;
+					if (this.getFuelStack().stackSize == 0) {
+						this.setFuelStack(this.getFuelStack().getItem().getContainerItem(this.getFuelStack()));
 					}
 				}
 			}
@@ -78,6 +78,14 @@ public abstract class TileEntityGradedMachineBase extends TileEntity implements 
 		if (isBurning != timeBurning > 0) {
 			this.updateIsBurning();
 		}
+	}
+
+	protected ItemStack getFuelStack() {
+		return itemStacks[1];
+	}
+
+	protected void setFuelStack(ItemStack stack) {
+		itemStacks[1] = stack;
 	}
 
 	protected boolean hasMaterialOrFuel() {
