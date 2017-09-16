@@ -207,7 +207,7 @@ public class OfalenModConfigCore {
 		// Machine
 		register.setCategory(MACHINE);
 		//
-		register.setProperty("amountWhiteFuelCrafting", 32, 1, 64);
+		register.setProperty("amountWhiteFuelCrafting", 8, 1, 64);
 		register.setRequiresMcRestart();
 		amountWhiteFuelCrafting = (byte) register.getInt();
 		//
@@ -217,7 +217,7 @@ public class OfalenModConfigCore {
 		register.setProperty("timeTDiamondBurning", 400, 0, Short.MAX_VALUE);
 		timeTDiamondBurning = (short) register.getInt();
 		//
-		register.setProperty("timeWhiteFuelBurning", 1600, 0, Short.MAX_VALUE);
+		register.setProperty("timeWhiteFuelBurning", 6400, 0, Short.MAX_VALUE);
 		timeWhiteFuelBurning = (short) register.getInt();
 		// Machine.Smelting
 		register.setCategory(SMELTING);
@@ -338,11 +338,11 @@ public class OfalenModConfigCore {
 		// WorldEditor
 		register.setCategory(WORLD_EDITOR);
 		//
-		register.setProperty("amountDarkFuelCrafting", 32, 1, 64);
+		register.setProperty("amountDarkFuelCrafting", 8, 1, 64);
 		register.setRequiresMcRestart();
 		amountDarkFuelCrafting = (byte) register.getInt();
 		//
-		register.setProperty("energyDarkFuel", 20, 0, Short.MAX_VALUE);
+		register.setProperty("energyDarkFuel", 80, 0, Short.MAX_VALUE);
 		energyDarkFuel = (short) register.getInt();
 		// Grass
 		register.setCategory(GRASS);
