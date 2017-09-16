@@ -194,7 +194,7 @@ itemGroup.ofalen.tabOfalenMod=Ofalen Mod
 # Information
 info.ofalen.metaMod.description=This mod adds new ore called "Ofalen" and uses it to make various items.
 info.ofalen.metaMod.credits=Mr. Tom Kate, Mr. Taira Komori
-info.ofalen.notificationVersion=Ofalen Mod : New version is available.
+info.ofalen.notificationVersion=Ofalen Mod: New version is available.
 info.ofalen.using=Using
 info.ofalen.latest=Latest
 info.ofalen.util.stack=Stack
