@@ -43,7 +43,7 @@ public abstract class TileEntityWorldEditorBase extends TileEntity implements IS
 	/** 測量器が隣接しているかどうか。 */
 	private boolean isSurveying;
 	/** 燃料の残り燃焼時間。 */
-	private byte remainingEnergy;
+	private short remainingEnergy;
 
 	/** 更新時の処理。 */
 	@Override
@@ -203,6 +203,22 @@ public abstract class TileEntityWorldEditorBase extends TileEntity implements IS
 			this.addAmountFuel(-(amount / energy + 1));
 			remainingEnergy = (byte) (energy - amount % energy);
 		}
+	}
+
+	public short getRemainingEnergy() {
+		return remainingEnergy;
+	}
+
+	public void setRemainingEnergy(short remainingEnergy) {
+		this.remainingEnergy = remainingEnergy;
+	}
+
+	public int getRemainingEnergyScaled(int scale) {
+		if (OfalenModConfigCore.energyDarkFuel < 1)
+			return 0;
+		if (remainingEnergy == 0)
+			return this.getAmountFuel() > 0 ? scale : 0;
+		return remainingEnergy * scale / OfalenModConfigCore.energyDarkFuel;
 	}
 
 	/** 燃料を追加する。（負の値も可。） */
@@ -437,7 +453,7 @@ public abstract class TileEntityWorldEditorBase extends TileEntity implements IS
 		nbt.setBoolean(OfalenNBTUtil.IS_WORKING, isWorking);
 		nbt.setTag(FilterUtil.ITEM_FILTER, tagItemFilter);
 		nbt.setBoolean(OfalenNBTUtil.IS_SURVEYING, isSurveying);
-		nbt.setByte(OfalenNBTUtil.REMAINING_ENERGY, remainingEnergy);
+		nbt.setShort(OfalenNBTUtil.REMAINING_ENERGY, remainingEnergy);
 	}
 
 	/** TileEntityの情報をNBTから読み込む。 */
@@ -461,7 +477,7 @@ public abstract class TileEntityWorldEditorBase extends TileEntity implements IS
 		isWorking = nbt.getBoolean(OfalenNBTUtil.IS_WORKING);
 		tagItemFilter = nbt.getCompoundTag(FilterUtil.ITEM_FILTER);
 		isSurveying = nbt.getBoolean(OfalenNBTUtil.IS_SURVEYING);
-		remainingEnergy = nbt.getByte(OfalenNBTUtil.REMAINING_ENERGY);
+		remainingEnergy = nbt.getShort(OfalenNBTUtil.REMAINING_ENERGY);
 	}
 
 	@Override

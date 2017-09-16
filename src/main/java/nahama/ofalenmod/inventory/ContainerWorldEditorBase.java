@@ -3,20 +3,24 @@ package nahama.ofalenmod.inventory;
 import nahama.ofalenmod.tileentity.TileEntityWorldEditorBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
+import net.minecraft.inventory.ICrafting;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 
 public class ContainerWorldEditorBase extends Container {
-	private TileEntityWorldEditorBase tileEntity;
 	/** 設置機・収集機のインベントリの第一スロットの番号。通常は{@link #INDEX_2}と同値。 */
 	protected byte INDEX_1;
 	/** プレイヤーのインベントリの第一スロットの番号。 */
 	protected byte INDEX_2;
 	/** クイックスロットの第一スロットの番号。 */
+	@SuppressWarnings("WeakerAccess")
 	protected byte INDEX_3;
 	/** このコンテナの全体のスロット数。 */
+	@SuppressWarnings("WeakerAccess")
 	protected byte INDEX_4;
+	private TileEntityWorldEditorBase tileEntity;
+	private short lastRemainingEnergy;
 
 	public ContainerWorldEditorBase(EntityPlayer player, TileEntityWorldEditorBase tileEntity) {
 		this.tileEntity = tileEntity;
@@ -55,6 +59,30 @@ public class ContainerWorldEditorBase extends Container {
 	}
 
 	@Override
+	public void addCraftingToCrafters(ICrafting iCrafting) {
+		super.addCraftingToCrafters(iCrafting);
+		iCrafting.sendProgressBarUpdate(this, 0, tileEntity.getRemainingEnergy());
+	}
+
+	@Override
+	public void detectAndSendChanges() {
+		super.detectAndSendChanges();
+		short energy = tileEntity.getRemainingEnergy();
+		if (lastRemainingEnergy != energy) {
+			for (Object crafter : crafters) {
+				((ICrafting) crafter).sendProgressBarUpdate(this, 0, energy);
+			}
+			lastRemainingEnergy = energy;
+		}
+	}
+
+	@Override
+	public void updateProgressBar(int par1, int par2) {
+		if (par1 == 0)
+			tileEntity.setRemainingEnergy((short) par2);
+	}
+
+	@Override
 	public ItemStack transferStackInSlot(EntityPlayer player, int slotNumber) {
 		Slot slot = (Slot) inventorySlots.get(slotNumber);
 		// スロットが空なら終了。
@@ -62,7 +90,7 @@ public class ContainerWorldEditorBase extends Container {
 			return null;
 		ItemStack slotStack = slot.getStack();
 		ItemStack copyStack = slotStack.copy();
-		if (0 <= slotNumber && slotNumber < INDEX_2) {
+		if (slotNumber < INDEX_2) {
 			// TileEntityのスロットなら、プレイヤーのインベントリへ移動。
 			if (!this.mergeItemStack(slotStack, INDEX_2, INDEX_4, true))
 				return null;
