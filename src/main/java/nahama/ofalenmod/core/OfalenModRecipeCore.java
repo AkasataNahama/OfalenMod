@@ -150,14 +150,10 @@ public class OfalenModRecipeCore {
 		addShaped(new ItemStack(pistolLaser, 1, 1024), "OOO", "OII", "GC ", 'O', GEM[3], 'I', INGOT_IRON, 'G', INGOT_GOLD, 'C', CORE[3]);
 		// マガジンへのクリスタル格納レシピ
 		RecipeSorter.register("ofalenmod:magazine", MagazineRecipe.class, RecipeSorter.Category.SHAPELESS, "after:minecraft:shapeless");
-		for (int i = 0; i < 1024; i += 32) {
-			for (int j = 1; j < 9; j++) {
-				GameRegistry.addRecipe(new MagazineRecipe(new ItemStack(magazineLaserRed, 1, i), new ItemStack(magazineLaserRed, 1, i + (32 * j)), CRYSTAL[0], j));
-				GameRegistry.addRecipe(new MagazineRecipe(new ItemStack(magazineLaserGreen, 1, i), new ItemStack(magazineLaserGreen, 1, i + (32 * j)), CRYSTAL[1], j));
-				GameRegistry.addRecipe(new MagazineRecipe(new ItemStack(magazineLaserBlue, 1, i), new ItemStack(magazineLaserBlue, 1, i + (32 * j)), CRYSTAL[2], j));
-				GameRegistry.addRecipe(new MagazineRecipe(new ItemStack(magazineLaserWhite, 1, i), new ItemStack(magazineLaserWhite, 1, i + (32 * j)), CRYSTAL[3], j));
-			}
-		}
+		GameRegistry.addRecipe(new MagazineRecipe(OfalenModItemCore.magazineLaserRed, (byte) 0));
+		GameRegistry.addRecipe(new MagazineRecipe(OfalenModItemCore.magazineLaserGreen, (byte) 1));
+		GameRegistry.addRecipe(new MagazineRecipe(OfalenModItemCore.magazineLaserBlue, (byte) 2));
+		GameRegistry.addRecipe(new MagazineRecipe(OfalenModItemCore.magazineLaserWhite, (byte) 3));
 		// プロテクター関連
 		addShaped(new ItemStack(partsOfalen, OfalenModConfigCore.amountProtectingIngotCrafting, 6), "GOG", "OMO", "GOG", 'G', NUGGET_GOLD, 'O', FRAG[0], 'M', INGOT_IRON);
 		addShaped(new ItemStack(protectorOfalen, 1, protectorOfalen.getMaxDamage()), "IOI", "OEO", "IOI", 'I', INGOT_GOLD, 'O', CORE[0], 'E', getParts(6));
@@ -211,10 +207,6 @@ public class OfalenModRecipeCore {
 
 	private static void addShaped(ItemStack result, Object... recipe) {
 		GameRegistry.addRecipe(new ShapedOreRecipe(result, recipe));
-	}
-
-	private static void addShapeless(Item result, Object... recipe) {
-		addShapeless(new ItemStack(result), recipe);
 	}
 
 	private static void addShapeless(ItemStack result, Object... recipe) {

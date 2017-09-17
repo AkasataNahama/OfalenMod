@@ -1,60 +1,75 @@
 package nahama.ofalenmod.recipe;
 
+import nahama.ofalenmod.core.OfalenModItemCore;
 import net.minecraft.inventory.InventoryCrafting;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.world.World;
-import net.minecraftforge.oredict.OreDictionary;
-
-import java.util.ArrayList;
 
 public class MagazineRecipe implements IRecipe {
-	private ItemStack output = null;
-	private ArrayList<ItemStack> input = new ArrayList<ItemStack>();
+	private Item magazine;
+	private byte color;
 
-	public MagazineRecipe(ItemStack result, ItemStack magazine, ItemStack crystal, int amount) {
-		output = result.copy();
-		input.add(magazine.copy());
-		for (int i = 0; i < amount; i++) {
-			input.add(crystal.copy());
-		}
+	public MagazineRecipe(Item magazine, byte color) {
+		this.magazine = magazine;
+		this.color = color;
 	}
 
 	@Override
 	public int getRecipeSize() {
-		return input.size();
+		return 9;
 	}
 
 	@Override
 	public ItemStack getRecipeOutput() {
-		return output;
+		return new ItemStack(magazine);
 	}
 
 	@Override
 	public ItemStack getCraftingResult(InventoryCrafting inv) {
-		return output.copy();
+		int damage = 0;
+		for (int i = 0; i < inv.getSizeInventory(); i++) {
+			ItemStack stack = inv.getStackInSlot(i);
+			if (stack == null)
+				continue;
+			if (stack.getItem() == magazine) {
+				damage += stack.getItemDamage();
+			} else if (stack.getItem() == OfalenModItemCore.crystalLaserEnergy) {
+				damage -= 32;
+			}
+		}
+		return new ItemStack(magazine, 1, damage);
 	}
 
 	/** クラフティングインベントリがレシピに適合しているか。 */
 	@Override
 	public boolean matches(InventoryCrafting inv, World world) {
-		ArrayList<ItemStack> required = new ArrayList<ItemStack>(input);
-		for (int x = 0; x < inv.getSizeInventory(); x++) {
-			ItemStack slot = inv.getStackInSlot(x);
-			if (slot == null)
+		boolean hasMagazine = false;
+		boolean hasCrystal = false;
+		int damageMagazine = 0;
+		for (int i = 0; i < inv.getSizeInventory(); i++) {
+			ItemStack stack = inv.getStackInSlot(i);
+			if (stack == null)
 				continue;
-			boolean inRecipe = false;
-			for (ItemStack aRequired : required) {
-				if (!OreDictionary.itemMatches(aRequired, slot, false))
-					continue;
-				inRecipe = true;
-				required.remove(aRequired);
-				break;
-			}
-			if (!inRecipe) {
+			if (stack.getItem() == magazine) {
+				// マガジンが2個以上あったら不適合。
+				if (hasMagazine)
+					return false;
+				hasMagazine = true;
+				damageMagazine = stack.getItemDamage();
+			} else if (stack.getItem() == OfalenModItemCore.crystalLaserEnergy) {
+				// 違う色のクリスタルがあったら不適合。
+				if (stack.getItemDamage() != color)
+					return false;
+				damageMagazine -= 32;
+				hasCrystal = true;
+			} else {
+				// 他のアイテムがあったら不適合。
 				return false;
 			}
 		}
-		return required.isEmpty();
+		// マガジンとクリスタルがあり、クリスタルが多すぎなければ適合。
+		return hasMagazine && hasCrystal && damageMagazine >= 0;
 	}
 }
