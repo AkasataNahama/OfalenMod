@@ -31,7 +31,6 @@ import nahama.ofalenmod.entity.EntityLaserGreen;
 import nahama.ofalenmod.entity.EntityLaserRed;
 import nahama.ofalenmod.entity.EntityWhiteLaser;
 import nahama.ofalenmod.generator.WorldGenOfalenOre;
-import nahama.ofalenmod.handler.OfalenFlightHandlerClient;
 import nahama.ofalenmod.handler.OfalenFlightHandlerServer;
 import nahama.ofalenmod.handler.OfalenKeyHandler;
 import nahama.ofalenmod.handler.OfalenModAnniversaryHandler;
@@ -144,8 +143,6 @@ public class OfalenModCore {
 		OfalenTimer.start("OfalenModCore.serverStarting");
 		// 各種ハンドラを初期化する。
 		OfalenTeleportHandler.init();
-		if (OfalenUtil.isClient())
-			OfalenFlightHandlerClient.init();
 		OfalenFlightHandlerServer.init();
 		OfalenModAnniversaryHandler.init();
 		OfalenKeyHandler.onServerStarting();

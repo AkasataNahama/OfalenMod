@@ -14,10 +14,12 @@ public class OfalenFlightHandlerClient {
 	/** 二連続ジャンプ判定の残り時間。 */
 	private static byte timeRemaining;
 	/** フローターの機能で飛行しているか。 */
-	private static boolean isFlightEnabled;
+	private static boolean isFlightEnabled = true;
 
 	/** 初期化処理。 */
 	public static void init() {
+		mode = null;
+		timeRemaining = 0;
 		isFlightEnabled = true;
 	}
 

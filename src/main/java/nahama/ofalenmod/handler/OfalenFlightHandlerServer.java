@@ -130,6 +130,10 @@ public class OfalenFlightHandlerServer {
 		return playersFloating.get(player.getCommandSenderName()) != null;
 	}
 
+	public static void onPlayerLoggedOut(EntityPlayer player) {
+		playersFloating.remove(player.getCommandSenderName());
+	}
+
 	/** フローター使用中のプレイヤーの状態。 */
 	private static class FloaterState {
 		public FloaterMode mode;

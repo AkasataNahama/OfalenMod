@@ -3,10 +3,13 @@ package nahama.ofalenmod.handler;
 import cpw.mods.fml.client.event.ConfigChangedEvent;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.InputEvent;
+import cpw.mods.fml.common.gameevent.PlayerEvent;
 import nahama.ofalenmod.OfalenModCore;
 import nahama.ofalenmod.core.OfalenModConfigCore;
 import nahama.ofalenmod.entity.EntityLaserBase;
+import nahama.ofalenmod.util.OfalenLog;
 import nahama.ofalenmod.util.OfalenUtil;
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ChatComponentText;
@@ -36,7 +39,16 @@ public class OfalenModEventHandler {
 				player.addChatMessage(new ChatComponentText(OfalenModUpdateCheckHandler.getMessage()));
 				OfalenModUpdateCheckHandler.namesNotified.add(player.getCommandSenderName());
 			}
+		} else {
+			if (player == Minecraft.getMinecraft().thePlayer)
+				OfalenFlightHandlerClient.init();
 		}
+	}
+
+	@SubscribeEvent
+	public void onPlayerLoggedOut(PlayerEvent.PlayerLoggedOutEvent event) {
+		OfalenLog.debuggingInfo("onPlayerLoggedOut");
+		OfalenFlightHandlerServer.onPlayerLoggedOut(event.player);
 	}
 
 	/** EntityLivingBaseがダメージを受けた時の処理。 */
