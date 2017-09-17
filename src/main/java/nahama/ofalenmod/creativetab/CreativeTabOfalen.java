@@ -19,13 +19,14 @@ public class CreativeTabOfalen extends CreativeTabs {
 	public ItemStack getIconItemStack() {
 		short current = (short) (System.currentTimeMillis() / 1000 % 10000);
 		if (current != lastSecond) {
-			count--;
+			if (count > 0)
+				count--;
 			lastSecond = current;
 		}
 		if (count < 1) {
 			count = 2;
 			meta++;
-			if (meta > 3)
+			if (meta > 8)
 				meta = 0;
 		}
 		return new ItemStack(OfalenModItemCore.gemOfalen, 1, meta);
