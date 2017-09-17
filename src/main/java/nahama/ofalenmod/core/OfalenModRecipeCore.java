@@ -56,7 +56,7 @@ public class OfalenModRecipeCore {
 		// 機械用カバープレート
 		addShaped(new ItemStack(partsOfalen, OfalenModConfigCore.amountCoverPlateCrafting, 0), "LOL", "OQO", "LOL", 'L', getParts(2), 'Q', GEM_QUARTZ, 'O', FRAG[3]);
 		// Grade 3の部品
-		addShaped(new ItemStack(partsOfalen, OfalenModConfigCore.amountGrade3PartsCrafting, 1), "DWD", "WIW", "DID", 'W', GEM[3], 'D', GEM_DIAMOND, 'I', INGOT_IRON);
+		addShaped(new ItemStack(partsOfalen, OfalenModConfigCore.amountGrade3PartsCrafting, 1), "IDI", "DOD", "IDI", 'O', BLOCK[3], 'D', GEM_DIAMOND, 'I', INGOT_IRON);
 		// 製錬機
 		addShaped(machineSmelting, "XYX", "XZX", "XYX", 'X', getParts(0), 'Y', GEM[0], 'Z', Blocks.furnace);
 		// 変換機

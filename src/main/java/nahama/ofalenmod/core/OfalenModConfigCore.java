@@ -145,7 +145,7 @@ public class OfalenModConfigCore {
 		register.setRequiresMcRestart();
 		amountCoverPlateCrafting = (byte) register.getInt();
 		//
-		register.setProperty("amountGrade3PartsCrafting", 1, 1, 64);
+		register.setProperty("amountGrade3PartsCrafting", 2, 1, 64);
 		register.setRequiresMcRestart();
 		amountGrade3PartsCrafting = (byte) register.getInt();
 		//
