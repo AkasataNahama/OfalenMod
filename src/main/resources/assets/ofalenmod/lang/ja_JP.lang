@@ -413,9 +413,9 @@ container.ofalen.floater=オファレンフローター
 container.ofalen.collector=オファレンコレクター
 container.ofalen.filterItem=アイテムフィルター
 container.ofalen.installerFilter=フィルターインストーラー
-container.ofalen.placer=オファレンブロックプレイサー
+container.ofalen.placer=オファレンブロックプレーサー
 container.ofalen.mover=オファレンブロックムーバー
-container.ofalen.breaker=オファレンブロックブレイカー
+container.ofalen.breaker=オファレンブロックブレーカー
 container.ofalen.blockCollector=オファレンコレクターブロック
 container.ofalen.boxPresent=オファレンプレゼントボックス
 container.ofalen.setterDetailed=オファレン詳細設定器
@@ -612,9 +612,9 @@ tile.ofalen.casingProcessor.5.name=処理装置筐体固定ブロック Grade 2
 tile.ofalen.casingProcessor.6.name=処理装置筐体固定ブロック Grade 3
 
 # 世界系
-tile.ofalen.placer.name=オファレンブロックプレイサー
+tile.ofalen.placer.name=オファレンブロックプレーサー
 tile.ofalen.mover.name=オファレンブロックムーバー
-tile.ofalen.breaker.name=オファレンブロックブレイカー
+tile.ofalen.breaker.name=オファレンブロックブレーカー
 tile.ofalen.collector.name=オファレンコレクターブロック
 tile.ofalen.surveyor.name=オファレン測量器
 
