@@ -28,6 +28,7 @@ import net.minecraft.init.Items;
 import net.minecraft.item.EnumAction;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemTool;
+import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.StatCollector;
@@ -107,16 +108,14 @@ public class ItemOfalenPerfectTool extends ItemTool implements IItemOfalenSettab
 				}
 			}
 		} else {
-			if (world.isRemote)
-				return itemStack;
 			// 設定キーが押されていたら、modeを変更する。
 			mode = this.getNextMode(itemStack, mode, player.isSneaking());
 			itemStack.getTagCompound().setByte(OfalenNBTUtil.MODE, mode);
 			// 次に変更できるまでの間隔を設定する。
 			itemStack.getTagCompound().setByte(OfalenNBTUtil.INTERVAL, (byte) 10);
 			// プレイヤーのチャット欄に通知する。
-			if (((OfalenSettingBoolean) this.getSetting().getChildSetting("ModeChangeNotification")).getValueByStack(itemStack))
-				OfalenUtil.addChatTranslationMessage(player, "info.ofalen.toolPerfect.mode.changed", StatCollector.translateToLocal("info.ofalen.toolPerfect.mode." + mode));
+			if (world.isRemote && ((OfalenSettingBoolean) this.getSetting().getChildSetting("ModeChangeNotification")).getValueByStack(itemStack))
+				player.addChatMessage(new ChatComponentTranslation("info.ofalen.toolPerfect.mode.changed", StatCollector.translateToLocal("info.ofalen.toolPerfect.mode." + mode)));
 		}
 		return itemStack;
 	}
