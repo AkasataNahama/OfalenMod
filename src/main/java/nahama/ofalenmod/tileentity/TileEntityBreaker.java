@@ -1,16 +1,23 @@
 package nahama.ofalenmod.tileentity;
 
+import cpw.mods.fml.relauncher.ReflectionHelper;
 import nahama.ofalenmod.OfalenModCore;
+import nahama.ofalenmod.util.OfalenLog;
 import nahama.ofalenmod.util.OfalenNBTUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLiquid;
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.common.util.FakePlayerFactory;
 
+import java.lang.reflect.InvocationTargetException;
+
 public class TileEntityBreaker extends TileEntityWorldEditorBase {
+	/** シルクタッチを適用するか。 */
+	private boolean isSilkTouchEnabled;
 	/** ブロックを削除するかどうか。 */
 	private boolean canDeleteBrokenBlock;
 	/** 液体を破壊するか。 */
@@ -47,24 +54,51 @@ public class TileEntityBreaker extends TileEntityWorldEditorBase {
 		worldObj.playAuxSFX(2001, x, y, z, Block.getIdFromBlock(block) + (meta << 12));
 		if (flag)
 			block.onBlockDestroyedByPlayer(worldObj, x, y, z, meta);
-		if (!canDeleteBrokenBlock)
-			block.dropBlockAsItem(worldObj, x, y, z, meta, 0);
-		if (flag)
-			block.dropXpOnBlockBreak(worldObj, x, y, z, block.getExpDrop(worldObj, meta, 0));
+		if (!canDeleteBrokenBlock) {
+			ItemStack itemStack = null;
+			try {
+				itemStack = (ItemStack) ReflectionHelper.findMethod(Block.class, block, new String[] { "createStackedBlock", "func_149644_j" }, int.class).invoke(block, meta);
+			} catch (IllegalAccessException e) {
+				OfalenLog.error("Unable to get drop block by silk touch.", "TileEntityBreaker");
+				e.printStackTrace();
+			} catch (InvocationTargetException e) {
+				OfalenLog.error("Unable to get drop block by silk touch.", "TileEntityBreaker");
+				e.printStackTrace();
+			}
+			if (isSilkTouchEnabled && itemStack != null && block.canSilkHarvest(worldObj, fakePlayer, x, y, z, meta)) {
+				// シルクタッチで破壊し、ドロップする。
+				if (worldObj.getGameRules().getGameRuleBooleanValue("doTileDrops")) {
+					float f = 0.7F;
+					double d0 = (double) (worldObj.rand.nextFloat() * f) + (double) (1.0F - f) * 0.5D;
+					double d1 = (double) (worldObj.rand.nextFloat() * f) + (double) (1.0F - f) * 0.5D;
+					double d2 = (double) (worldObj.rand.nextFloat() * f) + (double) (1.0F - f) * 0.5D;
+					EntityItem entityitem = new EntityItem(worldObj, (double) x + d0, (double) y + d1, (double) z + d2, itemStack);
+					entityitem.delayBeforeCanPickup = 10;
+					worldObj.spawnEntityInWorld(entityitem);
+				}
+			} else {
+				// 通常のドロップ処理を行う。
+				block.dropBlockAsItem(worldObj, x, y, z, meta, 0);
+				if (flag)
+					block.dropXpOnBlockBreak(worldObj, x, y, z, block.getExpDrop(worldObj, meta, 0));
+			}
+		}
 		return true;
 	}
 
 	@Override
 	public byte getAmountSettingID() {
-		return (byte) (super.getAmountSettingID() + 2);
+		return (byte) (super.getAmountSettingID() + 3);
 	}
 
 	@Override
 	public short getWithID(int id) {
 		switch (id - super.getAmountSettingID()) {
 		case 0:
-			return (short) (canDeleteBrokenBlock ? 1 : 0);
+			return (short) (isSilkTouchEnabled ? 1 : 0);
 		case 1:
+			return (short) (canDeleteBrokenBlock ? 1 : 0);
+		case 2:
 			return (short) (canDeleteLiquid ? 1 : 0);
 		}
 		return super.getWithID(id);
@@ -75,9 +109,12 @@ public class TileEntityBreaker extends TileEntityWorldEditorBase {
 		super.setWithID(id, value);
 		switch (id - super.getAmountSettingID()) {
 		case 0:
-			canDeleteBrokenBlock = (value != 0);
+			isSilkTouchEnabled = (value != 0);
 			break;
 		case 1:
+			canDeleteBrokenBlock = (value != 0);
+			break;
+		case 2:
 			canDeleteLiquid = (value != 0);
 			break;
 		}
@@ -87,8 +124,10 @@ public class TileEntityBreaker extends TileEntityWorldEditorBase {
 	public String getSettingNameWithID(int id) {
 		switch (id - super.getAmountSettingID()) {
 		case 0:
-			return "info.ofalen.setting.breaker.canDeleteBrokenBlock";
+			return "info.ofalen.setting.breaker.isSilkTouchEnabled";
 		case 1:
+			return "info.ofalen.setting.breaker.canDeleteBrokenBlock";
+		case 2:
 			return "info.ofalen.setting.breaker.canDeleteLiquid";
 		}
 		return super.getSettingNameWithID(id);
@@ -102,6 +141,7 @@ public class TileEntityBreaker extends TileEntityWorldEditorBase {
 	@Override
 	public void writeToNBT(NBTTagCompound nbt) {
 		super.writeToNBT(nbt);
+		nbt.setBoolean(OfalenNBTUtil.IS_SILK_TOUCH_ENABLED, isSilkTouchEnabled);
 		nbt.setBoolean(OfalenNBTUtil.CAN_DELETE_BROKEN_BLOCK, canDeleteBrokenBlock);
 		nbt.setBoolean(OfalenNBTUtil.CAN_DELETE_LIQUID, canDeleteLiquid);
 	}
@@ -109,6 +149,7 @@ public class TileEntityBreaker extends TileEntityWorldEditorBase {
 	@Override
 	public void readFromNBT(NBTTagCompound nbt) {
 		super.readFromNBT(nbt);
+		isSilkTouchEnabled = nbt.getBoolean(OfalenNBTUtil.IS_SILK_TOUCH_ENABLED);
 		canDeleteBrokenBlock = nbt.getBoolean(OfalenNBTUtil.CAN_DELETE_BROKEN_BLOCK);
 		canDeleteLiquid = nbt.getBoolean(OfalenNBTUtil.CAN_DELETE_LIQUID);
 	}

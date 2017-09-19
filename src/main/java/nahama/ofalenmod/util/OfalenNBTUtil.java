@@ -50,8 +50,6 @@ public class OfalenNBTUtil {
 	// コレクター
 	public static final String IS_ITEM_DISABLED = "IsItemDisabled";
 	public static final String IS_EXP_DISABLED = "IsExpDisabled";
-	public static final String ITEM_RANGE = "ItemRange";
-	public static final String EXP_RANGE = "ExpRange";
 	// 世界系 (INTERVALも使用)
 	public static final String IS_RANGE_SAVING_ABSOLUTE = "IsRangeSavingAbsolute";
 	public static final String RANGE = "Range";
@@ -75,13 +73,13 @@ public class OfalenNBTUtil {
 	public static final String META = "Meta";
 	public static final String TILE_ENTITY = "TileEntity";
 	// 破壊機
+	public static final String IS_SILK_TOUCH_ENABLED = "IsSilkTouchEnabled";
 	public static final String CAN_DELETE_BROKEN_BLOCK = "CanDeleteBrokenBlock";
 	public static final String CAN_DELETE_LIQUID = "CanDeleteLiquid";
 	// 収集機
 	public static final String CAN_DELETE_ITEM = "CanDeleteItem";
 	public static final String CAN_DELETE_EXP = "CanDeleteExp";
 	// 詳細設定
-	public static final String IS_SET_IN_DETAIL = "IsSetInDetail";
 	public static final String DETAILED_SETTING = "DetailedSetting";
 	// BlockPos, BlockRange
 	public static final String X = "X";
