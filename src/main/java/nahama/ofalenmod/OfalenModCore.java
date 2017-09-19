@@ -1,5 +1,6 @@
 package nahama.ofalenmod;
 
+import com.mojang.authlib.GameProfile;
 import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.common.FMLCommonHandler;
@@ -53,6 +54,8 @@ import net.minecraft.util.StatCollector;
 import net.minecraftforge.client.MinecraftForgeClient;
 import net.minecraftforge.common.MinecraftForge;
 
+import java.util.UUID;
+
 /** @author Akasata Nahama */
 @Mod(modid = OfalenModCore.MOD_ID, name = OfalenModCore.MOD_NAME, version = OfalenModCore.VERSION, guiFactory = "nahama.ofalenmod.gui.OfalenModGuiFactory")
 public class OfalenModCore {
@@ -76,6 +79,7 @@ public class OfalenModCore {
 	/** modの情報を登録。 */
 	@Metadata(MOD_ID)
 	public static ModMetadata meta;
+	public static GameProfile profile = new GameProfile(UUID.nameUUIDFromBytes("ofalenmod".getBytes()), "[OfalenMod]");
 
 	/** 初期化前処理。 */
 	@EventHandler

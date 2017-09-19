@@ -1,11 +1,14 @@
 package nahama.ofalenmod.tileentity;
 
-import nahama.ofalenmod.util.OfalenLog;
+import nahama.ofalenmod.OfalenModCore;
 import nahama.ofalenmod.util.OfalenNBTUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLiquid;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.world.WorldServer;
+import net.minecraftforge.common.util.FakePlayer;
+import net.minecraftforge.common.util.FakePlayerFactory;
 
 public class TileEntityBreaker extends TileEntityWorldEditorBase {
 	/** ブロックを削除するかどうか。 */
@@ -38,16 +41,9 @@ public class TileEntityBreaker extends TileEntityWorldEditorBase {
 	protected boolean work(int x, int y, int z) {
 		Block block = worldObj.getBlock(x, y, z);
 		int meta = worldObj.getBlockMetadata(x, y, z);
-		boolean flag;
-		try {
-			block.onBlockHarvested(worldObj, x, y, z, meta, null);
-			flag = block.removedByPlayer(worldObj, null, x, y, z, true);
-		} catch (NullPointerException e) {
-			OfalenLog.error("Failed to break block. (name=" + block.getLocalizedName() + ", id=" + Block.getIdFromBlock(block) + ", meta=" + meta + ")", "TileEntityBreaker");
-			OfalenLog.error("This error was anticipated. Probably Breaker failed to break the block.", "TileEntityBreaker");
-			e.printStackTrace();
-			return false;
-		}
+		FakePlayer fakePlayer = FakePlayerFactory.get((WorldServer) worldObj, OfalenModCore.profile);
+		block.onBlockHarvested(worldObj, x, y, z, meta, fakePlayer);
+		boolean flag = block.removedByPlayer(worldObj, fakePlayer, x, y, z, true);
 		worldObj.playAuxSFX(2001, x, y, z, Block.getIdFromBlock(block) + (meta << 12));
 		if (flag)
 			block.onBlockDestroyedByPlayer(worldObj, x, y, z, meta);
