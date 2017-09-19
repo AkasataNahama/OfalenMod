@@ -39,7 +39,7 @@ public class OfalenModItemCore {
 	 * 1: Grade 3 Part<br>
 	 * 2: Lump of Stone<br>
 	 * 3: White Ofalen Fuel<br>
-	 * 4: Black Ofalen Fuel<br>
+	 * 4: Dark Ofalen Fuel<br>
 	 * 5: Laser Magazine<br>
 	 * 6: Protecting Ingot<br>
 	 * 7: Teleporting Pearl<br>
