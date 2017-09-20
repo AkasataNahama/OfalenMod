@@ -11,6 +11,7 @@ import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class OfalenNBTUtil {
 	// TileEntity
@@ -199,6 +200,25 @@ public class OfalenNBTUtil {
 			if (!isAvailableFilterTag(itemStack))
 				return ret;
 			NBTTagCompound nbtFilter = FilterUtil.getFilterTag(itemStack);
+			ret.add("  " + StatCollector.translateToLocal("info.ofalen.filter." + (FilterUtil.isWhiteList(nbtFilter) ? "white" : "black")));
+			NBTTagList nbtTagList = FilterUtil.getSelectingItemList(nbtFilter);
+			for (int i = 0; i < 27 && i < nbtTagList.tagCount(); i++) {
+				NBTTagCompound nbt = nbtTagList.getCompoundTagAt(i);
+				if (nbt == null)
+					continue;
+				ItemStack itemStack1 = ItemStack.loadItemStackFromNBT(nbt);
+				if (itemStack1 != null)
+					ret.add("    " + itemStack1.getDisplayName() + " (" + Item.getIdFromItem(itemStack1.getItem()) + ", " + itemStack1.getItemDamage() + ")");
+			}
+			return ret;
+		}
+
+		public static List<String> getFilterMessage(NBTTagCompound nbtFilter) {
+			List<String> ret = new ArrayList<String>();
+			ret.add(StatCollector.translateToLocal("info.ofalen.filter.item.installed"));
+			// フィルターが無効なら終了。
+			if (nbtFilter == null || getSelectingItemList(nbtFilter) == null)
+				return ret;
 			ret.add("  " + StatCollector.translateToLocal("info.ofalen.filter." + (FilterUtil.isWhiteList(nbtFilter) ? "white" : "black")));
 			NBTTagList nbtTagList = FilterUtil.getSelectingItemList(nbtFilter);
 			for (int i = 0; i < 27 && i < nbtTagList.tagCount(); i++) {

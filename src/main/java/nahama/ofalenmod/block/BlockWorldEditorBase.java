@@ -18,10 +18,12 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
+import java.util.List;
 import java.util.Random;
 
 public abstract class BlockWorldEditorBase extends BlockContainer {
@@ -67,6 +69,17 @@ public abstract class BlockWorldEditorBase extends BlockContainer {
 					// アイテムフィルターを持っていたら、フィルターをインストールする。
 					FilterUtil.installFilterToTileEntity(world, x, y, z, FilterUtil.getFilterTag(itemStack));
 					return true;
+				} else if (itemStack.getItem() == OfalenModItemCore.installerFilter) {
+					TileEntity tileEntity = world.getTileEntity(x, y, z);
+					if (tileEntity != null && tileEntity instanceof TileEntityWorldEditorBase) {
+						if (world.isRemote) {
+							List<String> list = ((TileEntityWorldEditorBase) tileEntity).getFilterMessage();
+							for (String s : list) {
+								player.addChatMessage(new ChatComponentText(s));
+							}
+						}
+						return true;
+					}
 				} else if (itemStack.getItem() == OfalenModItemCore.wandSurveying) {
 					// 測量杖を持っていたら、作業範囲を設定する。
 					BlockRangeWithStandard range = BlockRangeWithStandard.loadFromNBT(itemStack.getTagCompound().getCompoundTag(OfalenNBTUtil.RANGE));

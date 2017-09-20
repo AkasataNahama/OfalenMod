@@ -19,6 +19,8 @@ import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.util.ForgeDirection;
 
+import java.util.List;
+
 public abstract class TileEntityWorldEditorBase extends TileEntity implements ISidedInventory, FilterUtil.IFilterable {
 	/** 作業範囲。 */
 	protected BlockRange range;
@@ -392,6 +394,10 @@ public abstract class TileEntityWorldEditorBase extends TileEntity implements IS
 			return "info.ofalen.setting.editor.canRestart";
 		}
 		return null;
+	}
+
+	public List<String> getFilterMessage() {
+		return FilterUtil.getFilterMessage(tagItemFilter);
 	}
 
 	@Override
