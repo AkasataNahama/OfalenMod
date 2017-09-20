@@ -50,8 +50,9 @@ public class ItemFilter extends Item {
 
 	@Override
 	public boolean onItemUse(ItemStack itemStack, EntityPlayer player, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ) {
-		if (itemStack.getItemDamage() < 1)
+		if (itemStack.getItemDamage() < 1 || OfalenKeyHandler.isSettingKeyPressed(player))
 			return false;
+		// ブロック選択モードで、設定キーが押されていない時。
 		NBTTagCompound nbtFilter = FilterUtil.getFilterTag(itemStack);
 		NBTTagList listSelectingItem = FilterUtil.getSelectingItemList(nbtFilter);
 		if (listSelectingItem.tagCount() > 27)
