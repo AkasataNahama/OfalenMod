@@ -44,51 +44,44 @@ public abstract class BlockWorldEditorBase extends BlockContainer {
 	@Override
 	public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ) {
 		if (!OfalenKeyHandler.isSettingKeyPressed(player)) {
-			// OSSキーが押されていなかったらインベントリのGUIを開く。
-			player.openGui(OfalenModCore.instance, 1, world, x, y, z);
-		} else {
-			// OSSキーが押されていたら設定のGUIを開く。
-			player.openGui(OfalenModCore.instance, 0, world, x, y, z);
-		}
-		return true;
-	}
-
-	/** プレイヤーに左クリックされた時の処理。 */
-	@Override
-	public void onBlockClicked(World world, int x, int y, int z, EntityPlayer player) {
-		super.onBlockClicked(world, x, y, z, player);
-		ItemStack itemStack = player.getHeldItem();
-		if (itemStack != null) {
-			// プレイヤーがアイテムフィルターを持っていたら、フィルターをインストールする。
-			if (itemStack.getItem() == OfalenModItemCore.filterItem && FilterUtil.isAvailableFilterTag(itemStack)) {
-				FilterUtil.installFilterToTileEntity(world, x, y, z, FilterUtil.getFilterTag(itemStack));
-				return;
+			// 設定キーが押されていなかったらGUIを開く。
+			if (!OfalenKeyHandler.isSprintKeyPressed(player)) {
+				// スプリントキーが押されていなかったらインベントリのGUIを開く。
+				player.openGui(OfalenModCore.instance, 1, world, x, y, z);
+			} else {
+				// スプリントキーが押されていたら設定のGUIを開く。
+				player.openGui(OfalenModCore.instance, 0, world, x, y, z);
 			}
-			// 測量杖を持っていたら、作業範囲を設定する。
-			if (itemStack.getItem() == OfalenModItemCore.wandSurveying) {
-				BlockRangeWithStandard range = BlockRangeWithStandard.loadFromNBT(itemStack.getTagCompound().getCompoundTag(OfalenNBTUtil.RANGE));
-				if (range != null) {
-					TileEntity tileEntity = world.getTileEntity(x, y, z);
-					if (tileEntity != null && tileEntity instanceof TileEntityWorldEditorBase) {
-						((TileEntityWorldEditorBase) tileEntity).setRange(range.convertToNormal());
-						return;
+		} else {
+			if (!OfalenKeyHandler.isSprintKeyPressed(player)) {
+				// 設定キーが押されていたら起動/停止。
+				TileEntity tileEntity = world.getTileEntity(x, y, z);
+				if (tileEntity != null && tileEntity instanceof TileEntityWorldEditorBase)
+					((TileEntityWorldEditorBase) tileEntity).changeIsWorking();
+			} else {
+				// 設定キーとスプリントキーが押されていたら手持ちアイテムの適用。
+				ItemStack itemStack = player.getHeldItem();
+				if (itemStack == null)
+					return false;
+				if (itemStack.getItem() == OfalenModItemCore.filterItem && FilterUtil.isAvailableFilterTag(itemStack)) {
+					// アイテムフィルターを持っていたら、フィルターをインストールする。
+					FilterUtil.installFilterToTileEntity(world, x, y, z, FilterUtil.getFilterTag(itemStack));
+					return true;
+				} else if (itemStack.getItem() == OfalenModItemCore.wandSurveying) {
+					// 測量杖を持っていたら、作業範囲を設定する。
+					BlockRangeWithStandard range = BlockRangeWithStandard.loadFromNBT(itemStack.getTagCompound().getCompoundTag(OfalenNBTUtil.RANGE));
+					if (range != null) {
+						TileEntity tileEntity = world.getTileEntity(x, y, z);
+						if (tileEntity != null && tileEntity instanceof TileEntityWorldEditorBase) {
+							((TileEntityWorldEditorBase) tileEntity).setRange(range.convertToNormal());
+							return true;
+						}
 					}
 				}
+				return false;
 			}
 		}
-		if (!OfalenKeyHandler.isSettingKeyPressed(player))
-			return;
-		TileEntity tileEntity = world.getTileEntity(x, y, z);
-		if (tileEntity == null || !(tileEntity instanceof TileEntityWorldEditorBase))
-			return;
-		TileEntityWorldEditorBase editor = (TileEntityWorldEditorBase) tileEntity;
-		if (!player.isSneaking()) {
-			// OSS+左クリックで起動。
-			editor.setIsWorking(true);
-		} else {
-			// Shift+OSS+左クリックで停止。
-			editor.setIsWorking(false);
-		}
+		return true;
 	}
 
 	/** 隣接するブロックが更新された時の処理。 */

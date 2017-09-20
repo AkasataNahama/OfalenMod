@@ -151,8 +151,13 @@ public abstract class TileEntityWorldEditorBase extends TileEntity implements IS
 		return itemStack.getItem() == OfalenModItemCore.partsOfalen && itemStack.getItemDamage() == 4;
 	}
 
+	/** 停止していたら作業を始め、作業中なら停止する。 */
+	public void changeIsWorking() {
+		this.setIsWorking(!isWorking);
+	}
+
 	/** 作業中かどうかを設定する。変更があった場合、メタデータも更新する。 */
-	public void setIsWorking(boolean isWorking) {
+	private void setIsWorking(boolean isWorking) {
 		if (this.isWorking == isWorking)
 			return;
 		worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, isWorking ? 1 : 0, 3);
