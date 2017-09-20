@@ -239,6 +239,8 @@ info.ofalen.filter.black=Black List
 info.ofalen.filter.white=White List
 # World Editor
 info.ofalen.editor.hasNBT=Containing setting data
+info.ofalen.editor.installedFilter=The filter was installed to the device.
+info.ofalen.editor.setRange=The working range of the device was set.
 info.ofalen.setting.editor.range.isAbsolute=Coord Saving
 info.ofalen.setting.editor.range.isAbsolute.0=Relative
 info.ofalen.setting.editor.range.isAbsolute.1=Absolute

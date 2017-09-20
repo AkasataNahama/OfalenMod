@@ -239,6 +239,8 @@ info.ofalen.filter.black=ブラックリスト
 info.ofalen.filter.white=ホワイトリスト
 # 世界系
 info.ofalen.editor.hasNBT=設定のデータが保存されています
+info.ofalen.editor.installedFilter=装置にフィルターがインストールされました。
+info.ofalen.editor.setRange=装置の作業範囲が設定されました。
 info.ofalen.setting.editor.range.isAbsolute=座標記録
 info.ofalen.setting.editor.range.isAbsolute.0=相対値
 info.ofalen.setting.editor.range.isAbsolute.1=絶対値

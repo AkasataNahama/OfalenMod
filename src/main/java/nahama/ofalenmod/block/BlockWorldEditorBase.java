@@ -68,6 +68,7 @@ public abstract class BlockWorldEditorBase extends BlockContainer {
 				if (itemStack.getItem() == OfalenModItemCore.filterItem && FilterUtil.isAvailableFilterTag(itemStack)) {
 					// アイテムフィルターを持っていたら、フィルターをインストールする。
 					FilterUtil.installFilterToTileEntity(world, x, y, z, FilterUtil.getFilterTag(itemStack));
+					OfalenUtil.addChatTranslationMessage(player, "info.ofalen.editor.installedFilter");
 					return true;
 				} else if (itemStack.getItem() == OfalenModItemCore.installerFilter) {
 					TileEntity tileEntity = world.getTileEntity(x, y, z);
@@ -87,6 +88,7 @@ public abstract class BlockWorldEditorBase extends BlockContainer {
 						TileEntity tileEntity = world.getTileEntity(x, y, z);
 						if (tileEntity != null && tileEntity instanceof TileEntityWorldEditorBase) {
 							((TileEntityWorldEditorBase) tileEntity).setRange(range.convertToNormal());
+							OfalenUtil.addChatTranslationMessage(player, "info.ofalen.editor.setRange");
 							return true;
 						}
 					}
