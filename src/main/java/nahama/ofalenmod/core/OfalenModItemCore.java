@@ -239,23 +239,23 @@ public class OfalenModItemCore {
 		// 防御玉
 		ballDefenseG1 = new ItemOfalenBall(new PotionEffect(Potion.resistance.id, 2400, 0)).setUnlocalizedName("ofalen.ball.defense.G1").setTextureName("ofalenmod:ball-1-0");
 		GameRegistry.registerItem(ballDefenseG1, "ballDefense");
-		ballDefenseG2 = new ItemOfalenBall(new PotionEffect(Potion.resistance.id, 2400, 1)).setUnlocalizedName("ofalen.ball.defense.G2").setTextureName("ofalenmod:ball-2-0");
+		ballDefenseG2 = new ItemOfalenBall(new PotionEffect(Potion.resistance.id, 4800, 1)).setUnlocalizedName("ofalen.ball.defense.G2").setTextureName("ofalenmod:ball-2-0");
 		GameRegistry.registerItem(ballDefenseG2, "ballDefenseG2");
-		ballDefenseG3 = new ItemOfalenBall(new PotionEffect(Potion.resistance.id, 2400, 3)).setUnlocalizedName("ofalen.ball.defense.G3").setTextureName("ofalenmod:ball-3-0");
+		ballDefenseG3 = new ItemOfalenBall(new PotionEffect(Potion.resistance.id, 9600, 3)).setUnlocalizedName("ofalen.ball.defense.G3").setTextureName("ofalenmod:ball-3-0");
 		GameRegistry.registerItem(ballDefenseG3, "ballDefenseG3");
 		// 攻撃玉
 		ballAttackG1 = new ItemOfalenBall(new PotionEffect(Potion.damageBoost.id, 2400, 0)).setUnlocalizedName("ofalen.ball.attack.G1").setTextureName("ofalenmod:ball-1-2");
 		GameRegistry.registerItem(ballAttackG1, "ballAttack");
-		ballAttackG2 = new ItemOfalenBall(new PotionEffect(Potion.damageBoost.id, 2400, 1)).setUnlocalizedName("ofalen.ball.attack.G2").setTextureName("ofalenmod:ball-2-2");
+		ballAttackG2 = new ItemOfalenBall(new PotionEffect(Potion.damageBoost.id, 4800, 1)).setUnlocalizedName("ofalen.ball.attack.G2").setTextureName("ofalenmod:ball-2-2");
 		GameRegistry.registerItem(ballAttackG2, "ballAttackG2");
-		ballAttackG3 = new ItemOfalenBall(new PotionEffect(Potion.damageBoost.id, 2400, 3)).setUnlocalizedName("ofalen.ball.attack.G3").setTextureName("ofalenmod:ball-3-2");
+		ballAttackG3 = new ItemOfalenBall(new PotionEffect(Potion.damageBoost.id, 9600, 3)).setUnlocalizedName("ofalen.ball.attack.G3").setTextureName("ofalenmod:ball-3-2");
 		GameRegistry.registerItem(ballAttackG3, "ballAttackG3");
 		// 回復玉
 		ballRecoveryG1 = new ItemOfalenBall(new PotionEffect(Potion.regeneration.id, 2400, 0)).setUnlocalizedName("ofalen.ball.recovery.G1").setTextureName("ofalenmod:ball-1-3");
 		GameRegistry.registerItem(ballRecoveryG1, "ballRecovery");
-		ballRecoveryG2 = new ItemOfalenBall(new PotionEffect(Potion.regeneration.id, 2400, 1)).setUnlocalizedName("ofalen.ball.recovery.G2").setTextureName("ofalenmod:ball-2-3");
+		ballRecoveryG2 = new ItemOfalenBall(new PotionEffect(Potion.regeneration.id, 4800, 1)).setUnlocalizedName("ofalen.ball.recovery.G2").setTextureName("ofalenmod:ball-2-3");
 		GameRegistry.registerItem(ballRecoveryG2, "ballRecoveryG2");
-		ballRecoveryG3 = new ItemOfalenBall(new PotionEffect(Potion.regeneration.id, 2400, 3)).setUnlocalizedName("ofalen.ball.recovery.G3").setTextureName("ofalenmod:ball-3-3");
+		ballRecoveryG3 = new ItemOfalenBall(new PotionEffect(Potion.regeneration.id, 9600, 3)).setUnlocalizedName("ofalen.ball.recovery.G3").setTextureName("ofalenmod:ball-3-3");
 		GameRegistry.registerItem(ballRecoveryG3, "ballRecoveryG3");
 		// 耐火玉
 		ballFireproofG1 = new ItemOfalenBall(new PotionEffect(Potion.fireResistance.getId(), 2400, 0));
@@ -271,10 +271,10 @@ public class OfalenModItemCore {
 		ballMiningG1 = new ItemOfalenBall(new PotionEffect(Potion.digSpeed.getId(), 2400, 0));
 		ballMiningG1.setUnlocalizedName("ofalen.ball.mining.G1").setTextureName("ofalenmod:ball-1-5");
 		GameRegistry.registerItem(ballMiningG1, "ballMiningG1");
-		ballMiningG2 = new ItemOfalenBall(new PotionEffect(Potion.digSpeed.getId(), 2400, 1));
+		ballMiningG2 = new ItemOfalenBall(new PotionEffect(Potion.digSpeed.getId(), 4800, 1));
 		ballMiningG2.setUnlocalizedName("ofalen.ball.mining.G2").setTextureName("ofalenmod:ball-2-5");
 		GameRegistry.registerItem(ballMiningG2, "ballMiningG2");
-		ballMiningG3 = new ItemOfalenBall(new PotionEffect(Potion.digSpeed.getId(), 2400, 3));
+		ballMiningG3 = new ItemOfalenBall(new PotionEffect(Potion.digSpeed.getId(), 9600, 3));
 		ballMiningG3.setUnlocalizedName("ofalen.ball.mining.G3").setTextureName("ofalenmod:ball-3-5");
 		GameRegistry.registerItem(ballMiningG3, "ballMiningG3");
 		// 暗視玉
@@ -313,14 +313,14 @@ public class OfalenModItemCore {
 		GameRegistry.registerItem(ballExplosion, "ballExplosion");
 		ballHungry = new ItemOfalenBall(new PotionEffect(Potion.hunger.id, 40, 1599)).setUnlocalizedName("ofalen.ball.hungry").setTextureName("ofalenmod:hungry_ball");
 		GameRegistry.registerItem(ballHungry, "ballHungry");
-		ballPerfect = new ItemPerfectBall(new PotionEffect[] { new PotionEffect(Potion.regeneration.id, 2400, 7), new PotionEffect(Potion.damageBoost.id, 2400, 7), new PotionEffect(Potion.resistance.id, 2400, 7) }).setUnlocalizedName("ofalen.ball.perfect").setTextureName("ofalenmod:ball-2-1");
+		ballPerfect = new ItemPerfectBall(new PotionEffect[] { new PotionEffect(Potion.regeneration.id, 19200, 7), new PotionEffect(Potion.damageBoost.id, 19200, 7), new PotionEffect(Potion.resistance.id, 19200, 7) }).setUnlocalizedName("ofalen.ball.perfect").setTextureName("ofalenmod:ball-2-1");
 		GameRegistry.registerItem(ballPerfect, "ballPerfectOfalen");
 		PotionEffect[] effects = new PotionEffect[7];
-		effects[0] = new PotionEffect(Potion.regeneration.id, 2400, 7);
-		effects[1] = new PotionEffect(Potion.damageBoost.id, 2400, 7);
-		effects[2] = new PotionEffect(Potion.resistance.id, 2400, 7);
+		effects[0] = new PotionEffect(Potion.regeneration.id, 19200, 7);
+		effects[1] = new PotionEffect(Potion.damageBoost.id, 19200, 7);
+		effects[2] = new PotionEffect(Potion.resistance.id, 19200, 7);
 		effects[3] = new PotionEffect(Potion.fireResistance.id, 19200, 0);
-		effects[4] = new PotionEffect(Potion.digSpeed.id, 2400, 7);
+		effects[4] = new PotionEffect(Potion.digSpeed.id, 19200, 7);
 		effects[5] = new PotionEffect(Potion.nightVision.id, 19200, 0);
 		effects[6] = new PotionEffect(Potion.invisibility.id, 19200, 0);
 		ballPerfect2 = new ItemPerfectBall(effects);
