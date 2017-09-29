@@ -117,8 +117,8 @@ public class OfalenModRecipeCore {
 			addBallRecipe(new ItemStack(ballExplosion, 1, i), Items.gunpowder, i);
 		}
 		addSingleBallRecipe(ballHungry, Items.rotten_flesh);
-		addShaped(ballPerfect, "XWX", "R B", "YGY", 'X', CORE[1], 'Y', CORE[3], 'W', ballRecoveryG3, 'R', ballDefenseG3, 'G', new ItemStack(ballEmpty, 1, 2), 'B', ballAttackG3);
-		addShaped(ballPerfect2, "XDX", "OZP", "YVY", 'X', CORE[1], 'Y', CORE[3], 'Z', ballPerfect, 'O', ballFireproofG3, 'V', ballMiningG3, 'P', ballNightVisionG3, 'D', ballTransparentG3);
+		addShaped(new ItemStack(ballPerfect, 4), "XWX", "R B", "YGY", 'X', CORE[1], 'Y', CORE[3], 'W', ballRecoveryG3, 'R', ballDefenseG3, 'G', new ItemStack(ballEmpty, 1, 2), 'B', ballAttackG3);
+		addShaped(new ItemStack(ballPerfect2, 4), "XDX", "OYP", "XVX", 'X', ballPerfect, 'Y', CORE[3], 'O', ballFireproofG3, 'V', ballMiningG3, 'P', ballNightVisionG3, 'D', ballTransparentG3);
 		// 道具
 		addShaped(swordOfalenG1, "X", "X", "Y", 'X', GEM[2], 'Y', new ItemStack(partsOfalen3D, 1, 0));
 		addShaped(shovelOfalenG1, "X", "Y", "Y", 'X', GEM[2], 'Y', new ItemStack(partsOfalen3D, 1, 0));
