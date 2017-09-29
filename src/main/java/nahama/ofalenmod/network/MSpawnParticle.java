@@ -11,7 +11,7 @@ import net.minecraft.client.Minecraft;
 import static nahama.ofalenmod.util.OfalenUtil.random;
 
 public class MSpawnParticle implements IMessage {
-	public float x, y, z;
+	public double x, y, z;
 	public byte type;
 
 	@SuppressWarnings("unused")
@@ -19,25 +19,25 @@ public class MSpawnParticle implements IMessage {
 	}
 
 	public MSpawnParticle(double x, double y, double z, byte type) {
-		this.x = (float) x;
-		this.y = (float) y;
-		this.z = (float) z;
+		this.x = x;
+		this.y = y;
+		this.z = z;
 		this.type = type;
 	}
 
 	@Override
 	public void fromBytes(ByteBuf buf) {
-		x = buf.readFloat();
-		y = buf.readFloat();
-		z = buf.readFloat();
+		x = buf.readDouble();
+		y = buf.readDouble();
+		z = buf.readDouble();
 		type = buf.readByte();
 	}
 
 	@Override
 	public void toBytes(ByteBuf buf) {
-		buf.writeFloat(x);
-		buf.writeFloat(y);
-		buf.writeFloat(z);
+		buf.writeDouble(x);
+		buf.writeDouble(y);
+		buf.writeDouble(z);
 		buf.writeByte(type);
 	}
 
