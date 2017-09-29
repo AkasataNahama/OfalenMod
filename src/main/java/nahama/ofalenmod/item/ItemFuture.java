@@ -3,6 +3,7 @@ package nahama.ofalenmod.item;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import nahama.ofalenmod.OfalenModCore;
+import nahama.ofalenmod.core.OfalenModConfigCore;
 import nahama.ofalenmod.util.OfalenNBTUtil;
 import nahama.ofalenmod.util.OfalenUtil;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -14,7 +15,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 
-public class ItemFuture extends Item {
+public abstract class ItemFuture extends Item {
 	@SideOnly(Side.CLIENT)
 	protected IIcon iconOverlayWeak;
 	@SideOnly(Side.CLIENT)
@@ -52,6 +53,18 @@ public class ItemFuture extends Item {
 		iconOverlayWeak = register.registerIcon("ofalenmod:future-overlay-weak");
 		iconOverlayLacking = register.registerIcon("ofalenmod:future-overlay-lacking");
 	}
+
+	@Override
+	public boolean showDurabilityBar(ItemStack stack) {
+		return OfalenModConfigCore.sizeDurabilityBar != 0.0 && this.getMaterialAmount(stack) < this.getReferenceAmount() * OfalenModConfigCore.sizeDurabilityBar;
+	}
+
+	@Override
+	public double getDurabilityForDisplay(ItemStack stack) {
+		return 1 - ((double) this.getMaterialAmount(stack)) / ((double) this.getReferenceAmount() * OfalenModConfigCore.sizeDurabilityBar);
+	}
+
+	protected abstract int getReferenceAmount();
 
 	/**
 	 * 素材数を減らす。

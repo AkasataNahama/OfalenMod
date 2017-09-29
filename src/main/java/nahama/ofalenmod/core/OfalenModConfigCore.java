@@ -77,6 +77,8 @@ public class OfalenModConfigCore {
 	public static short timeRepairing;
 	// Machine.Fusing
 	public static short timeFusing;
+	// Future
+	public static double sizeDurabilityBar;
 	// Future.Protector
 	public static byte amountProtectingIngotCrafting;
 	public static short amountProtectingIngotReference;
@@ -245,6 +247,9 @@ public class OfalenModConfigCore {
 		timeFusing = (short) register.getInt();
 		// Future
 		register.setCategory(FUTURE);
+		//
+		register.setProperty("sizeDurabilityBar", 2.0, 0.0, Double.MAX_VALUE);
+		sizeDurabilityBar = register.getDouble();
 		// Future.Protector
 		register.setCategory(PROTECTOR);
 		//

@@ -34,6 +34,11 @@ public class ItemTeleporter extends ItemFuture {
 		this.setMaxDamage(0);
 	}
 
+	@Override
+	protected int getReferenceAmount() {
+		return OfalenModConfigCore.amountTeleportingPearlReference;
+	}
+
 	/** クリエイティブタブにアイテムを登録する。 */
 	@Override
 	public void getSubItems(Item item, CreativeTabs creativeTab, List list) {

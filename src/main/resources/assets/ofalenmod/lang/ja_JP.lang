@@ -107,6 +107,8 @@ config.ofalen.prop.timeFusing.tooltip=オファレン融合機が融合1回に�
 # 未来
 config.ofalen.category.general.future=未来
 config.ofalen.category.general.future.tooltip=プロテクター・テレポーター・フローター・コレクターに関する設定です。
+config.ofalen.prop.sizeDurabilityBar=耐久値バーの大きさ
+config.ofalen.prop.sizeDurabilityBar.tooltip=耐久値バーの計算時に基準量に乗算される数値。大きいほど耐久値バーの最大値が大きくなる。
 # 未来/プロテクター
 config.ofalen.category.general.future.protector=プロテクター
 config.ofalen.category.general.future.protector.tooltip=オファレンプロテクターに関する設定です。

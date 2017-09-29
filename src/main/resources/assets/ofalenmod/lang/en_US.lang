@@ -107,6 +107,8 @@ config.ofalen.prop.timeFusing.tooltip=This is the time ofalen fusing machines re
 # Future
 config.ofalen.category.general.future=Future
 config.ofalen.category.general.future.tooltip=This is where you can edit the settings about protectors, teleporters, floaters and collectors.
+config.ofalen.prop.sizeDurabilityBar=Durability Bar Size
+config.ofalen.prop.sizeDurabilityBar.tooltip=This is the number multiplying to the reference amount when calculating the durability bar. The larger this value is, the larger the maximum value of the durability bar is.
 # Future.Protector
 config.ofalen.category.general.future.protector=Protector
 config.ofalen.category.general.future.protector.tooltip=This is where you can edit the settings about ofalen protectors.

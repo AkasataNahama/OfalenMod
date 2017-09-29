@@ -83,6 +83,11 @@ public class ItemCollector extends ItemFuture implements IItemOfalenSettable {
 	}
 
 	@Override
+	protected int getReferenceAmount() {
+		return OfalenModConfigCore.amountCollectingLumpReference;
+	}
+
+	@Override
 	public void getSubItems(Item item, CreativeTabs tab, List list) {
 		ItemStack itemStack = new ItemStack(item);
 		this.setMaterialAmount(itemStack, Math.max(OfalenModConfigCore.amountCollectorDamageExp, OfalenModConfigCore.amountCollectorDamageItem) * 64 * 9 * 6);

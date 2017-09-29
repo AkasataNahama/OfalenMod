@@ -39,6 +39,11 @@ public class ItemFloater extends ItemFuture implements IItemOfalenSettable {
 	private IIcon invalid;
 	private OfalenSettingCategoryOrigin origin;
 
+	@Override
+	protected int getReferenceAmount() {
+		return OfalenModConfigCore.amountFloatingDustReference;
+	}
+
 	/** クリエイティブタブに登録する処理。 */
 	@Override
 	public void getSubItems(Item item, CreativeTabs tab, List list) {

@@ -19,6 +19,11 @@ import java.util.List;
 public class ItemProtector extends ItemFuture {
 	private IIcon invalid;
 
+	@Override
+	protected int getReferenceAmount() {
+		return OfalenModConfigCore.amountProtectingIngotReference;
+	}
+
 	/** クリエイティブタブにアイテムを登録する。 */
 	@Override
 	public void getSubItems(Item item, CreativeTabs tab, List list) {
