@@ -9,32 +9,32 @@ import net.minecraft.tileentity.TileEntity;
 
 public class MTeleporterChannel implements IMessage {
 	public short channel;
-	public short x, y, z;
+	public int x, y, z;
 
 	public MTeleporterChannel() {
 	}
 
 	public MTeleporterChannel(short channel, int x, int y, int z) {
 		this.channel = channel;
-		this.x = (short) x;
-		this.y = (short) y;
-		this.z = (short) z;
+		this.x = x;
+		this.y = y;
+		this.z = z;
 	}
 
 	@Override
 	public void fromBytes(ByteBuf buf) {
 		channel = buf.readShort();
-		x = buf.readShort();
-		y = buf.readShort();
-		z = buf.readShort();
+		x = buf.readInt();
+		y = buf.readInt();
+		z = buf.readInt();
 	}
 
 	@Override
 	public void toBytes(ByteBuf buf) {
 		buf.writeShort(channel);
-		buf.writeShort(x);
-		buf.writeShort(y);
-		buf.writeShort(z);
+		buf.writeInt(x);
+		buf.writeInt(y);
+		buf.writeInt(z);
 	}
 
 	public static class Handler implements IMessageHandler<MTeleporterChannel, IMessage> {

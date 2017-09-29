@@ -8,7 +8,7 @@ import nahama.ofalenmod.tileentity.TileEntityWorldEditorBase;
 import net.minecraft.tileentity.TileEntity;
 
 public class MWorldEditorSetting implements IMessage {
-	public short x, y, z;
+	public int x, y, z;
 	public byte idSetting;
 	public short value;
 
@@ -16,27 +16,27 @@ public class MWorldEditorSetting implements IMessage {
 	}
 
 	public MWorldEditorSetting(TileEntityWorldEditorBase tileEntity, int idSetting, int value) {
-		this.x = (short) tileEntity.xCoord;
-		this.y = (short) tileEntity.yCoord;
-		this.z = (short) tileEntity.zCoord;
+		this.x = tileEntity.xCoord;
+		this.y = tileEntity.yCoord;
+		this.z = tileEntity.zCoord;
 		this.idSetting = (byte) idSetting;
 		this.value = (short) value;
 	}
 
 	@Override
 	public void toBytes(ByteBuf buf) {
-		buf.writeShort(x);
-		buf.writeShort(y);
-		buf.writeShort(z);
+		buf.writeInt(x);
+		buf.writeInt(y);
+		buf.writeInt(z);
 		buf.writeByte(idSetting);
 		buf.writeShort(value);
 	}
 
 	@Override
 	public void fromBytes(ByteBuf buf) {
-		x = buf.readShort();
-		y = buf.readShort();
-		z = buf.readShort();
+		x = buf.readInt();
+		y = buf.readInt();
+		z = buf.readInt();
 		idSetting = buf.readByte();
 		value = buf.readShort();
 	}
