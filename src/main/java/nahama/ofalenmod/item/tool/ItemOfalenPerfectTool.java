@@ -91,7 +91,7 @@ public class ItemOfalenPerfectTool extends ItemTool implements IItemOfalenSettab
 		if (itemStack.getTagCompound().getByte(OfalenNBTUtil.INTERVAL) > 0)
 			return itemStack;
 		if (OfalenKeyHandler.isSprintKeyPressed(player)) {
-			// スプリントキーが押されていたら、モード設定の変更を行う。
+			// ダッシュキーが押されていたら、モード設定の変更を行う。
 			if (mode == 1) {
 				int addition = itemStack.getTagCompound().getByte(OfalenNBTUtil.RANGE_LENGTH_ADDITION);
 				if (!player.isSneaking()) {

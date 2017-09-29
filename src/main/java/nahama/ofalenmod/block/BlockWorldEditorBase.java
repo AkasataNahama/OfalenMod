@@ -48,10 +48,10 @@ public abstract class BlockWorldEditorBase extends BlockContainer {
 		if (!OfalenKeyHandler.isSettingKeyPressed(player)) {
 			// 設定キーが押されていなかったらGUIを開く。
 			if (!OfalenKeyHandler.isSprintKeyPressed(player)) {
-				// スプリントキーが押されていなかったらインベントリのGUIを開く。
+				// ダッシュキーが押されていなかったらインベントリのGUIを開く。
 				player.openGui(OfalenModCore.instance, 1, world, x, y, z);
 			} else {
-				// スプリントキーが押されていたら設定のGUIを開く。
+				// ダッシュキーが押されていたら設定のGUIを開く。
 				player.openGui(OfalenModCore.instance, 0, world, x, y, z);
 			}
 		} else {
@@ -61,7 +61,7 @@ public abstract class BlockWorldEditorBase extends BlockContainer {
 				if (tileEntity != null && tileEntity instanceof TileEntityWorldEditorBase)
 					((TileEntityWorldEditorBase) tileEntity).changeIsWorking();
 			} else {
-				// 設定キーとスプリントキーが押されていたら手持ちアイテムの適用。
+				// 設定キーとダッシュキーが押されていたら手持ちアイテムの適用。
 				ItemStack itemStack = player.getHeldItem();
 				if (itemStack == null)
 					return false;
