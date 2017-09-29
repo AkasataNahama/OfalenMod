@@ -59,15 +59,15 @@ public class OfalenModBlockCore {
 		// 製錬機
 		machineSmelting = new BlockMachineSmelting().setBlockName("ofalen.machineSmelting").setBlockTextureName("ofalenmod:smelting_machine");
 		GameRegistry.registerBlock(machineSmelting, "machineSmelting");
-		GameRegistry.registerTileEntity(TileEntitySmeltingMachine.class, "OfalenMod.SmeltingMachine");
+		GameRegistry.registerTileEntityWithAlternatives(TileEntitySmeltingMachine.class, "OfalenMod.SmeltingMachine", "TileEntitySmeltingMachine");
 		// 変換機
 		machineConverting = new BlockMachineConverting().setBlockName("ofalen.machineConverting").setBlockTextureName("ofalenmod:converting_machine");
 		GameRegistry.registerBlock(machineConverting, "machineConversion");
-		GameRegistry.registerTileEntity(TileEntityConvertingMachine.class, "OfalenMod.ConvertingMachine");
+		GameRegistry.registerTileEntityWithAlternatives(TileEntityConvertingMachine.class, "OfalenMod.ConvertingMachine", "TileEntityConversionMachine");
 		// 修繕機
 		machineRepairing = new BlockMachineRepairing().setBlockName("ofalen.machineRepairing").setBlockTextureName("ofalenmod:repairing_machine");
 		GameRegistry.registerBlock(machineRepairing, "machineRepair");
-		GameRegistry.registerTileEntity(TileEntityRepairingMachine.class, "OfalenMod.RepairingMachine");
+		GameRegistry.registerTileEntityWithAlternatives(TileEntityRepairingMachine.class, "OfalenMod.RepairingMachine", "TileEntityRepairMachine");
 		// 融合機
 		machineFusing = new BlockMachineFusing().setBlockName("ofalen.machineFusing").setBlockTextureName("ofalenmod:fusing_machine");
 		GameRegistry.registerBlock(machineFusing, "machineFusing");
@@ -120,11 +120,11 @@ public class OfalenModBlockCore {
 		// テレポートマーカー
 		markerTeleporting = new BlockTeleportingMarker().setBlockName("ofalen.markerTeleporting").setBlockTextureName("ofalenmod:teleporting_marker");
 		GameRegistry.registerBlock(markerTeleporting, "markerTeleportOfalen");
-		GameRegistry.registerTileEntity(TileEntityTeleportingMarker.class, "OfalenMod.TeleportingMarker");
+		GameRegistry.registerTileEntityWithAlternatives(TileEntityTeleportingMarker.class, "OfalenMod.TeleportingMarker", "TileEntityTeleportMarker");
 		// プレゼントボックス
 		boxPresent = new BlockPresentBox().setBlockName("ofalen.boxPresent").setBlockTextureName("ofalenmod:present_box");
 		GameRegistry.registerBlock(boxPresent, "boxPresentOfalen");
-		GameRegistry.registerTileEntity(TileEntityPresentBox.class, "OfalenMod.PresentBox");
+		GameRegistry.registerTileEntityWithAlternatives(TileEntityPresentBox.class, "OfalenMod.PresentBox", "TileEntityOfalenPresentBox");
 		// オファレン草
 		grassOfalen = new BlockOfalenGrass().setBlockName("ofalen.grass").setBlockTextureName("ofalenmod:grass");
 		GameRegistry.registerBlock(grassOfalen, "grassOfalen");
