@@ -17,7 +17,7 @@ import java.util.List;
 public class ItemLaserMagazine extends Item {
 	public ItemLaserMagazine() {
 		this.setCreativeTab(OfalenModCore.TAB_OFALEN);
-		this.setHasSubtypes(false);
+		this.setHasSubtypes(true);
 		this.setMaxDamage(1024);
 		this.setMaxStackSize(1);
 		this.setNoRepair();
