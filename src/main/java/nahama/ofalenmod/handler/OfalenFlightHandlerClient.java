@@ -128,12 +128,12 @@ public class OfalenFlightHandlerClient {
 		if (isFlightEnabled) {
 			// 上下移動をキャンセル。
 			player.motionY = 0.0D;
-			// スニークキーに入力があれば下降。
-			if (player.movementInput.sneak)
-				player.motionY -= mode.getParam(0);
 			// ジャンプキーに入力があれば上昇。
 			if (player.movementInput.jump)
-				player.motionY += mode.getParam(1);
+				player.motionY += mode.getParam(0);
+			// スニークキーに入力があれば下降。
+			if (player.movementInput.sneak)
+				player.motionY -= mode.getParam(1);
 		}
 	}
 }
