@@ -1,10 +1,12 @@
 package nahama.ofalenmod.recipe;
 
 import nahama.ofalenmod.core.OfalenModItemCore;
+import nahama.ofalenmod.util.OfalenNBTUtil;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 
 public class MagazineRecipe implements IRecipe {
@@ -23,7 +25,7 @@ public class MagazineRecipe implements IRecipe {
 
 	@Override
 	public ItemStack getRecipeOutput() {
-		return new ItemStack(magazine);
+		return this.getMagazineStack(0);
 	}
 
 	@Override
@@ -39,7 +41,7 @@ public class MagazineRecipe implements IRecipe {
 				damage -= 32;
 			}
 		}
-		return new ItemStack(magazine, 1, damage);
+		return this.getMagazineStack(damage);
 	}
 
 	/** クラフティングインベントリがレシピに適合しているか。 */
@@ -71,5 +73,13 @@ public class MagazineRecipe implements IRecipe {
 		}
 		// マガジンとクリスタルがあり、クリスタルが多すぎなければ適合。
 		return hasMagazine && hasCrystal && damageMagazine >= 0;
+	}
+
+	private ItemStack getMagazineStack(int meta) {
+		ItemStack stack = new ItemStack(magazine, 1, meta);
+		NBTTagCompound nbt = new NBTTagCompound();
+		nbt.setBoolean(OfalenNBTUtil.IS_IRREPARABLE, true);
+		stack.setTagCompound(nbt);
+		return stack;
 	}
 }
