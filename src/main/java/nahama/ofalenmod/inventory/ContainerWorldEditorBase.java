@@ -124,14 +124,14 @@ public class ContainerWorldEditorBase extends Container {
 		return copyStack;
 	}
 
-	/** プレイヤーのインベントリがShift+左クリックされた時、どう移動するか。 */
+	/** プレイヤーのインベントリがスニークキー+左クリックされた時、どう移動するか。 */
 	protected int getTypeStackTransfer(ItemStack itemStack) {
 		if (tileEntity.isItemFuel(itemStack))
 			return 1;
 		return 0;
 	}
 
-	/** プレイヤーのインベントリがShift+左クリックされた時の移動処理。 */
+	/** プレイヤーのインベントリがスニークキー+左クリックされた時の移動処理。 */
 	protected boolean mergeStackWithType(int type, ItemStack itemStack) {
 		return this.mergeItemStack(itemStack, 0, INDEX_1, false);
 	}

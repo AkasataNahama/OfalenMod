@@ -30,7 +30,7 @@ public class ItemExpCrystal extends Item {
 					itemStack.stackSize = 0;
 				}
 			} else {
-				// 設定キー + Shift + 右クリックで分解。
+				// 設定キー + スニークキー + 右クリックで分解。
 				if (itemStack.getItemDamage() > 0) {
 					for (int i = 0; i < itemStack.stackSize; i++) {
 						OfalenUtil.dropItemStackNearEntity(new ItemStack(OfalenModItemCore.crystalExp, 64, itemStack.getItemDamage() - 1), player);

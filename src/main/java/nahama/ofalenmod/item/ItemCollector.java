@@ -237,7 +237,7 @@ public class ItemCollector extends ItemFuture implements IItemOfalenSettable {
 				// 右クリックでアイテムのOn/Off。
 				nbt.setBoolean(OfalenNBTUtil.IS_ITEM_DISABLED, !nbt.getBoolean(OfalenNBTUtil.IS_ITEM_DISABLED));
 			} else {
-				// Shift + 右クリックで経験値のOn/Off。
+				// スニークキー + 右クリックで経験値のOn/Off。
 				nbt.setBoolean(OfalenNBTUtil.IS_EXP_DISABLED, !nbt.getBoolean(OfalenNBTUtil.IS_EXP_DISABLED));
 			}
 		} else {

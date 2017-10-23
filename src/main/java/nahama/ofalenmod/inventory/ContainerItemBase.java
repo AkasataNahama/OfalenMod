@@ -72,7 +72,7 @@ public abstract class ContainerItemBase extends Container {
 		return super.slotClick(slotNumber, par2, par3, player);
 	}
 
-	/** Shift+左クリック時の処理。 */
+	/** スニークキー+左クリック時の処理。 */
 	@Override
 	public ItemStack transferStackInSlot(EntityPlayer player, int slotNumber) {
 		ItemStack itemStack = null;
@@ -116,11 +116,11 @@ public abstract class ContainerItemBase extends Container {
 		return itemStack;
 	}
 
-	/** 「スロットに入れられるか」と「Shift+左クリック時の処理」に使う。 */
+	/** 「スロットに入れられるか」と「スニークキー+左クリック時の処理」に使う。 */
 	protected abstract boolean isItemStackEnabled(ItemStack itemStack);
 
 	/**
-	 * プレイヤーのインベントリかクイックスロットでShift+左クリックされた時に移動する処理。
+	 * プレイヤーのインベントリかクイックスロットでスニークキー+左クリックされた時に移動する処理。
 	 * @return 更新が必要か。
 	 */
 	protected boolean transferStackInItemSlot(ItemStack itemStack, int slotNumber) {
