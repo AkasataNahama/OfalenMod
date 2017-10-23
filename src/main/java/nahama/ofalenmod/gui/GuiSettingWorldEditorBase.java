@@ -8,6 +8,7 @@ import nahama.ofalenmod.util.OfalenUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.inventory.GuiContainer;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.StatCollector;
 import org.lwjgl.opengl.GL11;
@@ -16,9 +17,10 @@ public class GuiSettingWorldEditorBase extends GuiContainer {
 	protected static final ResourceLocation TEXTURE = new ResourceLocation("ofalenmod:textures/gui/container/world_editor_setting.png");
 	protected TileEntityWorldEditorBase tileEntity;
 
-	public GuiSettingWorldEditorBase(TileEntityWorldEditorBase tileEntity) {
-		super(new ContainerSettingWorldEditorBase(tileEntity));
+	public GuiSettingWorldEditorBase(EntityPlayer player, TileEntityWorldEditorBase tileEntity) {
+		super(new ContainerSettingWorldEditorBase(player, tileEntity));
 		this.tileEntity = tileEntity;
+		ySize = 222 + 18;
 	}
 
 	@Override

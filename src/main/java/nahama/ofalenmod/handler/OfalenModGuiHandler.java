@@ -50,7 +50,7 @@ public class OfalenModGuiHandler implements IGuiHandler {
 				return new ContainerWorldEditorBase(player, (TileEntityWorldEditorBase) tileEntity);
 		} else if (id == 0) {
 			if (tileEntity instanceof TileEntityWorldEditorBase)
-				return new ContainerSettingWorldEditorBase((TileEntityWorldEditorBase) tileEntity);
+				return new ContainerSettingWorldEditorBase(player, (TileEntityWorldEditorBase) tileEntity);
 		}
 		return null;
 	}
@@ -94,7 +94,7 @@ public class OfalenModGuiHandler implements IGuiHandler {
 				return new GuiWorldEditorBase(player, (TileEntityWorldEditorBase) tileEntity);
 		} else if (id == 0) {
 			if (tileEntity instanceof TileEntityWorldEditorBase)
-				return new GuiSettingWorldEditorBase((TileEntityWorldEditorBase) tileEntity);
+				return new GuiSettingWorldEditorBase(player, (TileEntityWorldEditorBase) tileEntity);
 		}
 		return null;
 	}
