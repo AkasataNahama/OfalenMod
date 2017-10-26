@@ -55,32 +55,35 @@ public class TileEntityBreaker extends TileEntityWorldEditorBase {
 		if (flag)
 			block.onBlockDestroyedByPlayer(worldObj, x, y, z, meta);
 		if (!canDeleteBrokenBlock) {
-			ItemStack itemStack = null;
-			try {
-				itemStack = (ItemStack) ReflectionHelper.findMethod(Block.class, block, new String[] { "createStackedBlock", "func_149644_j" }, int.class).invoke(block, meta);
-			} catch (IllegalAccessException e) {
-				OfalenLog.error("Unable to get drop block by silk touch.", "TileEntityBreaker");
-				e.printStackTrace();
-			} catch (InvocationTargetException e) {
-				OfalenLog.error("Unable to get drop block by silk touch.", "TileEntityBreaker");
-				e.printStackTrace();
-			}
-			if (isSilkTouchEnabled && itemStack != null && block.canSilkHarvest(worldObj, fakePlayer, x, y, z, meta)) {
-				// シルクタッチで破壊し、ドロップする。
-				if (worldObj.getGameRules().getGameRuleBooleanValue("doTileDrops")) {
-					float f = 0.7F;
-					double d0 = (double) (worldObj.rand.nextFloat() * f) + (double) (1.0F - f) * 0.5D;
-					double d1 = (double) (worldObj.rand.nextFloat() * f) + (double) (1.0F - f) * 0.5D;
-					double d2 = (double) (worldObj.rand.nextFloat() * f) + (double) (1.0F - f) * 0.5D;
-					EntityItem entityitem = new EntityItem(worldObj, (double) x + d0, (double) y + d1, (double) z + d2, itemStack);
-					entityitem.delayBeforeCanPickup = 10;
-					worldObj.spawnEntityInWorld(entityitem);
+			if (isSilkTouchEnabled && block.canSilkHarvest(worldObj, fakePlayer, x, y, z, meta)) {
+				ItemStack itemStack = null;
+				try {
+					itemStack = (ItemStack) ReflectionHelper.findMethod(Block.class, block, new String[] { "createStackedBlock", "func_149644_j" }, int.class).invoke(block, meta);
+				} catch (IllegalAccessException e) {
+					OfalenLog.error("Unable to get drop block by silk touch.", "TileEntityBreaker");
+					e.printStackTrace();
+				} catch (InvocationTargetException e) {
+					OfalenLog.error("Unable to get drop block by silk touch.", "TileEntityBreaker");
+					e.printStackTrace();
 				}
-			} else {
+				if (itemStack != null) {
+					// シルクタッチで破壊し、ドロップする。
+					if (worldObj.getGameRules().getGameRuleBooleanValue("doTileDrops")) {
+						float f = 0.7F;
+						double d0 = (double) (worldObj.rand.nextFloat() * f) + (double) (1.0F - f) * 0.5D;
+						double d1 = (double) (worldObj.rand.nextFloat() * f) + (double) (1.0F - f) * 0.5D;
+						double d2 = (double) (worldObj.rand.nextFloat() * f) + (double) (1.0F - f) * 0.5D;
+						EntityItem entityitem = new EntityItem(worldObj, (double) x + d0, (double) y + d1, (double) z + d2, itemStack);
+						entityitem.delayBeforeCanPickup = 10;
+						worldObj.spawnEntityInWorld(entityitem);
+					}
+					return true;
+				}
+			}
+			if (flag) {
 				// 通常のドロップ処理を行う。
-				block.dropBlockAsItem(worldObj, x, y, z, meta, 0);
-				if (flag)
-					block.dropXpOnBlockBreak(worldObj, x, y, z, block.getExpDrop(worldObj, meta, 0));
+				block.harvestBlock(worldObj, fakePlayer, x, y, z, 0);
+				block.dropXpOnBlockBreak(worldObj, x, y, z, block.getExpDrop(worldObj, meta, 0));
 			}
 		}
 		return true;
