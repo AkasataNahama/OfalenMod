@@ -6,7 +6,7 @@ import java.util.Arrays;
 
 /** x, y, zの座標をshortで保持する。equalsオーバーライド済み。 */
 public class BlockPos {
-	private static final int MAX_X_Z = 30000000;
+	private static final int MAX_X_Z = 30000000 - 1;
 	private static final int MIN_X_Z = -30000000;
 	private static final short MAX_Y = 255;
 	private static final short MIN_Y = 0;
