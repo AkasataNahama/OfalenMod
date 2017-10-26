@@ -92,30 +92,30 @@ public class TileEntityBreaker extends TileEntityWorldEditorBase {
 	}
 
 	@Override
-	public short getWithID(int id) {
+	public Object getWithID(int id) {
 		switch (id - super.getAmountSettingID()) {
 		case 0:
-			return (short) (isSilkTouchEnabled ? 1 : 0);
+			return isSilkTouchEnabled;
 		case 1:
-			return (short) (canDeleteBrokenBlock ? 1 : 0);
+			return canDeleteBrokenBlock;
 		case 2:
-			return (short) (canDeleteLiquid ? 1 : 0);
+			return canDeleteLiquid;
 		}
 		return super.getWithID(id);
 	}
 
 	@Override
-	public void setWithID(int id, int value) {
-		super.setWithID(id, value);
+	public void setWithID(int id, byte changeType) {
+		super.setWithID(id, changeType);
 		switch (id - super.getAmountSettingID()) {
 		case 0:
-			isSilkTouchEnabled = (value != 0);
+			isSilkTouchEnabled = !isSilkTouchEnabled;
 			break;
 		case 1:
-			canDeleteBrokenBlock = (value != 0);
+			canDeleteBrokenBlock = !canDeleteBrokenBlock;
 			break;
 		case 2:
-			canDeleteLiquid = (value != 0);
+			canDeleteLiquid = !canDeleteLiquid;
 			break;
 		}
 	}
@@ -136,6 +136,22 @@ public class TileEntityBreaker extends TileEntityWorldEditorBase {
 	@Override
 	protected byte getColor() {
 		return 6;
+	}
+
+	@Override
+	protected void writeToPacketNBT(NBTTagCompound nbt) {
+		super.writeToPacketNBT(nbt);
+		nbt.setBoolean(OfalenNBTUtil.IS_SILK_TOUCH_ENABLED, isSilkTouchEnabled);
+		nbt.setBoolean(OfalenNBTUtil.CAN_DELETE_BROKEN_BLOCK, canDeleteBrokenBlock);
+		nbt.setBoolean(OfalenNBTUtil.CAN_DELETE_LIQUID, canDeleteLiquid);
+	}
+
+	@Override
+	protected void readFromPacketNBT(NBTTagCompound nbt) {
+		super.readFromPacketNBT(nbt);
+		isSilkTouchEnabled = nbt.getBoolean(OfalenNBTUtil.IS_SILK_TOUCH_ENABLED);
+		canDeleteBrokenBlock = nbt.getBoolean(OfalenNBTUtil.CAN_DELETE_BROKEN_BLOCK);
+		canDeleteLiquid = nbt.getBoolean(OfalenNBTUtil.CAN_DELETE_LIQUID);
 	}
 
 	@Override

@@ -90,35 +90,35 @@ public class TileEntityMover extends TileEntityWorldEditorBase {
 	}
 
 	@Override
-	public short getWithID(int id) {
+	public Object getWithID(int id) {
 		switch (id - super.getAmountSettingID()) {
 		case 0:
-			return (short) (isRemovingDisabled ? 1 : 0);
+			return isRemovingDisabled;
 		case 1:
-			return (short) (isPlacingDisabled ? 1 : 0);
+			return isPlacingDisabled;
 		case 2:
-			return (short) (canRemoveLiquid ? 1 : 0);
+			return canRemoveLiquid;
 		case 3:
-			return (short) (canMoveTileEntity ? 1 : 0);
+			return canMoveTileEntity;
 		}
 		return super.getWithID(id);
 	}
 
 	@Override
-	public void setWithID(int id, int value) {
-		super.setWithID(id, value);
+	public void setWithID(int id, byte changeType) {
+		super.setWithID(id, changeType);
 		switch (id - super.getAmountSettingID()) {
 		case 0:
-			isRemovingDisabled = (value != 0);
+			isRemovingDisabled = !isRemovingDisabled;
 			break;
 		case 1:
-			isPlacingDisabled = (value != 0);
+			isPlacingDisabled = !isPlacingDisabled;
 			break;
 		case 2:
-			canRemoveLiquid = (value != 0);
+			canRemoveLiquid = !canRemoveLiquid;
 			break;
 		case 3:
-			canMoveTileEntity = (value != 0);
+			canMoveTileEntity = !canMoveTileEntity;
 			break;
 		}
 	}
@@ -141,6 +141,24 @@ public class TileEntityMover extends TileEntityWorldEditorBase {
 	@Override
 	protected byte getColor() {
 		return 5;
+	}
+
+	@Override
+	protected void writeToPacketNBT(NBTTagCompound nbt) {
+		super.writeToPacketNBT(nbt);
+		nbt.setBoolean(OfalenNBTUtil.IS_REMOVING_DISABLED, isRemovingDisabled);
+		nbt.setBoolean(OfalenNBTUtil.IS_PLACING_DISABLED, isPlacingDisabled);
+		nbt.setBoolean(OfalenNBTUtil.CAN_REMOVE_LIQUID, canRemoveLiquid);
+		nbt.setBoolean(OfalenNBTUtil.CAN_MOVE_TILE_ENTITY, canMoveTileEntity);
+	}
+
+	@Override
+	protected void readFromPacketNBT(NBTTagCompound nbt) {
+		super.readFromPacketNBT(nbt);
+		isRemovingDisabled = nbt.getBoolean(OfalenNBTUtil.IS_REMOVING_DISABLED);
+		isPlacingDisabled = nbt.getBoolean(OfalenNBTUtil.IS_PLACING_DISABLED);
+		canRemoveLiquid = nbt.getBoolean(OfalenNBTUtil.CAN_REMOVE_LIQUID);
+		canMoveTileEntity = nbt.getBoolean(OfalenNBTUtil.CAN_MOVE_TILE_ENTITY);
 	}
 
 	@Override

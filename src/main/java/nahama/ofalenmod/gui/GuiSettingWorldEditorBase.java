@@ -82,17 +82,14 @@ public class GuiSettingWorldEditorBase extends GuiContainer {
 	@Override
 	protected void actionPerformed(GuiButton button) {
 		ButtonWorldEditorSetting buttonSetting = (ButtonWorldEditorSetting) button;
-		int factor = buttonSetting.type;
-		if (factor == 0) {
-			// type == 0はBooleanなので反転。
-			factor = tileEntity.getWithID(buttonSetting.idSetting) == 1 ? -1 : 1;
-		} else {
-			if (OfalenUtil.isKeyPressed(Minecraft.getMinecraft().gameSettings.keyBindSneak))
-				factor *= 10;
-			if (OfalenUtil.isKeyPressed(Minecraft.getMinecraft().gameSettings.keyBindSprint))
-				factor *= 100;
-		}
-		OfalenModPacketCore.WRAPPER.sendToServer(new MWorldEditorSetting(tileEntity, buttonSetting.idSetting, tileEntity.getWithID(buttonSetting.idSetting) + factor));
+		byte changeType = buttonSetting.type;
+		int i = 1;
+		if (OfalenUtil.isKeyPressed(Minecraft.getMinecraft().gameSettings.keyBindSneak))
+			i += 1;
+		if (OfalenUtil.isKeyPressed(Minecraft.getMinecraft().gameSettings.keyBindSprint))
+			i += 2;
+		changeType *= i;
+		OfalenModPacketCore.WRAPPER.sendToServer(new MWorldEditorSetting(tileEntity, buttonSetting.idSetting, changeType));
 	}
 
 	protected static class ButtonWorldEditorSetting extends GuiButton {

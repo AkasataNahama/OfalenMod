@@ -10,17 +10,18 @@ import net.minecraft.tileentity.TileEntity;
 public class MWorldEditorSetting implements IMessage {
 	public int x, y, z;
 	public byte idSetting;
-	public short value;
+	public byte changeType;
 
+	@SuppressWarnings("unused")
 	public MWorldEditorSetting() {
 	}
 
-	public MWorldEditorSetting(TileEntityWorldEditorBase tileEntity, int idSetting, int value) {
+	public MWorldEditorSetting(TileEntityWorldEditorBase tileEntity, byte idSetting, byte changeType) {
 		this.x = tileEntity.xCoord;
 		this.y = tileEntity.yCoord;
 		this.z = tileEntity.zCoord;
-		this.idSetting = (byte) idSetting;
-		this.value = (short) value;
+		this.idSetting = idSetting;
+		this.changeType = changeType;
 	}
 
 	@Override
@@ -29,7 +30,7 @@ public class MWorldEditorSetting implements IMessage {
 		buf.writeInt(y);
 		buf.writeInt(z);
 		buf.writeByte(idSetting);
-		buf.writeShort(value);
+		buf.writeByte(changeType);
 	}
 
 	@Override
@@ -38,7 +39,7 @@ public class MWorldEditorSetting implements IMessage {
 		y = buf.readInt();
 		z = buf.readInt();
 		idSetting = buf.readByte();
-		value = buf.readShort();
+		changeType = buf.readByte();
 	}
 
 	public static class Handler implements IMessageHandler<MWorldEditorSetting, IMessage> {
@@ -47,7 +48,7 @@ public class MWorldEditorSetting implements IMessage {
 			TileEntity tileEntity = ctx.getServerHandler().playerEntity.worldObj.getTileEntity(message.x, message.y, message.z);
 			if (tileEntity == null || !(tileEntity instanceof TileEntityWorldEditorBase))
 				return null;
-			((TileEntityWorldEditorBase) tileEntity).setWithID(message.idSetting, message.value);
+			((TileEntityWorldEditorBase) tileEntity).setWithID(message.idSetting, message.changeType);
 			return null;
 		}
 	}

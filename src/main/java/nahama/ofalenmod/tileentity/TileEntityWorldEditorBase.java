@@ -273,69 +273,82 @@ public abstract class TileEntityWorldEditorBase extends TileEntity implements IS
 	}
 
 	/** 設定IDに応じて表示値を返す。 */
-	public short getWithID(int id) {
+	public Object getWithID(int id) {
 		switch (id) {
 		case 0:
-			return (short) (isAbsoluteRangeSaving ? 1 : 0);
+			return isAbsoluteRangeSaving;
 		case 1:
-			return (short) range.posMin.x;
+			return range.posMin.x;
 		case 2:
-			return (short) range.posMax.x;
+			return range.posMax.x;
 		case 3:
-			return (short) range.posMin.y;
+			return range.posMin.y;
 		case 4:
-			return (short) range.posMax.y;
+			return range.posMax.y;
 		case 5:
-			return (short) range.posMin.z;
+			return range.posMin.z;
 		case 6:
-			return (short) range.posMax.z;
+			return range.posMax.z;
 		case 7:
 			return intervalProcessing;
 		case 8:
 			return intervalRestarting;
 		case 9:
-			return (short) (canRestart ? 1 : 0);
+			return canRestart;
 		}
 		return 0;
 	}
 
 	/** 設定IDに応じて値を変更する。 */
-	public void setWithID(int id, int value) {
+	public void setWithID(int id, byte changeType) {
+		int value = 0;
+		if (changeType != 0) {
+			value = (int) Math.pow(10, Math.abs(changeType) - 1);
+			if (changeType < 0)
+				value *= -1;
+		}
 		switch (id) {
 		case 0:
-			isAbsoluteRangeSaving = (value != 0);
+			isAbsoluteRangeSaving = !isAbsoluteRangeSaving;
 			break;
 		case 1:
+			value += range.posMin.x;
 			if (value > range.posMax.x)
 				value = range.posMax.x;
-			range.posMin.x = (short) value;
+			range.posMin.x = value;
 			break;
 		case 2:
+			value += range.posMax.x;
 			if (value < range.posMin.x)
 				value = range.posMin.x;
-			range.posMax.x = (short) value;
+			range.posMax.x = value;
 			break;
 		case 3:
+			value += range.posMin.y;
 			if (value > range.posMax.y)
 				value = range.posMax.y;
-			range.posMin.y = (short) value;
+			range.posMin.y = value;
 			break;
 		case 4:
+			value += range.posMax.y;
 			if (value < range.posMin.y)
 				value = range.posMin.y;
-			range.posMax.y = (short) value;
+			range.posMax.y = value;
 			break;
 		case 5:
+			value += range.posMin.z;
 			if (value > range.posMax.z)
 				value = range.posMax.z;
-			range.posMin.z = (short) value;
+			range.posMin.z = value;
 			break;
 		case 6:
+			value += range.posMax.z;
 			if (value < range.posMin.z)
 				value = range.posMin.z;
-			range.posMax.z = (short) value;
+			range.posMax.z = value;
 			break;
 		case 7:
+			value += intervalProcessing;
 			if (value < 0)
 				value = 0;
 			if (value > intervalRestarting)
@@ -343,12 +356,15 @@ public abstract class TileEntityWorldEditorBase extends TileEntity implements IS
 			intervalProcessing = (short) value;
 			break;
 		case 8:
+			value += intervalRestarting;
 			if (value < intervalProcessing)
 				value = intervalProcessing;
+			if (value > Short.MAX_VALUE)
+				value = Short.MAX_VALUE;
 			intervalRestarting = (short) value;
 			break;
 		case 9:
-			canRestart = (value != 0);
+			canRestart = !canRestart;
 			break;
 		}
 		// 座標が正常な値かどうか確認し、不正なら修正する。
@@ -360,6 +376,8 @@ public abstract class TileEntityWorldEditorBase extends TileEntity implements IS
 			if (0 < id && id < 7)
 				this.resetCoordWorking();
 		}
+		// クライアントに同期する。
+		worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
 	}
 
 	/** 設定の種類を返す。0 : boolean, 1 : short */
@@ -425,20 +443,37 @@ public abstract class TileEntityWorldEditorBase extends TileEntity implements IS
 	@Override
 	public Packet getDescriptionPacket() {
 		NBTTagCompound nbt = new NBTTagCompound();
-		nbt.setBoolean(OfalenNBTUtil.IS_SURVEYING, isSurveying);
+		this.writeToPacketNBT(nbt);
+		return new S35PacketUpdateTileEntity(this.xCoord, this.yCoord, this.zCoord, 0, nbt);
+	}
+
+	/** 同期用パケットのNBTを書き込む。 */
+	protected void writeToPacketNBT(NBTTagCompound nbt) {
+		nbt.setBoolean(OfalenNBTUtil.IS_RANGE_SAVING_ABSOLUTE, isAbsoluteRangeSaving);
 		if (range != null)
 			nbt.setTag(OfalenNBTUtil.RANGE, range.getNBT());
-		return new S35PacketUpdateTileEntity(this.xCoord, this.yCoord, this.zCoord, 0, nbt);
+		nbt.setShort(OfalenNBTUtil.PROCESSING_INTERVAL, intervalProcessing);
+		nbt.setShort(OfalenNBTUtil.RESTARTING_INTERVAL, intervalRestarting);
+		nbt.setBoolean(OfalenNBTUtil.CAN_RESTART, canRestart);
+		nbt.setBoolean(OfalenNBTUtil.IS_SURVEYING, isSurveying);
 	}
 
 	/** パケットを処理する。 */
 	@Override
 	public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity pkt) {
-		NBTTagCompound nbt = pkt.func_148857_g();
-		isSurveying = nbt.getBoolean(OfalenNBTUtil.IS_SURVEYING);
+		this.readFromPacketNBT(pkt.func_148857_g());
+	}
+
+	/** 同期用パケットのNBTを読み込む。 */
+	protected void readFromPacketNBT(NBTTagCompound nbt) {
+		isAbsoluteRangeSaving = nbt.getBoolean(OfalenNBTUtil.IS_RANGE_SAVING_ABSOLUTE);
 		range = BlockRange.loadFromNBT(nbt.getCompoundTag(OfalenNBTUtil.RANGE));
 		if (range != null)
 			this.resetCoordWorking();
+		intervalProcessing = nbt.getShort(OfalenNBTUtil.PROCESSING_INTERVAL);
+		intervalRestarting = nbt.getShort(OfalenNBTUtil.RESTARTING_INTERVAL);
+		canRestart = nbt.getBoolean(OfalenNBTUtil.CAN_RESTART);
+		isSurveying = nbt.getBoolean(OfalenNBTUtil.IS_SURVEYING);
 	}
 
 	/** 色の番号を返す。4 : 橙, 5 : 翠, 6 : 紫, 7 : 黒。 */

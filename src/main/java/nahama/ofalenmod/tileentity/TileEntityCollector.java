@@ -158,47 +158,71 @@ public class TileEntityCollector extends TileEntityWorldEditorBase {
 	}
 
 	@Override
-	public short getWithID(int id) {
-		if (id == super.getAmountSettingID())
-			return (short) (isItemDisabled ? 1 : 0);
-		if (id == super.getAmountSettingID() + 1)
-			return (short) (isExpDisabled ? 1 : 0);
-		if (id == super.getAmountSettingID() + 2)
-			return (short) (canDeleteItem ? 1 : 0);
-		if (id == super.getAmountSettingID() + 3)
-			return (short) (canDeleteExp ? 1 : 0);
+	public Object getWithID(int id) {
+		switch (id - super.getAmountSettingID()) {
+		case 0:
+			return isItemDisabled;
+		case 1:
+			return isExpDisabled;
+		case 2:
+			return canDeleteItem;
+		case 3:
+			return canDeleteExp;
+		}
 		return super.getWithID(id);
 	}
 
 	@Override
-	public void setWithID(int id, int value) {
-		super.setWithID(id, value);
-		if (id == super.getAmountSettingID())
-			isItemDisabled = (value != 0);
-		if (id == super.getAmountSettingID() + 1)
-			isExpDisabled = (value != 0);
-		if (id == super.getAmountSettingID() + 2)
-			canDeleteItem = (value != 0);
-		if (id == super.getAmountSettingID() + 3)
-			canDeleteExp = (value != 0);
+	public void setWithID(int id, byte changeType) {
+		super.setWithID(id, changeType);
+		switch (id - super.getAmountSettingID()) {
+		case 0:
+			isItemDisabled = !isItemDisabled;
+		case 1:
+			isExpDisabled = !isExpDisabled;
+		case 2:
+			canDeleteItem = !canDeleteItem;
+		case 3:
+			canDeleteExp = !canDeleteExp;
+		}
 	}
 
 	@Override
 	public String getSettingNameWithID(int id) {
-		if (id == super.getAmountSettingID())
+		switch (id - super.getAmountSettingID()) {
+		case 0:
 			return "info.ofalen.setting.collector.isDisabled.item";
-		if (id == super.getAmountSettingID() + 1)
+		case 1:
 			return "info.ofalen.setting.collector.isDisabled.exp";
-		if (id == super.getAmountSettingID() + 2)
+		case 2:
 			return "info.ofalen.setting.collector.canDelete.item";
-		if (id == super.getAmountSettingID() + 3)
+		case 3:
 			return "info.ofalen.setting.collector.canDelete.exp";
+		}
 		return super.getSettingNameWithID(id);
 	}
 
 	@Override
 	protected byte getColor() {
 		return 7;
+	}
+
+	@Override
+	protected void writeToPacketNBT(NBTTagCompound nbt) {
+		super.writeToPacketNBT(nbt);
+		nbt.setBoolean(OfalenNBTUtil.IS_ITEM_DISABLED, isItemDisabled);
+		nbt.setBoolean(OfalenNBTUtil.IS_EXP_DISABLED, isExpDisabled);
+		nbt.setBoolean(OfalenNBTUtil.CAN_DELETE_ITEM, canDeleteItem);
+		nbt.setBoolean(OfalenNBTUtil.CAN_DELETE_EXP, canDeleteExp);
+	}
+
+	@Override
+	protected void readFromPacketNBT(NBTTagCompound nbt) {
+		super.readFromPacketNBT(nbt);
+		isItemDisabled = nbt.getBoolean(OfalenNBTUtil.IS_ITEM_DISABLED);
+		isExpDisabled = nbt.getBoolean(OfalenNBTUtil.IS_EXP_DISABLED);
+		canDeleteItem = nbt.getBoolean(OfalenNBTUtil.CAN_DELETE_ITEM);
+		canDeleteExp = nbt.getBoolean(OfalenNBTUtil.CAN_DELETE_EXP);
 	}
 
 	@Override
