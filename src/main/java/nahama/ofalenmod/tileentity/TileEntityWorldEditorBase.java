@@ -40,8 +40,6 @@ public abstract class TileEntityWorldEditorBase extends TileEntity implements IS
 	private short intervalRestarting = 40;
 	/** 再起動が可能かどうか。 */
 	private boolean canRestart;
-	/** 作業しているかどうか。 */
-	private boolean isWorking;
 	/** 測量器が隣接しているかどうか。 */
 	private boolean isSurveying;
 	/** 燃料の残り燃焼時間。 */
@@ -65,7 +63,7 @@ public abstract class TileEntityWorldEditorBase extends TileEntity implements IS
 			return;
 		}
 		// 作業していないなら終了。
-		if (!isWorking)
+		if (!this.isWorking())
 			return;
 		if (interval > 0) {
 			interval--;
@@ -153,17 +151,25 @@ public abstract class TileEntityWorldEditorBase extends TileEntity implements IS
 		return itemStack.getItem() == OfalenModItemCore.partsOfalen && itemStack.getItemDamage() == 4;
 	}
 
-	/** 停止していたら作業を始め、作業中なら停止する。 */
-	public void changeIsWorking() {
-		this.setIsWorking(!isWorking);
+	/** 作業中か。 */
+	private boolean isWorking() {
+		return this.getBlockMetadata() % 2 == 1;
 	}
 
-	/** 作業中かどうかを設定する。変更があった場合、メタデータも更新する。 */
+	/** 作業中かどうかを設定する。変更があった場合、メタデータを更新する。 */
 	private void setIsWorking(boolean isWorking) {
-		if (this.isWorking == isWorking)
+		if (this.isWorking() == isWorking)
 			return;
-		worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, isWorking ? 1 : 0, 3);
-		this.isWorking = isWorking;
+		int meta = this.getBlockMetadata() / 2 * 2;
+		if (isWorking)
+			meta += 1;
+		worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, meta, 3);
+		this.updateContainingBlockInfo();
+	}
+
+	/** 停止していたら作業を始め、作業中なら停止する。 */
+	public void changeIsWorking() {
+		this.setIsWorking(!this.isWorking());
 	}
 
 	/** 燃料の数を返す。 */
@@ -497,7 +503,6 @@ public abstract class TileEntityWorldEditorBase extends TileEntity implements IS
 		nbt.setTag(OfalenNBTUtil.WORKING_COORD, coordWorking.getNBT());
 		nbt.setShort(OfalenNBTUtil.INTERVAL, interval);
 		nbt.setShort(OfalenNBTUtil.FUEL_AMOUNT, this.getAmountFuel());
-		nbt.setBoolean(OfalenNBTUtil.IS_WORKING, isWorking);
 		nbt.setTag(FilterUtil.ITEM_FILTER, tagItemFilter);
 		nbt.setShort(OfalenNBTUtil.REMAINING_ENERGY, remainingEnergy);
 	}
@@ -510,7 +515,6 @@ public abstract class TileEntityWorldEditorBase extends TileEntity implements IS
 		coordWorking = BlockPos.loadFromNBT(nbt.getCompoundTag(OfalenNBTUtil.WORKING_COORD));
 		interval = nbt.getShort(OfalenNBTUtil.INTERVAL);
 		this.setAmountFuel(nbt.getShort(OfalenNBTUtil.FUEL_AMOUNT));
-		isWorking = nbt.getBoolean(OfalenNBTUtil.IS_WORKING);
 		tagItemFilter = nbt.getCompoundTag(FilterUtil.ITEM_FILTER);
 		remainingEnergy = nbt.getShort(OfalenNBTUtil.REMAINING_ENERGY);
 	}
@@ -626,7 +630,6 @@ public abstract class TileEntityWorldEditorBase extends TileEntity implements IS
 		this.writeSettingToNBT(nbtTileEntity);
 		nbtTileEntity.setTag(OfalenNBTUtil.WORKING_COORD, coordWorking.getNBT());
 		nbtTileEntity.setShort(OfalenNBTUtil.INTERVAL, interval);
-		nbtTileEntity.setBoolean(OfalenNBTUtil.IS_WORKING, isWorking);
 		nbtTileEntity.setShort(OfalenNBTUtil.REMAINING_ENERGY, remainingEnergy);
 		this.writeAdditionalDataToItemNBT(nbtTileEntity);
 		nbtItem.setTag(OfalenNBTUtil.TILE_ENTITY_WORLD_EDITOR_BASE, nbtTileEntity);
@@ -651,7 +654,6 @@ public abstract class TileEntityWorldEditorBase extends TileEntity implements IS
 			this.readSettingFromNBT(nbtTileEntity);
 			coordWorking = BlockPos.loadFromNBT(nbtTileEntity.getCompoundTag(OfalenNBTUtil.WORKING_COORD));
 			interval = nbtTileEntity.getShort(OfalenNBTUtil.INTERVAL);
-			this.setIsWorking(nbtTileEntity.getBoolean(OfalenNBTUtil.IS_WORKING));
 			remainingEnergy = nbtTileEntity.getShort(OfalenNBTUtil.REMAINING_ENERGY);
 			this.readAdditionalDataFromItemNBT(nbtTileEntity);
 		}
