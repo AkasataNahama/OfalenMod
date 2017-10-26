@@ -71,7 +71,7 @@ public abstract class TileEntityWorldEditorBase extends TileEntity implements IS
 			interval--;
 			return;
 		}
-		interval = intervalProcessing;
+		interval = (short) (intervalProcessing - 1);
 		// 作業が不可能な状態か、燃料が足りなかったら作業を停止。
 		if (!this.canWork() || !this.hasEnoughEnergy()) {
 			this.setIsWorking(false);
@@ -89,7 +89,7 @@ public abstract class TileEntityWorldEditorBase extends TileEntity implements IS
 				return;
 			}
 			// 再起動が有効なら次の作業までの間隔を設定する。
-			interval = (short) (intervalRestarting - intervalProcessing);
+			interval = (short) (intervalRestarting - 1);
 			return;
 		}
 		// 作業を実行し、成功したら燃料を消費する。
@@ -349,16 +349,16 @@ public abstract class TileEntityWorldEditorBase extends TileEntity implements IS
 			break;
 		case 7:
 			value += intervalProcessing;
-			if (value < 0)
-				value = 0;
-			if (value > intervalRestarting)
-				value = intervalRestarting;
+			if (value < 1)
+				value = 1;
+			if (value > Short.MAX_VALUE)
+				value = Short.MAX_VALUE;
 			intervalProcessing = (short) value;
 			break;
 		case 8:
 			value += intervalRestarting;
-			if (value < intervalProcessing)
-				value = intervalProcessing;
+			if (value < 1)
+				value = 1;
 			if (value > Short.MAX_VALUE)
 				value = Short.MAX_VALUE;
 			intervalRestarting = (short) value;
