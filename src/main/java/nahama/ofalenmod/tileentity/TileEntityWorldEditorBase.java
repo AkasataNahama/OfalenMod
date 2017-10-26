@@ -40,8 +40,6 @@ public abstract class TileEntityWorldEditorBase extends TileEntity implements IS
 	private short intervalRestarting = 40;
 	/** 再起動が可能かどうか。 */
 	private boolean canRestart;
-	/** 測量器が隣接しているかどうか。 */
-	private boolean isSurveying;
 	/** 燃料の残り燃焼時間。 */
 	private short remainingEnergy;
 
@@ -55,7 +53,7 @@ public abstract class TileEntityWorldEditorBase extends TileEntity implements IS
 		if (worldObj.isRemote) {
 			if (interval > 0)
 				interval--;
-			if (isSurveying && interval < 1) {
+			if (this.isSurveying() && interval < 1) {
 				// 測量器が隣接していて、残り時間が0になったらパーティクルを発生させる。
 				OfalenParticleUtil.spawnParticleWithBlockRange(worldObj, range.copy(), this.getColor());
 				interval = 20;
@@ -149,6 +147,37 @@ public abstract class TileEntityWorldEditorBase extends TileEntity implements IS
 	/** 燃料として使えるItemStackかどうか。 */
 	public boolean isItemFuel(ItemStack itemStack) {
 		return itemStack.getItem() == OfalenModItemCore.partsOfalen && itemStack.getItemDamage() == 4;
+	}
+
+	/** 測量パーティクルを発生させるか。 */
+	private boolean isSurveying() {
+		return this.getBlockMetadata() % 4 / 2 == 1;
+	}
+
+	/** 測量パーティクルを発生させるか設定する。変更があった場合、メタデータを更新する。 */
+	private void setIsSurveying(boolean isSurveying) {
+		if (this.isSurveying() == isSurveying)
+			return;
+		int meta = this.getBlockMetadata() / 4 * 4 + this.getBlockMetadata() % 2;
+		if (isSurveying)
+			meta += 2;
+		worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, meta, 3);
+		this.updateContainingBlockInfo();
+	}
+
+	/** 測量器が隣接しているかにより{@link #isSurveying()}を更新する。 */
+	public void searchSurveyor() {
+		this.setIsSurveying(false);
+		for (ForgeDirection dir : ForgeDirection.VALID_DIRECTIONS) {
+			int x = xCoord + dir.offsetX;
+			int y = yCoord + dir.offsetY;
+			int z = zCoord + dir.offsetZ;
+			Block block = worldObj.getBlock(x, y, z);
+			if (block instanceof BlockSurveyor) {
+				this.setIsSurveying(true);
+				break;
+			}
+		}
 	}
 
 	/** 作業中か。 */
@@ -274,8 +303,7 @@ public abstract class TileEntityWorldEditorBase extends TileEntity implements IS
 
 	public void setRange(BlockRange range) {
 		this.range = range;
-		if (isSurveying)
-			worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
+		worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
 	}
 
 	/** 設定IDに応じて表示値を返す。 */
@@ -429,22 +457,6 @@ public abstract class TileEntityWorldEditorBase extends TileEntity implements IS
 		tagItemFilter = filter;
 	}
 
-	/** 測量器が隣接しているかにより{@link #isSurveying}を更新する。 */
-	public void searchSurveyor() {
-		isSurveying = false;
-		for (ForgeDirection dir : ForgeDirection.VALID_DIRECTIONS) {
-			int x = xCoord + dir.offsetX;
-			int y = yCoord + dir.offsetY;
-			int z = zCoord + dir.offsetZ;
-			Block block = worldObj.getBlock(x, y, z);
-			if (block instanceof BlockSurveyor) {
-				isSurveying = true;
-				break;
-			}
-		}
-		worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
-	}
-
 	/** 送信するパケットを返す。 */
 	@Override
 	public Packet getDescriptionPacket() {
@@ -465,7 +477,6 @@ public abstract class TileEntityWorldEditorBase extends TileEntity implements IS
 		nbt.setShort(OfalenNBTUtil.PROCESSING_INTERVAL, intervalProcessing);
 		nbt.setShort(OfalenNBTUtil.RESTARTING_INTERVAL, intervalRestarting);
 		nbt.setBoolean(OfalenNBTUtil.CAN_RESTART, canRestart);
-		nbt.setBoolean(OfalenNBTUtil.IS_SURVEYING, isSurveying);
 	}
 
 	/** パケットを処理する。 */
@@ -489,7 +500,6 @@ public abstract class TileEntityWorldEditorBase extends TileEntity implements IS
 		intervalProcessing = nbt.getShort(OfalenNBTUtil.PROCESSING_INTERVAL);
 		intervalRestarting = nbt.getShort(OfalenNBTUtil.RESTARTING_INTERVAL);
 		canRestart = nbt.getBoolean(OfalenNBTUtil.CAN_RESTART);
-		isSurveying = nbt.getBoolean(OfalenNBTUtil.IS_SURVEYING);
 	}
 
 	/** 色の番号を返す。4 : 橙, 5 : 翠, 6 : 紫, 7 : 黒。 */

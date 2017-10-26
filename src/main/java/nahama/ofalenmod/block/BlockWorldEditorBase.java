@@ -203,7 +203,7 @@ public abstract class BlockWorldEditorBase extends BlockContainer {
 	/** 光源レベルを返す。 */
 	@Override
 	public int getLightValue(IBlockAccess iBlockAccess, int x, int y, int z) {
-		if (iBlockAccess.getBlockMetadata(x, y, z) > 1)
+		if (iBlockAccess.getBlockMetadata(x, y, z) % 2 == 1)
 			return 13;
 		return 0;
 	}
