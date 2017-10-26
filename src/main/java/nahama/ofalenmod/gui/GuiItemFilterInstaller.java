@@ -1,11 +1,6 @@
 package nahama.ofalenmod.gui;
 
-import nahama.ofalenmod.core.OfalenModPacketCore;
 import nahama.ofalenmod.inventory.ContainerItemFilterInstaller;
-import nahama.ofalenmod.network.MFilterInstaller;
-import nahama.ofalenmod.util.OfalenUtil;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
@@ -17,17 +12,6 @@ public class GuiItemFilterInstaller extends GuiContainer {
 
 	public GuiItemFilterInstaller(EntityPlayer player) {
 		super(new ContainerItemFilterInstaller(player));
-	}
-
-	@Override
-	public void initGui() {
-		super.initGui();
-		OfalenUtil.add(buttonList, new Button(-1, guiLeft + 120, guiTop + 16));
-	}
-
-	@Override
-	protected void actionPerformed(GuiButton button) {
-		OfalenModPacketCore.WRAPPER.sendToServer(new MFilterInstaller());
 	}
 
 	@Override
@@ -44,23 +28,5 @@ public class GuiItemFilterInstaller extends GuiContainer {
 		int k = (width - xSize) / 2;
 		int l = (height - ySize) / 2;
 		this.drawTexturedModalRect(k, l, 0, 0, xSize, ySize);
-	}
-
-	public static class Button extends GuiButton {
-		public Button(int id, int x, int y) {
-			super(id, x, y, 8, 8, "");
-		}
-
-		@Override
-		public void drawButton(Minecraft minecraft, int cursorX, int cursorY) {
-			if (!visible)
-				return;
-			minecraft.getTextureManager().bindTexture(GUITEXTURE);
-			GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-			// カーソルがあっているか。
-			field_146123_n = cursorX >= xPosition && cursorY >= yPosition && cursorX < xPosition + width && cursorY < yPosition + height;
-			int offY = field_146123_n ? 0 : height;
-			this.drawTexturedModalRect(xPosition, yPosition, 176, offY, width, height);
-		}
 	}
 }
