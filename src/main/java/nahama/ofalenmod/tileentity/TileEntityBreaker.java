@@ -139,32 +139,16 @@ public class TileEntityBreaker extends TileEntityWorldEditorBase {
 	}
 
 	@Override
-	protected void writeToPacketNBT(NBTTagCompound nbt) {
-		super.writeToPacketNBT(nbt);
+	protected void writeSettingToNBT(NBTTagCompound nbt) {
+		super.writeSettingToNBT(nbt);
 		nbt.setBoolean(OfalenNBTUtil.IS_SILK_TOUCH_ENABLED, isSilkTouchEnabled);
 		nbt.setBoolean(OfalenNBTUtil.CAN_DELETE_BROKEN_BLOCK, canDeleteBrokenBlock);
 		nbt.setBoolean(OfalenNBTUtil.CAN_DELETE_LIQUID, canDeleteLiquid);
 	}
 
 	@Override
-	protected void readFromPacketNBT(NBTTagCompound nbt) {
-		super.readFromPacketNBT(nbt);
-		isSilkTouchEnabled = nbt.getBoolean(OfalenNBTUtil.IS_SILK_TOUCH_ENABLED);
-		canDeleteBrokenBlock = nbt.getBoolean(OfalenNBTUtil.CAN_DELETE_BROKEN_BLOCK);
-		canDeleteLiquid = nbt.getBoolean(OfalenNBTUtil.CAN_DELETE_LIQUID);
-	}
-
-	@Override
-	public void writeToNBT(NBTTagCompound nbt) {
-		super.writeToNBT(nbt);
-		nbt.setBoolean(OfalenNBTUtil.IS_SILK_TOUCH_ENABLED, isSilkTouchEnabled);
-		nbt.setBoolean(OfalenNBTUtil.CAN_DELETE_BROKEN_BLOCK, canDeleteBrokenBlock);
-		nbt.setBoolean(OfalenNBTUtil.CAN_DELETE_LIQUID, canDeleteLiquid);
-	}
-
-	@Override
-	public void readFromNBT(NBTTagCompound nbt) {
-		super.readFromNBT(nbt);
+	protected void readSettingFromNBT(NBTTagCompound nbt) {
+		super.readSettingFromNBT(nbt);
 		isSilkTouchEnabled = nbt.getBoolean(OfalenNBTUtil.IS_SILK_TOUCH_ENABLED);
 		canDeleteBrokenBlock = nbt.getBoolean(OfalenNBTUtil.CAN_DELETE_BROKEN_BLOCK);
 		canDeleteLiquid = nbt.getBoolean(OfalenNBTUtil.CAN_DELETE_LIQUID);

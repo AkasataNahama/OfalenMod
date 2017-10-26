@@ -144,8 +144,8 @@ public class TileEntityMover extends TileEntityWorldEditorBase {
 	}
 
 	@Override
-	protected void writeToPacketNBT(NBTTagCompound nbt) {
-		super.writeToPacketNBT(nbt);
+	protected void writeSettingToNBT(NBTTagCompound nbt) {
+		super.writeSettingToNBT(nbt);
 		nbt.setBoolean(OfalenNBTUtil.IS_REMOVING_DISABLED, isRemovingDisabled);
 		nbt.setBoolean(OfalenNBTUtil.IS_PLACING_DISABLED, isPlacingDisabled);
 		nbt.setBoolean(OfalenNBTUtil.CAN_REMOVE_LIQUID, canRemoveLiquid);
@@ -153,8 +153,8 @@ public class TileEntityMover extends TileEntityWorldEditorBase {
 	}
 
 	@Override
-	protected void readFromPacketNBT(NBTTagCompound nbt) {
-		super.readFromPacketNBT(nbt);
+	protected void readSettingFromNBT(NBTTagCompound nbt) {
+		super.readSettingFromNBT(nbt);
 		isRemovingDisabled = nbt.getBoolean(OfalenNBTUtil.IS_REMOVING_DISABLED);
 		isPlacingDisabled = nbt.getBoolean(OfalenNBTUtil.IS_PLACING_DISABLED);
 		canRemoveLiquid = nbt.getBoolean(OfalenNBTUtil.CAN_REMOVE_LIQUID);
@@ -164,10 +164,27 @@ public class TileEntityMover extends TileEntityWorldEditorBase {
 	@Override
 	public void writeToNBT(NBTTagCompound nbt) {
 		super.writeToNBT(nbt);
-		nbt.setBoolean(OfalenNBTUtil.IS_REMOVING_DISABLED, isRemovingDisabled);
-		nbt.setBoolean(OfalenNBTUtil.IS_PLACING_DISABLED, isPlacingDisabled);
-		nbt.setBoolean(OfalenNBTUtil.CAN_REMOVE_LIQUID, canRemoveLiquid);
-		nbt.setBoolean(OfalenNBTUtil.CAN_MOVE_TILE_ENTITY, canMoveTileEntity);
+		this.writeMovingBlocks(nbt);
+	}
+
+	@Override
+	public void readFromNBT(NBTTagCompound nbt) {
+		super.readFromNBT(nbt);
+		this.readMovingBlocks(nbt);
+	}
+
+	@Override
+	protected void writeAdditionalDataToItemNBT(NBTTagCompound nbt) {
+		super.writeAdditionalDataToItemNBT(nbt);
+		this.writeMovingBlocks(nbt);
+	}
+
+	@Override
+	protected void readAdditionalDataFromItemNBT(NBTTagCompound nbt) {
+		this.readMovingBlocks(nbt);
+	}
+
+	private void writeMovingBlocks(NBTTagCompound nbt) {
 		NBTTagList nbtTagList = new NBTTagList();
 		for (Map.Entry<BlockPos, BlockData> entry : listMovingBlock.entrySet()) {
 			NBTTagCompound nbt1 = new NBTTagCompound();
@@ -178,13 +195,7 @@ public class TileEntityMover extends TileEntityWorldEditorBase {
 		nbt.setTag(OfalenNBTUtil.MOVING_BLOCKS, nbtTagList);
 	}
 
-	@Override
-	public void readFromNBT(NBTTagCompound nbt) {
-		super.readFromNBT(nbt);
-		isRemovingDisabled = nbt.getBoolean(OfalenNBTUtil.IS_REMOVING_DISABLED);
-		isPlacingDisabled = nbt.getBoolean(OfalenNBTUtil.IS_PLACING_DISABLED);
-		canRemoveLiquid = nbt.getBoolean(OfalenNBTUtil.CAN_REMOVE_LIQUID);
-		canMoveTileEntity = nbt.getBoolean(OfalenNBTUtil.CAN_MOVE_TILE_ENTITY);
+	private void readMovingBlocks(NBTTagCompound nbt) {
 		listMovingBlock.clear();
 		NBTTagList nbtTagList = nbt.getTagList(OfalenNBTUtil.MOVING_BLOCKS, 10);
 		for (int i = 0; i < nbtTagList.tagCount(); i++) {

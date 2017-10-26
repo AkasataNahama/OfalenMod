@@ -14,17 +14,16 @@ import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.IIcon;
+import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 public abstract class BlockWorldEditorBase extends BlockContainer {
 	private IIcon[] icons;
@@ -115,25 +114,9 @@ public abstract class BlockWorldEditorBase extends BlockContainer {
 	public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase entity, ItemStack itemStack) {
 		super.onBlockPlacedBy(world, x, y, z, entity, itemStack);
 		TileEntity tileEntity = world.getTileEntity(x, y, z);
-		// 世界系のTileEntityがないか、ItemStackがNBTを持っていないなら終了。
-		if (tileEntity == null || !(tileEntity instanceof TileEntityWorldEditorBase) || !itemStack.hasTagCompound())
-			return;
-		TileEntityWorldEditorBase editor = (TileEntityWorldEditorBase) tileEntity;
-		// TileEntityのデータが保存されていないなら、アイテムフィルターの情報だけ読み込む。
-		if (!itemStack.getTagCompound().hasKey(OfalenNBTUtil.TILE_ENTITY_WORLD_EDITOR_BASE, new NBTTagCompound().getId())) {
-			editor.setTagItemFilter(FilterUtil.getFilterTag(itemStack));
-			return;
-		}
-		// データが保存されていたら、座標を書き換えてから読み込む。
-		NBTTagCompound nbt = itemStack.getTagCompound().getCompoundTag(OfalenNBTUtil.TILE_ENTITY_WORLD_EDITOR_BASE);
-		nbt.setInteger("x", x);
-		nbt.setInteger("y", y);
-		nbt.setInteger("z", z);
-		editor.readFromNBT(nbt);
-		// フィルターの情報をItemStackのものに更新する。
-		editor.setTagItemFilter(FilterUtil.getFilterTag(itemStack));
-		// 測量器が隣接しているか判定する。
-		editor.searchSurveyor();
+		// TileEntityが存在したら、設置時の処理を行う。
+		if (tileEntity != null && tileEntity instanceof TileEntityWorldEditorBase)
+			((TileEntityWorldEditorBase) tileEntity).onPlaced(itemStack);
 	}
 
 	/** 破壊された時の処理。 */
@@ -144,38 +127,62 @@ public abstract class BlockWorldEditorBase extends BlockContainer {
 			return;
 		}
 		TileEntity tileEntity = world.getTileEntity(x, y, z);
-		if (tileEntity == null || !(tileEntity instanceof TileEntityWorldEditorBase)) {
-			super.breakBlock(world, x, y, z, block, meta);
-			return;
+		if (tileEntity != null && tileEntity instanceof TileEntityWorldEditorBase) {
+			// TileEntityの内部にあるアイテムをドロップさせる。
+			TileEntityWorldEditorBase editor = (TileEntityWorldEditorBase) tileEntity;
+			for (int i = 0; i < editor.getSizeInventory(); i++) {
+				ItemStack itemStack = editor.getStackInSlotOnClosing(i);
+				if (itemStack != null)
+					OfalenUtil.dropItemStackNearBlock(itemStack, world, x, y, z);
+			}
+			// TileEntityの更新を通知する。
+			world.func_147453_f(x, y, z, block);
 		}
-		// TileEntityの内部にあるアイテムをドロップさせる。
-		TileEntityWorldEditorBase editor = (TileEntityWorldEditorBase) tileEntity;
-		for (int i = 0; i < editor.getSizeInventory(); i++) {
-			ItemStack itemStack = editor.getStackInSlotOnClosing(i);
-			if (itemStack != null)
-				OfalenUtil.dropItemStackNearBlock(itemStack, world, x, y, z);
-		}
-		// このブロック自身をドロップさせる。NBT保存用。
-		Item item = getItemDropped(meta, world.rand, 0);
-		NBTTagCompound nbtItem = new NBTTagCompound();
-		NBTTagCompound nbtTileEntity = new NBTTagCompound();
-		tileEntity.writeToNBT(nbtTileEntity);
-		nbtItem.setTag(OfalenNBTUtil.TILE_ENTITY_WORLD_EDITOR_BASE, nbtTileEntity);
-		// アイテムフィルターのデータをItemStackのNBTの直下に複製する。
-		nbtItem.setTag(FilterUtil.ITEM_FILTER, nbtTileEntity.getTag(FilterUtil.ITEM_FILTER));
-		ItemStack itemStack = new ItemStack(item, 1, damageDropped(meta));
-		itemStack.setTagCompound(nbtItem);
-		OfalenUtil.dropItemStackNearBlock(itemStack, world, x, y, z);
-		// TileEntityの更新を通知する。
-		world.func_147453_f(x, y, z, block);
 		super.breakBlock(world, x, y, z, block, meta);
 	}
 
-	/** ドロップ数を返す。 */
+	/** ブロックを破壊する処理。 */
 	@Override
-	public int quantityDropped(Random random) {
-		// breakBlockでNBTを保存してドロップさせるため、通常のドロップ数は0にする。
-		return 0;
+	public boolean removedByPlayer(World world, EntityPlayer player, int x, int y, int z, boolean willHarvest) {
+		// 回収予定（後でharvestBlockが呼ばれる）なら何もせずに、そうでないなら通常の処理（setBlockToAir）を行う。
+		return willHarvest || super.removedByPlayer(world, player, x, y, z, false);
+	}
+
+	/** ブロックを回収する処理。 */
+	@Override
+	public void harvestBlock(World world, EntityPlayer player, int x, int y, int z, int meta) {
+		// 通常の処理を行う。getDropsが呼ばれる。
+		super.harvestBlock(world, player, x, y, z, meta);
+		// removedByPlayerでキャンセルした破壊処理（setBlockToAir）を行う。
+		super.removedByPlayer(world, player, x, y, z, false);
+	}
+
+	/** ドロップアイテムのリストを返す。 */
+	@Override
+	public ArrayList<ItemStack> getDrops(World world, int x, int y, int z, int metadata, int fortune) {
+		TileEntity tileEntity = world.getTileEntity(x, y, z);
+		if (tileEntity != null && tileEntity instanceof TileEntityWorldEditorBase) {
+			// TileEntityが存在したら、データを保存する。
+			ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
+			drops.add(((TileEntityWorldEditorBase) tileEntity).getDrop());
+			return drops;
+		} else {
+			// TileEntityが存在しなかったら、通常の処理を行う。
+			return super.getDrops(world, x, y, z, metadata, fortune);
+		}
+	}
+
+	/** 対応するItemStackを返す。 */
+	@Override
+	public ItemStack getPickBlock(MovingObjectPosition target, World world, int x, int y, int z, EntityPlayer player) {
+		TileEntity tileEntity = world.getTileEntity(x, y, z);
+		if (tileEntity != null && tileEntity instanceof TileEntityWorldEditorBase) {
+			// TileEntityが存在したら、データを保存して返す。
+			return ((TileEntityWorldEditorBase) tileEntity).getDrop();
+		} else {
+			// TileEntityが存在しなかったら、通常の処理を行う。
+			return super.getPickBlock(target, world, x, y, z, player);
+		}
 	}
 
 	/** テクスチャを登録する処理。 */

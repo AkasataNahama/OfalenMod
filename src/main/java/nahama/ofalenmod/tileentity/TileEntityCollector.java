@@ -208,8 +208,8 @@ public class TileEntityCollector extends TileEntityWorldEditorBase {
 	}
 
 	@Override
-	protected void writeToPacketNBT(NBTTagCompound nbt) {
-		super.writeToPacketNBT(nbt);
+	protected void writeSettingToNBT(NBTTagCompound nbt) {
+		super.writeSettingToNBT(nbt);
 		nbt.setBoolean(OfalenNBTUtil.IS_ITEM_DISABLED, isItemDisabled);
 		nbt.setBoolean(OfalenNBTUtil.IS_EXP_DISABLED, isExpDisabled);
 		nbt.setBoolean(OfalenNBTUtil.CAN_DELETE_ITEM, canDeleteItem);
@@ -217,8 +217,8 @@ public class TileEntityCollector extends TileEntityWorldEditorBase {
 	}
 
 	@Override
-	protected void readFromPacketNBT(NBTTagCompound nbt) {
-		super.readFromPacketNBT(nbt);
+	protected void readSettingFromNBT(NBTTagCompound nbt) {
+		super.readSettingFromNBT(nbt);
 		isItemDisabled = nbt.getBoolean(OfalenNBTUtil.IS_ITEM_DISABLED);
 		isExpDisabled = nbt.getBoolean(OfalenNBTUtil.IS_EXP_DISABLED);
 		canDeleteItem = nbt.getBoolean(OfalenNBTUtil.CAN_DELETE_ITEM);
@@ -228,20 +228,12 @@ public class TileEntityCollector extends TileEntityWorldEditorBase {
 	@Override
 	public void writeToNBT(NBTTagCompound nbt) {
 		super.writeToNBT(nbt);
-		nbt.setBoolean(OfalenNBTUtil.IS_ITEM_DISABLED, isItemDisabled);
-		nbt.setBoolean(OfalenNBTUtil.IS_EXP_DISABLED, isExpDisabled);
-		nbt.setBoolean(OfalenNBTUtil.CAN_DELETE_ITEM, canDeleteItem);
-		nbt.setBoolean(OfalenNBTUtil.CAN_DELETE_EXP, canDeleteExp);
 		nbt.setTag(OfalenNBTUtil.ITEMS, OfalenNBTUtil.writeItemStacksToNBTTagList(itemStacks));
 	}
 
 	@Override
 	public void readFromNBT(NBTTagCompound nbt) {
 		super.readFromNBT(nbt);
-		isItemDisabled = nbt.getBoolean(OfalenNBTUtil.IS_ITEM_DISABLED);
-		isExpDisabled = nbt.getBoolean(OfalenNBTUtil.IS_EXP_DISABLED);
-		canDeleteItem = nbt.getBoolean(OfalenNBTUtil.CAN_DELETE_ITEM);
-		canDeleteExp = nbt.getBoolean(OfalenNBTUtil.CAN_DELETE_EXP);
 		itemStacks = OfalenNBTUtil.loadItemStacksFromNBTTagList(nbt.getTagList(OfalenNBTUtil.ITEMS, 10), this.getSizeOwnInventory());
 	}
 

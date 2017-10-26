@@ -443,15 +443,19 @@ public abstract class TileEntityWorldEditorBase extends TileEntity implements IS
 	@Override
 	public Packet getDescriptionPacket() {
 		NBTTagCompound nbt = new NBTTagCompound();
-		this.writeToPacketNBT(nbt);
+		this.writeSettingToNBT(nbt);
 		return new S35PacketUpdateTileEntity(this.xCoord, this.yCoord, this.zCoord, 0, nbt);
 	}
 
 	/** 同期用パケットのNBTを書き込む。 */
-	protected void writeToPacketNBT(NBTTagCompound nbt) {
+	protected void writeSettingToNBT(NBTTagCompound nbt) {
 		nbt.setBoolean(OfalenNBTUtil.IS_RANGE_SAVING_ABSOLUTE, isAbsoluteRangeSaving);
-		if (range != null)
-			nbt.setTag(OfalenNBTUtil.RANGE, range.getNBT());
+		if (range != null) {
+			BlockRange tmp = range.copy();
+			if (!isAbsoluteRangeSaving)
+				tmp.applyOffset(xCoord, yCoord, zCoord, true);
+			nbt.setTag(OfalenNBTUtil.RANGE, tmp.getNBT());
+		}
 		nbt.setShort(OfalenNBTUtil.PROCESSING_INTERVAL, intervalProcessing);
 		nbt.setShort(OfalenNBTUtil.RESTARTING_INTERVAL, intervalRestarting);
 		nbt.setBoolean(OfalenNBTUtil.CAN_RESTART, canRestart);
@@ -461,15 +465,21 @@ public abstract class TileEntityWorldEditorBase extends TileEntity implements IS
 	/** パケットを処理する。 */
 	@Override
 	public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity pkt) {
-		this.readFromPacketNBT(pkt.func_148857_g());
+		this.readSettingFromNBT(pkt.func_148857_g());
+		if (range != null)
+			this.resetCoordWorking();
 	}
 
 	/** 同期用パケットのNBTを読み込む。 */
-	protected void readFromPacketNBT(NBTTagCompound nbt) {
+	protected void readSettingFromNBT(NBTTagCompound nbt) {
 		isAbsoluteRangeSaving = nbt.getBoolean(OfalenNBTUtil.IS_RANGE_SAVING_ABSOLUTE);
 		range = BlockRange.loadFromNBT(nbt.getCompoundTag(OfalenNBTUtil.RANGE));
-		if (range != null)
-			this.resetCoordWorking();
+		if (range != null) {
+			if (!isAbsoluteRangeSaving)
+				range.applyOffset(xCoord, yCoord, zCoord);
+			range.posMin.checkAndFixCoord();
+			range.posMax.checkAndFixCoord();
+		}
 		intervalProcessing = nbt.getShort(OfalenNBTUtil.PROCESSING_INTERVAL);
 		intervalRestarting = nbt.getShort(OfalenNBTUtil.RESTARTING_INTERVAL);
 		canRestart = nbt.getBoolean(OfalenNBTUtil.CAN_RESTART);
@@ -483,22 +493,12 @@ public abstract class TileEntityWorldEditorBase extends TileEntity implements IS
 	@Override
 	public void writeToNBT(NBTTagCompound nbt) {
 		super.writeToNBT(nbt);
-		nbt.setBoolean(OfalenNBTUtil.IS_RANGE_SAVING_ABSOLUTE, isAbsoluteRangeSaving);
-		if (range != null) {
-			BlockRange tmp = range.copy();
-			if (!isAbsoluteRangeSaving)
-				tmp.applyOffset(xCoord, yCoord, zCoord, true);
-			nbt.setTag(OfalenNBTUtil.RANGE, tmp.getNBT());
-		}
+		this.writeSettingToNBT(nbt);
 		nbt.setTag(OfalenNBTUtil.WORKING_COORD, coordWorking.getNBT());
 		nbt.setShort(OfalenNBTUtil.INTERVAL, interval);
-		nbt.setShort(OfalenNBTUtil.PROCESSING_INTERVAL, intervalProcessing);
-		nbt.setShort(OfalenNBTUtil.RESTARTING_INTERVAL, intervalRestarting);
 		nbt.setShort(OfalenNBTUtil.FUEL_AMOUNT, this.getAmountFuel());
-		nbt.setBoolean(OfalenNBTUtil.CAN_RESTART, canRestart);
 		nbt.setBoolean(OfalenNBTUtil.IS_WORKING, isWorking);
 		nbt.setTag(FilterUtil.ITEM_FILTER, tagItemFilter);
-		nbt.setBoolean(OfalenNBTUtil.IS_SURVEYING, isSurveying);
 		nbt.setShort(OfalenNBTUtil.REMAINING_ENERGY, remainingEnergy);
 	}
 
@@ -506,23 +506,12 @@ public abstract class TileEntityWorldEditorBase extends TileEntity implements IS
 	@Override
 	public void readFromNBT(NBTTagCompound nbt) {
 		super.readFromNBT(nbt);
-		isAbsoluteRangeSaving = nbt.getBoolean(OfalenNBTUtil.IS_RANGE_SAVING_ABSOLUTE);
-		range = BlockRange.loadFromNBT(nbt.getCompoundTag(OfalenNBTUtil.RANGE));
-		if (range != null) {
-			if (!isAbsoluteRangeSaving)
-				range.applyOffset(xCoord, yCoord, zCoord);
-			range.posMin.checkAndFixCoord();
-			range.posMax.checkAndFixCoord();
-		}
+		this.readSettingFromNBT(nbt);
 		coordWorking = BlockPos.loadFromNBT(nbt.getCompoundTag(OfalenNBTUtil.WORKING_COORD));
 		interval = nbt.getShort(OfalenNBTUtil.INTERVAL);
-		intervalProcessing = nbt.getShort(OfalenNBTUtil.PROCESSING_INTERVAL);
-		intervalRestarting = nbt.getShort(OfalenNBTUtil.RESTARTING_INTERVAL);
 		this.setAmountFuel(nbt.getShort(OfalenNBTUtil.FUEL_AMOUNT));
-		canRestart = nbt.getBoolean(OfalenNBTUtil.CAN_RESTART);
 		isWorking = nbt.getBoolean(OfalenNBTUtil.IS_WORKING);
 		tagItemFilter = nbt.getCompoundTag(FilterUtil.ITEM_FILTER);
-		isSurveying = nbt.getBoolean(OfalenNBTUtil.IS_SURVEYING);
 		remainingEnergy = nbt.getShort(OfalenNBTUtil.REMAINING_ENERGY);
 	}
 
@@ -625,5 +614,57 @@ public abstract class TileEntityWorldEditorBase extends TileEntity implements IS
 	@Override
 	public boolean canExtractItem(int slot, ItemStack itemStack, int side) {
 		return false;
+	}
+
+	/** ドロップアイテムを返す。 */
+	public ItemStack getDrop() {
+		ItemStack stack = new ItemStack(this.getBlockType());
+		FilterUtil.initFilterTag(stack);
+		NBTTagCompound nbtItem = stack.stackTagCompound;
+		// TileEntityの情報をNBTに保存する。
+		NBTTagCompound nbtTileEntity = new NBTTagCompound();
+		this.writeSettingToNBT(nbtTileEntity);
+		nbtTileEntity.setTag(OfalenNBTUtil.WORKING_COORD, coordWorking.getNBT());
+		nbtTileEntity.setShort(OfalenNBTUtil.INTERVAL, interval);
+		nbtTileEntity.setBoolean(OfalenNBTUtil.IS_WORKING, isWorking);
+		nbtTileEntity.setShort(OfalenNBTUtil.REMAINING_ENERGY, remainingEnergy);
+		this.writeAdditionalDataToItemNBT(nbtTileEntity);
+		nbtItem.setTag(OfalenNBTUtil.TILE_ENTITY_WORLD_EDITOR_BASE, nbtTileEntity);
+		// フィルターの情報はアイテムの直下に保存する。
+		FilterUtil.copyFilterTag(FilterUtil.getFilterTag(stack), tagItemFilter);
+		stack.setTagCompound(nbtItem);
+		return stack;
+	}
+
+	/** ドロップアイテムのNBTに追加で情報を書き込む。 */
+	protected void writeAdditionalDataToItemNBT(NBTTagCompound nbt) {
+	}
+
+	/** 設置時の処理。 */
+	public void onPlaced(ItemStack stack) {
+		NBTTagCompound nbt = stack.getTagCompound();
+		if (nbt == null)
+			return;
+		// TileEntityの情報を読み込む。
+		if (nbt.hasKey(OfalenNBTUtil.TILE_ENTITY_WORLD_EDITOR_BASE)) {
+			NBTTagCompound nbtTileEntity = nbt.getCompoundTag(OfalenNBTUtil.TILE_ENTITY_WORLD_EDITOR_BASE);
+			this.readSettingFromNBT(nbtTileEntity);
+			coordWorking = BlockPos.loadFromNBT(nbtTileEntity.getCompoundTag(OfalenNBTUtil.WORKING_COORD));
+			interval = nbtTileEntity.getShort(OfalenNBTUtil.INTERVAL);
+			this.setIsWorking(nbtTileEntity.getBoolean(OfalenNBTUtil.IS_WORKING));
+			remainingEnergy = nbtTileEntity.getShort(OfalenNBTUtil.REMAINING_ENERGY);
+			this.readAdditionalDataFromItemNBT(nbtTileEntity);
+		}
+		// フィルターの情報を読み込む。
+		if (FilterUtil.isAvailableFilterTag(stack))
+			tagItemFilter = FilterUtil.getFilterTag(stack);
+		// 測量器が隣接しているか判定する。
+		this.searchSurveyor();
+		// クライアントに同期する。
+		worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
+	}
+
+	/** 設置時にアイテムのNBTから追加の情報を読み込む。 */
+	protected void readAdditionalDataFromItemNBT(NBTTagCompound nbt) {
 	}
 }
