@@ -14,6 +14,6 @@ public class ItemCreativeSword extends ItemSword {
 	@Override
 	public boolean hitEntity(ItemStack itemStack, EntityLivingBase target, EntityLivingBase player) {
 		target.setHealth(0);
-		return true;
+		return super.hitEntity(itemStack, target, player);
 	}
 }

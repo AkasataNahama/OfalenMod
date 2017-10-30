@@ -49,6 +49,8 @@ config.ofalen.prop.probLodeGeneration.tooltip=オファレンの巨大鉱脈の�
 # 道具
 config.ofalen.category.general.tool=道具
 config.ofalen.category.general.tool.tooltip=オファレンの道具に関する設定です。
+config.ofalen.prop.durabilityCreativeSword=クリエイティブソード耐久値
+config.ofalen.prop.durabilityCreativeSword.tooltip=サバイバルにおけるクリエイティブソードの使用回数の上限です。0にすると壊れなくなります。
 # 道具/万能ツール
 config.ofalen.category.general.tool.perfect=万能ツール
 config.ofalen.category.general.tool.perfect.tooltip=オファレンの万能ツールに関する設定です。

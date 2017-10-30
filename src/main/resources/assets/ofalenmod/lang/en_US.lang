@@ -49,6 +49,8 @@ config.ofalen.prop.probLodeGeneration.tooltip=This is the generation probability
 # Tool
 config.ofalen.category.general.tool=Tool
 config.ofalen.category.general.tool.tooltip=This is where you can edit the settings about ofalen tools.
+config.ofalen.prop.durabilityCreativeSword=Creative Sword Durability
+config.ofalen.prop.durabilityCreativeSword.tooltip=This is the maximum number of uses of creative swords. When this is 0, they will not break.
 # Tool.Perfect
 config.ofalen.category.general.tool.perfect=Perfect Tool
 config.ofalen.category.general.tool.perfect.tooltip=This is where you can edit the settings about ofalen perfect tools.

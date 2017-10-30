@@ -55,6 +55,8 @@ public class OfalenModConfigCore {
 	public static byte frequencyGeneration;
 	public static byte limitGeneration;
 	public static double probLodeGeneration;
+	// Tool
+	public static short durabilityCreativeSword;
 	// Tool.Perfect
 	public static byte rangeMax;
 	// Ball.Explosion
@@ -181,6 +183,10 @@ public class OfalenModConfigCore {
 		probLodeGeneration = register.getDouble();
 		// Tool
 		register.setCategory(TOOL);
+		//
+		register.setProperty("durabilityCreativeSword", 0, 0, Short.MAX_VALUE);
+		register.setRequiresMcRestart();
+		durabilityCreativeSword = (short) register.getInt();
 		// Tool.Perfect
 		register.setCategory(PERFECT);
 		//
