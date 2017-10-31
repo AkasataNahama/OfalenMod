@@ -1,13 +1,12 @@
 package nahama.ofalenmod.util;
 
-import java.util.HashMap;
-
+@SuppressWarnings({ "WeakerAccess", "unused" })
 public class OfalenTimer {
-	private static HashMap<String, Long> timeMap = new HashMap<String, Long>();
+	//	private static HashMap<String, Long> timeMap = new HashMap<String, Long>();
 
 	public static void start(String name) {
-		timeMap.remove(name);
-		timeMap.put(name, System.nanoTime());
+		//		timeMap.remove(name);
+		//		timeMap.put(name, System.nanoTime());
 	}
 
 	public static void start(String name, boolean log) {
@@ -17,12 +16,12 @@ public class OfalenTimer {
 	}
 
 	private static long getTime(String name) {
-		Long time = timeMap.get(name);
-		if (time == null) {
-			OfalenLog.debuggingInfo("Failed to get time of " + name);
-			return 0;
-		}
-		return System.nanoTime() - time;
+		//		Long time = timeMap.get(name);
+		//		if (time == null) {
+		//			OfalenLog.debuggingInfo("Failed to get time of " + name);
+		return 0;
+		//		}
+		//		return System.nanoTime() - time;
 	}
 
 	public static void watchAndLog(String name) {
@@ -40,7 +39,6 @@ public class OfalenTimer {
 		watchAndLogNano(name, 0);
 	}
 
-	@SuppressWarnings("WeakerAccess")
 	public static void watchAndLogNano(String name, long min) {
 		long time = getTime(name);
 		if (time >= min)

@@ -69,8 +69,7 @@ public class OfalenModCore {
 	public static final String MOD_VERSION = "2.0.0";
 	public static final String VERSION = "[" + MINECRAFT_VERSION + "]" + MOD_VERSION;
 	public static final VersionUtil.VersionString VERSION_STRING = new VersionUtil.VersionString(OfalenModCore.MOD_ID, OfalenModCore.VERSION);
-	// TODO リリース時に変更
-	public static final boolean IS_DEBUGGING = true;
+	public static final boolean IS_DEBUGGING = false;
 	/** 追加するクリエイティブタブ。 */
 	public static final CreativeTabs TAB_OFALEN = new CreativeTabOfalen("ofalen.tabOfalenMod");
 	/** coreクラスのインスタンス。 */
