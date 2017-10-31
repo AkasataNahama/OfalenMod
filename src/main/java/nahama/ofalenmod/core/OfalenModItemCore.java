@@ -142,15 +142,15 @@ public class OfalenModItemCore {
 	public static Item teleporterOfalen;
 	public static Item floaterOfalen;
 	public static Item collectorOfalen;
+	// 測量杖
+	public static Item wandSurveying;
+	// 経験値の結晶
+	public static Item crystalExp;
 	// フィルター
 	public static Item filterItem;
 	public static Item installerFilter;
 	// オファレン草
 	public static Item seedsOfalen;
-	// 測量杖
-	public static Item wandSurveying;
-	// 経験値の結晶
-	public static Item crystalExp;
 
 	/** アイテムを登録する。 */
 	public static void registerItem() {
@@ -386,6 +386,12 @@ public class OfalenModItemCore {
 		GameRegistry.registerItem(floaterOfalen, "floaterOfalen");
 		collectorOfalen = new ItemCollector().setUnlocalizedName("ofalen.collector").setTextureName("ofalenmod:future-collector");
 		GameRegistry.registerItem(collectorOfalen, "collector");
+		// 測量杖
+		wandSurveying = new ItemSurveyingWand().setUnlocalizedName("ofalen.wandSurveying").setTextureName("ofalenmod:surveying_wand");
+		GameRegistry.registerItem(wandSurveying, "wandSurveying");
+		// 経験値の結晶
+		crystalExp = new ItemExpCrystal().setUnlocalizedName("ofalen.crystalExp").setTextureName("ofalenmod:exp_crystal");
+		GameRegistry.registerItem(crystalExp, "crystalExp");
 		// フィルター
 		filterItem = new ItemFilter().setUnlocalizedName("ofalen.filterItem").setTextureName("ofalenmod:item_filter");
 		GameRegistry.registerItem(filterItem, "item_filter");
@@ -394,11 +400,5 @@ public class OfalenModItemCore {
 		// オファレン草
 		seedsOfalen = new ItemOfalenSeed(OfalenModBlockCore.grassOfalen).setUnlocalizedName("ofalen.seeds").setTextureName("ofalenmod:seeds");
 		GameRegistry.registerItem(seedsOfalen, "seedsOfalen");
-		// 測量杖
-		wandSurveying = new ItemSurveyingWand().setUnlocalizedName("ofalen.wandSurveying").setTextureName("ofalenmod:surveying_wand");
-		GameRegistry.registerItem(wandSurveying, "wandSurveying");
-		// 経験値の結晶
-		crystalExp = new ItemExpCrystal().setUnlocalizedName("ofalen.crystalExp").setTextureName("ofalenmod:exp_crystal");
-		GameRegistry.registerItem(crystalExp, "crystalExp");
 	}
 }
