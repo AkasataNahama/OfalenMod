@@ -41,7 +41,7 @@ public abstract class TileEntityGradedMachineBase extends TileEntity implements 
 		boolean isBurning = timeBurning > 0;
 		// 燃焼時間を更新する。
 		if (isBurning)
-			timeBurning--;
+			timeBurning -= OfalenUtil.power(2, grade);
 		// 燃焼中でなく、材料・燃料のどちらかでも空なら終了する。
 		if (timeBurning <= 0 && !this.hasMaterialOrFuel()) {
 			timeWorking = 0;
@@ -102,16 +102,16 @@ public abstract class TileEntityGradedMachineBase extends TileEntity implements 
 			return 0;
 		// 匠魔石ならConfigで設定された時間。
 		if (OfalenModOreDictCore.isMatchedItemStack(OfalenModOreDictCore.listTDiamond, itemStack))
-			return (short) (this.getTimeWithGrade(OfalenModConfigCore.timeTDiamondBurning));
+			return OfalenModConfigCore.timeTDiamondBurning;
 		// かまど燃料としての燃焼時間をConfigで設定された値で割る。
-		short time = (short) (this.getTimeWithGrade(TileEntityFurnace.getItemBurnTime(itemStack)) / OfalenModConfigCore.divisorBurningTime);
+		short time = (short) (TileEntityFurnace.getItemBurnTime(itemStack) / OfalenModConfigCore.divisorBurningTime);
 		// partsでないなら終了。
 		if (itemStack.getItem() != OfalenModItemCore.partsOfalen)
 			return time;
 		int meta = itemStack.getItemDamage();
 		// 白色オファレン燃料ならConfigで設定された時間。
 		if (meta == 3)
-			return (short) (this.getTimeWithGrade(OfalenModConfigCore.timeWhiteFuelBurning));
+			return OfalenModConfigCore.timeWhiteFuelBurning;
 		return time;
 	}
 
