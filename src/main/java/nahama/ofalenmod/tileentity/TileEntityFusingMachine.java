@@ -114,7 +114,7 @@ public class TileEntityFusingMachine extends TileEntityGradedMachineBase {
 
 	/** 作業にかかる時間を返す。 */
 	@Override
-	protected int getMaxWorkingTimeBase() {
+	protected int getMaxWorkingTime() {
 		return OfalenModConfigCore.timeFusing;
 	}
 

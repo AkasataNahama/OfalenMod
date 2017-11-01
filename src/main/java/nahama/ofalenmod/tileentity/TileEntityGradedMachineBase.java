@@ -41,7 +41,7 @@ public abstract class TileEntityGradedMachineBase extends TileEntity implements 
 		boolean isBurning = timeBurning > 0;
 		// 燃焼時間を更新する。
 		if (isBurning)
-			timeBurning -= OfalenUtil.power(2, grade);
+			timeBurning -= this.getGradeEfficiency();
 		// 燃焼中でなく、材料・燃料のどちらかでも空なら終了する。
 		if (timeBurning <= 0 && !this.hasMaterialOrFuel()) {
 			timeWorking = 0;
@@ -64,9 +64,9 @@ public abstract class TileEntityGradedMachineBase extends TileEntity implements 
 		}
 		// 燃焼中で作業可能なら、作業する。
 		if (timeBurning > 0 && this.canWork()) {
-			++timeWorking;
+			timeWorking += this.getGradeEfficiency();
 			// 作業時間が一定に達したら、作業を実行する。
-			if (timeWorking >= this.getMaxWorkingTimeWithGrade()) {
+			if (timeWorking >= this.getMaxWorkingTime()) {
 				timeWorking = 0;
 				this.work();
 			}
@@ -115,18 +115,13 @@ public abstract class TileEntityGradedMachineBase extends TileEntity implements 
 		return time;
 	}
 
-	/** 作業時間などにGradeを反映させる。 */
-	private int getTimeWithGrade(int time) {
-		return time / OfalenUtil.power(2, grade);
-	}
-
-	/** 作業にかかる時間を返す。 */
-	private int getMaxWorkingTimeWithGrade() {
-		return this.getTimeWithGrade(this.getMaxWorkingTimeBase());
+	/** Gradeに応じて作業速度を返す。 */
+	private int getGradeEfficiency() {
+		return OfalenUtil.power(2, grade);
 	}
 
 	/** 作業にかかる時間の基準値を返す。 */
-	protected abstract int getMaxWorkingTimeBase();
+	protected abstract int getMaxWorkingTime();
 
 	/** 作業時の処理。 */
 	protected abstract void work();
@@ -206,7 +201,7 @@ public abstract class TileEntityGradedMachineBase extends TileEntity implements 
 
 	/** 作業の完了率を0~scaleで返す。Gui表示用。 */
 	public int getWorkProgressScaled(int scale) {
-		int max = this.getMaxWorkingTimeWithGrade();
+		int max = this.getMaxWorkingTime();
 		if (max < 1)
 			return this.isBurning() ? scale : 0;
 		return timeWorking * scale / max;
