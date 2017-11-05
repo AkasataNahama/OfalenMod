@@ -138,24 +138,6 @@ public class OfalenModConfigCore {
 		register.setProperty("enablePresentBox", true);
 		register.setRequiresWorldRestart();
 		isPresentBoxEnabled = register.getBoolean();
-		// Material
-		register.setCategory(MATERIAL);
-		//
-		register.setProperty("positionStoneLumpRecipeBlank", 7, 0, 8);
-		register.setRequiresMcRestart();
-		positionStoneLumpRecipeBlank = (byte) register.getInt();
-		//
-		register.setProperty("amountCoverPlateCrafting", 6, 1, 64);
-		register.setRequiresMcRestart();
-		amountCoverPlateCrafting = (byte) register.getInt();
-		//
-		register.setProperty("amountGrade3PartsCrafting", 2, 1, 64);
-		register.setRequiresMcRestart();
-		amountGrade3PartsCrafting = (byte) register.getInt();
-		//
-		register.setProperty("amountOfalenStickCrafting", 1, 1, 64);
-		register.setRequiresMcRestart();
-		amountOfalenStickCrafting = (byte) register.getInt();
 		// Ore
 		register.setCategory(ORE);
 		//
@@ -181,37 +163,20 @@ public class OfalenModConfigCore {
 		//
 		register.setProperty("probLodeGeneration", 0.001, 0.0, 1.0);
 		probLodeGeneration = register.getDouble();
-		// Tool
-		register.setCategory(TOOL);
+		// Material
+		register.setCategory(MATERIAL);
 		//
-		register.setProperty("durabilityCreativeSword", 0, 0, Short.MAX_VALUE);
+		register.setProperty("amountCoverPlateCrafting", 6, 1, 64);
 		register.setRequiresMcRestart();
-		durabilityCreativeSword = (short) register.getInt();
-		// Tool.Perfect
-		register.setCategory(PERFECT);
+		amountCoverPlateCrafting = (byte) register.getInt();
 		//
-		register.setProperty("rangeMax", 7, 0, Byte.MAX_VALUE);
-		rangeMax = (byte) register.getInt();
-		// Ball
-		register.setCategory(BALL);
-		// Ball.Explosion
-		register.setCategory(EXPLOSION);
-		//
-		register.setProperty("sizeExplosion", 2, 0, Byte.MAX_VALUE);
-		sizeExplosion = (byte) register.getInt();
-		// Laser
-		register.setCategory(LASER);
-		//
-		register.setProperty("amountLaserCrafting", 4, 1, 64);
+		register.setProperty("amountGrade3PartsCrafting", 2, 1, 64);
 		register.setRequiresMcRestart();
-		amountLaserCrafting = (byte) register.getInt();
+		amountGrade3PartsCrafting = (byte) register.getInt();
 		//
-		register.setProperty("amountWhiteLaserCrafting", 3, 1, 64);
+		register.setProperty("positionStoneLumpRecipeBlank", 7, 0, 8);
 		register.setRequiresMcRestart();
-		amountWhiteLaserCrafting = (byte) register.getInt();
-		//
-		register.setProperty("enableLaserSound", true);
-		isLaserSoundEnabled = register.getBoolean();
+		positionStoneLumpRecipeBlank = (byte) register.getInt();
 		// Machine
 		register.setCategory(MACHINE);
 		//
@@ -219,14 +184,14 @@ public class OfalenModConfigCore {
 		register.setRequiresMcRestart();
 		amountWhiteFuelCrafting = (byte) register.getInt();
 		//
-		register.setProperty("divisorBurningTime", 256, 1, Short.MAX_VALUE);
-		divisorBurningTime = (short) register.getInt();
+		register.setProperty("timeWhiteFuelBurning", 6400, 0, Short.MAX_VALUE);
+		timeWhiteFuelBurning = (short) register.getInt();
 		//
 		register.setProperty("timeTDiamondBurning", 400, 0, Short.MAX_VALUE);
 		timeTDiamondBurning = (short) register.getInt();
 		//
-		register.setProperty("timeWhiteFuelBurning", 6400, 0, Short.MAX_VALUE);
-		timeWhiteFuelBurning = (short) register.getInt();
+		register.setProperty("divisorBurningTime", 256, 1, Short.MAX_VALUE);
+		divisorBurningTime = (short) register.getInt();
 		// Machine.Smelting
 		register.setCategory(SMELTING);
 		//
@@ -251,6 +216,41 @@ public class OfalenModConfigCore {
 		//
 		register.setProperty("timeFusing", 1600, 0, Short.MAX_VALUE);
 		timeFusing = (short) register.getInt();
+		// Ball
+		register.setCategory(BALL);
+		// Ball.Explosion
+		register.setCategory(EXPLOSION);
+		//
+		register.setProperty("sizeExplosion", 2, 0, Byte.MAX_VALUE);
+		sizeExplosion = (byte) register.getInt();
+		// Tool
+		register.setCategory(TOOL);
+		//
+		register.setProperty("amountOfalenStickCrafting", 1, 1, 64);
+		register.setRequiresMcRestart();
+		amountOfalenStickCrafting = (byte) register.getInt();
+		//
+		register.setProperty("durabilityCreativeSword", 0, 0, Short.MAX_VALUE);
+		register.setRequiresMcRestart();
+		durabilityCreativeSword = (short) register.getInt();
+		// Tool.Perfect
+		register.setCategory(PERFECT);
+		//
+		register.setProperty("rangeMax", 7, 0, Byte.MAX_VALUE);
+		rangeMax = (byte) register.getInt();
+		// Laser
+		register.setCategory(LASER);
+		//
+		register.setProperty("amountLaserCrafting", 4, 1, 64);
+		register.setRequiresMcRestart();
+		amountLaserCrafting = (byte) register.getInt();
+		//
+		register.setProperty("amountWhiteLaserCrafting", 3, 1, 64);
+		register.setRequiresMcRestart();
+		amountWhiteLaserCrafting = (byte) register.getInt();
+		//
+		register.setProperty("enableLaserSound", true);
+		isLaserSoundEnabled = register.getBoolean();
 		// Future
 		register.setCategory(FUTURE);
 		//
