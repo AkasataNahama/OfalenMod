@@ -353,7 +353,7 @@ public class OfalenModConfigCore {
 		register.setRequiresMcRestart();
 		amountDarkFuelCrafting = (byte) register.getInt();
 		//
-		register.setProperty("energyDarkFuel", 80, 0, Short.MAX_VALUE);
+		register.setProperty("energyDarkFuel", 20, 0, Short.MAX_VALUE);
 		energyDarkFuel = (short) register.getInt();
 		// Grass
 		register.setCategory(GRASS);
