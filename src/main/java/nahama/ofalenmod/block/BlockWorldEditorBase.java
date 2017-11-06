@@ -59,7 +59,7 @@ public abstract class BlockWorldEditorBase extends BlockContainer {
 				TileEntity tileEntity = world.getTileEntity(x, y, z);
 				if (tileEntity != null && tileEntity instanceof TileEntityWorldEditorBase)
 					((TileEntityWorldEditorBase) tileEntity).changeIsWorking();
-			} else {
+			} else if (!world.isRemote) {
 				// 設定キーとダッシュキーが押されていたら手持ちアイテムの適用。
 				ItemStack itemStack = player.getHeldItem();
 				if (itemStack == null)
@@ -72,11 +72,9 @@ public abstract class BlockWorldEditorBase extends BlockContainer {
 				} else if (itemStack.getItem() == OfalenModItemCore.installerFilter) {
 					TileEntity tileEntity = world.getTileEntity(x, y, z);
 					if (tileEntity != null && tileEntity instanceof TileEntityWorldEditorBase) {
-						if (world.isRemote) {
-							List<String> list = ((TileEntityWorldEditorBase) tileEntity).getFilterMessage();
-							for (String s : list) {
-								player.addChatMessage(new ChatComponentText(s));
-							}
+						List<String> list = ((TileEntityWorldEditorBase) tileEntity).getFilterMessage();
+						for (String s : list) {
+							player.addChatMessage(new ChatComponentText(s));
 						}
 						return true;
 					}
