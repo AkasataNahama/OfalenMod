@@ -326,9 +326,9 @@ public abstract class TileEntityWorldEditorBase extends TileEntity implements IS
 		case 7:
 			return intervalProcessing;
 		case 8:
-			return intervalRestarting;
-		case 9:
 			return canRestart;
+		case 9:
+			return intervalRestarting;
 		}
 		return 0;
 	}
@@ -390,15 +390,15 @@ public abstract class TileEntityWorldEditorBase extends TileEntity implements IS
 			intervalProcessing = (short) value;
 			break;
 		case 8:
+			canRestart = !canRestart;
+			break;
+		case 9:
 			value += intervalRestarting;
 			if (value < 1)
 				value = 1;
 			if (value > Short.MAX_VALUE)
 				value = Short.MAX_VALUE;
 			intervalRestarting = (short) value;
-			break;
-		case 9:
-			canRestart = !canRestart;
 			break;
 		}
 		// 座標が正常な値かどうか確認し、不正なら修正する。
@@ -416,7 +416,11 @@ public abstract class TileEntityWorldEditorBase extends TileEntity implements IS
 
 	/** 設定の種類を返す。0 : boolean, 1 : short */
 	public byte getSettingTypeWithID(int id) {
-		if (0 < id && id < 9)
+		// 座標設定は数値。
+		if (0 < id && id < 7)
+			return 1;
+		// 間隔設定は数値。
+		if (id == 7 || id == 9)
 			return 1;
 		return 0;
 	}
@@ -441,9 +445,9 @@ public abstract class TileEntityWorldEditorBase extends TileEntity implements IS
 		case 7:
 			return "info.ofalen.setting.editor.interval.processing";
 		case 8:
-			return "info.ofalen.setting.editor.interval.restarting";
-		case 9:
 			return "info.ofalen.setting.editor.canRestart";
+		case 9:
+			return "info.ofalen.setting.editor.interval.restarting";
 		}
 		return null;
 	}
