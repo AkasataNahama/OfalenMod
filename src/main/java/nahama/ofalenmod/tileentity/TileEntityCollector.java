@@ -154,12 +154,12 @@ public class TileEntityCollector extends TileEntityWorldEditorBase {
 
 	@Override
 	public byte getAmountSettingID() {
-		return (byte) (super.getAmountSettingID() + 4);
+		return (byte) (super.getAmountSettingID() + 2);
 	}
 
 	@Override
 	public Object getWithID(int id) {
-		switch (id - super.getAmountSettingID()) {
+		switch (id - super.getAmountSettingID() + 2) {
 		case 0:
 			return isItemDisabled;
 		case 1:
@@ -175,7 +175,7 @@ public class TileEntityCollector extends TileEntityWorldEditorBase {
 	@Override
 	public void setWithID(int id, byte changeType) {
 		super.setWithID(id, changeType);
-		switch (id - super.getAmountSettingID()) {
+		switch (id - super.getAmountSettingID() + 2) {
 		case 0:
 			isItemDisabled = !isItemDisabled;
 		case 1:
@@ -189,7 +189,7 @@ public class TileEntityCollector extends TileEntityWorldEditorBase {
 
 	@Override
 	public String getSettingNameWithID(int id) {
-		switch (id - super.getAmountSettingID()) {
+		switch (id - super.getAmountSettingID() + 2) {
 		case 0:
 			return "info.ofalen.setting.collector.isDisabled.item";
 		case 1:
