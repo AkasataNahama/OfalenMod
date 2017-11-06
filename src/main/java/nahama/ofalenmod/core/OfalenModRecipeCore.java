@@ -169,7 +169,9 @@ public class OfalenModRecipeCore {
 		addShaped(new ItemStack(collectorOfalen, 1, collectorOfalen.getMaxDamage()), "IOI", "OEO", "IOI", 'I', INGOT_GOLD, 'O', CORE[7], 'E', getParts(9));
 		// フィルター関連
 		addShaped(installerFilter, "XYX", "YZY", "XYX", 'X', getParts(2), 'Y', Items.string, 'Z', Blocks.hopper);
+		addShaped(installerFilter, "XYX", "YZY", "XYX", 'X', getParts(2), 'Y', Blocks.wool, 'Z', Blocks.hopper);
 		addShaped(filterItem, "XYX", "YZY", "XYX", 'X', getParts(2), 'Y', Items.string, 'Z', Blocks.chest);
+		addShaped(filterItem, "XYX", "YZY", "XYX", 'X', getParts(2), 'Y', Blocks.wool, 'Z', Blocks.chest);
 		// オファレン草
 		for (int i = 0; i < 4; i++) {
 			addShaped(new ItemStack(seedsOfalen, 1, i), "SSS", "SOS", "SSS", 'S', Items.wheat_seeds, 'O', GEM[i]);
