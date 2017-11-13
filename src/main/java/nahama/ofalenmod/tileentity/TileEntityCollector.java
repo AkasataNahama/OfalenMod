@@ -178,12 +178,16 @@ public class TileEntityCollector extends TileEntityWorldEditorBase {
 		switch (id - super.getAmountSettingID() + 2) {
 		case 0:
 			isItemDisabled = !isItemDisabled;
+			break;
 		case 1:
 			isExpDisabled = !isExpDisabled;
+			break;
 		case 2:
 			canDeleteItem = !canDeleteItem;
+			break;
 		case 3:
 			canDeleteExp = !canDeleteExp;
+			break;
 		}
 	}
 
@@ -200,6 +204,13 @@ public class TileEntityCollector extends TileEntityWorldEditorBase {
 			return "info.ofalen.setting.collector.canDelete.exp";
 		}
 		return super.getSettingNameWithID(id);
+	}
+
+	@Override
+	public byte getSettingTypeWithID(int id) {
+		if (id >= super.getAmountSettingID() - 2)
+			return 0;
+		return super.getSettingTypeWithID(id);
 	}
 
 	@Override
