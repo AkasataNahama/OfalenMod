@@ -158,7 +158,7 @@ public class OfalenModConfigCore {
 		register.setProperty("frequencyGeneration", 3, 0, Byte.MAX_VALUE);
 		frequencyGeneration = (byte) register.getInt();
 		//
-		register.setProperty("limitGeneration", 8, 1, Byte.MAX_VALUE);
+		register.setProperty("limitGeneration", 7, 1, Byte.MAX_VALUE);
 		limitGeneration = (byte) register.getInt();
 		//
 		register.setProperty("probLodeGeneration", 0.001, 0.0, 1.0);
