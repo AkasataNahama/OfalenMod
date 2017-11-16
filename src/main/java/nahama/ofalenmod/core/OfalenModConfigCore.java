@@ -349,11 +349,11 @@ public class OfalenModConfigCore {
 		// WorldEditor
 		register.setCategory(WORLD_EDITOR);
 		//
-		register.setProperty("amountDarkFuelCrafting", 8, 1, 64);
+		register.setProperty("amountDarkFuelCrafting", 2, 1, 64);
 		register.setRequiresMcRestart();
 		amountDarkFuelCrafting = (byte) register.getInt();
 		//
-		register.setProperty("energyDarkFuel", 20, 0, Short.MAX_VALUE);
+		register.setProperty("energyDarkFuel", 8, 0, Short.MAX_VALUE);
 		energyDarkFuel = (short) register.getInt();
 		// Grass
 		register.setCategory(GRASS);
