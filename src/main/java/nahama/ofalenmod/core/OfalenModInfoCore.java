@@ -12,7 +12,7 @@ public class OfalenModInfoCore {
 		meta.name = StatCollector.translateToLocal(OfalenModCore.UNLOCALIZED_MOD_NAME);
 		meta.description = StatCollector.translateToLocal("info.ofalen.metaMod.description");
 		meta.version = OfalenModCore.VERSION;
-		meta.url = "http://www63.atwiki.jp/akasatanahama/pages/15.html";
+		meta.url = "https://www.tntmodders.com";
 		meta.updateUrl = "https://dl.dropboxusercontent.com/s/cdp8031ki7jz9rl/versions.txt";
 		meta.authorList.add("Akasata Nahama");
 		meta.credits = OfalenUtil.translate("info.ofalen.metaMod.credits");
