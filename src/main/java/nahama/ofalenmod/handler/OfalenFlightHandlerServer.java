@@ -3,6 +3,7 @@ package nahama.ofalenmod.handler;
 import nahama.ofalenmod.core.OfalenModConfigCore;
 import nahama.ofalenmod.core.OfalenModPacketCore;
 import nahama.ofalenmod.item.ItemFloater;
+import nahama.ofalenmod.network.MFloaterInit;
 import nahama.ofalenmod.network.MFloaterMode;
 import nahama.ofalenmod.setting.IItemOfalenSettable;
 import nahama.ofalenmod.setting.OfalenSettingCategory;
@@ -88,7 +89,7 @@ public class OfalenFlightHandlerServer {
 		if (state.mode != null && state.mode.equals(modeFloater))
 			return;
 		// モード変更をClientHandlerに通知する。
-		OfalenModPacketCore.WRAPPER.sendTo(new MFloaterMode(modeFloater, player.onGround), (EntityPlayerMP) player);
+		OfalenModPacketCore.WRAPPER.sendTo(new MFloaterMode(modeFloater), (EntityPlayerMP) player);
 		if (modeSelected < 1 || modeFloater.getFlightForm() < 1) {
 			// モードが1未満（無効）なら削除する。
 			if (playersFloating.containsKey(player.getCommandSenderName())) {
@@ -130,6 +131,13 @@ public class OfalenFlightHandlerServer {
 		return playersFloating.get(player.getCommandSenderName()) != null;
 	}
 
+	/** プレイヤーがワールドに入った時の処理 */
+	public static void onPlayerLoggedIn(EntityPlayer player) {
+		// ClientHandlerを初期化する。
+		OfalenModPacketCore.WRAPPER.sendTo(new MFloaterInit(player.onGround), (EntityPlayerMP) player);
+	}
+
+	/** プレイヤーがワールドから出た時の処理。 */
 	public static void onPlayerLoggedOut(EntityPlayer player) {
 		playersFloating.remove(player.getCommandSenderName());
 	}

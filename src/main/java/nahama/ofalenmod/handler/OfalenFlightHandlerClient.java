@@ -17,18 +17,17 @@ public class OfalenFlightHandlerClient {
 	private static boolean isFlightEnabled = true;
 
 	/** 初期化処理。 */
-	public static void init() {
+	public static void init(boolean onGround) {
 		mode = null;
 		timeRemaining = 0;
-		isFlightEnabled = true;
+		// プレイヤーが空中にいるなら、フロートモードの飛行を有効にする。
+		isFlightEnabled = !onGround;
 	}
 
-	/** フローターのモードを設定する。ワールド起動直後なら有効判定を上書きする。 */
-	public static void setMode(FloaterMode newMode, boolean onGround) {
+	/** フローターのモードを設定する。 */
+	public static void setMode(FloaterMode newMode) {
 		// モードを設定する。
 		mode = newMode;
-		if (Minecraft.getMinecraft().thePlayer.onGround != onGround)
-			isFlightEnabled = !onGround;
 	}
 
 	/** 浮遊が許可されているかどうか。 */

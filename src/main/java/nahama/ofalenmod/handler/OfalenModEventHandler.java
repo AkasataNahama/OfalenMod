@@ -9,7 +9,6 @@ import nahama.ofalenmod.core.OfalenModConfigCore;
 import nahama.ofalenmod.entity.EntityLaserBase;
 import nahama.ofalenmod.util.OfalenLog;
 import nahama.ofalenmod.util.OfalenUtil;
-import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ChatComponentText;
@@ -39,12 +38,16 @@ public class OfalenModEventHandler {
 				player.addChatMessage(new ChatComponentText(OfalenModUpdateCheckHandler.getMessage()));
 				OfalenModUpdateCheckHandler.namesNotified.add(player.getCommandSenderName());
 			}
-		} else {
-			if (player == Minecraft.getMinecraft().thePlayer)
-				OfalenFlightHandlerClient.init();
 		}
 	}
 
+	/** プレイヤーがワールドに入った時の処理 */
+	@SubscribeEvent
+	public void onPlayerLoggedIn(PlayerEvent.PlayerLoggedInEvent event) {
+		OfalenFlightHandlerServer.onPlayerLoggedIn(event.player);
+	}
+
+	/** プレイヤーがワールドから出た時の処理。 */
 	@SubscribeEvent
 	public void onPlayerLoggedOut(PlayerEvent.PlayerLoggedOutEvent event) {
 		OfalenLog.debuggingInfo("onPlayerLoggedOut");

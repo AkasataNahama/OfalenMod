@@ -7,6 +7,7 @@ import cpw.mods.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import cpw.mods.fml.relauncher.Side;
 import nahama.ofalenmod.OfalenModCore;
 import nahama.ofalenmod.network.MApplyDetailedSetter;
+import nahama.ofalenmod.network.MFloaterInit;
 import nahama.ofalenmod.network.MFloaterMode;
 import nahama.ofalenmod.network.MKeyStateChange;
 import nahama.ofalenmod.network.MSpawnParticle;
@@ -23,6 +24,7 @@ public class OfalenModPacketCore {
 		discriminator = 0;
 		registerMessage(MTeleporterChannel.class, MTeleporterChannel.Handler.class, Side.SERVER);
 		registerMessage(MTeleporterMeta.class, MTeleporterMeta.Handler.class, Side.SERVER);
+		registerMessage(MFloaterInit.class, MFloaterInit.Handler.class, Side.CLIENT);
 		registerMessage(MFloaterMode.class, MFloaterMode.Handler.class, Side.CLIENT);
 		registerMessage(MSpawnParticle.class, MSpawnParticle.Handler.class, Side.CLIENT);
 		registerMessage(MWorldEditorSetting.class, MWorldEditorSetting.Handler.class, Side.SERVER);
