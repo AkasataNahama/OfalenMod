@@ -57,14 +57,11 @@ public class OfalenFlightHandlerServer {
 			// フローターでないか、NBTを持っていないなら無視。
 			if (itemStack == null || !(itemStack.getItem() instanceof ItemFloater) || !itemStack.hasTagCompound())
 				continue;
-			if (!isSearching) {
-				// 調査が終了しているなら、使用中でないことを記録し、次へ。
+			if (!isSearching || !((ItemFloater) itemStack.getItem()).isValidFloater(itemStack)) {
+				// 調査が終了しているか、無効なフローターなら、使用中でないことを記録し、次へ。
 				itemStack.getTagCompound().setBoolean(OfalenNBTUtil.IS_BEING_USED, false);
 				continue;
 			}
-			// フローターが無効なら無視。
-			if (!((ItemFloater) itemStack.getItem()).isValidFloater(itemStack))
-				continue;
 			// 使用中であることを記録。
 			itemStack.getTagCompound().setBoolean(OfalenNBTUtil.IS_BEING_USED, true);
 			// 有効なフローターを見つけたら保持する。

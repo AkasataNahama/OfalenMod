@@ -112,7 +112,8 @@ public class ItemFloater extends ItemFuture implements IItemOfalenSettable {
 					// 次の飛行形態が有効なモードに変更する。
 					nbt.setByte(OfalenNBTUtil.MODE, mode);
 					// チャットに通知する。
-					OfalenUtil.addChatTranslationMessage(player, "info.ofalen.floater.modeChanged", this.getModeName(itemStack, mode));
+					if (!nbt.getBoolean(OfalenNBTUtil.IS_BEING_USED))
+						OfalenUtil.addChatTranslationMessage(player, "info.ofalen.floater.modeChanged", this.getModeName(itemStack, mode));
 				} else if (mode < 1) {
 					// 全てのモードの飛行形態が無効なら、チャットに通知する。
 					OfalenUtil.addChatTranslationMessage(player, "info.ofalen.floater.mode.disabled.all");
