@@ -66,7 +66,7 @@ public class OfalenModCore {
 	@SuppressWarnings("WeakerAccess")
 	public static final String MINECRAFT_VERSION = "1.7.10";
 	@SuppressWarnings("WeakerAccess")
-	public static final String MOD_VERSION = "2.0.0";
+	public static final String MOD_VERSION = "2.0.2";
 	public static final String VERSION = "[" + MINECRAFT_VERSION + "]" + MOD_VERSION;
 	public static final VersionUtil.VersionString VERSION_STRING = new VersionUtil.VersionString(OfalenModCore.MOD_ID, OfalenModCore.VERSION);
 	public static final boolean IS_DEBUGGING = false;
